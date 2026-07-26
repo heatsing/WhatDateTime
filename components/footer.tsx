@@ -2,19 +2,19 @@ import Link from "next/link";
 import { Icon } from "@/components/icon";
 
 const calculatorLinks = [
-  ["Date Calculator", "/date-calculator"],
-  ["Time Difference", "/time-difference-calculator"],
-  ["Age Calculator", "/age-calculator"],
-  ["Countdown Timer", "/countdown-timer"],
-  ["Time Zone Converter", "/time-zone-converter"],
+  ["Date Calculator", "/calculators/date-calculator"],
+  ["Time Difference", "/calculators/time-difference"],
+  ["Age Calculator", "/calculators/age-calculator"],
+  ["Countdown Timer", "/calculators/countdown"],
+  ["Time Zone Converter", "/calculators/timezone-converter"],
 ] as const;
 
 const quickLinks = [
-  ["24 hours from now", "/hours-from-now/24"],
-  ["30 days from today", "/days-from-today/30"],
-  ["8 weeks from today", "/weeks-from-today/8"],
-  ["6 months from today", "/months-from-today/6"],
-  ["7 days ago", "/days-ago/7"],
+  ["24 hours from now", "/24-hours-from-now"],
+  ["30 days from today", "/30-days-from-today"],
+  ["8 weeks from today", "/8-weeks-from-today"],
+  ["6 months from today", "/6-months-from-today"],
+  ["7 days ago", "/7-days-ago"],
 ] as const;
 
 export function Footer() {

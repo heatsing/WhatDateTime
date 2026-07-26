@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 };
 
 const popular = [
-  { amount: "24", unit: "hours", phrase: "from now", href: "/hours-from-now/24", tone: "bg-lime/50" },
-  { amount: "30", unit: "days", phrase: "from today", href: "/days-from-today/30", tone: "bg-peach/80" },
-  { amount: "8", unit: "weeks", phrase: "from today", href: "/weeks-from-today/8", tone: "bg-[#DDEEFF]" },
-  { amount: "6", unit: "months", phrase: "from today", href: "/months-from-today/6", tone: "bg-[#E9E2FF]" },
+  { amount: "24", unit: "hours", phrase: "from now", href: "/24-hours-from-now", tone: "bg-lime/50" },
+  { amount: "30", unit: "days", phrase: "from today", href: "/30-days-from-today", tone: "bg-peach/80" },
+  { amount: "8", unit: "weeks", phrase: "from today", href: "/8-weeks-from-today", tone: "bg-[#DDEEFF]" },
+  { amount: "6", unit: "months", phrase: "from today", href: "/6-months-from-today", tone: "bg-[#E9E2FF]" },
 ] as const;
 
 export default function HomePage() {
@@ -40,7 +40,7 @@ export default function HomePage() {
             Clear answers, right on time
           </span>
           <h1 className="mt-7 font-display text-5xl font-extrabold leading-[1.04] tracking-[-0.045em] text-ink sm:text-7xl">
-            Time math,
+            Date & time,
             <span className="relative mx-2 inline-block">
               beautifully
               <svg className="absolute -bottom-2 left-0 w-full text-lime" viewBox="0 0 250 14" fill="none" aria-hidden="true">
@@ -81,7 +81,7 @@ export default function HomePage() {
                 </span>
                 <h3 className="mt-5 font-display text-xl font-bold">Quick date answers</h3>
                 <p className="mt-2 text-sm leading-6 text-white/55">Explore hundreds of ready-made date and time answers.</p>
-                <Link href="/days-from-today/7" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-lime">
+                <Link href="/7-days-from-today" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-lime">
                   Browse answers <Icon name="arrow" className="h-4 w-4" />
                 </Link>
               </div>
@@ -97,7 +97,7 @@ export default function HomePage() {
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">Popular right now</p>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">Answers in one tap</h2>
             </div>
-            <Link href="/days-from-today/1" className="inline-flex items-center gap-2 text-sm font-bold text-fern">
+            <Link href="/1-day-from-today" className="inline-flex items-center gap-2 text-sm font-bold text-fern">
               Start with tomorrow <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>
@@ -120,13 +120,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
+      <section className="bg-mist px-5 py-20 sm:px-8 sm:py-24">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">
+              Date calculation, explained
+            </p>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              Accurate answers for any date or time question
+            </h2>
+          </div>
+          <div className="grid gap-6 text-sm leading-7 text-ink/60 sm:grid-cols-2">
+            <div>
+              <h3 className="font-display text-lg font-bold text-ink">
+                Calendar-aware calculations
+              </h3>
+              <p className="mt-2">
+                ChronoCraft accounts for different month lengths, leap years,
+                weekdays, weekends, and daylight-saving transitions. Use it for
+                deadlines, schedules, travel, billing periods, or everyday
+                planning.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-display text-lg font-bold text-ink">
+                Thousands of direct answers
+              </h3>
+              <p className="mt-2">
+                Browse exact answers for days, hours, weeks, months, years,
+                business days, date differences, and international time zones.
+                Every page includes a calculator so you can adjust the result.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-20 sm:px-8 sm:py-24">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-fern px-6 py-12 text-center text-white sm:px-12">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-lime">Made for real life</p>
           <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Deadlines, birthdays, trips, launches—plan all of it with confidence.
           </h2>
-          <Link href="/date-calculator" className="mt-7 inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-sm font-bold text-ink transition hover:-translate-y-0.5">
+          <Link href="/calculators/date-calculator" className="mt-7 inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-sm font-bold text-ink transition hover:-translate-y-0.5">
             Calculate a date <Icon name="arrow" className="h-4 w-4" />
           </Link>
         </div>

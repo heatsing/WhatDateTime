@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import { Icon } from "@/components/icon";
 
 const options = [
-  ["hours-from-now", "hours from now", 24],
-  ["days-from-today", "days from today", 31],
-  ["weeks-from-today", "weeks from today", 12],
-  ["months-from-today", "months from today", 24],
-  ["years-from-today", "years from today", 50],
-  ["hours-ago", "hours ago", 24],
-  ["days-ago", "days ago", 31],
+  ["hours-from-now", "hours from now", 500, "hour", "from-now"],
+  ["days-from-today", "days from today", 365, "day", "from-today"],
+  ["weeks-from-today", "weeks from today", 200, "week", "from-today"],
+  ["months-from-today", "months from today", 300, "month", "from-today"],
+  ["years-from-today", "years from today", 300, "year", "from-today"],
+  ["hours-ago", "hours ago", 500, "hour", "ago"],
+  ["days-ago", "days ago", 365, "day", "ago"],
+  ["business-days-from-today", "business days from today", 1000, "business-day", "from-today"],
 ] as const;
 
 export function QuickAnswer() {
@@ -21,9 +22,14 @@ export function QuickAnswer() {
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    const max = options.find((option) => option[0] === type)?.[2] || 31;
+    const selected = options.find((option) => option[0] === type);
+    const max = selected?.[2] || 365;
     const safeAmount = Math.min(Math.max(Math.round(amount || 1), 1), max);
-    router.push(`/${type}/${safeAmount}`);
+    const unit = selected?.[3] || "day";
+    const suffix = selected?.[4] || "from-today";
+    router.push(
+      `/${safeAmount}-${safeAmount === 1 ? unit : `${unit}s`}-${suffix}`,
+    );
   }
 
   return (

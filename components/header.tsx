@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Icon } from "@/components/icon";
 
 const links = [
-  { href: "/date-calculator", label: "Date" },
-  { href: "/time-difference-calculator", label: "Difference" },
-  { href: "/age-calculator", label: "Age" },
-  { href: "/countdown-timer", label: "Countdown" },
-  { href: "/time-zone-converter", label: "Time zones" },
+  { href: "/calculators/date-calculator", label: "Date" },
+  { href: "/calculators/time-difference", label: "Difference" },
+  { href: "/calculators/age-calculator", label: "Age" },
+  { href: "/calculators/countdown", label: "Countdown" },
+  { href: "/calculators/timezone-converter", label: "Time zones" },
 ];
 
 export function Header() {
@@ -40,7 +40,7 @@ export function Header() {
         </nav>
 
         <Link
-          href="/date-calculator"
+          href="/calculators/date-calculator"
           className="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-fern sm:inline-flex"
         >
           Start calculating

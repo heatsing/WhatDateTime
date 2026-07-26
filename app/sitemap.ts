@@ -1,8 +1,5 @@
 import type { MetadataRoute } from "next";
-import {
-  calculationDefinitions,
-  calculationSlugs,
-} from "@/lib/calculator";
+import { getAllSEOPages } from "@/lib/seoGenerator";
 import { primaryTools, siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -14,25 +11,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    ...primaryTools.map((tool) => ({
+    ...primaryTools
+      .filter((tool) => tool.href.startsWith("/calculators/"))
+      .map((tool) => ({
       url: `${siteConfig.url}${tool.href}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.9,
-    })),
+      })),
   ];
 
-  const seoPages: MetadataRoute.Sitemap = calculationSlugs.flatMap((slug) =>
-    Array.from(
-      { length: calculationDefinitions[slug].max },
-      (_, index) => ({
-        url: `${siteConfig.url}/${slug}/${index + 1}`,
-        lastModified: now,
-        changeFrequency: "daily" as const,
-        priority: 0.7,
-      }),
-    ),
-  );
+  const seoPages: MetadataRoute.Sitemap = getAllSEOPages().map((page) => ({
+    url: `${siteConfig.url}/${page.slug}`,
+    lastModified: now,
+    changeFrequency: page.kind === "relative" ? "daily" : "weekly",
+    priority: page.kind === "relative" ? 0.8 : 0.7,
+  }));
 
   return [...corePages, ...seoPages];
 }
