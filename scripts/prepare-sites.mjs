@@ -15,8 +15,20 @@ if (!existsSync(`${source}/worker.js`)) {
 
 rmSync(output, { recursive: true, force: true });
 mkdirSync(`${output}/server`, { recursive: true });
-cpSync(source, `${output}/server`, { recursive: true });
 copyFileSync(`${source}/worker.js`, `${output}/server/index.js`);
+
+for (const directory of [
+  ".build",
+  "cloudflare",
+  "middleware",
+  "server-functions",
+]) {
+  cpSync(
+    `${source}/${directory}`,
+    `${output}/server/${directory}`,
+    { recursive: true },
+  );
+}
 
 if (existsSync(`${source}/assets`)) {
   cpSync(`${source}/assets`, `${output}/client`, { recursive: true });
