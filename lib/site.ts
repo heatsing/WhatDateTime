@@ -3,7 +3,9 @@ export const siteConfig = {
   shortName: "ChronoCraft",
   description:
     "Simple, accurate date and time calculators for everyday planning.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://chronocraft.example.com",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    "https://chronocraft-time.heatsinghaiqing.chatgpt.site",
 };
 
 export const primaryTools = [
