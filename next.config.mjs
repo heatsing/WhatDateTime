@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  distDir: "dist",
+  output: "standalone",
 };
 
 export default nextConfig;
