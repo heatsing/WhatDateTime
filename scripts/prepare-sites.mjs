@@ -4,7 +4,6 @@ import {
   existsSync,
   mkdirSync,
   rmSync,
-  writeFileSync,
 } from "node:fs";
 
 const source = ".open-next";
@@ -15,13 +14,9 @@ if (!existsSync(`${source}/worker.js`)) {
 }
 
 rmSync(output, { recursive: true, force: true });
-cpSync(source, output, { recursive: true });
-
 mkdirSync(`${output}/server`, { recursive: true });
-writeFileSync(
-  `${output}/server/index.js`,
-  'export { default } from "../worker.js";\n',
-);
+cpSync(source, `${output}/server`, { recursive: true });
+copyFileSync(`${source}/worker.js`, `${output}/server/index.js`);
 
 if (existsSync(`${source}/assets`)) {
   cpSync(`${source}/assets`, `${output}/client`, { recursive: true });
