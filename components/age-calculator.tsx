@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { subYears } from "date-fns";
 import { calculateAge, inputDate } from "@/lib/calculator";
 import {
@@ -11,12 +11,20 @@ import {
   ResultHeading,
 } from "@/components/calculator-ui";
 
-export function AgeCalculator() {
-  const today = useMemo(() => new Date(), []);
+export function AgeCalculator({ initialTime }: { initialTime: string }) {
+  const today = useMemo(() => new Date(initialTime), [initialTime]);
   const initialBirth = useMemo(() => subYears(today, 25), [today]);
   const [birth, setBirth] = useState(inputDate(initialBirth));
   const [asOf, setAsOf] = useState(inputDate(today));
   const [result, setResult] = useState(() => calculateAge(initialBirth, today));
+
+  useEffect(() => {
+    const current = new Date();
+    const currentBirth = subYears(current, 25);
+    setBirth(inputDate(currentBirth));
+    setAsOf(inputDate(current));
+    setResult(calculateAge(currentBirth, current));
+  }, []);
 
   function submit(event: FormEvent) {
     event.preventDefault();

@@ -16,6 +16,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
+  const initialTime = new Date().toISOString();
   return (
     <ToolPageShell
       title="Time Zone Converter"
@@ -29,7 +30,7 @@ export default function Page() {
         { title: "Read local time", text: "See the matching date, time, and zone abbreviation." },
       ]}
     >
-      <TimezoneCalculator />
+      <TimezoneCalculator initialTime={initialTime} />
     </ToolPageShell>
   );
 }

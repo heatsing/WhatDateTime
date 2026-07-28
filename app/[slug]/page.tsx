@@ -10,7 +10,7 @@ import { RelatedLinks } from "@/components/RelatedLinks";
 import { SEOContent } from "@/components/SEOContent";
 import {
   buildFAQs,
-  getAllSEOPages,
+  getAllSEOPageIndex,
   getPageResult,
   getRelatedPages,
   getSEOPage,
@@ -30,11 +30,11 @@ export const dynamicParams = false;
 export const revalidate = 86_400;
 
 export function generateStaticParams() {
-  return getAllSEOPages().map((page) => ({ slug: page.slug }));
+  return getAllSEOPageIndex().map((page) => ({ slug: page.slug }));
 }
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const page = getSEOPage(params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const page = await getSEOPage(params.slug);
   if (!page) return {};
 
   const seo = getSEOText(page);
@@ -58,15 +58,15 @@ export function generateMetadata({ params }: PageProps): Metadata {
   };
 }
 
-export default function ProgrammaticSEOPage({ params }: PageProps) {
-  const page = getSEOPage(params.slug);
+export default async function ProgrammaticSEOPage({ params }: PageProps) {
+  const page = await getSEOPage(params.slug);
   if (!page) notFound();
 
   const now = new Date();
   const seo = getSEOText(page);
   const result = getPageResult(page, now);
-  const faqs = buildFAQs(page, result);
-  const related = getRelatedPages(page);
+  const faqs = buildFAQs(page);
+  const related = await getRelatedPages(page);
   const path = `/${page.slug}`;
 
   return (
@@ -122,7 +122,7 @@ export default function ProgrammaticSEOPage({ params }: PageProps) {
 
       <section className="bg-mist px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <SEOContent page={page} result={result} />
+          <SEOContent data={page.content.sections} />
         </div>
       </section>
 

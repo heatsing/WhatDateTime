@@ -22,13 +22,19 @@ function getRemaining(target: Date, now: Date) {
   };
 }
 
-export function CountdownCalculator() {
-  const initialTarget = useMemo(() => addDays(new Date(), 7), []);
+export function CountdownCalculator({ initialTime }: { initialTime: string }) {
+  const initialNow = useMemo(() => new Date(initialTime), [initialTime]);
+  const initialTarget = useMemo(() => addDays(initialNow, 7), [initialNow]);
   const [input, setInput] = useState(inputDateTime(initialTarget));
   const [target, setTarget] = useState(initialTarget);
-  const [now, setNow] = useState(new Date());
+  const [now, setNow] = useState(initialNow);
 
   useEffect(() => {
+    const current = new Date();
+    const currentTarget = addDays(current, 7);
+    setNow(current);
+    setTarget(currentTarget);
+    setInput(inputDateTime(currentTarget));
     const interval = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(interval);
   }, []);

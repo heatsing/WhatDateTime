@@ -16,6 +16,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
+  const initialTime = new Date().toISOString();
   return (
     <ToolPageShell
       title="Time Difference Calculator"
@@ -29,7 +30,7 @@ export default function Page() {
         { title: "See every unit", text: "Read the duration plus useful totals at a glance." },
       ]}
     >
-      <DifferenceCalculator />
+      <DifferenceCalculator initialTime={initialTime} />
     </ToolPageShell>
   );
 }

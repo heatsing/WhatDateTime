@@ -16,6 +16,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
+  const initialTime = new Date().toISOString();
   return (
     <ToolPageShell
       title="Countdown Timer"
@@ -29,7 +30,7 @@ export default function Page() {
         { title: "Watch it tick", text: "Track remaining days through seconds in real time." },
       ]}
     >
-      <CountdownCalculator />
+      <CountdownCalculator initialTime={initialTime} />
     </ToolPageShell>
   );
 }

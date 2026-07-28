@@ -16,6 +16,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
+  const initialTime = new Date().toISOString();
   return (
     <ToolPageShell
       title="Date Calculator"
@@ -29,7 +30,7 @@ export default function Page() {
         { title: "Get your date", text: "See the weekday and full calendar date instantly." },
       ]}
     >
-      <DateCalculator />
+      <DateCalculator initialTime={initialTime} />
     </ToolPageShell>
   );
 }

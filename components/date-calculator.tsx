@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { format } from "date-fns";
 import {
   calculateDateOffset,
@@ -15,13 +15,19 @@ import {
   ResultHeading,
 } from "@/components/calculator-ui";
 
-export function DateCalculator() {
-  const today = useMemo(() => new Date(), []);
+export function DateCalculator({ initialTime }: { initialTime: string }) {
+  const today = useMemo(() => new Date(initialTime), [initialTime]);
   const [baseInput, setBaseInput] = useState(inputDate(today));
   const [amount, setAmount] = useState(10);
   const [unit, setUnit] = useState<TimeUnit>("day");
   const [operation, setOperation] = useState<"add" | "subtract">("add");
   const [result, setResult] = useState(() => calculateDateOffset(today, 10, "day", "add"));
+
+  useEffect(() => {
+    const current = new Date();
+    setBaseInput(inputDate(current));
+    setResult(calculateDateOffset(current, 10, "day", "add"));
+  }, []);
 
   function submit(event: FormEvent) {
     event.preventDefault();

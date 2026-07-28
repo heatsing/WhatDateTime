@@ -27,7 +27,7 @@ export function webApplicationSchema(
     "@type": "WebApplication",
     name,
     description,
-    url: `${siteConfig.url}${path}`,
+    url: path === "/" ? siteConfig.url : `${siteConfig.url}${path}`,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     offers: {

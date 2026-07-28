@@ -1,9 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { ArrowRight, Calculator, CalendarDays } from "lucide-react";
 import { format } from "date-fns";
-import { fromZonedTime } from "date-fns-tz";
+import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import {
   calculateDateDifference,
   calculateRelativeDate,
@@ -75,6 +75,18 @@ function RelativeForm({
   const [unit, setUnit] = useState<RelativeUnit>(page.unit);
   const [date, setDate] = useState(initialDate);
   const [result, setResult] = useState(initialResult);
+
+  useEffect(() => {
+    const current = new Date();
+    setDate(format(current, "yyyy-MM-dd"));
+    const next = calculateRelativeDate(
+      current,
+      page.amount,
+      page.unit,
+      page.direction,
+    );
+    setResult(formatLongDate(next, page.unit === "hour"));
+  }, [page.amount, page.direction, page.unit]);
 
   function calculate(event: FormEvent) {
     event.preventDefault();
@@ -224,6 +236,15 @@ function TimezoneForm({
     initialDateTime || `${initialDate}T12:00`,
   );
   const [result, setResult] = useState(initialResult);
+
+  useEffect(() => {
+    const current = new Date();
+    setDateTime(formatInTimeZone(current, page.fromZone, "yyyy-MM-dd'T'HH:mm"));
+    const converted = formatZonedTime(current, page.toZone);
+    setResult(
+      `${converted.time} on ${converted.date} (${converted.abbreviation})`,
+    );
+  }, [page.fromZone, page.toZone]);
 
   function calculate(event: FormEvent) {
     event.preventDefault();

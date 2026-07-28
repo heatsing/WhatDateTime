@@ -16,6 +16,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
+  const initialTime = new Date().toISOString();
   return (
     <ToolPageShell
       title="Age Calculator"
@@ -29,7 +30,7 @@ export default function Page() {
         { title: "See the breakdown", text: "Get complete years, months, days, and total days." },
       ]}
     >
-      <AgeCalculator />
+      <AgeCalculator initialTime={initialTime} />
     </ToolPageShell>
   );
 }

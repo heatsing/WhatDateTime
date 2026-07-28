@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { addDays } from "date-fns";
 import { calculateDifference, inputDateTime } from "@/lib/calculator";
 import {
@@ -11,12 +11,20 @@ import {
   ResultHeading,
 } from "@/components/calculator-ui";
 
-export function DifferenceCalculator() {
-  const now = useMemo(() => new Date(), []);
+export function DifferenceCalculator({ initialTime }: { initialTime: string }) {
+  const now = useMemo(() => new Date(initialTime), [initialTime]);
   const later = useMemo(() => addDays(now, 7), [now]);
   const [start, setStart] = useState(inputDateTime(now));
   const [end, setEnd] = useState(inputDateTime(later));
   const [result, setResult] = useState(() => calculateDifference(now, later));
+
+  useEffect(() => {
+    const current = new Date();
+    const currentLater = addDays(current, 7);
+    setStart(inputDateTime(current));
+    setEnd(inputDateTime(currentLater));
+    setResult(calculateDifference(current, currentLater));
+  }, []);
 
   function submit(event: FormEvent) {
     event.preventDefault();

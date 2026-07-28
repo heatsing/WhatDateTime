@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { inputDateTime } from "@/lib/calculator";
@@ -36,20 +36,37 @@ function zoneLabel(zone: string) {
   return zone.replaceAll("_", " ").replace("/", " · ");
 }
 
-export function TimezoneCalculator() {
-  const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const initialSource = timeZones.includes(localZone as (typeof timeZones)[number])
-    ? localZone
-    : "America/New_York";
-  const [input, setInput] = useState(inputDateTime(new Date()));
+export function TimezoneCalculator({ initialTime }: { initialTime: string }) {
+  const initialDate = useMemo(() => new Date(initialTime), [initialTime]);
+  const initialSource = "America/New_York";
+  const [input, setInput] = useState(inputDateTime(initialDate));
   const [source, setSource] = useState(initialSource);
   const [target, setTarget] = useState("Europe/London");
-  const [instant, setInstant] = useState(() => fromZonedTime(format(new Date(), "yyyy-MM-dd'T'HH:mm"), initialSource));
+  const [instant, setInstant] = useState(() =>
+    fromZonedTime(
+      format(initialDate, "yyyy-MM-dd'T'HH:mm"),
+      initialSource,
+    ),
+  );
   const result = useMemo(() => ({
     date: formatInTimeZone(instant, target, "EEEE, MMMM d, yyyy"),
     time: formatInTimeZone(instant, target, "h:mm a"),
     zone: formatInTimeZone(instant, target, "zzz"),
   }), [instant, target]);
+
+  useEffect(() => {
+    const current = new Date();
+    const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const nextSource = timeZones.includes(
+      localZone as (typeof timeZones)[number],
+    )
+      ? localZone
+      : initialSource;
+    const nextInput = inputDateTime(current);
+    setInput(nextInput);
+    setSource(nextSource);
+    setInstant(fromZonedTime(nextInput, nextSource));
+  }, []);
 
   function submit(event: FormEvent) {
     event.preventDefault();
