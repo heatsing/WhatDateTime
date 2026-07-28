@@ -1,6 +1,8 @@
 node_modules
 .next
 .open-next
+.wrangler
+.wrangler-*
 dist
 out
 .env*

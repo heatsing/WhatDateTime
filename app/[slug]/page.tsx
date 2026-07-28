@@ -27,7 +27,7 @@ type PageProps = {
 };
 
 export const dynamicParams = false;
-export const revalidate = 86_400;
+export const revalidate = false;
 
 export function generateStaticParams() {
   return getAllSEOPageIndex().map((page) => ({ slug: page.slug }));
