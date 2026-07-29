@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CountdownCalculator } from "@/components/countdown-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
+import { getBuildTime } from "@/lib/build-time";
 
 export const metadata: Metadata = {
   title: "Countdown Timer — Days, Hours & Seconds",
@@ -16,7 +17,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
-  const initialTime = new Date().toISOString();
+  const initialTime = getBuildTime();
   return (
     <ToolPageShell
       title="Countdown Timer"

@@ -4,6 +4,9 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   output: "standalone",
+  env: {
+    CHRONOCRAFT_BUILD_TIME: new Date().toISOString(),
+  },
 };
 
 export default nextConfig;

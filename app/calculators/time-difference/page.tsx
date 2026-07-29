@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DifferenceCalculator } from "@/components/difference-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
+import { getBuildTime } from "@/lib/build-time";
 
 export const metadata: Metadata = {
   title: "Time Difference Calculator",
@@ -16,7 +17,7 @@ const faqs = [
 ] as const;
 
 export default function Page() {
-  const initialTime = new Date().toISOString();
+  const initialTime = getBuildTime();
   return (
     <ToolPageShell
       title="Time Difference Calculator"
