@@ -1,9 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { format } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
-import { inputDateTime } from "@/lib/calculator";
+import { inputDateTime, inputDateTimeUTC } from "@/lib/calculator";
 import {
   CalculatorFrame,
   CalculateButton,
@@ -32,6 +31,12 @@ const timeZones = [
   "Pacific/Auckland",
 ] as const;
 
+const initialResult = {
+  date: "Thursday, January 1, 2026",
+  time: "5:00 PM",
+  zone: "GMT",
+};
+
 function zoneLabel(zone: string) {
   return zone.replaceAll("_", " ").replace("/", " · ");
 }
@@ -39,20 +44,30 @@ function zoneLabel(zone: string) {
 export function TimezoneCalculator({ initialTime }: { initialTime: string }) {
   const initialDate = useMemo(() => new Date(initialTime), [initialTime]);
   const initialSource = "America/New_York";
-  const [input, setInput] = useState(inputDateTime(initialDate));
+  const initialInput = useMemo(
+    () => inputDateTimeUTC(initialDate),
+    [initialDate],
+  );
+  const [input, setInput] = useState(initialInput);
   const [source, setSource] = useState(initialSource);
   const [target, setTarget] = useState("Europe/London");
+  const [isMounted, setIsMounted] = useState(false);
   const [instant, setInstant] = useState(() =>
     fromZonedTime(
-      format(initialDate, "yyyy-MM-dd'T'HH:mm"),
+      initialInput,
       initialSource,
     ),
   );
-  const result = useMemo(() => ({
-    date: formatInTimeZone(instant, target, "EEEE, MMMM d, yyyy"),
-    time: formatInTimeZone(instant, target, "h:mm a"),
-    zone: formatInTimeZone(instant, target, "zzz"),
-  }), [instant, target]);
+  const result = useMemo(
+    () => isMounted
+      ? {
+          date: formatInTimeZone(instant, target, "EEEE, MMMM d, yyyy"),
+          time: formatInTimeZone(instant, target, "h:mm a"),
+          zone: formatInTimeZone(instant, target, "zzz"),
+        }
+      : initialResult,
+    [instant, isMounted, target],
+  );
 
   useEffect(() => {
     const current = new Date();
@@ -66,6 +81,7 @@ export function TimezoneCalculator({ initialTime }: { initialTime: string }) {
     setInput(nextInput);
     setSource(nextSource);
     setInstant(fromZonedTime(nextInput, nextSource));
+    setIsMounted(true);
   }, []);
 
   function submit(event: FormEvent) {

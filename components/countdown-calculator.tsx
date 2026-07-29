@@ -1,8 +1,9 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { addDays, format } from "date-fns";
-import { inputDateTime } from "@/lib/calculator";
+import { addDays } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
+import { inputDateTime, inputDateTimeUTC } from "@/lib/calculator";
 import {
   CalculatorFrame,
   CalculateButton,
@@ -24,14 +25,19 @@ function getRemaining(target: Date, now: Date) {
 
 export function CountdownCalculator({ initialTime }: { initialTime: string }) {
   const initialNow = useMemo(() => new Date(initialTime), [initialTime]);
-  const initialTarget = useMemo(() => addDays(initialNow, 7), [initialNow]);
-  const [input, setInput] = useState(inputDateTime(initialTarget));
+  const initialTarget = useMemo(
+    () => new Date(initialNow.getTime() + 7 * 86_400_000),
+    [initialNow],
+  );
+  const [input, setInput] = useState(inputDateTimeUTC(initialTarget));
   const [target, setTarget] = useState(initialTarget);
   const [now, setNow] = useState(initialNow);
+  const [displayZone, setDisplayZone] = useState("UTC");
 
   useEffect(() => {
     const current = new Date();
     const currentTarget = addDays(current, 7);
+    setDisplayZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
     setNow(current);
     setTarget(currentTarget);
     setInput(inputDateTime(currentTarget));
@@ -57,7 +63,7 @@ export function CountdownCalculator({ initialTime }: { initialTime: string }) {
           <CountdownUnit label="Min" value={remaining.minutes} />
           <CountdownUnit label="Sec" value={remaining.seconds} accent />
         </div>
-        <p className="mt-5 text-xs text-white/45">Until {format(target, "MMM d, yyyy 'at' h:mm a")}</p>
+        <p className="mt-5 text-xs text-white/45">Until {formatInTimeZone(target, displayZone, "MMM d, yyyy 'at' h:mm a")}</p>
       </>
     }>
       <form onSubmit={submit}>

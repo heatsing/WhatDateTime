@@ -1,10 +1,11 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import {
   calculateDateOffset,
   inputDate,
+  inputDateUTC,
   type TimeUnit,
 } from "@/lib/calculator";
 import {
@@ -17,14 +18,20 @@ import {
 
 export function DateCalculator({ initialTime }: { initialTime: string }) {
   const today = useMemo(() => new Date(initialTime), [initialTime]);
-  const [baseInput, setBaseInput] = useState(inputDate(today));
+  const initialBase = useMemo(
+    () => new Date(`${inputDateUTC(today)}T12:00:00.000Z`),
+    [today],
+  );
+  const [baseInput, setBaseInput] = useState(inputDateUTC(today));
   const [amount, setAmount] = useState(10);
   const [unit, setUnit] = useState<TimeUnit>("day");
   const [operation, setOperation] = useState<"add" | "subtract">("add");
-  const [result, setResult] = useState(() => calculateDateOffset(today, 10, "day", "add"));
+  const [result, setResult] = useState(() => calculateDateOffset(initialBase, 10, "day", "add"));
+  const [displayZone, setDisplayZone] = useState("UTC");
 
   useEffect(() => {
     const current = new Date();
+    setDisplayZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
     setBaseInput(inputDate(current));
     setResult(calculateDateOffset(current, 10, "day", "add"));
   }, []);
@@ -39,7 +46,7 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
     <CalculatorFrame
       result={
         <>
-          <ResultHeading>{format(result, "EEEE, MMMM d, yyyy")}</ResultHeading>
+          <ResultHeading>{formatInTimeZone(result, displayZone, "EEEE, MMMM d, yyyy")}</ResultHeading>
           <p className="mt-4 text-sm text-white/55">
             {operation === "add" ? "Adding" : "Subtracting"} {Math.abs(amount)} {unit}{Math.abs(amount) === 1 ? "" : "s"}.
           </p>
