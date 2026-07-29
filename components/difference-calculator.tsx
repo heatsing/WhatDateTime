@@ -2,7 +2,11 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { addDays } from "date-fns";
-import { calculateDifference, inputDateTime } from "@/lib/calculator";
+import {
+  calculateDifference,
+  inputDateTime,
+  inputDateTimeUTC,
+} from "@/lib/calculator";
 import {
   CalculatorFrame,
   CalculateButton,
@@ -13,9 +17,12 @@ import {
 
 export function DifferenceCalculator({ initialTime }: { initialTime: string }) {
   const now = useMemo(() => new Date(initialTime), [initialTime]);
-  const later = useMemo(() => addDays(now, 7), [now]);
-  const [start, setStart] = useState(inputDateTime(now));
-  const [end, setEnd] = useState(inputDateTime(later));
+  const later = useMemo(
+    () => new Date(now.getTime() + 7 * 86_400_000),
+    [now],
+  );
+  const [start, setStart] = useState(inputDateTimeUTC(now));
+  const [end, setEnd] = useState(inputDateTimeUTC(later));
   const [result, setResult] = useState(() => calculateDifference(now, later));
 
   useEffect(() => {

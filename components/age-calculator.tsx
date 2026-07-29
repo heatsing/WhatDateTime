@@ -2,7 +2,11 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { subYears } from "date-fns";
-import { calculateAge, inputDate } from "@/lib/calculator";
+import {
+  calculateAge,
+  inputDate,
+  inputDateUTC,
+} from "@/lib/calculator";
 import {
   CalculatorFrame,
   CalculateButton,
@@ -12,10 +16,17 @@ import {
 } from "@/components/calculator-ui";
 
 export function AgeCalculator({ initialTime }: { initialTime: string }) {
-  const today = useMemo(() => new Date(initialTime), [initialTime]);
-  const initialBirth = useMemo(() => subYears(today, 25), [today]);
-  const [birth, setBirth] = useState(inputDate(initialBirth));
-  const [asOf, setAsOf] = useState(inputDate(today));
+  const today = useMemo(
+    () => new Date(`${inputDateUTC(new Date(initialTime))}T12:00:00.000Z`),
+    [initialTime],
+  );
+  const initialBirth = useMemo(() => {
+    const birth = new Date(today);
+    birth.setUTCFullYear(birth.getUTCFullYear() - 25);
+    return birth;
+  }, [today]);
+  const [birth, setBirth] = useState(inputDateUTC(initialBirth));
+  const [asOf, setAsOf] = useState(inputDateUTC(today));
   const [result, setResult] = useState(() => calculateAge(initialBirth, today));
 
   useEffect(() => {

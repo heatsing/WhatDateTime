@@ -190,3 +190,11 @@ export function inputDate(date: Date) {
 export function inputDateTime(date: Date) {
   return format(date, "yyyy-MM-dd'T'HH:mm");
 }
+
+export function inputDateUTC(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
+export function inputDateTimeUTC(date: Date) {
+  return date.toISOString().slice(0, 16);
+}
