@@ -1,0 +1,3502 @@
+[
+  {
+    "kind": "difference",
+    "slug": "days-between-january-1-2026-and-january-2-2026",
+    "type": "date-difference",
+    "start": "2026-01-01",
+    "end": "2026-01-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-2-2026-and-january-4-2026",
+    "type": "date-difference",
+    "start": "2026-01-02",
+    "end": "2026-01-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-3-2026-and-january-6-2026",
+    "type": "date-difference",
+    "start": "2026-01-03",
+    "end": "2026-01-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-4-2026-and-january-8-2026",
+    "type": "date-difference",
+    "start": "2026-01-04",
+    "end": "2026-01-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-5-2026-and-january-10-2026",
+    "type": "date-difference",
+    "start": "2026-01-05",
+    "end": "2026-01-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-6-2026-and-january-12-2026",
+    "type": "date-difference",
+    "start": "2026-01-06",
+    "end": "2026-01-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-7-2026-and-january-14-2026",
+    "type": "date-difference",
+    "start": "2026-01-07",
+    "end": "2026-01-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-8-2026-and-january-16-2026",
+    "type": "date-difference",
+    "start": "2026-01-08",
+    "end": "2026-01-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-9-2026-and-january-18-2026",
+    "type": "date-difference",
+    "start": "2026-01-09",
+    "end": "2026-01-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-10-2026-and-january-20-2026",
+    "type": "date-difference",
+    "start": "2026-01-10",
+    "end": "2026-01-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-11-2026-and-january-22-2026",
+    "type": "date-difference",
+    "start": "2026-01-11",
+    "end": "2026-01-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-12-2026-and-january-24-2026",
+    "type": "date-difference",
+    "start": "2026-01-12",
+    "end": "2026-01-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-13-2026-and-january-26-2026",
+    "type": "date-difference",
+    "start": "2026-01-13",
+    "end": "2026-01-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-14-2026-and-january-28-2026",
+    "type": "date-difference",
+    "start": "2026-01-14",
+    "end": "2026-01-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-15-2026-and-january-30-2026",
+    "type": "date-difference",
+    "start": "2026-01-15",
+    "end": "2026-01-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-16-2026-and-february-1-2026",
+    "type": "date-difference",
+    "start": "2026-01-16",
+    "end": "2026-02-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-17-2026-and-february-3-2026",
+    "type": "date-difference",
+    "start": "2026-01-17",
+    "end": "2026-02-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-18-2026-and-february-5-2026",
+    "type": "date-difference",
+    "start": "2026-01-18",
+    "end": "2026-02-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-19-2026-and-february-7-2026",
+    "type": "date-difference",
+    "start": "2026-01-19",
+    "end": "2026-02-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-20-2026-and-february-9-2026",
+    "type": "date-difference",
+    "start": "2026-01-20",
+    "end": "2026-02-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-21-2026-and-february-11-2026",
+    "type": "date-difference",
+    "start": "2026-01-21",
+    "end": "2026-02-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-22-2026-and-february-13-2026",
+    "type": "date-difference",
+    "start": "2026-01-22",
+    "end": "2026-02-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-23-2026-and-february-15-2026",
+    "type": "date-difference",
+    "start": "2026-01-23",
+    "end": "2026-02-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-24-2026-and-february-17-2026",
+    "type": "date-difference",
+    "start": "2026-01-24",
+    "end": "2026-02-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-25-2026-and-february-19-2026",
+    "type": "date-difference",
+    "start": "2026-01-25",
+    "end": "2026-02-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-26-2026-and-february-21-2026",
+    "type": "date-difference",
+    "start": "2026-01-26",
+    "end": "2026-02-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-27-2026-and-february-23-2026",
+    "type": "date-difference",
+    "start": "2026-01-27",
+    "end": "2026-02-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-28-2026-and-february-25-2026",
+    "type": "date-difference",
+    "start": "2026-01-28",
+    "end": "2026-02-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-29-2026-and-february-27-2026",
+    "type": "date-difference",
+    "start": "2026-01-29",
+    "end": "2026-02-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-30-2026-and-march-1-2026",
+    "type": "date-difference",
+    "start": "2026-01-30",
+    "end": "2026-03-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-31-2026-and-march-3-2026",
+    "type": "date-difference",
+    "start": "2026-01-31",
+    "end": "2026-03-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-1-2026-and-march-5-2026",
+    "type": "date-difference",
+    "start": "2026-02-01",
+    "end": "2026-03-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-2-2026-and-march-7-2026",
+    "type": "date-difference",
+    "start": "2026-02-02",
+    "end": "2026-03-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-3-2026-and-march-9-2026",
+    "type": "date-difference",
+    "start": "2026-02-03",
+    "end": "2026-03-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-4-2026-and-march-11-2026",
+    "type": "date-difference",
+    "start": "2026-02-04",
+    "end": "2026-03-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-5-2026-and-march-13-2026",
+    "type": "date-difference",
+    "start": "2026-02-05",
+    "end": "2026-03-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-6-2026-and-march-15-2026",
+    "type": "date-difference",
+    "start": "2026-02-06",
+    "end": "2026-03-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-7-2026-and-march-17-2026",
+    "type": "date-difference",
+    "start": "2026-02-07",
+    "end": "2026-03-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-8-2026-and-march-19-2026",
+    "type": "date-difference",
+    "start": "2026-02-08",
+    "end": "2026-03-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-9-2026-and-march-21-2026",
+    "type": "date-difference",
+    "start": "2026-02-09",
+    "end": "2026-03-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-10-2026-and-march-23-2026",
+    "type": "date-difference",
+    "start": "2026-02-10",
+    "end": "2026-03-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-11-2026-and-march-25-2026",
+    "type": "date-difference",
+    "start": "2026-02-11",
+    "end": "2026-03-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-12-2026-and-march-27-2026",
+    "type": "date-difference",
+    "start": "2026-02-12",
+    "end": "2026-03-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-13-2026-and-march-29-2026",
+    "type": "date-difference",
+    "start": "2026-02-13",
+    "end": "2026-03-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-14-2026-and-march-31-2026",
+    "type": "date-difference",
+    "start": "2026-02-14",
+    "end": "2026-03-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-15-2026-and-april-2-2026",
+    "type": "date-difference",
+    "start": "2026-02-15",
+    "end": "2026-04-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-16-2026-and-april-4-2026",
+    "type": "date-difference",
+    "start": "2026-02-16",
+    "end": "2026-04-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-17-2026-and-april-6-2026",
+    "type": "date-difference",
+    "start": "2026-02-17",
+    "end": "2026-04-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-18-2026-and-april-8-2026",
+    "type": "date-difference",
+    "start": "2026-02-18",
+    "end": "2026-04-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-19-2026-and-april-10-2026",
+    "type": "date-difference",
+    "start": "2026-02-19",
+    "end": "2026-04-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-20-2026-and-april-12-2026",
+    "type": "date-difference",
+    "start": "2026-02-20",
+    "end": "2026-04-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-21-2026-and-april-14-2026",
+    "type": "date-difference",
+    "start": "2026-02-21",
+    "end": "2026-04-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-22-2026-and-april-16-2026",
+    "type": "date-difference",
+    "start": "2026-02-22",
+    "end": "2026-04-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-23-2026-and-april-18-2026",
+    "type": "date-difference",
+    "start": "2026-02-23",
+    "end": "2026-04-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-24-2026-and-april-20-2026",
+    "type": "date-difference",
+    "start": "2026-02-24",
+    "end": "2026-04-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-25-2026-and-april-22-2026",
+    "type": "date-difference",
+    "start": "2026-02-25",
+    "end": "2026-04-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-26-2026-and-april-24-2026",
+    "type": "date-difference",
+    "start": "2026-02-26",
+    "end": "2026-04-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-27-2026-and-april-26-2026",
+    "type": "date-difference",
+    "start": "2026-02-27",
+    "end": "2026-04-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-28-2026-and-april-28-2026",
+    "type": "date-difference",
+    "start": "2026-02-28",
+    "end": "2026-04-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-1-2026-and-april-30-2026",
+    "type": "date-difference",
+    "start": "2026-03-01",
+    "end": "2026-04-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-2-2026-and-may-2-2026",
+    "type": "date-difference",
+    "start": "2026-03-02",
+    "end": "2026-05-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-3-2026-and-may-4-2026",
+    "type": "date-difference",
+    "start": "2026-03-03",
+    "end": "2026-05-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-4-2026-and-may-6-2026",
+    "type": "date-difference",
+    "start": "2026-03-04",
+    "end": "2026-05-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-5-2026-and-may-8-2026",
+    "type": "date-difference",
+    "start": "2026-03-05",
+    "end": "2026-05-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-6-2026-and-may-10-2026",
+    "type": "date-difference",
+    "start": "2026-03-06",
+    "end": "2026-05-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-7-2026-and-may-12-2026",
+    "type": "date-difference",
+    "start": "2026-03-07",
+    "end": "2026-05-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-8-2026-and-may-14-2026",
+    "type": "date-difference",
+    "start": "2026-03-08",
+    "end": "2026-05-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-9-2026-and-may-16-2026",
+    "type": "date-difference",
+    "start": "2026-03-09",
+    "end": "2026-05-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-10-2026-and-may-18-2026",
+    "type": "date-difference",
+    "start": "2026-03-10",
+    "end": "2026-05-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-11-2026-and-may-20-2026",
+    "type": "date-difference",
+    "start": "2026-03-11",
+    "end": "2026-05-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-12-2026-and-may-22-2026",
+    "type": "date-difference",
+    "start": "2026-03-12",
+    "end": "2026-05-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-13-2026-and-may-24-2026",
+    "type": "date-difference",
+    "start": "2026-03-13",
+    "end": "2026-05-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-14-2026-and-may-26-2026",
+    "type": "date-difference",
+    "start": "2026-03-14",
+    "end": "2026-05-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-15-2026-and-may-28-2026",
+    "type": "date-difference",
+    "start": "2026-03-15",
+    "end": "2026-05-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-16-2026-and-may-30-2026",
+    "type": "date-difference",
+    "start": "2026-03-16",
+    "end": "2026-05-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-17-2026-and-june-1-2026",
+    "type": "date-difference",
+    "start": "2026-03-17",
+    "end": "2026-06-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-18-2026-and-june-3-2026",
+    "type": "date-difference",
+    "start": "2026-03-18",
+    "end": "2026-06-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-19-2026-and-june-5-2026",
+    "type": "date-difference",
+    "start": "2026-03-19",
+    "end": "2026-06-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-20-2026-and-june-7-2026",
+    "type": "date-difference",
+    "start": "2026-03-20",
+    "end": "2026-06-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-21-2026-and-june-9-2026",
+    "type": "date-difference",
+    "start": "2026-03-21",
+    "end": "2026-06-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-22-2026-and-june-11-2026",
+    "type": "date-difference",
+    "start": "2026-03-22",
+    "end": "2026-06-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-23-2026-and-june-13-2026",
+    "type": "date-difference",
+    "start": "2026-03-23",
+    "end": "2026-06-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-24-2026-and-june-15-2026",
+    "type": "date-difference",
+    "start": "2026-03-24",
+    "end": "2026-06-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-25-2026-and-june-17-2026",
+    "type": "date-difference",
+    "start": "2026-03-25",
+    "end": "2026-06-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-26-2026-and-june-19-2026",
+    "type": "date-difference",
+    "start": "2026-03-26",
+    "end": "2026-06-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-27-2026-and-june-21-2026",
+    "type": "date-difference",
+    "start": "2026-03-27",
+    "end": "2026-06-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-28-2026-and-june-23-2026",
+    "type": "date-difference",
+    "start": "2026-03-28",
+    "end": "2026-06-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-29-2026-and-june-25-2026",
+    "type": "date-difference",
+    "start": "2026-03-29",
+    "end": "2026-06-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-30-2026-and-june-27-2026",
+    "type": "date-difference",
+    "start": "2026-03-30",
+    "end": "2026-06-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-31-2026-and-june-29-2026",
+    "type": "date-difference",
+    "start": "2026-03-31",
+    "end": "2026-06-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-1-2026-and-july-1-2026",
+    "type": "date-difference",
+    "start": "2026-04-01",
+    "end": "2026-07-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-2-2026-and-july-3-2026",
+    "type": "date-difference",
+    "start": "2026-04-02",
+    "end": "2026-07-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-3-2026-and-july-5-2026",
+    "type": "date-difference",
+    "start": "2026-04-03",
+    "end": "2026-07-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-4-2026-and-july-7-2026",
+    "type": "date-difference",
+    "start": "2026-04-04",
+    "end": "2026-07-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-5-2026-and-july-9-2026",
+    "type": "date-difference",
+    "start": "2026-04-05",
+    "end": "2026-07-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-6-2026-and-july-11-2026",
+    "type": "date-difference",
+    "start": "2026-04-06",
+    "end": "2026-07-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-7-2026-and-july-13-2026",
+    "type": "date-difference",
+    "start": "2026-04-07",
+    "end": "2026-07-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-8-2026-and-july-15-2026",
+    "type": "date-difference",
+    "start": "2026-04-08",
+    "end": "2026-07-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-9-2026-and-july-17-2026",
+    "type": "date-difference",
+    "start": "2026-04-09",
+    "end": "2026-07-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-10-2026-and-july-19-2026",
+    "type": "date-difference",
+    "start": "2026-04-10",
+    "end": "2026-07-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-11-2026-and-july-21-2026",
+    "type": "date-difference",
+    "start": "2026-04-11",
+    "end": "2026-07-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-12-2026-and-july-23-2026",
+    "type": "date-difference",
+    "start": "2026-04-12",
+    "end": "2026-07-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-13-2026-and-july-25-2026",
+    "type": "date-difference",
+    "start": "2026-04-13",
+    "end": "2026-07-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-14-2026-and-july-27-2026",
+    "type": "date-difference",
+    "start": "2026-04-14",
+    "end": "2026-07-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-15-2026-and-july-29-2026",
+    "type": "date-difference",
+    "start": "2026-04-15",
+    "end": "2026-07-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-16-2026-and-july-31-2026",
+    "type": "date-difference",
+    "start": "2026-04-16",
+    "end": "2026-07-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-17-2026-and-august-2-2026",
+    "type": "date-difference",
+    "start": "2026-04-17",
+    "end": "2026-08-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-18-2026-and-august-4-2026",
+    "type": "date-difference",
+    "start": "2026-04-18",
+    "end": "2026-08-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-19-2026-and-august-6-2026",
+    "type": "date-difference",
+    "start": "2026-04-19",
+    "end": "2026-08-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-20-2026-and-august-8-2026",
+    "type": "date-difference",
+    "start": "2026-04-20",
+    "end": "2026-08-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-21-2026-and-august-10-2026",
+    "type": "date-difference",
+    "start": "2026-04-21",
+    "end": "2026-08-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-22-2026-and-august-12-2026",
+    "type": "date-difference",
+    "start": "2026-04-22",
+    "end": "2026-08-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-23-2026-and-august-14-2026",
+    "type": "date-difference",
+    "start": "2026-04-23",
+    "end": "2026-08-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-24-2026-and-august-16-2026",
+    "type": "date-difference",
+    "start": "2026-04-24",
+    "end": "2026-08-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-25-2026-and-august-18-2026",
+    "type": "date-difference",
+    "start": "2026-04-25",
+    "end": "2026-08-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-26-2026-and-august-20-2026",
+    "type": "date-difference",
+    "start": "2026-04-26",
+    "end": "2026-08-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-27-2026-and-august-22-2026",
+    "type": "date-difference",
+    "start": "2026-04-27",
+    "end": "2026-08-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-28-2026-and-august-24-2026",
+    "type": "date-difference",
+    "start": "2026-04-28",
+    "end": "2026-08-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-29-2026-and-august-26-2026",
+    "type": "date-difference",
+    "start": "2026-04-29",
+    "end": "2026-08-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-30-2026-and-august-28-2026",
+    "type": "date-difference",
+    "start": "2026-04-30",
+    "end": "2026-08-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-1-2026-and-august-30-2026",
+    "type": "date-difference",
+    "start": "2026-05-01",
+    "end": "2026-08-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-2-2026-and-september-1-2026",
+    "type": "date-difference",
+    "start": "2026-05-02",
+    "end": "2026-09-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-3-2026-and-september-3-2026",
+    "type": "date-difference",
+    "start": "2026-05-03",
+    "end": "2026-09-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-4-2026-and-september-5-2026",
+    "type": "date-difference",
+    "start": "2026-05-04",
+    "end": "2026-09-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-5-2026-and-september-7-2026",
+    "type": "date-difference",
+    "start": "2026-05-05",
+    "end": "2026-09-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-6-2026-and-september-9-2026",
+    "type": "date-difference",
+    "start": "2026-05-06",
+    "end": "2026-09-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-7-2026-and-september-11-2026",
+    "type": "date-difference",
+    "start": "2026-05-07",
+    "end": "2026-09-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-8-2026-and-september-13-2026",
+    "type": "date-difference",
+    "start": "2026-05-08",
+    "end": "2026-09-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-9-2026-and-september-15-2026",
+    "type": "date-difference",
+    "start": "2026-05-09",
+    "end": "2026-09-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-10-2026-and-september-17-2026",
+    "type": "date-difference",
+    "start": "2026-05-10",
+    "end": "2026-09-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-11-2026-and-september-19-2026",
+    "type": "date-difference",
+    "start": "2026-05-11",
+    "end": "2026-09-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-12-2026-and-september-21-2026",
+    "type": "date-difference",
+    "start": "2026-05-12",
+    "end": "2026-09-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-13-2026-and-september-23-2026",
+    "type": "date-difference",
+    "start": "2026-05-13",
+    "end": "2026-09-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-14-2026-and-september-25-2026",
+    "type": "date-difference",
+    "start": "2026-05-14",
+    "end": "2026-09-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-15-2026-and-september-27-2026",
+    "type": "date-difference",
+    "start": "2026-05-15",
+    "end": "2026-09-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-16-2026-and-september-29-2026",
+    "type": "date-difference",
+    "start": "2026-05-16",
+    "end": "2026-09-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-17-2026-and-october-1-2026",
+    "type": "date-difference",
+    "start": "2026-05-17",
+    "end": "2026-10-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-18-2026-and-october-3-2026",
+    "type": "date-difference",
+    "start": "2026-05-18",
+    "end": "2026-10-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-19-2026-and-october-5-2026",
+    "type": "date-difference",
+    "start": "2026-05-19",
+    "end": "2026-10-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-20-2026-and-october-7-2026",
+    "type": "date-difference",
+    "start": "2026-05-20",
+    "end": "2026-10-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-21-2026-and-october-9-2026",
+    "type": "date-difference",
+    "start": "2026-05-21",
+    "end": "2026-10-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-22-2026-and-october-11-2026",
+    "type": "date-difference",
+    "start": "2026-05-22",
+    "end": "2026-10-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-23-2026-and-october-13-2026",
+    "type": "date-difference",
+    "start": "2026-05-23",
+    "end": "2026-10-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-24-2026-and-october-15-2026",
+    "type": "date-difference",
+    "start": "2026-05-24",
+    "end": "2026-10-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-25-2026-and-october-17-2026",
+    "type": "date-difference",
+    "start": "2026-05-25",
+    "end": "2026-10-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-26-2026-and-october-19-2026",
+    "type": "date-difference",
+    "start": "2026-05-26",
+    "end": "2026-10-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-27-2026-and-october-21-2026",
+    "type": "date-difference",
+    "start": "2026-05-27",
+    "end": "2026-10-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-28-2026-and-october-23-2026",
+    "type": "date-difference",
+    "start": "2026-05-28",
+    "end": "2026-10-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-29-2026-and-october-25-2026",
+    "type": "date-difference",
+    "start": "2026-05-29",
+    "end": "2026-10-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-30-2026-and-october-27-2026",
+    "type": "date-difference",
+    "start": "2026-05-30",
+    "end": "2026-10-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-31-2026-and-october-29-2026",
+    "type": "date-difference",
+    "start": "2026-05-31",
+    "end": "2026-10-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-1-2026-and-october-31-2026",
+    "type": "date-difference",
+    "start": "2026-06-01",
+    "end": "2026-10-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-2-2026-and-november-2-2026",
+    "type": "date-difference",
+    "start": "2026-06-02",
+    "end": "2026-11-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-3-2026-and-november-4-2026",
+    "type": "date-difference",
+    "start": "2026-06-03",
+    "end": "2026-11-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-4-2026-and-november-6-2026",
+    "type": "date-difference",
+    "start": "2026-06-04",
+    "end": "2026-11-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-5-2026-and-november-8-2026",
+    "type": "date-difference",
+    "start": "2026-06-05",
+    "end": "2026-11-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-6-2026-and-november-10-2026",
+    "type": "date-difference",
+    "start": "2026-06-06",
+    "end": "2026-11-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-7-2026-and-november-12-2026",
+    "type": "date-difference",
+    "start": "2026-06-07",
+    "end": "2026-11-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-8-2026-and-november-14-2026",
+    "type": "date-difference",
+    "start": "2026-06-08",
+    "end": "2026-11-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-9-2026-and-november-16-2026",
+    "type": "date-difference",
+    "start": "2026-06-09",
+    "end": "2026-11-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-10-2026-and-november-18-2026",
+    "type": "date-difference",
+    "start": "2026-06-10",
+    "end": "2026-11-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-11-2026-and-november-20-2026",
+    "type": "date-difference",
+    "start": "2026-06-11",
+    "end": "2026-11-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-12-2026-and-november-22-2026",
+    "type": "date-difference",
+    "start": "2026-06-12",
+    "end": "2026-11-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-13-2026-and-november-24-2026",
+    "type": "date-difference",
+    "start": "2026-06-13",
+    "end": "2026-11-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-14-2026-and-november-26-2026",
+    "type": "date-difference",
+    "start": "2026-06-14",
+    "end": "2026-11-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-15-2026-and-november-28-2026",
+    "type": "date-difference",
+    "start": "2026-06-15",
+    "end": "2026-11-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-16-2026-and-november-30-2026",
+    "type": "date-difference",
+    "start": "2026-06-16",
+    "end": "2026-11-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-17-2026-and-december-2-2026",
+    "type": "date-difference",
+    "start": "2026-06-17",
+    "end": "2026-12-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-18-2026-and-december-4-2026",
+    "type": "date-difference",
+    "start": "2026-06-18",
+    "end": "2026-12-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-19-2026-and-december-6-2026",
+    "type": "date-difference",
+    "start": "2026-06-19",
+    "end": "2026-12-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-20-2026-and-december-8-2026",
+    "type": "date-difference",
+    "start": "2026-06-20",
+    "end": "2026-12-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-21-2026-and-december-10-2026",
+    "type": "date-difference",
+    "start": "2026-06-21",
+    "end": "2026-12-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-22-2026-and-december-12-2026",
+    "type": "date-difference",
+    "start": "2026-06-22",
+    "end": "2026-12-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-23-2026-and-december-14-2026",
+    "type": "date-difference",
+    "start": "2026-06-23",
+    "end": "2026-12-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-24-2026-and-december-16-2026",
+    "type": "date-difference",
+    "start": "2026-06-24",
+    "end": "2026-12-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-25-2026-and-december-18-2026",
+    "type": "date-difference",
+    "start": "2026-06-25",
+    "end": "2026-12-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-26-2026-and-december-20-2026",
+    "type": "date-difference",
+    "start": "2026-06-26",
+    "end": "2026-12-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-27-2026-and-december-22-2026",
+    "type": "date-difference",
+    "start": "2026-06-27",
+    "end": "2026-12-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-28-2026-and-december-24-2026",
+    "type": "date-difference",
+    "start": "2026-06-28",
+    "end": "2026-12-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-29-2026-and-december-26-2026",
+    "type": "date-difference",
+    "start": "2026-06-29",
+    "end": "2026-12-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-june-30-2026-and-july-1-2026",
+    "type": "date-difference",
+    "start": "2026-06-30",
+    "end": "2026-07-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-1-2026-and-july-3-2026",
+    "type": "date-difference",
+    "start": "2026-07-01",
+    "end": "2026-07-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-2-2026-and-july-5-2026",
+    "type": "date-difference",
+    "start": "2026-07-02",
+    "end": "2026-07-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-3-2026-and-july-7-2026",
+    "type": "date-difference",
+    "start": "2026-07-03",
+    "end": "2026-07-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-4-2026-and-july-9-2026",
+    "type": "date-difference",
+    "start": "2026-07-04",
+    "end": "2026-07-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-5-2026-and-july-11-2026",
+    "type": "date-difference",
+    "start": "2026-07-05",
+    "end": "2026-07-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-6-2026-and-july-13-2026",
+    "type": "date-difference",
+    "start": "2026-07-06",
+    "end": "2026-07-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-7-2026-and-july-15-2026",
+    "type": "date-difference",
+    "start": "2026-07-07",
+    "end": "2026-07-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-8-2026-and-july-17-2026",
+    "type": "date-difference",
+    "start": "2026-07-08",
+    "end": "2026-07-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-9-2026-and-july-19-2026",
+    "type": "date-difference",
+    "start": "2026-07-09",
+    "end": "2026-07-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-10-2026-and-july-21-2026",
+    "type": "date-difference",
+    "start": "2026-07-10",
+    "end": "2026-07-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-11-2026-and-july-23-2026",
+    "type": "date-difference",
+    "start": "2026-07-11",
+    "end": "2026-07-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-12-2026-and-july-25-2026",
+    "type": "date-difference",
+    "start": "2026-07-12",
+    "end": "2026-07-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-13-2026-and-july-27-2026",
+    "type": "date-difference",
+    "start": "2026-07-13",
+    "end": "2026-07-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-14-2026-and-july-29-2026",
+    "type": "date-difference",
+    "start": "2026-07-14",
+    "end": "2026-07-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-15-2026-and-july-31-2026",
+    "type": "date-difference",
+    "start": "2026-07-15",
+    "end": "2026-07-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-16-2026-and-august-2-2026",
+    "type": "date-difference",
+    "start": "2026-07-16",
+    "end": "2026-08-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-17-2026-and-august-4-2026",
+    "type": "date-difference",
+    "start": "2026-07-17",
+    "end": "2026-08-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-18-2026-and-august-6-2026",
+    "type": "date-difference",
+    "start": "2026-07-18",
+    "end": "2026-08-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-19-2026-and-august-8-2026",
+    "type": "date-difference",
+    "start": "2026-07-19",
+    "end": "2026-08-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-20-2026-and-august-10-2026",
+    "type": "date-difference",
+    "start": "2026-07-20",
+    "end": "2026-08-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-21-2026-and-august-12-2026",
+    "type": "date-difference",
+    "start": "2026-07-21",
+    "end": "2026-08-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-22-2026-and-august-14-2026",
+    "type": "date-difference",
+    "start": "2026-07-22",
+    "end": "2026-08-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-23-2026-and-august-16-2026",
+    "type": "date-difference",
+    "start": "2026-07-23",
+    "end": "2026-08-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-24-2026-and-august-18-2026",
+    "type": "date-difference",
+    "start": "2026-07-24",
+    "end": "2026-08-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-25-2026-and-august-20-2026",
+    "type": "date-difference",
+    "start": "2026-07-25",
+    "end": "2026-08-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-26-2026-and-august-22-2026",
+    "type": "date-difference",
+    "start": "2026-07-26",
+    "end": "2026-08-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-27-2026-and-august-24-2026",
+    "type": "date-difference",
+    "start": "2026-07-27",
+    "end": "2026-08-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-28-2026-and-august-26-2026",
+    "type": "date-difference",
+    "start": "2026-07-28",
+    "end": "2026-08-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-29-2026-and-august-28-2026",
+    "type": "date-difference",
+    "start": "2026-07-29",
+    "end": "2026-08-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-30-2026-and-august-30-2026",
+    "type": "date-difference",
+    "start": "2026-07-30",
+    "end": "2026-08-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-july-31-2026-and-september-1-2026",
+    "type": "date-difference",
+    "start": "2026-07-31",
+    "end": "2026-09-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-1-2026-and-september-3-2026",
+    "type": "date-difference",
+    "start": "2026-08-01",
+    "end": "2026-09-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-2-2026-and-september-5-2026",
+    "type": "date-difference",
+    "start": "2026-08-02",
+    "end": "2026-09-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-3-2026-and-september-7-2026",
+    "type": "date-difference",
+    "start": "2026-08-03",
+    "end": "2026-09-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-4-2026-and-september-9-2026",
+    "type": "date-difference",
+    "start": "2026-08-04",
+    "end": "2026-09-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-5-2026-and-september-11-2026",
+    "type": "date-difference",
+    "start": "2026-08-05",
+    "end": "2026-09-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-6-2026-and-september-13-2026",
+    "type": "date-difference",
+    "start": "2026-08-06",
+    "end": "2026-09-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-7-2026-and-september-15-2026",
+    "type": "date-difference",
+    "start": "2026-08-07",
+    "end": "2026-09-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-8-2026-and-september-17-2026",
+    "type": "date-difference",
+    "start": "2026-08-08",
+    "end": "2026-09-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-9-2026-and-september-19-2026",
+    "type": "date-difference",
+    "start": "2026-08-09",
+    "end": "2026-09-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-10-2026-and-september-21-2026",
+    "type": "date-difference",
+    "start": "2026-08-10",
+    "end": "2026-09-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-11-2026-and-september-23-2026",
+    "type": "date-difference",
+    "start": "2026-08-11",
+    "end": "2026-09-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-12-2026-and-september-25-2026",
+    "type": "date-difference",
+    "start": "2026-08-12",
+    "end": "2026-09-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-13-2026-and-september-27-2026",
+    "type": "date-difference",
+    "start": "2026-08-13",
+    "end": "2026-09-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-14-2026-and-september-29-2026",
+    "type": "date-difference",
+    "start": "2026-08-14",
+    "end": "2026-09-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-15-2026-and-october-1-2026",
+    "type": "date-difference",
+    "start": "2026-08-15",
+    "end": "2026-10-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-16-2026-and-october-3-2026",
+    "type": "date-difference",
+    "start": "2026-08-16",
+    "end": "2026-10-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-17-2026-and-october-5-2026",
+    "type": "date-difference",
+    "start": "2026-08-17",
+    "end": "2026-10-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-18-2026-and-october-7-2026",
+    "type": "date-difference",
+    "start": "2026-08-18",
+    "end": "2026-10-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-19-2026-and-october-9-2026",
+    "type": "date-difference",
+    "start": "2026-08-19",
+    "end": "2026-10-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-20-2026-and-october-11-2026",
+    "type": "date-difference",
+    "start": "2026-08-20",
+    "end": "2026-10-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-21-2026-and-october-13-2026",
+    "type": "date-difference",
+    "start": "2026-08-21",
+    "end": "2026-10-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-22-2026-and-october-15-2026",
+    "type": "date-difference",
+    "start": "2026-08-22",
+    "end": "2026-10-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-23-2026-and-october-17-2026",
+    "type": "date-difference",
+    "start": "2026-08-23",
+    "end": "2026-10-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-24-2026-and-october-19-2026",
+    "type": "date-difference",
+    "start": "2026-08-24",
+    "end": "2026-10-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-25-2026-and-october-21-2026",
+    "type": "date-difference",
+    "start": "2026-08-25",
+    "end": "2026-10-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-26-2026-and-october-23-2026",
+    "type": "date-difference",
+    "start": "2026-08-26",
+    "end": "2026-10-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-27-2026-and-october-25-2026",
+    "type": "date-difference",
+    "start": "2026-08-27",
+    "end": "2026-10-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-28-2026-and-october-27-2026",
+    "type": "date-difference",
+    "start": "2026-08-28",
+    "end": "2026-10-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-29-2026-and-october-29-2026",
+    "type": "date-difference",
+    "start": "2026-08-29",
+    "end": "2026-10-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-30-2026-and-october-31-2026",
+    "type": "date-difference",
+    "start": "2026-08-30",
+    "end": "2026-10-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-august-31-2026-and-november-2-2026",
+    "type": "date-difference",
+    "start": "2026-08-31",
+    "end": "2026-11-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-1-2026-and-november-4-2026",
+    "type": "date-difference",
+    "start": "2026-09-01",
+    "end": "2026-11-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-2-2026-and-november-6-2026",
+    "type": "date-difference",
+    "start": "2026-09-02",
+    "end": "2026-11-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-3-2026-and-november-8-2026",
+    "type": "date-difference",
+    "start": "2026-09-03",
+    "end": "2026-11-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-4-2026-and-november-10-2026",
+    "type": "date-difference",
+    "start": "2026-09-04",
+    "end": "2026-11-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-5-2026-and-november-12-2026",
+    "type": "date-difference",
+    "start": "2026-09-05",
+    "end": "2026-11-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-6-2026-and-november-14-2026",
+    "type": "date-difference",
+    "start": "2026-09-06",
+    "end": "2026-11-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-7-2026-and-november-16-2026",
+    "type": "date-difference",
+    "start": "2026-09-07",
+    "end": "2026-11-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-8-2026-and-november-18-2026",
+    "type": "date-difference",
+    "start": "2026-09-08",
+    "end": "2026-11-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-9-2026-and-november-20-2026",
+    "type": "date-difference",
+    "start": "2026-09-09",
+    "end": "2026-11-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-10-2026-and-november-22-2026",
+    "type": "date-difference",
+    "start": "2026-09-10",
+    "end": "2026-11-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-11-2026-and-november-24-2026",
+    "type": "date-difference",
+    "start": "2026-09-11",
+    "end": "2026-11-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-12-2026-and-november-26-2026",
+    "type": "date-difference",
+    "start": "2026-09-12",
+    "end": "2026-11-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-13-2026-and-november-28-2026",
+    "type": "date-difference",
+    "start": "2026-09-13",
+    "end": "2026-11-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-14-2026-and-november-30-2026",
+    "type": "date-difference",
+    "start": "2026-09-14",
+    "end": "2026-11-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-15-2026-and-december-2-2026",
+    "type": "date-difference",
+    "start": "2026-09-15",
+    "end": "2026-12-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-16-2026-and-december-4-2026",
+    "type": "date-difference",
+    "start": "2026-09-16",
+    "end": "2026-12-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-17-2026-and-december-6-2026",
+    "type": "date-difference",
+    "start": "2026-09-17",
+    "end": "2026-12-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-18-2026-and-december-8-2026",
+    "type": "date-difference",
+    "start": "2026-09-18",
+    "end": "2026-12-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-19-2026-and-december-10-2026",
+    "type": "date-difference",
+    "start": "2026-09-19",
+    "end": "2026-12-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-20-2026-and-december-12-2026",
+    "type": "date-difference",
+    "start": "2026-09-20",
+    "end": "2026-12-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-21-2026-and-december-14-2026",
+    "type": "date-difference",
+    "start": "2026-09-21",
+    "end": "2026-12-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-22-2026-and-december-16-2026",
+    "type": "date-difference",
+    "start": "2026-09-22",
+    "end": "2026-12-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-23-2026-and-december-18-2026",
+    "type": "date-difference",
+    "start": "2026-09-23",
+    "end": "2026-12-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-24-2026-and-december-20-2026",
+    "type": "date-difference",
+    "start": "2026-09-24",
+    "end": "2026-12-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-25-2026-and-december-22-2026",
+    "type": "date-difference",
+    "start": "2026-09-25",
+    "end": "2026-12-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-26-2026-and-december-24-2026",
+    "type": "date-difference",
+    "start": "2026-09-26",
+    "end": "2026-12-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-27-2026-and-december-26-2026",
+    "type": "date-difference",
+    "start": "2026-09-27",
+    "end": "2026-12-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-28-2026-and-december-28-2026",
+    "type": "date-difference",
+    "start": "2026-09-28",
+    "end": "2026-12-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-29-2026-and-december-30-2026",
+    "type": "date-difference",
+    "start": "2026-09-29",
+    "end": "2026-12-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-september-30-2026-and-january-1-2027",
+    "type": "date-difference",
+    "start": "2026-09-30",
+    "end": "2027-01-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-1-2026-and-january-3-2027",
+    "type": "date-difference",
+    "start": "2026-10-01",
+    "end": "2027-01-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-2-2026-and-january-5-2027",
+    "type": "date-difference",
+    "start": "2026-10-02",
+    "end": "2027-01-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-3-2026-and-january-7-2027",
+    "type": "date-difference",
+    "start": "2026-10-03",
+    "end": "2027-01-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-4-2026-and-january-9-2027",
+    "type": "date-difference",
+    "start": "2026-10-04",
+    "end": "2027-01-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-5-2026-and-january-11-2027",
+    "type": "date-difference",
+    "start": "2026-10-05",
+    "end": "2027-01-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-6-2026-and-january-13-2027",
+    "type": "date-difference",
+    "start": "2026-10-06",
+    "end": "2027-01-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-7-2026-and-january-15-2027",
+    "type": "date-difference",
+    "start": "2026-10-07",
+    "end": "2027-01-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-8-2026-and-january-17-2027",
+    "type": "date-difference",
+    "start": "2026-10-08",
+    "end": "2027-01-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-9-2026-and-january-19-2027",
+    "type": "date-difference",
+    "start": "2026-10-09",
+    "end": "2027-01-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-10-2026-and-january-21-2027",
+    "type": "date-difference",
+    "start": "2026-10-10",
+    "end": "2027-01-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-11-2026-and-january-23-2027",
+    "type": "date-difference",
+    "start": "2026-10-11",
+    "end": "2027-01-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-12-2026-and-january-25-2027",
+    "type": "date-difference",
+    "start": "2026-10-12",
+    "end": "2027-01-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-13-2026-and-january-27-2027",
+    "type": "date-difference",
+    "start": "2026-10-13",
+    "end": "2027-01-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-14-2026-and-january-29-2027",
+    "type": "date-difference",
+    "start": "2026-10-14",
+    "end": "2027-01-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-15-2026-and-january-31-2027",
+    "type": "date-difference",
+    "start": "2026-10-15",
+    "end": "2027-01-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-16-2026-and-february-2-2027",
+    "type": "date-difference",
+    "start": "2026-10-16",
+    "end": "2027-02-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-17-2026-and-february-4-2027",
+    "type": "date-difference",
+    "start": "2026-10-17",
+    "end": "2027-02-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-18-2026-and-february-6-2027",
+    "type": "date-difference",
+    "start": "2026-10-18",
+    "end": "2027-02-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-19-2026-and-february-8-2027",
+    "type": "date-difference",
+    "start": "2026-10-19",
+    "end": "2027-02-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-20-2026-and-february-10-2027",
+    "type": "date-difference",
+    "start": "2026-10-20",
+    "end": "2027-02-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-21-2026-and-february-12-2027",
+    "type": "date-difference",
+    "start": "2026-10-21",
+    "end": "2027-02-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-22-2026-and-february-14-2027",
+    "type": "date-difference",
+    "start": "2026-10-22",
+    "end": "2027-02-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-23-2026-and-february-16-2027",
+    "type": "date-difference",
+    "start": "2026-10-23",
+    "end": "2027-02-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-24-2026-and-february-18-2027",
+    "type": "date-difference",
+    "start": "2026-10-24",
+    "end": "2027-02-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-25-2026-and-february-20-2027",
+    "type": "date-difference",
+    "start": "2026-10-25",
+    "end": "2027-02-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-26-2026-and-february-22-2027",
+    "type": "date-difference",
+    "start": "2026-10-26",
+    "end": "2027-02-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-27-2026-and-february-24-2027",
+    "type": "date-difference",
+    "start": "2026-10-27",
+    "end": "2027-02-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-28-2026-and-february-26-2027",
+    "type": "date-difference",
+    "start": "2026-10-28",
+    "end": "2027-02-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-29-2026-and-february-28-2027",
+    "type": "date-difference",
+    "start": "2026-10-29",
+    "end": "2027-02-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-30-2026-and-march-2-2027",
+    "type": "date-difference",
+    "start": "2026-10-30",
+    "end": "2027-03-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-october-31-2026-and-march-4-2027",
+    "type": "date-difference",
+    "start": "2026-10-31",
+    "end": "2027-03-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-1-2026-and-march-6-2027",
+    "type": "date-difference",
+    "start": "2026-11-01",
+    "end": "2027-03-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-2-2026-and-march-8-2027",
+    "type": "date-difference",
+    "start": "2026-11-02",
+    "end": "2027-03-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-3-2026-and-march-10-2027",
+    "type": "date-difference",
+    "start": "2026-11-03",
+    "end": "2027-03-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-4-2026-and-march-12-2027",
+    "type": "date-difference",
+    "start": "2026-11-04",
+    "end": "2027-03-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-5-2026-and-march-14-2027",
+    "type": "date-difference",
+    "start": "2026-11-05",
+    "end": "2027-03-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-6-2026-and-march-16-2027",
+    "type": "date-difference",
+    "start": "2026-11-06",
+    "end": "2027-03-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-7-2026-and-march-18-2027",
+    "type": "date-difference",
+    "start": "2026-11-07",
+    "end": "2027-03-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-8-2026-and-march-20-2027",
+    "type": "date-difference",
+    "start": "2026-11-08",
+    "end": "2027-03-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-9-2026-and-march-22-2027",
+    "type": "date-difference",
+    "start": "2026-11-09",
+    "end": "2027-03-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-10-2026-and-march-24-2027",
+    "type": "date-difference",
+    "start": "2026-11-10",
+    "end": "2027-03-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-11-2026-and-march-26-2027",
+    "type": "date-difference",
+    "start": "2026-11-11",
+    "end": "2027-03-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-12-2026-and-march-28-2027",
+    "type": "date-difference",
+    "start": "2026-11-12",
+    "end": "2027-03-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-13-2026-and-march-30-2027",
+    "type": "date-difference",
+    "start": "2026-11-13",
+    "end": "2027-03-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-14-2026-and-april-1-2027",
+    "type": "date-difference",
+    "start": "2026-11-14",
+    "end": "2027-04-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-15-2026-and-april-3-2027",
+    "type": "date-difference",
+    "start": "2026-11-15",
+    "end": "2027-04-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-16-2026-and-april-5-2027",
+    "type": "date-difference",
+    "start": "2026-11-16",
+    "end": "2027-04-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-17-2026-and-april-7-2027",
+    "type": "date-difference",
+    "start": "2026-11-17",
+    "end": "2027-04-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-18-2026-and-april-9-2027",
+    "type": "date-difference",
+    "start": "2026-11-18",
+    "end": "2027-04-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-19-2026-and-april-11-2027",
+    "type": "date-difference",
+    "start": "2026-11-19",
+    "end": "2027-04-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-20-2026-and-april-13-2027",
+    "type": "date-difference",
+    "start": "2026-11-20",
+    "end": "2027-04-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-21-2026-and-april-15-2027",
+    "type": "date-difference",
+    "start": "2026-11-21",
+    "end": "2027-04-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-22-2026-and-april-17-2027",
+    "type": "date-difference",
+    "start": "2026-11-22",
+    "end": "2027-04-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-23-2026-and-april-19-2027",
+    "type": "date-difference",
+    "start": "2026-11-23",
+    "end": "2027-04-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-24-2026-and-april-21-2027",
+    "type": "date-difference",
+    "start": "2026-11-24",
+    "end": "2027-04-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-25-2026-and-april-23-2027",
+    "type": "date-difference",
+    "start": "2026-11-25",
+    "end": "2027-04-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-26-2026-and-april-25-2027",
+    "type": "date-difference",
+    "start": "2026-11-26",
+    "end": "2027-04-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-27-2026-and-april-27-2027",
+    "type": "date-difference",
+    "start": "2026-11-27",
+    "end": "2027-04-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-28-2026-and-april-29-2027",
+    "type": "date-difference",
+    "start": "2026-11-28",
+    "end": "2027-04-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-29-2026-and-may-1-2027",
+    "type": "date-difference",
+    "start": "2026-11-29",
+    "end": "2027-05-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-november-30-2026-and-may-3-2027",
+    "type": "date-difference",
+    "start": "2026-11-30",
+    "end": "2027-05-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-1-2026-and-may-5-2027",
+    "type": "date-difference",
+    "start": "2026-12-01",
+    "end": "2027-05-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-2-2026-and-may-7-2027",
+    "type": "date-difference",
+    "start": "2026-12-02",
+    "end": "2027-05-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-3-2026-and-may-9-2027",
+    "type": "date-difference",
+    "start": "2026-12-03",
+    "end": "2027-05-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-4-2026-and-may-11-2027",
+    "type": "date-difference",
+    "start": "2026-12-04",
+    "end": "2027-05-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-5-2026-and-may-13-2027",
+    "type": "date-difference",
+    "start": "2026-12-05",
+    "end": "2027-05-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-6-2026-and-may-15-2027",
+    "type": "date-difference",
+    "start": "2026-12-06",
+    "end": "2027-05-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-7-2026-and-may-17-2027",
+    "type": "date-difference",
+    "start": "2026-12-07",
+    "end": "2027-05-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-8-2026-and-may-19-2027",
+    "type": "date-difference",
+    "start": "2026-12-08",
+    "end": "2027-05-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-9-2026-and-may-21-2027",
+    "type": "date-difference",
+    "start": "2026-12-09",
+    "end": "2027-05-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-10-2026-and-may-23-2027",
+    "type": "date-difference",
+    "start": "2026-12-10",
+    "end": "2027-05-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-11-2026-and-may-25-2027",
+    "type": "date-difference",
+    "start": "2026-12-11",
+    "end": "2027-05-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-12-2026-and-may-27-2027",
+    "type": "date-difference",
+    "start": "2026-12-12",
+    "end": "2027-05-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-13-2026-and-may-29-2027",
+    "type": "date-difference",
+    "start": "2026-12-13",
+    "end": "2027-05-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-14-2026-and-may-31-2027",
+    "type": "date-difference",
+    "start": "2026-12-14",
+    "end": "2027-05-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-15-2026-and-june-2-2027",
+    "type": "date-difference",
+    "start": "2026-12-15",
+    "end": "2027-06-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-16-2026-and-june-4-2027",
+    "type": "date-difference",
+    "start": "2026-12-16",
+    "end": "2027-06-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-17-2026-and-june-6-2027",
+    "type": "date-difference",
+    "start": "2026-12-17",
+    "end": "2027-06-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-18-2026-and-june-8-2027",
+    "type": "date-difference",
+    "start": "2026-12-18",
+    "end": "2027-06-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-19-2026-and-june-10-2027",
+    "type": "date-difference",
+    "start": "2026-12-19",
+    "end": "2027-06-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-20-2026-and-june-12-2027",
+    "type": "date-difference",
+    "start": "2026-12-20",
+    "end": "2027-06-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-21-2026-and-june-14-2027",
+    "type": "date-difference",
+    "start": "2026-12-21",
+    "end": "2027-06-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-22-2026-and-june-16-2027",
+    "type": "date-difference",
+    "start": "2026-12-22",
+    "end": "2027-06-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-23-2026-and-june-18-2027",
+    "type": "date-difference",
+    "start": "2026-12-23",
+    "end": "2027-06-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-24-2026-and-june-20-2027",
+    "type": "date-difference",
+    "start": "2026-12-24",
+    "end": "2027-06-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-25-2026-and-june-22-2027",
+    "type": "date-difference",
+    "start": "2026-12-25",
+    "end": "2027-06-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-26-2026-and-june-24-2027",
+    "type": "date-difference",
+    "start": "2026-12-26",
+    "end": "2027-06-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-27-2026-and-december-28-2026",
+    "type": "date-difference",
+    "start": "2026-12-27",
+    "end": "2026-12-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-28-2026-and-december-30-2026",
+    "type": "date-difference",
+    "start": "2026-12-28",
+    "end": "2026-12-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-29-2026-and-january-1-2027",
+    "type": "date-difference",
+    "start": "2026-12-29",
+    "end": "2027-01-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-30-2026-and-january-3-2027",
+    "type": "date-difference",
+    "start": "2026-12-30",
+    "end": "2027-01-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-december-31-2026-and-january-5-2027",
+    "type": "date-difference",
+    "start": "2026-12-31",
+    "end": "2027-01-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-1-2027-and-january-7-2027",
+    "type": "date-difference",
+    "start": "2027-01-01",
+    "end": "2027-01-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-2-2027-and-january-9-2027",
+    "type": "date-difference",
+    "start": "2027-01-02",
+    "end": "2027-01-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-3-2027-and-january-11-2027",
+    "type": "date-difference",
+    "start": "2027-01-03",
+    "end": "2027-01-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-4-2027-and-january-13-2027",
+    "type": "date-difference",
+    "start": "2027-01-04",
+    "end": "2027-01-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-5-2027-and-january-15-2027",
+    "type": "date-difference",
+    "start": "2027-01-05",
+    "end": "2027-01-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-6-2027-and-january-17-2027",
+    "type": "date-difference",
+    "start": "2027-01-06",
+    "end": "2027-01-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-7-2027-and-january-19-2027",
+    "type": "date-difference",
+    "start": "2027-01-07",
+    "end": "2027-01-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-8-2027-and-january-21-2027",
+    "type": "date-difference",
+    "start": "2027-01-08",
+    "end": "2027-01-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-9-2027-and-january-23-2027",
+    "type": "date-difference",
+    "start": "2027-01-09",
+    "end": "2027-01-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-10-2027-and-january-25-2027",
+    "type": "date-difference",
+    "start": "2027-01-10",
+    "end": "2027-01-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-11-2027-and-january-27-2027",
+    "type": "date-difference",
+    "start": "2027-01-11",
+    "end": "2027-01-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-12-2027-and-january-29-2027",
+    "type": "date-difference",
+    "start": "2027-01-12",
+    "end": "2027-01-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-13-2027-and-january-31-2027",
+    "type": "date-difference",
+    "start": "2027-01-13",
+    "end": "2027-01-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-14-2027-and-february-2-2027",
+    "type": "date-difference",
+    "start": "2027-01-14",
+    "end": "2027-02-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-15-2027-and-february-4-2027",
+    "type": "date-difference",
+    "start": "2027-01-15",
+    "end": "2027-02-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-16-2027-and-february-6-2027",
+    "type": "date-difference",
+    "start": "2027-01-16",
+    "end": "2027-02-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-17-2027-and-february-8-2027",
+    "type": "date-difference",
+    "start": "2027-01-17",
+    "end": "2027-02-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-18-2027-and-february-10-2027",
+    "type": "date-difference",
+    "start": "2027-01-18",
+    "end": "2027-02-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-19-2027-and-february-12-2027",
+    "type": "date-difference",
+    "start": "2027-01-19",
+    "end": "2027-02-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-20-2027-and-february-14-2027",
+    "type": "date-difference",
+    "start": "2027-01-20",
+    "end": "2027-02-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-21-2027-and-february-16-2027",
+    "type": "date-difference",
+    "start": "2027-01-21",
+    "end": "2027-02-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-22-2027-and-february-18-2027",
+    "type": "date-difference",
+    "start": "2027-01-22",
+    "end": "2027-02-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-23-2027-and-february-20-2027",
+    "type": "date-difference",
+    "start": "2027-01-23",
+    "end": "2027-02-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-24-2027-and-february-22-2027",
+    "type": "date-difference",
+    "start": "2027-01-24",
+    "end": "2027-02-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-25-2027-and-february-24-2027",
+    "type": "date-difference",
+    "start": "2027-01-25",
+    "end": "2027-02-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-26-2027-and-february-26-2027",
+    "type": "date-difference",
+    "start": "2027-01-26",
+    "end": "2027-02-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-27-2027-and-february-28-2027",
+    "type": "date-difference",
+    "start": "2027-01-27",
+    "end": "2027-02-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-28-2027-and-march-2-2027",
+    "type": "date-difference",
+    "start": "2027-01-28",
+    "end": "2027-03-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-29-2027-and-march-4-2027",
+    "type": "date-difference",
+    "start": "2027-01-29",
+    "end": "2027-03-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-30-2027-and-march-6-2027",
+    "type": "date-difference",
+    "start": "2027-01-30",
+    "end": "2027-03-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-january-31-2027-and-march-8-2027",
+    "type": "date-difference",
+    "start": "2027-01-31",
+    "end": "2027-03-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-1-2027-and-march-10-2027",
+    "type": "date-difference",
+    "start": "2027-02-01",
+    "end": "2027-03-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-2-2027-and-march-12-2027",
+    "type": "date-difference",
+    "start": "2027-02-02",
+    "end": "2027-03-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-3-2027-and-march-14-2027",
+    "type": "date-difference",
+    "start": "2027-02-03",
+    "end": "2027-03-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-4-2027-and-march-16-2027",
+    "type": "date-difference",
+    "start": "2027-02-04",
+    "end": "2027-03-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-5-2027-and-march-18-2027",
+    "type": "date-difference",
+    "start": "2027-02-05",
+    "end": "2027-03-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-6-2027-and-march-20-2027",
+    "type": "date-difference",
+    "start": "2027-02-06",
+    "end": "2027-03-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-7-2027-and-march-22-2027",
+    "type": "date-difference",
+    "start": "2027-02-07",
+    "end": "2027-03-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-8-2027-and-march-24-2027",
+    "type": "date-difference",
+    "start": "2027-02-08",
+    "end": "2027-03-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-9-2027-and-march-26-2027",
+    "type": "date-difference",
+    "start": "2027-02-09",
+    "end": "2027-03-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-10-2027-and-march-28-2027",
+    "type": "date-difference",
+    "start": "2027-02-10",
+    "end": "2027-03-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-11-2027-and-march-30-2027",
+    "type": "date-difference",
+    "start": "2027-02-11",
+    "end": "2027-03-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-12-2027-and-april-1-2027",
+    "type": "date-difference",
+    "start": "2027-02-12",
+    "end": "2027-04-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-13-2027-and-april-3-2027",
+    "type": "date-difference",
+    "start": "2027-02-13",
+    "end": "2027-04-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-14-2027-and-april-5-2027",
+    "type": "date-difference",
+    "start": "2027-02-14",
+    "end": "2027-04-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-15-2027-and-april-7-2027",
+    "type": "date-difference",
+    "start": "2027-02-15",
+    "end": "2027-04-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-16-2027-and-april-9-2027",
+    "type": "date-difference",
+    "start": "2027-02-16",
+    "end": "2027-04-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-17-2027-and-april-11-2027",
+    "type": "date-difference",
+    "start": "2027-02-17",
+    "end": "2027-04-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-18-2027-and-april-13-2027",
+    "type": "date-difference",
+    "start": "2027-02-18",
+    "end": "2027-04-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-19-2027-and-april-15-2027",
+    "type": "date-difference",
+    "start": "2027-02-19",
+    "end": "2027-04-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-20-2027-and-april-17-2027",
+    "type": "date-difference",
+    "start": "2027-02-20",
+    "end": "2027-04-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-21-2027-and-april-19-2027",
+    "type": "date-difference",
+    "start": "2027-02-21",
+    "end": "2027-04-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-22-2027-and-april-21-2027",
+    "type": "date-difference",
+    "start": "2027-02-22",
+    "end": "2027-04-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-23-2027-and-april-23-2027",
+    "type": "date-difference",
+    "start": "2027-02-23",
+    "end": "2027-04-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-24-2027-and-april-25-2027",
+    "type": "date-difference",
+    "start": "2027-02-24",
+    "end": "2027-04-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-25-2027-and-april-27-2027",
+    "type": "date-difference",
+    "start": "2027-02-25",
+    "end": "2027-04-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-26-2027-and-april-29-2027",
+    "type": "date-difference",
+    "start": "2027-02-26",
+    "end": "2027-04-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-27-2027-and-may-1-2027",
+    "type": "date-difference",
+    "start": "2027-02-27",
+    "end": "2027-05-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-february-28-2027-and-may-3-2027",
+    "type": "date-difference",
+    "start": "2027-02-28",
+    "end": "2027-05-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-1-2027-and-may-5-2027",
+    "type": "date-difference",
+    "start": "2027-03-01",
+    "end": "2027-05-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-2-2027-and-may-7-2027",
+    "type": "date-difference",
+    "start": "2027-03-02",
+    "end": "2027-05-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-3-2027-and-may-9-2027",
+    "type": "date-difference",
+    "start": "2027-03-03",
+    "end": "2027-05-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-4-2027-and-may-11-2027",
+    "type": "date-difference",
+    "start": "2027-03-04",
+    "end": "2027-05-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-5-2027-and-may-13-2027",
+    "type": "date-difference",
+    "start": "2027-03-05",
+    "end": "2027-05-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-6-2027-and-may-15-2027",
+    "type": "date-difference",
+    "start": "2027-03-06",
+    "end": "2027-05-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-7-2027-and-may-17-2027",
+    "type": "date-difference",
+    "start": "2027-03-07",
+    "end": "2027-05-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-8-2027-and-may-19-2027",
+    "type": "date-difference",
+    "start": "2027-03-08",
+    "end": "2027-05-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-9-2027-and-may-21-2027",
+    "type": "date-difference",
+    "start": "2027-03-09",
+    "end": "2027-05-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-10-2027-and-may-23-2027",
+    "type": "date-difference",
+    "start": "2027-03-10",
+    "end": "2027-05-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-11-2027-and-may-25-2027",
+    "type": "date-difference",
+    "start": "2027-03-11",
+    "end": "2027-05-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-12-2027-and-may-27-2027",
+    "type": "date-difference",
+    "start": "2027-03-12",
+    "end": "2027-05-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-13-2027-and-may-29-2027",
+    "type": "date-difference",
+    "start": "2027-03-13",
+    "end": "2027-05-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-14-2027-and-may-31-2027",
+    "type": "date-difference",
+    "start": "2027-03-14",
+    "end": "2027-05-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-15-2027-and-june-2-2027",
+    "type": "date-difference",
+    "start": "2027-03-15",
+    "end": "2027-06-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-16-2027-and-june-4-2027",
+    "type": "date-difference",
+    "start": "2027-03-16",
+    "end": "2027-06-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-17-2027-and-june-6-2027",
+    "type": "date-difference",
+    "start": "2027-03-17",
+    "end": "2027-06-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-18-2027-and-june-8-2027",
+    "type": "date-difference",
+    "start": "2027-03-18",
+    "end": "2027-06-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-19-2027-and-june-10-2027",
+    "type": "date-difference",
+    "start": "2027-03-19",
+    "end": "2027-06-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-20-2027-and-june-12-2027",
+    "type": "date-difference",
+    "start": "2027-03-20",
+    "end": "2027-06-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-21-2027-and-june-14-2027",
+    "type": "date-difference",
+    "start": "2027-03-21",
+    "end": "2027-06-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-22-2027-and-june-16-2027",
+    "type": "date-difference",
+    "start": "2027-03-22",
+    "end": "2027-06-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-23-2027-and-june-18-2027",
+    "type": "date-difference",
+    "start": "2027-03-23",
+    "end": "2027-06-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-24-2027-and-june-20-2027",
+    "type": "date-difference",
+    "start": "2027-03-24",
+    "end": "2027-06-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-25-2027-and-june-22-2027",
+    "type": "date-difference",
+    "start": "2027-03-25",
+    "end": "2027-06-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-26-2027-and-june-24-2027",
+    "type": "date-difference",
+    "start": "2027-03-26",
+    "end": "2027-06-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-27-2027-and-june-26-2027",
+    "type": "date-difference",
+    "start": "2027-03-27",
+    "end": "2027-06-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-28-2027-and-june-28-2027",
+    "type": "date-difference",
+    "start": "2027-03-28",
+    "end": "2027-06-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-29-2027-and-june-30-2027",
+    "type": "date-difference",
+    "start": "2027-03-29",
+    "end": "2027-06-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-30-2027-and-july-2-2027",
+    "type": "date-difference",
+    "start": "2027-03-30",
+    "end": "2027-07-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-march-31-2027-and-july-4-2027",
+    "type": "date-difference",
+    "start": "2027-03-31",
+    "end": "2027-07-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-1-2027-and-july-6-2027",
+    "type": "date-difference",
+    "start": "2027-04-01",
+    "end": "2027-07-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-2-2027-and-july-8-2027",
+    "type": "date-difference",
+    "start": "2027-04-02",
+    "end": "2027-07-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-3-2027-and-july-10-2027",
+    "type": "date-difference",
+    "start": "2027-04-03",
+    "end": "2027-07-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-4-2027-and-july-12-2027",
+    "type": "date-difference",
+    "start": "2027-04-04",
+    "end": "2027-07-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-5-2027-and-july-14-2027",
+    "type": "date-difference",
+    "start": "2027-04-05",
+    "end": "2027-07-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-6-2027-and-july-16-2027",
+    "type": "date-difference",
+    "start": "2027-04-06",
+    "end": "2027-07-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-7-2027-and-july-18-2027",
+    "type": "date-difference",
+    "start": "2027-04-07",
+    "end": "2027-07-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-8-2027-and-july-20-2027",
+    "type": "date-difference",
+    "start": "2027-04-08",
+    "end": "2027-07-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-9-2027-and-july-22-2027",
+    "type": "date-difference",
+    "start": "2027-04-09",
+    "end": "2027-07-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-10-2027-and-july-24-2027",
+    "type": "date-difference",
+    "start": "2027-04-10",
+    "end": "2027-07-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-11-2027-and-july-26-2027",
+    "type": "date-difference",
+    "start": "2027-04-11",
+    "end": "2027-07-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-12-2027-and-july-28-2027",
+    "type": "date-difference",
+    "start": "2027-04-12",
+    "end": "2027-07-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-13-2027-and-july-30-2027",
+    "type": "date-difference",
+    "start": "2027-04-13",
+    "end": "2027-07-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-14-2027-and-august-1-2027",
+    "type": "date-difference",
+    "start": "2027-04-14",
+    "end": "2027-08-01"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-15-2027-and-august-3-2027",
+    "type": "date-difference",
+    "start": "2027-04-15",
+    "end": "2027-08-03"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-16-2027-and-august-5-2027",
+    "type": "date-difference",
+    "start": "2027-04-16",
+    "end": "2027-08-05"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-17-2027-and-august-7-2027",
+    "type": "date-difference",
+    "start": "2027-04-17",
+    "end": "2027-08-07"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-18-2027-and-august-9-2027",
+    "type": "date-difference",
+    "start": "2027-04-18",
+    "end": "2027-08-09"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-19-2027-and-august-11-2027",
+    "type": "date-difference",
+    "start": "2027-04-19",
+    "end": "2027-08-11"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-20-2027-and-august-13-2027",
+    "type": "date-difference",
+    "start": "2027-04-20",
+    "end": "2027-08-13"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-21-2027-and-august-15-2027",
+    "type": "date-difference",
+    "start": "2027-04-21",
+    "end": "2027-08-15"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-22-2027-and-august-17-2027",
+    "type": "date-difference",
+    "start": "2027-04-22",
+    "end": "2027-08-17"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-23-2027-and-august-19-2027",
+    "type": "date-difference",
+    "start": "2027-04-23",
+    "end": "2027-08-19"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-24-2027-and-august-21-2027",
+    "type": "date-difference",
+    "start": "2027-04-24",
+    "end": "2027-08-21"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-25-2027-and-august-23-2027",
+    "type": "date-difference",
+    "start": "2027-04-25",
+    "end": "2027-08-23"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-26-2027-and-august-25-2027",
+    "type": "date-difference",
+    "start": "2027-04-26",
+    "end": "2027-08-25"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-27-2027-and-august-27-2027",
+    "type": "date-difference",
+    "start": "2027-04-27",
+    "end": "2027-08-27"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-28-2027-and-august-29-2027",
+    "type": "date-difference",
+    "start": "2027-04-28",
+    "end": "2027-08-29"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-29-2027-and-august-31-2027",
+    "type": "date-difference",
+    "start": "2027-04-29",
+    "end": "2027-08-31"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-april-30-2027-and-september-2-2027",
+    "type": "date-difference",
+    "start": "2027-04-30",
+    "end": "2027-09-02"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-1-2027-and-september-4-2027",
+    "type": "date-difference",
+    "start": "2027-05-01",
+    "end": "2027-09-04"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-2-2027-and-september-6-2027",
+    "type": "date-difference",
+    "start": "2027-05-02",
+    "end": "2027-09-06"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-3-2027-and-september-8-2027",
+    "type": "date-difference",
+    "start": "2027-05-03",
+    "end": "2027-09-08"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-4-2027-and-september-10-2027",
+    "type": "date-difference",
+    "start": "2027-05-04",
+    "end": "2027-09-10"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-5-2027-and-september-12-2027",
+    "type": "date-difference",
+    "start": "2027-05-05",
+    "end": "2027-09-12"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-6-2027-and-september-14-2027",
+    "type": "date-difference",
+    "start": "2027-05-06",
+    "end": "2027-09-14"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-7-2027-and-september-16-2027",
+    "type": "date-difference",
+    "start": "2027-05-07",
+    "end": "2027-09-16"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-8-2027-and-september-18-2027",
+    "type": "date-difference",
+    "start": "2027-05-08",
+    "end": "2027-09-18"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-9-2027-and-september-20-2027",
+    "type": "date-difference",
+    "start": "2027-05-09",
+    "end": "2027-09-20"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-10-2027-and-september-22-2027",
+    "type": "date-difference",
+    "start": "2027-05-10",
+    "end": "2027-09-22"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-11-2027-and-september-24-2027",
+    "type": "date-difference",
+    "start": "2027-05-11",
+    "end": "2027-09-24"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-12-2027-and-september-26-2027",
+    "type": "date-difference",
+    "start": "2027-05-12",
+    "end": "2027-09-26"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-13-2027-and-september-28-2027",
+    "type": "date-difference",
+    "start": "2027-05-13",
+    "end": "2027-09-28"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-14-2027-and-september-30-2027",
+    "type": "date-difference",
+    "start": "2027-05-14",
+    "end": "2027-09-30"
+  },
+  {
+    "kind": "difference",
+    "slug": "days-between-may-15-2027-and-october-2-2027",
+    "type": "date-difference",
+    "start": "2027-05-15",
+    "end": "2027-10-02"
+  }
+]

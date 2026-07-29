@@ -1,0 +1,1602 @@
+[
+  {
+    "kind": "relative",
+    "slug": "1-week-from-today",
+    "type": "weeks-from-today",
+    "amount": 1,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "2-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 2,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "3-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 3,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "4-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 4,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "5-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 5,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "6-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 6,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "7-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 7,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "8-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 8,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "9-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 9,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "10-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 10,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "11-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 11,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "12-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 12,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "13-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 13,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "14-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 14,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "15-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 15,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "16-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 16,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "17-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 17,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "18-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 18,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "19-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 19,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "20-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 20,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "21-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 21,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "22-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 22,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "23-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 23,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "24-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 24,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "25-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 25,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "26-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 26,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "27-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 27,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "28-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 28,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "29-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 29,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "30-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 30,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "31-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 31,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "32-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 32,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "33-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 33,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "34-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 34,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "35-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 35,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "36-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 36,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "37-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 37,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "38-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 38,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "39-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 39,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "40-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 40,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "41-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 41,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "42-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 42,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "43-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 43,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "44-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 44,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "45-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 45,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "46-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 46,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "47-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 47,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "48-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 48,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "49-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 49,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "50-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 50,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "51-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 51,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "52-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 52,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "53-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 53,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "54-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 54,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "55-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 55,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "56-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 56,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "57-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 57,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "58-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 58,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "59-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 59,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "60-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 60,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "61-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 61,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "62-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 62,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "63-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 63,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "64-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 64,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "65-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 65,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "66-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 66,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "67-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 67,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "68-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 68,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "69-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 69,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "70-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 70,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "71-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 71,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "72-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 72,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "73-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 73,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "74-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 74,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "75-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 75,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "76-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 76,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "77-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 77,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "78-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 78,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "79-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 79,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "80-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 80,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "81-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 81,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "82-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 82,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "83-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 83,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "84-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 84,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "85-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 85,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "86-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 86,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "87-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 87,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "88-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 88,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "89-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 89,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "90-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 90,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "91-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 91,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "92-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 92,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "93-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 93,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "94-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 94,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "95-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 95,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "96-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 96,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "97-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 97,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "98-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 98,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "99-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 99,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "100-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 100,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "101-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 101,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "102-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 102,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "103-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 103,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "104-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 104,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "105-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 105,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "106-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 106,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "107-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 107,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "108-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 108,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "109-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 109,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "110-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 110,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "111-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 111,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "112-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 112,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "113-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 113,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "114-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 114,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "115-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 115,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "116-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 116,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "117-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 117,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "118-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 118,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "119-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 119,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "120-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 120,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "121-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 121,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "122-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 122,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "123-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 123,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "124-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 124,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "125-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 125,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "126-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 126,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "127-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 127,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "128-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 128,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "129-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 129,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "130-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 130,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "131-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 131,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "132-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 132,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "133-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 133,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "134-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 134,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "135-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 135,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "136-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 136,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "137-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 137,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "138-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 138,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "139-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 139,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "140-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 140,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "141-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 141,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "142-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 142,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "143-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 143,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "144-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 144,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "145-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 145,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "146-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 146,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "147-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 147,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "148-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 148,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "149-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 149,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "150-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 150,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "151-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 151,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "152-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 152,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "153-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 153,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "154-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 154,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "155-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 155,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "156-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 156,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "157-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 157,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "158-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 158,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "159-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 159,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "160-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 160,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "161-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 161,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "162-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 162,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "163-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 163,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "164-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 164,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "165-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 165,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "166-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 166,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "167-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 167,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "168-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 168,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "169-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 169,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "170-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 170,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "171-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 171,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "172-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 172,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "173-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 173,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "174-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 174,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "175-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 175,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "176-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 176,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "177-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 177,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "178-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 178,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "179-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 179,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "180-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 180,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "181-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 181,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "182-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 182,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "183-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 183,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "184-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 184,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "185-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 185,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "186-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 186,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "187-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 187,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "188-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 188,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "189-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 189,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "190-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 190,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "191-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 191,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "192-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 192,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "193-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 193,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "194-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 194,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "195-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 195,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "196-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 196,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "197-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 197,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "198-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 198,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "199-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 199,
+    "unit": "week",
+    "direction": "future"
+  },
+  {
+    "kind": "relative",
+    "slug": "200-weeks-from-today",
+    "type": "weeks-from-today",
+    "amount": 200,
+    "unit": "week",
+    "direction": "future"
+  }
+]

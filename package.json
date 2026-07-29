@@ -1,0 +1,37 @@
+{
+  "name": "chronocraft",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node scripts/seo-check.mjs && opennextjs-cloudflare build --skipNextBuild && node scripts/prepare-sites.mjs",
+    "build:next": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seo:generate": "node scripts/generate-seo-data.mjs && node scripts/generate-tool-content.mjs",
+    "seo:audit": "node scripts/seo-audit.mjs",
+    "seo:check": "node scripts/seo-audit.mjs && node scripts/seo-check.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "date-fns-tz": "^3.2.0",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.468.0",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "1.6.5",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "wrangler": "4.24.4"
+  }
+}
