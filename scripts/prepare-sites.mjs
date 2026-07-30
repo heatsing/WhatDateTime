@@ -41,7 +41,6 @@ for (const { slug } of pageIndex) {
 
   const payload = JSON.stringify({
     html: readFileSync(htmlPath, "utf8"),
-    rsc: readFileSync(rscPath, "utf8"),
   });
   writeFileSync(
     `${staticSEOOutput}/${slug}.json.gz`,
