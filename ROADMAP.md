@@ -4,6 +4,7 @@
 
 - Maintain 9,994 programmatic pages and the existing calculator routes.
 - Keep the indexable sitemap inventory at exactly 10,000 URLs.
+- Require every programmatic page to ship the full answer, calculation basis, usage, scenarios, nearby results, and FAQ flow.
 - Preserve permanent static generation, canonical consistency, structured data, sitemap coverage, and crawlable internal links.
 - Monitor production hydration, Worker errors, and indexing signals.
 

@@ -16,6 +16,7 @@ export function ResultCard({
 
   return (
     <div
+      data-content-stage="direct-answer"
       className="relative flex h-full min-h-72 flex-col justify-center overflow-hidden bg-ink p-6 text-white sm:p-9"
       aria-live="polite"
     >

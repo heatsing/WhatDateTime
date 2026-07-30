@@ -223,22 +223,17 @@ function durationDetail(page) {
 }
 
 function relativeRelated(page) {
-  const candidates = [
-    Math.max(1, Math.round(page.amount / 2)),
-    page.amount + 7,
-    page.amount * 2,
-    page.amount * 3,
-    7,
-    14,
-    30,
-    90,
-  ];
   const related = [];
-  for (const amount of candidates) {
-    if (amount === page.amount || amount > maxByType[page.type]) continue;
-    const match = byRelativeKey.get(`${page.type}:${amount}`);
-    if (match && !related.includes(match.slug)) related.push(match.slug);
-    if (related.length === 6) break;
+  for (let distance = 1; related.length < 6; distance += 1) {
+    for (const amount of [
+      page.amount - distance,
+      page.amount + distance,
+    ]) {
+      if (amount < 1 || amount > maxByType[page.type]) continue;
+      const match = byRelativeKey.get(`${page.type}:${amount}`);
+      if (match && !related.includes(match.slug)) related.push(match.slug);
+      if (related.length === 6) break;
+    }
   }
   return related;
 }
@@ -620,6 +615,40 @@ function timezoneContent(page) {
   };
 }
 
+function landingFlowSections(page) {
+  const sourceSections = page.content.sections;
+  const label =
+    page.kind === "relative"
+      ? relativePhrase(page)
+      : page.kind === "difference"
+        ? `${humanDate(page.start)} to ${humanDate(page.end)}`
+        : `${page.fromCity} to ${page.toCity}`;
+  const howToUse =
+    page.kind === "relative"
+      ? `Enter ${page.amount} as the number, keep ${plural(page.amount, page.unit)} as the unit, choose the starting date, and select Calculate. The result uses the page's ${page.direction === "future" ? "forward" : "backward"} direction; changing the number, unit, or date creates a new calculation without changing this page's reference answer.`
+      : page.kind === "difference"
+        ? `Set ${humanDate(page.start)} as the start and ${humanDate(page.end)} as the end, then select Find difference. You can replace either date to compare another interval; the result remains an elapsed calendar-day count unless an inclusive rule is stated separately.`
+        : `Enter the local date and time in ${page.fromCity}, confirm ${page.fromZone} as the source zone, and select Convert time. The calculator maps the same instant into ${page.toZone}, so the displayed ${page.toCity} date can move backward or forward across midnight.`;
+
+  return [
+    {
+      stage: "calculation-basis",
+      title: `Calculation basis for ${label}`,
+      text: sourceSections[0].text,
+    },
+    {
+      stage: "how-to-use",
+      title: `How to use this ${page.kind === "timezone" ? "time-zone" : "date"} calculator`,
+      text: howToUse,
+    },
+    {
+      stage: "practical-scenarios",
+      title: `Practical scenarios for ${label}`,
+      text: `${sourceSections[1].text} ${sourceSections[2].text}`,
+    },
+  ];
+}
+
 const contentPages = sourcePages.map((page) => {
   const generated =
     page.kind === "relative"
@@ -628,9 +657,15 @@ const contentPages = sourcePages.map((page) => {
         ? differenceContent(page)
         : timezoneContent(page);
   const override = editorialOverrideBySlug.get(page.slug);
-  if (!override) return generated;
-  const { slug: _slug, ...editorial } = override;
-  return { ...generated, ...editorial };
+  const merged = (() => {
+    if (!override) return generated;
+    const { slug: _slug, ...editorial } = override;
+    return { ...generated, ...editorial };
+  })();
+  return {
+    ...merged,
+    content: { sections: landingFlowSections(merged) },
+  };
 });
 
 for (const override of editorialOverrides) {

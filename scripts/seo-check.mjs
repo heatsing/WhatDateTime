@@ -103,6 +103,7 @@ for (const routeEntry of routes) {
   }
 
   const schemaTypes = new Set();
+  let faqSchema;
   for (const script of jsonLdScripts) {
     let parsed;
     try {
@@ -113,6 +114,7 @@ for (const routeEntry of routes) {
     const schemas = Array.isArray(parsed) ? parsed : [parsed];
     for (const schema of schemas) {
       schemaTypes.add(schema["@type"]);
+      if (schema["@type"] === "FAQPage") faqSchema = schema;
       if (
         ["WebApplication", "WebPage"].includes(schema["@type"]) &&
         schema.url &&
@@ -129,6 +131,54 @@ for (const routeEntry of routes) {
     }
   }
   if (programmatic) {
+    const stageNames = [
+      "direct-answer",
+      "calculation-basis",
+      "how-to-use",
+      "practical-scenarios",
+      "nearby-results",
+      "faq",
+    ];
+    const stagePositions = stageNames.map((stage) =>
+      html.indexOf(`data-content-stage="${stage}"`),
+    );
+    if (
+      stagePositions.some((position) => position < 0) ||
+      stagePositions.some(
+        (position, index) =>
+          index > 0 && position <= stagePositions[index - 1],
+      )
+    ) {
+      fail(`/${route}: landing-page content stages are missing or unordered`);
+    }
+
+    const answerMatch = html.match(
+      /data-content-stage="direct-answer"[\s\S]*?<p class="[^"]*font-display[^"]*">([^<]+)<\/p>/,
+    );
+    if (!answerMatch?.[1]) {
+      fail(`/${route}: direct numerical answer could not be extracted`);
+    }
+    const calculationBlock = html.slice(
+      stagePositions[1],
+      stagePositions[2],
+    );
+    if (
+      !calculationBlock.includes(" = ") ||
+      !calculationBlock.includes(answerMatch[1])
+    ) {
+      fail(`/${route}: calculation basis lacks a matching worked formula`);
+    }
+    const nearbyBlock = html.slice(stagePositions[4], stagePositions[5]);
+    if ((nearbyBlock.match(/href="\//g) ?? []).length < 4) {
+      fail(`/${route}: nearby or related results lack crawlable links`);
+    }
+    if (
+      !faqSchema?.mainEntity?.length ||
+      !faqSchema.mainEntity[0]?.acceptedAnswer?.text?.includes(answerMatch[1])
+    ) {
+      fail(`/${route}: FAQ schema does not repeat the direct answer`);
+    }
+
     for (const requiredType of [
       "FAQPage",
       "WebApplication",
@@ -181,7 +231,7 @@ console.log(
     `Static HTML SEO check passed: ${checkedRoutes.size} indexable pages`,
     `${pageIndex.length} programmatic HTML files match the route inventory`,
     `${sitemapUrls.length} unique sitemap URLs`,
-    "canonical, metadata, H1, direct answer, and JSON-LD checks passed",
+    "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
     "duplicate titles: 0; duplicate descriptions: 0; unexpected noindex: 0",
   ].join("\n"),
 );

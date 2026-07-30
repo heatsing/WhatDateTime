@@ -11,6 +11,7 @@ import { SEOContent } from "@/components/SEOContent";
 import {
   buildFAQs,
   getAllSEOPageIndex,
+  getLandingSections,
   getPageResult,
   getRelatedPages,
   getSEOPage,
@@ -65,7 +66,8 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
   const now = new Date();
   const seo = getSEOText(page);
   const result = getPageResult(page, now);
-  const faqs = buildFAQs(page);
+  const faqs = buildFAQs(page, now);
+  const landingSections = getLandingSections(page, now);
   const related = await getRelatedPages(page);
   const path = `/${page.slug}`;
 
@@ -122,18 +124,22 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
 
       <section className="bg-mist px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <SEOContent data={page.content.sections} />
+          <SEOContent data={landingSections} />
+        </div>
+      </section>
+
+      <section className="bg-ink px-5 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto max-w-6xl">
+          <RelatedLinks
+            currentPage={page}
+            pages={related}
+            referenceDate={now}
+          />
         </div>
       </section>
 
       <section className="px-5 py-16 sm:px-8 sm:py-20">
         <FAQ faqs={faqs} />
-      </section>
-
-      <section className="bg-ink px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mx-auto max-w-6xl">
-          <RelatedLinks pages={related} />
-        </div>
       </section>
     </>
   );

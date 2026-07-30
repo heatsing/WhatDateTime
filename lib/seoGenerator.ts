@@ -13,6 +13,7 @@ export type FAQItem = {
 };
 
 export type ContentSection = {
+  stage: "calculation-basis" | "how-to-use" | "practical-scenarios";
   title: string;
   text: string;
 };
@@ -226,8 +227,54 @@ export function getPageResult(page: SEOPage, now: Date) {
   return `${result.time} on ${result.date} (${result.abbreviation})`;
 }
 
-export function buildFAQs(page: SEOPage) {
-  return page.faq;
+export function getPageFormula(page: SEOPage, now: Date) {
+  if (page.kind === "relative") {
+    const includeTime = page.unit === "hour";
+    const start = formatLongDate(now, includeTime);
+    const result = getPageResult(page, now);
+    const operation = page.direction === "future" ? "+" : "−";
+    const interval = getRelativePhrase(page)
+      .replace(/ from now$/, "")
+      .replace(/ from today$/, "")
+      .replace(/ ago$/, "");
+    return `${start} ${operation} ${interval} = ${result}.`;
+  }
+
+  if (page.kind === "difference") {
+    const start = formatLongDate(new Date(`${page.start}T12:00:00`));
+    const end = formatLongDate(new Date(`${page.end}T12:00:00`));
+    return `${end} − ${start} = ${getPageResult(page, now)} elapsed.`;
+  }
+
+  const source = formatZonedTime(now, page.fromZone);
+  return `${source.time} on ${source.date} in ${page.fromCity} = ${getPageResult(page, now)} in ${page.toCity}.`;
+}
+
+export function getLandingSections(page: SEOPage, now: Date) {
+  return page.content.sections.map((section) =>
+    section.stage === "calculation-basis"
+      ? { ...section, text: `${getPageFormula(page, now)} ${section.text}` }
+      : section,
+  );
+}
+
+export function buildFAQs(page: SEOPage, now: Date) {
+  const direct =
+    page.kind === "relative"
+      ? {
+          question: `What is the exact result for ${getRelativePhrase(page)}?`,
+          answer: `${titleCase(getRelativePhrase(page))} is ${getPageResult(page, now)} when calculated from ${formatLongDate(now, page.unit === "hour")}.`,
+        }
+      : page.kind === "difference"
+        ? {
+            question: `What is the exact difference between ${page.start} and ${page.end}?`,
+            answer: `The elapsed difference between ${page.start} and ${page.end} is ${getPageResult(page, now)}.`,
+          }
+        : {
+            question: `What is the current ${page.fromCity} to ${page.toCity} conversion?`,
+            answer: getPageFormula(page, now),
+          };
+  return [direct, ...page.faq.slice(1)];
 }
 
 export async function getRelatedPages(page: SEOPage) {

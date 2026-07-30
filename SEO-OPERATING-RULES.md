@@ -6,4 +6,5 @@
 - Canonicals must be absolute and self-referencing. Metadata, visible content, schema, and sitemap URLs must agree.
 - Run `npm run seo:check` and `npm run build` before production deployment.
 - Improve long-form content in measured cohorts of 10–20 URLs, prioritizing verified GSC demand.
+- Apply the complete landing-page framework sitewide; reserve cohort limits for bespoke editorial rewrites, not required structural coverage.
 - Do not change the established UI while performing technical SEO maintenance.

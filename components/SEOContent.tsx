@@ -16,7 +16,7 @@ export function SEOContent({
 function ContentGrid({
   sections,
 }: {
-  sections: ReadonlyArray<{ title: string; text: string }>;
+  sections: ReadonlyArray<ContentSection>;
 }) {
   const icons = [CalendarRange, CircleHelp, BriefcaseBusiness];
 
@@ -39,6 +39,7 @@ function ContentGrid({
           return (
             <article
               key={section.title}
+              data-content-stage={section.stage}
               className="rounded-[1.5rem] border border-ink/[0.07] bg-white p-6 shadow-card"
             >
               <span className="grid h-11 w-11 place-items-center rounded-2xl bg-lime/60 text-ink">

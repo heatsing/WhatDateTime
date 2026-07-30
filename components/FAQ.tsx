@@ -6,7 +6,11 @@ export function FAQ({
   faqs: ReadonlyArray<{ question: string; answer: string }>;
 }) {
   return (
-    <section className="mx-auto max-w-3xl" aria-labelledby="faq-heading">
+    <section
+      className="mx-auto max-w-3xl"
+      aria-labelledby="faq-heading"
+      data-content-stage="faq"
+    >
       <div className="text-center">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">
           Frequently asked

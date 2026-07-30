@@ -114,8 +114,13 @@ if (pageBySlug.size !== pages.length) fail("duplicate enriched URL slug");
 for (const override of editorialOverrides) {
   const page = pageBySlug.get(override.slug);
   if (!page) fail(`${override.slug}: editorial cohort page is missing`);
+  const landingText = page.content.sections
+    .map((section) => section.text)
+    .join(" ");
   if (
-    JSON.stringify(page.content) !== JSON.stringify(override.content) ||
+    !override.content.sections.every((section) =>
+      landingText.includes(section.text),
+    ) ||
     JSON.stringify(page.faq) !== JSON.stringify(override.faq)
   ) {
     fail(`${override.slug}: editorial cohort content was not applied`);
@@ -176,6 +181,18 @@ for (const page of pages) {
   }
   if (page.content?.sections?.length !== 3) {
     fail(`${page.slug}: content must provide exactly three UI sections`);
+  }
+  const expectedStages = [
+    "calculation-basis",
+    "how-to-use",
+    "practical-scenarios",
+  ];
+  if (
+    page.content.sections.some(
+      (section, index) => section.stage !== expectedStages[index],
+    )
+  ) {
+    fail(`${page.slug}: landing-page content stages are incomplete or unordered`);
   }
   if (
     !page.searchIntent?.category ||
@@ -238,6 +255,12 @@ for (const page of pages) {
     if (!related) fail(`${page.slug}: related URL ${slug} does not exist`);
     if (page.kind === "relative" && related.type !== page.type) {
       fail(`${page.slug}: relative link ${slug} is not the same calculator type`);
+    }
+    if (
+      page.kind === "relative" &&
+      Math.abs(related.amount - page.amount) > 6
+    ) {
+      fail(`${page.slug}: relative link ${slug} is not a nearby value`);
     }
     if (
       page.kind === "timezone" &&
