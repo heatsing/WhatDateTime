@@ -5,7 +5,7 @@ export const siteConfig = {
     "Simple, accurate date and time calculators for everyday planning.",
   url:
     process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://chronocraft-time.heatsinghaiqing.chatgpt.site",
+    "https://chronocraft-time.heatsinghaiqing.workers.dev",
 };
 
 export const primaryTools = [
