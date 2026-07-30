@@ -62,8 +62,58 @@ const cities = [
   ["Melbourne", "melbourne", "Australia/Melbourne"],
   ["Auckland", "auckland", "Pacific/Auckland"],
   ["Honolulu", "honolulu", "Pacific/Honolulu"],
+  ["Washington DC", "washington-dc", "America/New_York"],
+  ["Boston", "boston", "America/New_York"],
+  ["Miami", "miami", "America/New_York"],
+  ["Dallas", "dallas", "America/Chicago"],
+  ["Houston", "houston", "America/Chicago"],
+  ["Denver", "denver", "America/Denver"],
+  ["Phoenix", "phoenix", "America/Phoenix"],
+  ["Seattle", "seattle", "America/Los_Angeles"],
+  ["Montreal", "montreal", "America/Toronto"],
+  ["Lima", "lima", "America/Lima"],
+  ["Bogota", "bogota", "America/Bogota"],
+  ["Santiago", "santiago", "America/Santiago"],
+  ["Lisbon", "lisbon", "Europe/Lisbon"],
+  ["Dublin", "dublin", "Europe/Dublin"],
+  ["Brussels", "brussels", "Europe/Brussels"],
+  ["Vienna", "vienna", "Europe/Vienna"],
+  ["Prague", "prague", "Europe/Prague"],
+  ["Warsaw", "warsaw", "Europe/Warsaw"],
+  ["Stockholm", "stockholm", "Europe/Stockholm"],
+  ["Oslo", "oslo", "Europe/Oslo"],
+  ["Copenhagen", "copenhagen", "Europe/Copenhagen"],
+  ["Helsinki", "helsinki", "Europe/Helsinki"],
+  ["Athens", "athens", "Europe/Athens"],
+  ["Kyiv", "kyiv", "Europe/Kyiv"],
+  ["Bucharest", "bucharest", "Europe/Bucharest"],
+  ["Riyadh", "riyadh", "Asia/Riyadh"],
+  ["Doha", "doha", "Asia/Qatar"],
+  ["Jerusalem", "jerusalem", "Asia/Jerusalem"],
+  ["Tehran", "tehran", "Asia/Tehran"],
+  ["Karachi", "karachi", "Asia/Karachi"],
+  ["Dhaka", "dhaka", "Asia/Dhaka"],
+  ["Kathmandu", "kathmandu", "Asia/Kathmandu"],
+  ["Colombo", "colombo", "Asia/Colombo"],
+  ["Jakarta", "jakarta", "Asia/Jakarta"],
+  ["Manila", "manila", "Asia/Manila"],
+  ["Taipei", "taipei", "Asia/Taipei"],
+  ["Kuala Lumpur", "kuala-lumpur", "Asia/Kuala_Lumpur"],
+  ["Ho Chi Minh City", "ho-chi-minh-city", "Asia/Ho_Chi_Minh"],
+  ["Osaka", "osaka", "Asia/Tokyo"],
+  ["Beijing", "beijing", "Asia/Shanghai"],
+  ["Perth", "perth", "Australia/Perth"],
+  ["Brisbane", "brisbane", "Australia/Brisbane"],
+  ["Adelaide", "adelaide", "Australia/Adelaide"],
+  ["Wellington", "wellington", "Pacific/Auckland"],
+  ["Nairobi", "nairobi", "Africa/Nairobi"],
+  ["Lagos", "lagos", "Africa/Lagos"],
+  ["Casablanca", "casablanca", "Africa/Casablanca"],
+  ["Cape Town", "cape-town", "Africa/Johannesburg"],
+  ["Accra", "accra", "Africa/Accra"],
 ];
 
+const timezonePageTarget = 5964;
 const timezonePages = [];
 for (const [fromCity, fromSlug, fromZone] of cities) {
   for (const [toCity, toSlug, toZone] of cities) {
@@ -77,9 +127,9 @@ for (const [fromCity, fromSlug, fromZone] of cities) {
       toCity,
       toZone,
     });
-    if (timezonePages.length === 1000) break;
+    if (timezonePages.length === timezonePageTarget) break;
   }
-  if (timezonePages.length === 1000) break;
+  if (timezonePages.length === timezonePageTarget) break;
 }
 
 const differenceStart = new Date(Date.UTC(2026, 0, 1));

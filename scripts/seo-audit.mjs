@@ -10,7 +10,7 @@ const expectedCounts = {
   "years.json": 300,
   "business-days.json": 1000,
   "date-difference.json": 500,
-  "timezone.json": 1000,
+  "timezone.json": 5964,
 };
 
 const sourcePages = [];
@@ -26,6 +26,12 @@ for (const [file, expected] of Object.entries(expectedCounts)) {
 
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
+);
+const editorialOverrides = JSON.parse(
+  readFileSync(
+    new URL("../data/editorial-cohort-01.json", import.meta.url),
+    "utf8",
+  ),
 );
 const dataFiles = [...new Set(pageIndex.map((page) => page.dataFile))];
 const pages = dataFiles.flatMap((file) =>
@@ -99,11 +105,22 @@ function legacySEO(page) {
 if (
   pages.length !== sourcePages.length ||
   pageIndex.length !== pages.length ||
-  pages.length < 5000
+  pages.length !== 9994
 ) {
   fail(`expected ${sourcePages.length} enriched pages, received ${pages.length}`);
 }
 if (pageBySlug.size !== pages.length) fail("duplicate enriched URL slug");
+
+for (const override of editorialOverrides) {
+  const page = pageBySlug.get(override.slug);
+  if (!page) fail(`${override.slug}: editorial cohort page is missing`);
+  if (
+    JSON.stringify(page.content) !== JSON.stringify(override.content) ||
+    JSON.stringify(page.faq) !== JSON.stringify(override.faq)
+  ) {
+    fail(`${override.slug}: editorial cohort content was not applied`);
+  }
+}
 
 const introFrequency = new Map();
 const exampleFrequency = new Map();

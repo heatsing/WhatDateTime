@@ -46,6 +46,15 @@ const sourcePages = sourceFiles.flatMap((file) =>
     readFileSync(new URL(`../data/${file}`, import.meta.url), "utf8"),
   ),
 );
+const editorialOverrides = JSON.parse(
+  readFileSync(
+    new URL("../data/editorial-cohort-01.json", import.meta.url),
+    "utf8",
+  ),
+);
+const editorialOverrideBySlug = new Map(
+  editorialOverrides.map((override) => [override.slug, override]),
+);
 
 const bySlug = new Map(sourcePages.map((page) => [page.slug, page]));
 const byRelativeKey = new Map(
@@ -612,10 +621,28 @@ function timezoneContent(page) {
 }
 
 const contentPages = sourcePages.map((page) => {
-  if (page.kind === "relative") return relativeContent(page);
-  if (page.kind === "difference") return differenceContent(page);
-  return timezoneContent(page);
+  const generated =
+    page.kind === "relative"
+      ? relativeContent(page)
+      : page.kind === "difference"
+        ? differenceContent(page)
+        : timezoneContent(page);
+  const override = editorialOverrideBySlug.get(page.slug);
+  if (!override) return generated;
+  const { slug: _slug, ...editorial } = override;
+  return { ...generated, ...editorial };
 });
+
+for (const override of editorialOverrides) {
+  if (!bySlug.has(override.slug)) {
+    throw new Error(`Editorial override does not match a route: ${override.slug}`);
+  }
+  if (override.content?.sections?.length !== 3 || override.faq?.length !== 5) {
+    throw new Error(
+      `${override.slug}: editorial content requires three sections and five FAQs`,
+    );
+  }
+}
 
 function scorePage(page) {
   const commonAmounts = new Set([
