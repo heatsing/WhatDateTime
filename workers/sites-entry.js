@@ -14,6 +14,25 @@ function routeToken(route) {
   return route ? route.replaceAll("/", "__") : "index";
 }
 
+function extractEmbeddedFlight(html) {
+  const chunks = [];
+  const scripts =
+    html.matchAll(
+      /<script>self\.__next_f\.push\(([\s\S]*?)\)<\/script>/g,
+    );
+  for (const match of scripts) {
+    try {
+      const record = JSON.parse(match[1]);
+      if (record[0] === 1 && typeof record[1] === "string") {
+        chunks.push(record[1]);
+      }
+    } catch {
+      return null;
+    }
+  }
+  return chunks.length > 0 ? chunks.join("") : null;
+}
+
 async function getStaticPageResponse(request, env) {
   const url = new URL(request.url);
   const route = url.pathname.replace(/^\/+|\/+$/g, "");
@@ -64,7 +83,9 @@ async function getStaticPageResponse(request, env) {
   if (!payload) return null;
 
   const isRSC = request.headers.get("RSC") === "1";
-  const body = isRSC ? payload.rsc : payload.html;
+  const body = isRSC
+    ? payload.rsc ?? extractEmbeddedFlight(payload.html)
+    : payload.html;
 
   if (typeof body !== "string") {
     return null;
