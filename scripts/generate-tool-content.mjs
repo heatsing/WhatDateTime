@@ -370,7 +370,7 @@ function differenceContent(page) {
   const weekdays = countWeekdays(startDate, endDate);
   const weekendDays = days - weekdays;
   const inclusiveDays = days + 1;
-  const intro = `The interval from ${start} to ${end} spans ${days.toLocaleString("en-US")} elapsed calendar days, or ${weeks} complete ${weeks === 1 ? "week" : "weeks"} plus ${remainingDays} ${remainingDays === 1 ? "day" : "days"}. The calculator measures date boundaries rather than clock hours.`;
+  const intro = `The interval from ${start} to ${end} spans ${days.toLocaleString("en-US")} elapsed calendar ${days === 1 ? "day" : "days"}, or ${weeks} complete ${weeks === 1 ? "week" : "weeks"} plus ${remainingDays} ${remainingDays === 1 ? "day" : "days"}. The calculator measures date boundaries rather than clock hours.`;
   const differenceScenarios = [
     "project planning and milestone reviews",
     "age and anniversary calculations",
@@ -399,7 +399,10 @@ function differenceContent(page) {
   const faq = [
     {
       question: `How many days are between ${start} and ${end}?`,
-      answer: `There are ${days.toLocaleString("en-US")} elapsed calendar days between ${start} and ${end}.`,
+      answer:
+        days === 1
+          ? `There is 1 elapsed calendar day between ${start} and ${end}.`
+          : `There are ${days.toLocaleString("en-US")} elapsed calendar days between ${start} and ${end}.`,
     },
     {
       question: `What is the inclusive day count from ${start} through ${end}?`,

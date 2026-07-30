@@ -217,10 +217,11 @@ export function getPageResult(page: SEOPage, now: Date) {
   }
 
   if (page.kind === "difference") {
-    return `${calculateDateDifference(
+    const days = calculateDateDifference(
       new Date(`${page.start}T12:00:00`),
       new Date(`${page.end}T12:00:00`),
-    ).toLocaleString()} days`;
+    );
+    return `${days.toLocaleString()} ${days === 1 ? "day" : "days"}`;
   }
 
   const result = formatZonedTime(now, page.toZone);
