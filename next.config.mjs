@@ -5,7 +5,7 @@ const nextConfig = {
   compress: true,
   output: "standalone",
   env: {
-    CHRONOCRAFT_BUILD_TIME: "2026-01-01T12:00:00.000Z",
+    WHATDATETIME_BUILD_TIME: "2026-01-01T12:00:00.000Z",
   },
 };
 

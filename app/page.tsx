@@ -8,9 +8,9 @@ import { primaryTools, siteConfig } from "@/lib/site";
 import { webApplicationSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Date & Time Calculators",
+  title: { absolute: "WhatDateTime — Date & Time Calculators" },
   description:
-    "Calculate dates, ages, time differences, countdowns, and time zones with fast, free tools from ChronoCraft.",
+    "Calculate dates, ages, time differences, countdowns, and time zones with fast, free tools from WhatDateTime.",
   alternates: { canonical: "/" },
 };
 
@@ -26,7 +26,7 @@ export default function HomePage() {
     <>
       <JsonLd
         data={webApplicationSchema(
-          "ChronoCraft Date & Time Calculators",
+          "WhatDateTime Date & Time Calculators",
           siteConfig.description,
           "/",
         )}
@@ -136,7 +136,7 @@ export default function HomePage() {
                 Calendar-aware calculations
               </h3>
               <p className="mt-2">
-                ChronoCraft accounts for different month lengths, leap years,
+                WhatDateTime accounts for different month lengths, leap years,
                 weekdays, weekends, and daylight-saving transitions. Use it for
                 deadlines, schedules, travel, billing periods, or everyday
                 planning.

@@ -26,7 +26,7 @@ export function Footer() {
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-lime text-ink">
               <Icon name="spark" className="h-5 w-5" />
             </span>
-            <span className="font-display text-lg font-bold">ChronoCraft</span>
+            <span className="font-display text-lg font-bold">WhatDateTime</span>
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-7 text-white/55">
             Free, focused date and time tools made for quick answers and confident planning.
@@ -58,7 +58,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10 px-5 py-5 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} ChronoCraft. Time, made simple.
+        © {new Date().getFullYear()} WhatDateTime. Time, made simple.
       </div>
     </footer>
   );

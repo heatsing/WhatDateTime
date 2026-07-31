@@ -20,8 +20,8 @@ const display = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "ChronoCraft — Date & Time Calculators",
-    template: "%s | ChronoCraft",
+    default: "WhatDateTime — Date & Time Calculators",
+    template: "%s | WhatDateTime",
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
-    title: "ChronoCraft — Date & Time Calculators",
+    title: "WhatDateTime — Date & Time Calculators",
     description: siteConfig.description,
     url: siteConfig.url,
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChronoCraft — Date & Time Calculators",
+    title: "WhatDateTime — Date & Time Calculators",
     description: siteConfig.description,
   },
   robots: {

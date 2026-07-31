@@ -4,7 +4,7 @@ import path from "node:path";
 const appDir = path.resolve(".next/server/app");
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://chronocraft-time.heatsinghaiqing.workers.dev";
+  "https://whatdatetime.com";
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
 );

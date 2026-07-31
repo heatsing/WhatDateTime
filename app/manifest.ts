@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "ChronoCraft Date & Time Calculators",
-    short_name: "ChronoCraft",
+    name: "WhatDateTime Date & Time Calculators",
+    short_name: "WhatDateTime",
     description: "Fast, free date and time calculators.",
     start_url: "/",
     display: "standalone",

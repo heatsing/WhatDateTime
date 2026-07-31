@@ -18,12 +18,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/5 bg-[#fbfcf9]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="ChronoCraft home">
+        <Link href="/" className="flex items-center gap-2.5" aria-label="WhatDateTime home">
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-lime shadow-sm">
             <Icon name="spark" className="h-5 w-5" />
           </span>
           <span className="font-display text-lg font-bold tracking-tight text-ink">
-            Chrono<span className="text-fern">Craft</span>
+            What<span className="text-fern">DateTime</span>
           </span>
         </Link>
 

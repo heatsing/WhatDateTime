@@ -1,11 +1,11 @@
 export const siteConfig = {
-  name: "ChronoCraft",
-  shortName: "ChronoCraft",
+  name: "WhatDateTime",
+  shortName: "WhatDateTime",
   description:
     "Simple, accurate date and time calculators for everyday planning.",
   url:
     process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://chronocraft-time.heatsinghaiqing.workers.dev",
+    "https://whatdatetime.com",
 };
 
 export const primaryTools = [
