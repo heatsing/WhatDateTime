@@ -41,14 +41,14 @@ export default function HomePage() {
             Clear answers, right on time
           </span>
           <h1 className="mt-7 font-display text-5xl font-extrabold leading-[1.04] tracking-[-0.045em] text-ink sm:text-7xl">
-            What time
+            What time{" "}
             <span className="relative mx-2 inline-block">
               is it
               <svg className="absolute -bottom-2 left-0 w-full text-lime" viewBox="0 0 250 14" fill="none" aria-hidden="true">
                 <path d="M3 10C57 3 151 2 247 7" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
               </svg>
             </span>
-            right now?
+            {" "}right now?
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-base leading-8 text-ink/60 sm:text-lg">
             See the exact local time, date, and time zone at a glance—then use
