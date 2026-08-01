@@ -65,22 +65,22 @@ function DeepContent({ page, formula }: { page: SEOPage; formula: string }) {
         : ["IANA time-zone rules", "Daylight-saving offset handling", "Previous-day and next-day detection", "Side-by-side nearby time comparison"];
 
   return (
-    <section className="mx-auto max-w-5xl" aria-labelledby="calculation-explained">
+    <section className="mx-auto max-w-3xl" aria-labelledby="calculation-explained">
       <p className="text-sm font-semibold text-fern">Calculation guide</p>
       <h2 id="calculation-explained" className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
         Understanding {subject}
       </h2>
 
-      <article data-content-stage="calculation-basis" className="mt-8 border-t border-[#D9DEE5] pt-6">
+      <article data-content-stage="calculation-basis" className="mt-7 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-xl font-semibold text-ink">Calculation basis</h2>
-        <p className="mt-4 max-w-4xl text-base leading-8 text-ink/65">{page.intro}</p>
-        <p className="mt-4 border-l-4 border-fern bg-white px-4 py-3 font-medium leading-7 text-ink">{formula}</p>
+        <p className="mt-3 text-base leading-7 text-ink/65 sm:text-[17px] sm:leading-8">{page.intro}</p>
+        <p className="mt-4 border-l-4 border-fern bg-[#F4F8FB] px-4 py-3 text-sm font-medium leading-7 text-ink">{formula}</p>
       </article>
 
-      <article data-content-stage="how-to-use" className="mt-10 border-t border-[#D9DEE5] pt-6">
+      <article data-content-stage="how-to-use" className="mt-9 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-xl font-semibold text-ink">How to use this calculator</h2>
         <p className="mt-3 max-w-3xl text-base leading-8 text-ink/60">Follow these steps to reproduce the page answer or calculate a different value.</p>
-        <ol className="mt-7 grid gap-x-10 gap-y-7 md:grid-cols-2">
+        <ol className="mt-6 space-y-5">
           {steps.map(([title, text], index) => (
             <li key={title} className="grid grid-cols-[2.25rem_1fr] gap-4">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[#E7F0F8] text-xs font-bold text-fern">{index + 1}</span>
@@ -90,14 +90,14 @@ function DeepContent({ page, formula }: { page: SEOPage; formula: string }) {
         </ol>
       </article>
 
-      <article data-content-stage="practical-scenarios" className="mt-10 border-t border-[#D9DEE5] pt-6">
+      <article data-content-stage="practical-scenarios" className="mt-9 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-xl font-semibold text-ink">Practical applications</h2>
-        <ul className="mt-5 grid gap-x-8 gap-y-4 md:grid-cols-3">
-          {page.useCases.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-sm leading-7 text-ink/65">{item}</li>)}
+        <ul className="mt-4 space-y-2">
+          {page.useCases.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-sm leading-7 text-ink/65 sm:text-base">{item}</li>)}
         </ul>
       </article>
 
-      <div className="mt-10 grid gap-10 border-t border-[#D9DEE5] pt-6 lg:grid-cols-2">
+      <div className="mt-9 space-y-9 border-t border-[#D9DEE5] pt-6">
         <article>
           <h2 className="font-display text-xl font-semibold text-ink">Worked examples</h2>
           <ul className="mt-5 space-y-5">

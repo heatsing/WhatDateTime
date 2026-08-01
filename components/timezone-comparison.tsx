@@ -98,9 +98,9 @@ export function TimezoneComparison({
     <section
       data-content-stage="direct-answer"
       aria-labelledby="timezone-comparison-title"
-      className="rounded-xl border border-[#C8D0D8] bg-white p-5 sm:p-7"
+      className="border-y border-[#D9DEE5] bg-white py-7 sm:py-8"
     >
-      <div className="max-w-2xl">
+      <div className="text-center">
         <p className="text-sm font-semibold text-fern">
           Time comparison
         </p>
@@ -148,19 +148,19 @@ export function TimezoneComparison({
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[34rem] border-collapse text-left">
+          <table className="w-full table-fixed border-collapse text-left">
             <caption className="sr-only">
               Nearby time comparison for {page.fromCity} and {page.toCity}
             </caption>
             <thead>
               <tr className="border-b border-ink/10 text-xs font-bold uppercase tracking-[0.14em] text-fern">
-                <th scope="col" className="w-28 px-5 py-3 sm:px-6">
+                <th scope="col" className="w-[24%] px-2 py-3 sm:px-4">
                   Moment
                 </th>
-                <th scope="col" className="px-5 py-3 sm:px-6">
+                <th scope="col" className="break-words px-2 py-3 sm:px-4">
                   {page.fromCity}
                 </th>
-                <th scope="col" className="px-5 py-3 sm:px-6">
+                <th scope="col" className="break-words px-2 py-3 sm:px-4">
                   {page.toCity}
                 </th>
               </tr>
@@ -188,16 +188,16 @@ export function TimezoneComparison({
                   >
                     <th
                       scope="row"
-                      className="whitespace-nowrap px-5 py-4 text-xs font-extrabold uppercase tracking-[0.1em] sm:px-6"
+                      className="break-words px-2 py-4 text-xs font-extrabold uppercase tracking-[0.08em] sm:px-4"
                     >
                       {isSelected
                         ? "Selected"
                         : `${hourDelta > 0 ? "+" : ""}${hourDelta}h`}
                     </th>
-                    <td className="px-5 py-4 sm:px-6">
+                    <td className="break-words px-2 py-4 sm:px-4">
                       <time
                         dateTime={instant.toISOString()}
-                        className="font-display text-lg font-extrabold"
+                        className="font-display text-base font-extrabold sm:text-lg"
                       >
                         {nearbyOrigin.time}
                       </time>
@@ -207,10 +207,10 @@ export function TimezoneComparison({
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-4 sm:px-6">
+                    <td className="break-words px-2 py-4 sm:px-4">
                       <time
                         dateTime={instant.toISOString()}
-                        className="font-display text-lg font-extrabold"
+                        className="font-display text-base font-extrabold sm:text-lg"
                       >
                         {nearbyDestination.time}
                       </time>

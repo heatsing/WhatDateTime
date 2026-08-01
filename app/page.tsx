@@ -45,14 +45,14 @@ export default function HomePage() {
     <>
       <JsonLd data={webApplicationSchema("WhatDateTime Date & Time Calculators", siteConfig.description, "/")} />
 
-      <section className="border-b border-[#D9DEE5] bg-white px-5 py-10 sm:px-8 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl">
-            <h1 className="font-display text-4xl font-bold leading-tight tracking-[-0.035em] text-ink sm:text-5xl">What Date &amp; Time Is It?</h1>
-            <p className="mt-3 text-base leading-7 text-ink/60 sm:text-lg">Calculate dates, count days, and convert time zones instantly.</p>
+      <section className="border-b border-[#D9DEE5] bg-white px-5 py-8 sm:px-8 sm:py-10">
+        <div className="mx-auto max-w-[56rem]">
+          <div className="mx-auto max-w-2xl text-center">
+            <h1 className="font-display text-3xl font-bold leading-tight tracking-[-0.035em] text-ink sm:text-4xl">What Date &amp; Time Is It?</h1>
+            <p className="mt-2 text-base leading-7 text-ink/60 sm:text-lg">Calculate dates, count days, and convert time zones instantly.</p>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-xl border border-[#C8D0D8] bg-white lg:grid lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="mt-6 overflow-hidden rounded-xl border border-[#C8D0D8] bg-white lg:grid lg:grid-cols-[1.08fr_0.92fr]">
             <LiveClock />
             <QuickAnswer />
           </div>

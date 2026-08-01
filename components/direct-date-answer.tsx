@@ -54,25 +54,38 @@ export function DirectDateAnswer({
   return (
     <article
       data-content-stage="direct-answer"
-      className="mx-auto max-w-5xl rounded-xl border border-[#C8D0D8] bg-white px-5 py-7 sm:px-8 sm:py-8"
+      className="mx-auto max-w-3xl py-4 text-center sm:py-6"
       aria-labelledby="direct-date-answer-heading"
     >
       <header>
         <p className="text-sm font-semibold text-fern">Direct answer</p>
         <h2
           id="direct-date-answer-heading"
-          className="mt-2 font-display text-lg font-semibold leading-snug text-ink/65 sm:text-xl"
+          className="mx-auto mt-2 max-w-2xl font-display text-lg font-semibold leading-snug text-ink/65 sm:text-xl"
         >
           {prompt}
         </h2>
-        <p className="mt-3 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-4xl" aria-live="polite">{result}</p>
-        <time dateTime={format(resultDate, includesTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd")} className="sr-only">{result}</time>
+        <p
+          className="mt-3 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-[2.625rem]"
+          aria-live="polite"
+        >
+          {result}
+        </p>
+        <time
+          dateTime={format(
+            resultDate,
+            includesTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd",
+          )}
+          className="sr-only"
+        >
+          {result}
+        </time>
       </header>
 
       {!includesTime && <MonthCalendar resultDate={resultDate} />}
 
       <section
-        className={`${includesTime ? "mt-7" : "mt-6"} rounded-md border border-[#D9DEE5] bg-mist px-4 py-3`}
+        className={`${includesTime ? "mt-7" : "mt-6"} w-full rounded-md border-y border-[#D9DEE5] bg-[#F4F8FB] px-4 py-3.5`}
         aria-labelledby="calculation-basis-heading"
       >
         <h3
@@ -84,7 +97,7 @@ export function DirectDateAnswer({
         <p className="mt-1 text-sm leading-6 text-ink/65">{formula}</p>
       </section>
 
-      <div className="mt-6 grid gap-3 text-left sm:grid-cols-2">
+      <div className="mt-6 grid divide-y divide-[#D9DEE5] border-y border-[#D9DEE5] text-left sm:grid-cols-2 sm:divide-x sm:divide-y-0">
         <DateComparison
           label="Starting date"
           date={referenceDate}
@@ -115,11 +128,11 @@ function MonthCalendar({ resultDate }: { resultDate: Date }) {
 
   return (
     <section
-      className="mx-auto mt-6 max-w-sm overflow-hidden rounded-md border border-[#D9DEE5] bg-white"
+      className="mx-auto mt-6 w-full max-w-[22.75rem] overflow-hidden rounded-lg border border-[#D9DEE5] bg-white"
       aria-label={`${monthLabel} calendar`}
     >
       <table className="w-full table-fixed border-collapse">
-        <caption className="border-b border-[#D9DEE5] bg-mist px-4 py-2.5 font-display text-sm font-semibold text-ink">
+        <caption className="border-b border-[#C8D0D8] bg-[#E7F0F8] px-4 py-2.5 font-display text-sm font-semibold text-ink">
           {monthLabel}
         </caption>
         <thead>
@@ -184,7 +197,7 @@ function DateComparison({
 }) {
   return (
     <section
-      className="rounded-md border border-[#D9DEE5] bg-mist p-4 text-center"
+      className="min-w-0 px-4 py-5 text-center sm:px-6"
       aria-label={`${label}: ${formatLongDate(date, includesTime)}`}
     >
       <h3 className="text-xs font-semibold text-fern">
@@ -202,7 +215,7 @@ function DateComparison({
       {includesTime && (
         <time
           dateTime={format(date, "HH:mm")}
-          className="mt-3 inline-block rounded-full bg-white px-3 py-1 text-sm font-bold text-fern"
+          className="mt-3 inline-block rounded-md bg-[#E7F0F8] px-3 py-1 text-sm font-bold text-fern"
         >
           {format(date, "h:mm a")}
         </time>

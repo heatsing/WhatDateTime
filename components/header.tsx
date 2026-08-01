@@ -133,9 +133,9 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#D9DEE5] bg-white text-ink">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-5 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="shrink-0 font-display text-lg font-bold tracking-[-0.02em] text-ink" aria-label="WhatDateTime home">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink text-white">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8">
+        <Link href="/" className="shrink-0 rounded-md font-display text-base font-bold tracking-[-0.02em] text-white outline-none focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:text-lg" aria-label="WhatDateTime home">
           WhatDateTime
         </Link>
 
@@ -144,7 +144,7 @@ export function Header() {
             <div key={group.label} className="relative flex h-full items-center">
               <button
                 type="button"
-                className="inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-ink/70 hover:bg-mist hover:text-ink"
+                className="inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
                 aria-expanded={desktopMenu === group.label}
                 onClick={() => {
                   setPanel(null);
@@ -152,12 +152,12 @@ export function Header() {
                 }}
               >
                 {group.label}
-                <span aria-hidden="true" className="text-[10px] text-ink/40">▾</span>
+                <span aria-hidden="true" className="text-[10px] text-white/45">▾</span>
               </button>
               {desktopMenu === group.label && (
-                <div className="absolute left-0 top-[calc(100%-4px)] w-60 rounded-lg border border-[#D9DEE5] bg-white p-2 shadow-soft">
+                <div className="absolute left-0 top-full w-60 rounded-lg border border-ink/10 bg-white p-2 text-ink shadow-soft">
                   {group.links.map(([label, href]) => (
-                    <Link key={href} href={href} onClick={closeMenus} className="block rounded-md px-3 py-2.5 text-sm text-ink/70 hover:bg-mist hover:text-ink">
+                    <Link key={href} href={href} onClick={closeMenus} className="block rounded-md px-3 py-2.5 text-sm font-medium text-ink/70 outline-none hover:bg-mist hover:text-ink focus-visible:bg-mist focus-visible:ring-2 focus-visible:ring-fern">
                       {label}
                     </Link>
                   ))}
@@ -170,7 +170,7 @@ export function Header() {
         <div className="ml-auto flex items-center gap-1">
           <button
             type="button"
-            className="inline-flex h-10 items-center gap-2 rounded-md px-3 text-sm font-medium text-ink/70 hover:bg-mist hover:text-ink"
+            className="inline-flex h-10 w-10 items-center justify-center gap-2 rounded-md p-0 text-sm font-medium text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink lg:w-auto lg:px-3"
             onClick={() => {
               setDesktopMenu(null);
               setPanel((value) => value === "search" ? null : "search");
@@ -179,11 +179,11 @@ export function Header() {
             aria-expanded={panel === "search"}
           >
             <Icon name="search" className="h-4 w-4" />
-            <span className="hidden sm:inline">Search</span>
+            <span className="hidden lg:inline">Search</span>
           </button>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-md text-ink/70 hover:bg-mist hover:text-ink lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-md text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink lg:hidden"
             onClick={() => {
               setDesktopMenu(null);
               setPanel((value) => value === "menu" ? null : "menu");
@@ -197,7 +197,7 @@ export function Header() {
       </div>
 
       {panel === "search" && (
-        <div className="border-t border-[#D9DEE5] bg-white px-4 py-4">
+        <div className="border-t border-white/10 bg-white px-4 py-4 text-ink shadow-soft">
           <div className="mx-auto max-w-2xl">
             <form onSubmit={search} className="flex gap-2">
               <label htmlFor="site-search" className="sr-only">Search calculators and answers</label>
@@ -208,14 +208,14 @@ export function Header() {
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Try “30 days from today”…"
                 autoComplete="off"
-                className="h-11 min-w-0 flex-1 rounded-md border border-[#C8D0D8] bg-white px-3.5 text-sm text-ink outline-none focus:border-fern"
+                className="h-11 min-w-0 flex-1 rounded-md border border-ink/20 bg-white px-3.5 text-sm text-ink outline-none placeholder:text-ink/40 focus-visible:border-fern focus-visible:ring-2 focus-visible:ring-fern/25"
                 autoFocus
               />
-              <button className="h-11 rounded-md bg-fern px-5 text-sm font-semibold text-white hover:bg-[#12558B]">Search</button>
+              <button className="h-11 rounded-md bg-fern px-5 text-sm font-semibold text-white outline-none hover:bg-ink focus-visible:ring-2 focus-visible:ring-fern focus-visible:ring-offset-2">Search</button>
             </form>
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2" aria-label="Suggested tools">
               {suggestions.map(([label, href]) => (
-                <Link key={href} href={href} onClick={closeMenus} className="text-sm text-fern hover:underline">{label}</Link>
+                <Link key={href} href={href} onClick={closeMenus} className="rounded-sm text-sm font-medium text-fern outline-none hover:underline focus-visible:ring-2 focus-visible:ring-fern focus-visible:ring-offset-2">{label}</Link>
               ))}
             </div>
           </div>
@@ -223,14 +223,14 @@ export function Header() {
       )}
 
       {panel === "menu" && (
-        <nav className="border-t border-[#D9DEE5] bg-white px-4 py-5 lg:hidden" aria-label="Mobile navigation">
+        <nav className="border-t border-white/10 bg-white px-4 py-5 text-ink shadow-soft lg:hidden" aria-label="Mobile navigation">
           <div className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-3">
             {navigation.map((group) => (
               <section key={group.label}>
                 <h2 className="text-xs font-semibold uppercase tracking-[0.08em] text-ink/45">{group.label}</h2>
                 <div className="mt-2 grid">
                   {group.links.map(([label, href]) => (
-                    <Link key={href} href={href} onClick={closeMenus} className="-mx-2 rounded-md px-2 py-2.5 text-sm font-medium text-ink/75 hover:bg-mist hover:text-ink">{label}</Link>
+                    <Link key={href} href={href} onClick={closeMenus} className="-mx-2 rounded-md px-2 py-2.5 text-sm font-medium text-ink/75 outline-none hover:bg-mist hover:text-ink focus-visible:bg-mist focus-visible:ring-2 focus-visible:ring-fern">{label}</Link>
                   ))}
                 </div>
               </section>

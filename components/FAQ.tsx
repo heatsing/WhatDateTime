@@ -9,14 +9,14 @@ export function FAQ({
 }) {
   return (
     <section
-      className="mx-auto max-w-4xl"
+      className="mx-auto max-w-3xl"
       aria-labelledby="faq-heading"
       data-content-stage="faq"
     >
       <div>
         <h2
           id="faq-heading"
-          className="font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl"
+          className="font-display text-2xl font-semibold tracking-[-0.02em] text-ink"
         >
           Questions about this calculation
         </h2>
@@ -24,7 +24,7 @@ export function FAQ({
       {variant === "editorial" ? (
         <div className="mt-6 divide-y divide-[#E5E8EB] border-y border-[#D9DEE5] text-left">
           {faqs.map((faq) => (
-            <article key={faq.question} className="py-5">
+            <article key={faq.question} className="py-5 first:pt-4">
               <h3 className="font-display text-base font-semibold leading-7 text-ink sm:text-lg">
                 {faq.question}
               </h3>

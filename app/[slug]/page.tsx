@@ -93,21 +93,21 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="border-b border-[#E5E8EB] bg-white px-5 pb-14 pt-7 sm:px-8 sm:pb-16 sm:pt-9">
-        <div className="mx-auto max-w-6xl">
+      <section className="bg-white px-5 pb-12 pt-6 sm:px-8 sm:pb-14 sm:pt-8">
+        <div className="mx-auto max-w-3xl">
           <Breadcrumb current={seo.h1} />
-          <div className="mt-8 max-w-4xl">
+          <div className="mt-7 text-center">
             <p className="text-sm font-medium text-fern">
               {seo.eyebrow}
             </p>
-            <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-5xl">
+            <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-4xl">
               {seo.h1}
             </h1>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-ink/60">
+            <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-ink/60">
               {seo.description}
             </p>
           </div>
-          <div className="mt-9">
+          <div className="mt-7">
             {page.kind === "relative" ? (
               <DirectDateAnswer page={page} referenceDate={now} />
             ) : page.kind === "difference" ? (
@@ -116,7 +116,7 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
               <TimezoneComparison page={page} referenceDate={now} />
             )}
           </div>
-          <div className="mt-9">
+          <div className="mt-7">
             <CalculatorBox
               page={page}
               initialResult={result}
@@ -135,14 +135,14 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-mist px-5 py-14 sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-6xl">
+      <section className="border-t border-[#D9DEE5] bg-white px-5 py-12 sm:px-8 sm:py-14">
+        <div className="mx-auto max-w-3xl">
           <SEOContent data={landingSections} variant="deep" page={page} formula={formula} />
         </div>
       </section>
 
-      <section className="border-y border-[#E5E8EB] bg-white px-5 py-14 sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-6xl">
+      <section className="border-t border-[#D9DEE5] bg-white px-5 py-12 sm:px-8 sm:py-14">
+        <div className="mx-auto max-w-3xl">
           <RelatedLinks
             currentPage={page}
             pages={related}
@@ -151,7 +151,7 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-mist px-5 py-14 sm:px-8 sm:py-16">
+      <section className="border-t border-[#D9DEE5] bg-white px-5 py-12 sm:px-8 sm:py-14">
         <FAQ faqs={faqs} variant="editorial" />
       </section>
     </>

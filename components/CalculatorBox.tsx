@@ -1,7 +1,14 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { ArrowRight, Calculator, CalendarDays } from "lucide-react";
+import {
+  ArrowRight,
+  Calculator,
+  CalendarCheck2,
+  CalendarDays,
+  Clock3,
+  MapPin,
+} from "lucide-react";
 import { format } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import {
@@ -13,10 +20,9 @@ import {
   type RelativeUnit,
 } from "@/lib/dateCalculator";
 import type { SEOPage } from "@/lib/seoGenerator";
-import { ResultCard } from "@/components/ResultCard";
 
 const fieldClass =
-  "h-12 w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-sm font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
+  "h-12 min-w-0 max-w-full w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-sm font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
 
 const unitOptions: Array<{ value: RelativeUnit; label: string }> = [
   { value: "hour", label: "Hours" },
@@ -102,7 +108,7 @@ function RelativeForm({
   return (
     <CalculatorShell
       result={
-        <ResultCard
+        <CompactResult
           label="Calculated result"
           result={result}
           detail={`Calculated ${page.direction === "future" ? "forward" : "backward"} from ${format(parseLocalDate(date), "MMMM d, yyyy")}.`}
@@ -112,7 +118,7 @@ function RelativeForm({
     >
       <form onSubmit={calculate}>
         <FormHeading />
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(9rem,0.85fr)]">
           <Field label="Number" htmlFor="seo-amount">
             <input
               id="seo-amount"
@@ -144,8 +150,6 @@ function RelativeForm({
               ))}
             </select>
           </Field>
-        </div>
-        <div className="mt-4">
           <Field label="Starting date" htmlFor="seo-date">
             <input
               id="seo-date"
@@ -158,8 +162,8 @@ function RelativeForm({
               className={fieldClass}
             />
           </Field>
+          <CalculateButton />
         </div>
-        <CalculateButton />
       </form>
     </CalculatorShell>
   );
@@ -188,7 +192,7 @@ function DifferenceForm({
   return (
     <CalculatorShell
       result={
-        <ResultCard
+        <CompactResult
           label="Exact difference"
           result={result}
           detail="Standard elapsed-day count between the selected calendar dates."
@@ -198,7 +202,7 @@ function DifferenceForm({
     >
       <form onSubmit={calculate}>
         <FormHeading />
-        <div className="mt-6 space-y-4">
+        <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(10rem,0.7fr)]">
           <Field label="Start date" htmlFor="difference-start">
             <input
               id="difference-start"
@@ -223,8 +227,8 @@ function DifferenceForm({
               className={fieldClass}
             />
           </Field>
+          <CalculateButton label="Find difference" />
         </div>
-        <CalculateButton label="Find difference" />
       </form>
     </CalculatorShell>
   );
@@ -267,7 +271,7 @@ function TimezoneForm({
   return (
     <CalculatorShell
       result={
-        <ResultCard
+        <CompactResult
           label={`${page.toCity} local time`}
           result={result}
           detail={`Converted from ${page.fromCity} using daylight-saving rules for the selected date.`}
@@ -277,7 +281,7 @@ function TimezoneForm({
     >
       <form onSubmit={calculate}>
         <FormHeading />
-        <div className="mt-6">
+        <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(9rem,0.75fr)]">
           <Field label={`Date & time in ${page.fromCity}`} htmlFor="zone-date">
             <input
               id="zone-date"
@@ -290,12 +294,10 @@ function TimezoneForm({
               className={fieldClass}
             />
           </Field>
-        </div>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
           <ReadonlyZone label="From" city={page.fromCity} zone={page.fromZone} />
           <ReadonlyZone label="To" city={page.toCity} zone={page.toZone} />
+          <CalculateButton label="Convert time" />
         </div>
-        <CalculateButton label="Convert time" />
       </form>
     </CalculatorShell>
   );
@@ -309,11 +311,9 @@ function CalculatorShell({
   result: React.ReactNode;
 }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#C8D0D8] bg-white">
-      <div className="grid lg:grid-cols-2">
-        <div className="p-6 sm:p-8">{children}</div>
-        {result}
-      </div>
+    <div className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-[#C8D0D8] bg-[#EEF6FC]">
+      <div className="p-4 sm:p-6">{children}</div>
+      {result}
     </div>
   );
 }
@@ -321,11 +321,13 @@ function CalculatorShell({
 function FormHeading() {
   return (
     <div className="flex items-center gap-3">
-      <span className="grid h-9 w-9 place-items-center rounded-md bg-[#E7F0F8] text-fern">
-        <Calculator className="h-5 w-5" aria-hidden="true" />
+      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-white text-fern">
+        <Calculator className="h-4 w-4" aria-hidden="true" />
       </span>
       <div>
-        <p className="font-display font-semibold text-ink">Try another value</p>
+        <p className="font-display text-sm font-semibold text-ink">
+          Try another value
+        </p>
         <p className="text-xs text-ink/45">Change any field for a new result</p>
       </div>
     </div>
@@ -342,10 +344,10 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="min-w-0">
       <label
         htmlFor={htmlFor}
-        className="mb-2 block text-sm font-semibold text-ink"
+        className="mb-1.5 block text-sm font-semibold text-ink"
       >
         {label}
       </label>
@@ -356,7 +358,7 @@ function Field({
 
 function CalculateButton({ label = "Calculate" }: { label?: string }) {
   return (
-    <button className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-fern px-5 text-sm font-semibold text-white hover:bg-[#12558B]">
+    <button className="inline-flex h-12 w-full self-end items-center justify-center gap-2 rounded-md bg-fern px-4 text-sm font-semibold text-white hover:bg-[#12558B]">
       {label}
       <ArrowRight className="h-4 w-4" aria-hidden="true" />
     </button>
@@ -373,7 +375,7 @@ function ReadonlyZone({
   zone: string;
 }) {
   return (
-    <div className="rounded-md border border-[#D9DEE5] bg-mist p-3">
+    <div className="min-w-0 self-end rounded-md border border-[#C8D0D8] bg-white px-3 py-2">
       <p className="text-xs font-semibold text-fern">
         {label}
       </p>
@@ -382,6 +384,42 @@ function ReadonlyZone({
         {city}
       </p>
       <p className="mt-1 truncate text-[11px] text-ink/40">{zone}</p>
+    </div>
+  );
+}
+
+function CompactResult({
+  label,
+  result,
+  detail,
+  kind = "date",
+}: {
+  label: string;
+  result: string;
+  detail?: string;
+  kind?: "date" | "time" | "difference";
+}) {
+  const ResultIcon =
+    kind === "time" ? Clock3 : kind === "difference" ? MapPin : CalendarCheck2;
+
+  return (
+    <div
+      className="min-w-0 border-t border-[#C8D0D8] bg-white/70 px-4 py-3 text-ink sm:flex sm:items-center sm:gap-4 sm:px-6"
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <span className="inline-flex shrink-0 items-center gap-2 text-xs font-semibold text-fern">
+        <ResultIcon className="h-4 w-4" aria-hidden="true" />
+        {label}
+      </span>
+      <p className="mt-1 min-w-0 font-display text-base font-bold leading-6 text-ink sm:mt-0">
+        {result}
+      </p>
+      {detail && (
+        <p className="mt-1 min-w-0 text-xs leading-5 text-ink/50 sm:ml-auto sm:mt-0 sm:max-w-xs sm:text-right">
+          {detail}
+        </p>
+      )}
     </div>
   );
 }
