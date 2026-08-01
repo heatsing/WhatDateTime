@@ -14,6 +14,18 @@ function routeToken(route) {
   return route ? route.replaceAll("/", "__") : "index";
 }
 
+function canonicalRedirect(request) {
+  const url = new URL(request.url);
+  if (url.protocol === "https:" && url.hostname === "whatdatetime.com") {
+    return null;
+  }
+
+  url.protocol = "https:";
+  url.hostname = "whatdatetime.com";
+  url.port = "";
+  return Response.redirect(url.toString(), 308);
+}
+
 function extractEmbeddedFlight(html) {
   const chunks = [];
   const scripts =
@@ -107,6 +119,9 @@ async function getStaticPageResponse(request, env) {
 
 export default {
   async fetch(request, env) {
+    const redirect = canonicalRedirect(request);
+    if (redirect) return redirect;
+
     if (request.method === "GET" || request.method === "HEAD") {
       const staticResponse = await getStaticPageResponse(request, env);
       if (staticResponse) return staticResponse;

@@ -12,6 +12,15 @@ if (!/"name"\s*:\s*"whatdatetime"/.test(wranglerConfig)) {
 if (!/"main"\s*:\s*"workers\/sites-entry\.js"/.test(wranglerConfig)) {
   fail("wrangler.jsonc must deploy the static SEO Worker entrypoint");
 }
+for (const hostname of ["whatdatetime.com", "www.whatdatetime.com"]) {
+  if (
+    !new RegExp(
+      `"pattern"\\s*:\\s*"${hostname.replaceAll(".", "\\.")}"[\\s\\S]*?"custom_domain"\\s*:\\s*true`,
+    ).test(wranglerConfig)
+  ) {
+    fail(`wrangler.jsonc must bind the ${hostname} custom domain`);
+  }
+}
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
 );

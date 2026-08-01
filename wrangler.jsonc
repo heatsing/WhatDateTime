@@ -10,5 +10,15 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "whatdatetime.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.whatdatetime.com",
+      "custom_domain": true
+    }
+  ]
 }
