@@ -9,6 +9,9 @@ const wranglerConfig = readFileSync(path.resolve("wrangler.jsonc"), "utf8");
 if (!/"name"\s*:\s*"whatdatetime"/.test(wranglerConfig)) {
   fail('wrangler.jsonc must target the "whatdatetime" Worker');
 }
+if (!/"main"\s*:\s*"workers\/sites-entry\.js"/.test(wranglerConfig)) {
+  fail("wrangler.jsonc must deploy the static SEO Worker entrypoint");
+}
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
 );
