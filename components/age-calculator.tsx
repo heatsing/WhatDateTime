@@ -11,6 +11,7 @@ import {
   CalculatorFrame,
   CalculateButton,
   FieldLabel,
+  focusCalculatorResult,
   inputClass,
   ResultHeading,
 } from "@/components/calculator-ui";
@@ -40,6 +41,7 @@ export function AgeCalculator({ initialTime }: { initialTime: string }) {
   function submit(event: FormEvent) {
     event.preventDefault();
     setResult(calculateAge(new Date(`${birth}T12:00:00`), new Date(`${asOf}T12:00:00`)));
+    focusCalculatorResult();
   }
 
   return (
@@ -47,12 +49,12 @@ export function AgeCalculator({ initialTime }: { initialTime: string }) {
       result ? (
         <>
           <ResultHeading>{result.years} years old</ResultHeading>
-          <p className="mt-4 text-base font-semibold text-white/70">
+          <p className="mt-4 text-base font-semibold text-ink/65">
             {result.duration.years || 0} years, {result.duration.months || 0} months, {result.duration.days || 0} days
           </p>
-          <div className="mt-6 rounded-xl bg-white/[0.07] p-4">
+          <div className="mt-6 rounded-md border border-[#D9DEE5] bg-white p-4">
             <p className="font-display text-2xl font-bold">{result.days.toLocaleString()}</p>
-            <p className="text-xs text-white/45">total calendar days lived</p>
+            <p className="text-xs text-ink/50">total calendar days lived</p>
           </div>
         </>
       ) : (
@@ -61,10 +63,10 @@ export function AgeCalculator({ initialTime }: { initialTime: string }) {
     }>
       <form onSubmit={submit}>
         <FieldLabel htmlFor="birth-date">Date of birth</FieldLabel>
-        <input id="birth-date" type="date" required max={asOf} value={birth} onChange={(e) => setBirth(e.target.value)} className={inputClass} />
+        <input id="birth-date" name="birth-date" autoComplete="bday" type="date" required max={asOf} value={birth} onChange={(e) => setBirth(e.target.value)} className={inputClass} />
         <div className="mt-4">
           <FieldLabel htmlFor="age-date">Calculate age on</FieldLabel>
-          <input id="age-date" type="date" required min={birth} value={asOf} onChange={(e) => setAsOf(e.target.value)} className={inputClass} />
+          <input id="age-date" name="age-date" autoComplete="off" type="date" required min={birth} value={asOf} onChange={(e) => setAsOf(e.target.value)} className={inputClass} />
         </div>
         <CalculateButton label="Calculate age" />
       </form>

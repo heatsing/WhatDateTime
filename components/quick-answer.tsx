@@ -33,32 +33,36 @@ export function QuickAnswer() {
   }
 
   return (
-    <form
-      onSubmit={submit}
-      className="mx-auto mt-9 flex max-w-2xl flex-col gap-3 rounded-[1.5rem] border border-ink/10 bg-white p-3 shadow-soft sm:flex-row"
-    >
-      <label className="sr-only" htmlFor="quick-amount">Amount</label>
+    <form onSubmit={submit} className="p-5 sm:p-6">
+      <h2 className="text-lg font-semibold text-ink">Calculate a date</h2>
+      <p className="mt-1 text-sm text-ink/55">Choose an interval to get an exact date or time.</p>
+      <div className="mt-5 grid gap-3 sm:grid-cols-[7rem_1fr]">
+      <div><label className="mb-1.5 block text-sm font-medium text-ink" htmlFor="quick-amount">Amount</label>
       <input
+        name="quick-answer-amount"
+        autoComplete="off"
         id="quick-amount"
         value={amount}
         onChange={(event) => setAmount(Number(event.target.value))}
         min={1}
         type="number"
         inputMode="numeric"
-        className="h-13 w-full rounded-xl bg-mist px-4 text-base font-bold text-ink outline-none ring-fern/30 focus:ring-2 sm:w-24"
-      />
-      <label className="sr-only" htmlFor="quick-type">Calculation type</label>
+        className="h-12 w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-base font-semibold text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15"
+      /></div>
+      <div><label className="mb-1.5 block text-sm font-medium text-ink" htmlFor="quick-type">Calculation</label>
       <select
+        name="quick-answer-calculation"
         id="quick-type"
         value={type}
         onChange={(event) => setType(event.target.value as typeof type)}
-        className="h-13 min-w-0 flex-1 rounded-xl bg-mist px-4 text-base font-medium text-ink outline-none ring-fern/30 focus:ring-2"
+        className="h-12 w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-base font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15"
       >
         {options.map(([value, label]) => (
           <option key={value} value={value}>{label}</option>
         ))}
-      </select>
-      <button className="inline-flex h-13 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-sm font-bold text-white transition hover:bg-fern">
+      </select></div>
+      </div>
+      <button className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-fern px-6 text-sm font-semibold text-white hover:bg-[#12558B]">
         Get answer
         <Icon name="arrow" className="h-4 w-4" />
       </button>

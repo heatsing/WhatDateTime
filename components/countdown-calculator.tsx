@@ -8,6 +8,7 @@ import {
   CalculatorFrame,
   CalculateButton,
   FieldLabel,
+  focusCalculatorResult,
   inputClass,
   ResultHeading,
 } from "@/components/calculator-ui";
@@ -49,6 +50,7 @@ export function CountdownCalculator({ initialTime }: { initialTime: string }) {
     event.preventDefault();
     setTarget(new Date(input));
     setNow(new Date());
+    focusCalculatorResult();
   }
 
   const remaining = getRemaining(target, now);
@@ -63,12 +65,12 @@ export function CountdownCalculator({ initialTime }: { initialTime: string }) {
           <CountdownUnit label="Min" value={remaining.minutes} />
           <CountdownUnit label="Sec" value={remaining.seconds} accent />
         </div>
-        <p className="mt-5 text-xs text-white/45">Until {formatInTimeZone(target, displayZone, "MMM d, yyyy 'at' h:mm a")}</p>
+        <p className="mt-5 text-xs text-ink/50">Until {formatInTimeZone(target, displayZone, "MMM d, yyyy 'at' h:mm a")}</p>
       </>
     }>
       <form onSubmit={submit}>
         <FieldLabel htmlFor="countdown-target">Countdown to</FieldLabel>
-        <input id="countdown-target" type="datetime-local" required value={input} onChange={(e) => setInput(e.target.value)} className={inputClass} />
+        <input id="countdown-target" name="countdown-target" autoComplete="off" type="datetime-local" required value={input} onChange={(e) => setInput(e.target.value)} className={inputClass} />
         <p className="mt-3 text-xs leading-5 text-ink/45">The countdown runs in your device&apos;s local time and stays on this page.</p>
         <CalculateButton label="Start countdown" />
       </form>
@@ -78,9 +80,9 @@ export function CountdownCalculator({ initialTime }: { initialTime: string }) {
 
 function CountdownUnit({ label, value, accent = false }: { label: string; value: number; accent?: boolean }) {
   return (
-    <div className={`rounded-xl p-2 text-center sm:p-3 ${accent ? "bg-lime text-ink" : "bg-white/[0.07] text-white"}`}>
+    <div className={`rounded-md border p-2 text-center sm:p-3 ${accent ? "border-[#B8CCE0] bg-[#E7F0F8] text-ink" : "border-[#D9DEE5] bg-white text-ink"}`}>
       <p className="font-display text-xl font-extrabold tabular-nums sm:text-2xl">{String(value).padStart(2, "0")}</p>
-      <p className={`mt-1 text-[10px] uppercase tracking-wide ${accent ? "text-ink/55" : "text-white/40"}`}>{label}</p>
+      <p className="mt-1 text-[10px] uppercase tracking-wide text-ink/50">{label}</p>
     </div>
   );
 }

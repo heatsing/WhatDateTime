@@ -8,13 +8,11 @@ export function CalculatorFrame({
   result: React.ReactNode;
 }) {
   return (
-    <div className="overflow-hidden rounded-[1.75rem] border border-ink/[0.07] bg-white shadow-soft">
-      <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
+    <div className="overflow-hidden rounded-xl border border-[#C8D0D8] bg-white">
+      <div className="grid lg:grid-cols-[1fr_1fr]">
         <div className="p-6 sm:p-8">{children}</div>
-        <div className="relative min-h-72 overflow-hidden bg-ink p-6 text-white sm:p-8">
-          <div className="noise absolute inset-0 opacity-20" />
-          <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-lime/10 blur-2xl" />
-          <div className="relative flex h-full flex-col justify-center">{result}</div>
+        <div id="calculator-result" tabIndex={-1} aria-live="polite" aria-atomic="true" className="min-h-56 border-t border-[#D9DEE5] bg-[#F4F8FB] p-6 text-ink lg:border-l lg:border-t-0 sm:p-8">
+          <div className="flex h-full flex-col justify-center">{result}</div>
         </div>
       </div>
     </div>
@@ -32,11 +30,17 @@ export function FieldLabel({
 }
 
 export const inputClass =
-  "h-12 w-full rounded-xl border border-ink/10 bg-mist px-4 text-sm font-medium text-ink outline-none ring-fern/25 focus:ring-2";
+  "h-12 w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-sm font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
+
+export function focusCalculatorResult() {
+  window.requestAnimationFrame(() => {
+    document.getElementById("calculator-result")?.focus();
+  });
+}
 
 export function CalculateButton({ label = "Calculate" }: { label?: string }) {
   return (
-    <button className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 text-sm font-bold text-white transition hover:bg-fern">
+    <button className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-fern px-5 text-sm font-semibold text-white hover:bg-[#12558B]">
       {label} <Icon name="arrow" className="h-4 w-4" />
     </button>
   );
@@ -45,8 +49,8 @@ export function CalculateButton({ label = "Calculate" }: { label?: string }) {
 export function ResultHeading({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <span className="text-xs font-bold uppercase tracking-[0.18em] text-lime">Your result</span>
-      <div className="mt-3 font-display text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">{children}</div>
+      <span className="text-sm font-semibold text-fern">Result</span>
+      <div className="mt-2 font-display text-3xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-4xl">{children}</div>
     </>
   );
 }

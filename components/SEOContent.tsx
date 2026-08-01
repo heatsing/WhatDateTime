@@ -66,46 +66,46 @@ function DeepContent({ page, formula }: { page: SEOPage; formula: string }) {
 
   return (
     <section className="mx-auto max-w-5xl" aria-labelledby="calculation-explained">
-      <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">Calculation guide</p>
-      <h2 id="calculation-explained" className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+      <p className="text-sm font-semibold text-fern">Calculation guide</p>
+      <h2 id="calculation-explained" className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
         Understanding {subject}
       </h2>
 
-      <article data-content-stage="calculation-basis" className="mt-10 border-t border-ink/10 pt-8">
-        <h2 className="font-display text-2xl font-bold text-ink">Calculation basis</h2>
+      <article data-content-stage="calculation-basis" className="mt-8 border-t border-[#D9DEE5] pt-6">
+        <h2 className="font-display text-xl font-semibold text-ink">Calculation basis</h2>
         <p className="mt-4 max-w-4xl text-base leading-8 text-ink/65">{page.intro}</p>
-        <p className="mt-5 rounded-2xl bg-white px-5 py-4 font-semibold leading-7 text-ink shadow-sm">{formula}</p>
+        <p className="mt-4 border-l-4 border-fern bg-white px-4 py-3 font-medium leading-7 text-ink">{formula}</p>
       </article>
 
-      <article data-content-stage="how-to-use" className="mt-14 border-t border-ink/10 pt-8">
-        <h2 className="font-display text-2xl font-bold text-ink">How to use this calculator</h2>
+      <article data-content-stage="how-to-use" className="mt-10 border-t border-[#D9DEE5] pt-6">
+        <h2 className="font-display text-xl font-semibold text-ink">How to use this calculator</h2>
         <p className="mt-3 max-w-3xl text-base leading-8 text-ink/60">Follow these steps to reproduce the page answer or calculate a different value.</p>
         <ol className="mt-7 grid gap-x-10 gap-y-7 md:grid-cols-2">
           {steps.map(([title, text], index) => (
             <li key={title} className="grid grid-cols-[2.25rem_1fr] gap-4">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-lime text-xs font-extrabold text-ink">{index + 1}</span>
-              <div><h3 className="font-display text-lg font-bold text-ink">{title}</h3><p className="mt-2 text-sm leading-7 text-ink/60">{text}</p></div>
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-[#E7F0F8] text-xs font-bold text-fern">{index + 1}</span>
+              <div><h3 className="font-display text-base font-semibold text-ink">{title}</h3><p className="mt-1.5 text-sm leading-7 text-ink/60">{text}</p></div>
             </li>
           ))}
         </ol>
       </article>
 
-      <article data-content-stage="practical-scenarios" className="mt-14 border-t border-ink/10 pt-8">
-        <h2 className="font-display text-2xl font-bold text-ink">Practical applications</h2>
-        <ul className="mt-6 grid gap-4 md:grid-cols-3">
-          {page.useCases.map((item) => <li key={item} className="rounded-2xl bg-white p-5 text-sm leading-7 text-ink/65 shadow-sm">{item}</li>)}
+      <article data-content-stage="practical-scenarios" className="mt-10 border-t border-[#D9DEE5] pt-6">
+        <h2 className="font-display text-xl font-semibold text-ink">Practical applications</h2>
+        <ul className="mt-5 grid gap-x-8 gap-y-4 md:grid-cols-3">
+          {page.useCases.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-sm leading-7 text-ink/65">{item}</li>)}
         </ul>
       </article>
 
-      <div className="mt-14 grid gap-12 border-t border-ink/10 pt-8 lg:grid-cols-2">
+      <div className="mt-10 grid gap-10 border-t border-[#D9DEE5] pt-6 lg:grid-cols-2">
         <article>
-          <h2 className="font-display text-2xl font-bold text-ink">Worked examples</h2>
+          <h2 className="font-display text-xl font-semibold text-ink">Worked examples</h2>
           <ul className="mt-5 space-y-5">
-            {page.examples.map((item) => <li key={item} className="border-l-2 border-lime pl-4 text-sm leading-7 text-ink/65">{item}</li>)}
+            {page.examples.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-sm leading-7 text-ink/65">{item}</li>)}
           </ul>
         </article>
         <article>
-          <h2 className="font-display text-2xl font-bold text-ink">Advanced calculation features</h2>
+          <h2 className="font-display text-xl font-semibold text-ink">Advanced calculation features</h2>
           <ul className="mt-5 space-y-3">
             {features.map((item) => <li key={item} className="flex gap-3 text-sm leading-7 text-ink/65"><span className="font-bold text-fern" aria-hidden="true">✓</span>{item}</li>)}
           </ul>
@@ -187,7 +187,7 @@ function ContentGrid({
             <article
               key={section.title}
               data-content-stage={section.stage}
-              className="rounded-[1.5rem] border border-ink/[0.07] bg-white p-6 shadow-card"
+              className="border-t border-ink/15 bg-white py-6"
             >
               <span className="grid h-11 w-11 place-items-center rounded-2xl bg-lime/60 text-ink">
                 <SectionIcon className="h-5 w-5" aria-hidden="true" />

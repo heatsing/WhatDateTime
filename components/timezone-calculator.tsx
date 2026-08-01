@@ -7,6 +7,7 @@ import {
   CalculatorFrame,
   CalculateButton,
   FieldLabel,
+  focusCalculatorResult,
   inputClass,
   ResultHeading,
 } from "@/components/calculator-ui";
@@ -87,30 +88,31 @@ export function TimezoneCalculator({ initialTime }: { initialTime: string }) {
   function submit(event: FormEvent) {
     event.preventDefault();
     setInstant(fromZonedTime(input, source));
+    focusCalculatorResult();
   }
 
   return (
     <CalculatorFrame result={
       <>
         <ResultHeading>{result.time}</ResultHeading>
-        <p className="mt-3 text-lg font-semibold text-white/70">{result.date}</p>
-        <div className="mt-5 inline-flex w-fit rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-lime">
+        <p className="mt-3 text-lg font-semibold text-ink/65">{result.date}</p>
+        <div className="mt-5 inline-flex w-fit rounded-md border border-[#B8CCE0] bg-white px-3 py-1.5 text-xs font-semibold text-fern">
           {zoneLabel(target)} · {result.zone}
         </div>
       </>
     }>
       <form onSubmit={submit}>
         <FieldLabel htmlFor="zone-datetime">Date & time</FieldLabel>
-        <input id="zone-datetime" type="datetime-local" required value={input} onChange={(e) => setInput(e.target.value)} className={inputClass} />
+        <input id="zone-datetime" name="zone-datetime" autoComplete="off" type="datetime-local" required value={input} onChange={(e) => setInput(e.target.value)} className={inputClass} />
         <div className="mt-4">
           <FieldLabel htmlFor="source-zone">From time zone</FieldLabel>
-          <select id="source-zone" value={source} onChange={(e) => setSource(e.target.value)} className={inputClass}>
+          <select id="source-zone" name="source-zone" value={source} onChange={(e) => setSource(e.target.value)} className={inputClass}>
             {timeZones.map((zone) => <option key={zone} value={zone}>{zoneLabel(zone)}</option>)}
           </select>
         </div>
         <div className="mt-4">
           <FieldLabel htmlFor="target-zone">To time zone</FieldLabel>
-          <select id="target-zone" value={target} onChange={(e) => setTarget(e.target.value)} className={inputClass}>
+          <select id="target-zone" name="target-zone" value={target} onChange={(e) => setTarget(e.target.value)} className={inputClass}>
             {timeZones.map((zone) => <option key={zone} value={zone}>{zoneLabel(zone)}</option>)}
           </select>
         </div>

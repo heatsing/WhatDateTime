@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CalculatorDirectory } from "@/components/calculator-directory";
-import { Icon } from "@/components/icon";
+import { FaqSection } from "@/components/faq-section";
 import { JsonLd } from "@/components/json-ld";
 import { LiveClock } from "@/components/live-clock";
 import { QuickAnswer } from "@/components/quick-answer";
@@ -17,11 +17,25 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-const popular = [
-  { amount: "24", unit: "hours", phrase: "from now", href: "/24-hours-from-now", tone: "bg-lime/50" },
-  { amount: "30", unit: "days", phrase: "from today", href: "/30-days-from-today", tone: "bg-peach/80" },
-  { amount: "8", unit: "weeks", phrase: "from today", href: "/8-weeks-from-today", tone: "bg-[#DDEEFF]" },
-  { amount: "6", unit: "months", phrase: "from today", href: "/6-months-from-today", tone: "bg-[#E9E2FF]" },
+const quickActions = [
+  ["100 days from today", "/100-days-from-today"],
+  ["Days between dates", "/calculators/time-difference"],
+  ["Time zone converter", "/calculators/timezone-converter"],
+] as const;
+
+const commonCalculations = [
+  ["What date is 30 days from today?", "/30-days-from-today"],
+  ["What date is 90 days from today?", "/90-days-from-today"],
+  ["What time is 24 hours from now?", "/24-hours-from-now"],
+  ["What date was 7 days ago?", "/7-days-ago"],
+  ["What date is 8 weeks from today?", "/8-weeks-from-today"],
+  ["What date is 6 months from today?", "/6-months-from-today"],
+] as const;
+
+const homeFaqs = [
+  { question: "What can I calculate with WhatDateTime?", answer: "You can add or subtract calendar intervals, compare two dates and times, calculate age, run a countdown, and convert times between major time zones." },
+  { question: "Does the date calculator include weekends?", answer: "Calendar-day calculations include weekends. Business-day pages skip Saturdays and Sundays." },
+  { question: "Which time zone does the site use?", answer: "Current-time tools use your device time zone. Time-zone converters label both the source and destination zones explicitly." },
 ] as const;
 
 export default function HomePage() {
@@ -29,152 +43,54 @@ export default function HomePage() {
 
   return (
     <>
-      <JsonLd
-        data={webApplicationSchema(
-          "WhatDateTime Date & Time Calculators",
-          siteConfig.description,
-          "/",
-        )}
-      />
-      <section className="relative isolate overflow-hidden px-5 pb-20 pt-20 sm:px-8 sm:pb-28 sm:pt-28">
-        <div className="hero-grid absolute inset-0 -z-20" />
-        <div className="absolute left-1/2 top-10 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-lime/30 blur-3xl sm:h-96 sm:w-96" />
-        <div className="mx-auto max-w-4xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-fern/15 bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.13em] text-fern shadow-sm">
-            <Icon name="spark" className="h-4 w-4" />
-            Clear answers, right on time
-          </span>
-          <h1 className="mt-7 font-display text-5xl font-extrabold leading-[1.04] tracking-[-0.045em] text-ink sm:text-7xl">
-            What time{" "}
-            <span className="relative mx-2 inline-block">
-              is it
-              <svg className="absolute -bottom-2 left-0 w-full text-lime" viewBox="0 0 250 14" fill="none" aria-hidden="true">
-                <path d="M3 10C57 3 151 2 247 7" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
-              </svg>
-            </span>
-            {" "}right now?
-          </h1>
-          <p className="mx-auto mt-7 max-w-2xl text-base leading-8 text-ink/60 sm:text-lg">
-            See the exact local time, date, and time zone at a glance—then use
-            our calculators to plan what comes next.
-          </p>
-          <LiveClock />
-          <QuickAnswer />
-          <p className="mt-4 text-xs text-ink/40">Free forever · No sign-up · Works in your local time</p>
+      <JsonLd data={webApplicationSchema("WhatDateTime Date & Time Calculators", siteConfig.description, "/")} />
+
+      <section className="border-b border-[#D9DEE5] bg-white px-5 py-10 sm:px-8 sm:py-14">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl">
+            <h1 className="font-display text-4xl font-bold leading-tight tracking-[-0.035em] text-ink sm:text-5xl">What Date &amp; Time Is It?</h1>
+            <p className="mt-3 text-base leading-7 text-ink/60 sm:text-lg">Calculate dates, count days, and convert time zones instantly.</p>
+          </div>
+
+          <div className="mt-8 overflow-hidden rounded-xl border border-[#C8D0D8] bg-white lg:grid lg:grid-cols-[0.85fr_1.15fr]">
+            <LiveClock />
+            <QuickAnswer />
+          </div>
+
+          <nav className="mt-5 flex flex-wrap gap-x-5 gap-y-2" aria-label="Quick actions">
+            {quickActions.map(([label, href]) => (
+              <Link key={href} href={href} className="text-sm font-medium text-fern hover:underline">{label} →</Link>
+            ))}
+          </nav>
         </div>
       </section>
 
-      <section className="bg-mist px-5 py-20 sm:px-8 sm:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">Pick a tool</p>
-            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Everything you need to work with time
-            </h2>
-            <p className="mt-4 leading-7 text-ink/55">
-              Purpose-built calculators that keep the hard parts out of sight.
-            </p>
-          </div>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {primaryTools.map((tool) => (
-              <ToolCard key={tool.href} {...tool} />
-            ))}
-            <div className="relative overflow-hidden rounded-[1.75rem] bg-ink p-6 text-white shadow-card">
-              <div className="noise absolute inset-0 opacity-20" />
-              <div className="relative">
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-lime">
-                  <Icon name="spark" className="h-6 w-6" />
-                </span>
-                <h3 className="mt-5 font-display text-xl font-bold">Quick date answers</h3>
-                <p className="mt-2 text-sm leading-6 text-white/55">Explore hundreds of ready-made date and time answers.</p>
-                <Link href="/7-days-from-today" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-lime">
-                  Browse answers <Icon name="arrow" className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
+      <section className="px-5 py-12 sm:px-8 sm:py-14">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Popular tools</h2>
+          <p className="mt-2 text-sm text-ink/55">Start with the task you need to complete.</p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {primaryTools.map((tool) => <ToolCard key={tool.href} {...tool} />)}
           </div>
         </div>
+      </section>
+
+      <section className="border-y border-[#E5E8EB] bg-white px-5 py-12 sm:px-8 sm:py-14">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Common calculations</h2>
+          <div className="mt-5 grid border-t border-[#D9DEE5] sm:grid-cols-2">
+            {commonCalculations.map(([label, href]) => (
+              <Link key={href} href={href} className="border-b border-[#E5E8EB] py-3.5 text-sm font-medium text-ink/70 hover:text-fern sm:odd:pr-6 sm:even:pl-6">{label}</Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-12 sm:px-8 sm:py-14">
+        <FaqSection title="Frequently asked questions" faqs={homeFaqs} />
       </section>
 
       <CalculatorDirectory pages={directoryPages} />
-
-      <section className="px-5 py-20 sm:px-8 sm:py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">Popular right now</p>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">Answers in one tap</h2>
-            </div>
-            <Link href="/1-day-from-today" className="inline-flex items-center gap-2 text-sm font-bold text-fern">
-              Start with tomorrow <Icon name="arrow" className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {popular.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`group rounded-[1.5rem] p-6 transition hover:-translate-y-1 ${item.tone}`}
-              >
-                <span className="font-display text-4xl font-extrabold tracking-tight text-ink">{item.amount}</span>
-                <span className="ml-2 font-bold text-ink/70">{item.unit}</span>
-                <p className="mt-1 text-sm text-ink/55">{item.phrase}</p>
-                <span className="mt-8 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-ink transition group-hover:translate-x-1">
-                  <Icon name="arrow" className="h-4 w-4" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-mist px-5 py-20 sm:px-8 sm:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">
-              Date calculation, explained
-            </p>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Accurate answers for any date or time question
-            </h2>
-          </div>
-          <div className="grid gap-6 text-sm leading-7 text-ink/60 sm:grid-cols-2">
-            <div>
-              <h3 className="font-display text-lg font-bold text-ink">
-                Calendar-aware calculations
-              </h3>
-              <p className="mt-2">
-                WhatDateTime accounts for different month lengths, leap years,
-                weekdays, weekends, and daylight-saving transitions. Use it for
-                deadlines, schedules, travel, billing periods, or everyday
-                planning.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-display text-lg font-bold text-ink">
-                Thousands of direct answers
-              </h3>
-              <p className="mt-2">
-                Browse exact answers for days, hours, weeks, months, years,
-                business days, date differences, and international time zones.
-                Every page includes a calculator so you can adjust the result.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-20 sm:px-8 sm:py-24">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-fern px-6 py-12 text-center text-white sm:px-12">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-lime">Made for real life</p>
-          <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Deadlines, birthdays, trips, launches—plan all of it with confidence.
-          </h2>
-          <Link href="/calculators/date-calculator" className="mt-7 inline-flex items-center gap-2 rounded-full bg-lime px-6 py-3 text-sm font-bold text-ink transition hover:-translate-y-0.5">
-            Calculate a date <Icon name="arrow" className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

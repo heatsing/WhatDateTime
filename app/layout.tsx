@@ -1,21 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Manrope } from "next/font/google";
 import "@/app/globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { siteConfig } from "@/lib/site";
-
-const sans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const display = Manrope({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -53,15 +40,21 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FBFCF9",
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable}`}>
+    <html lang="en">
       <body className="font-sans antialiased">
+        <a
+          href="#main-content"
+          className="fixed left-4 top-3 z-[100] -translate-y-20 rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white focus:translate-y-0"
+        >
+          Skip to main content
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,64 +1,53 @@
 import Link from "next/link";
-import { Icon } from "@/components/icon";
 
-const calculatorLinks = [
-  ["Date Calculator", "/calculators/date-calculator"],
-  ["Time Difference", "/calculators/time-difference"],
-  ["Age Calculator", "/calculators/age-calculator"],
-  ["Countdown Timer", "/calculators/countdown"],
-  ["Time Zone Converter", "/calculators/timezone-converter"],
-] as const;
-
-const quickLinks = [
-  ["24 hours from now", "/24-hours-from-now"],
-  ["30 days from today", "/30-days-from-today"],
-  ["8 weeks from today", "/8-weeks-from-today"],
-  ["6 months from today", "/6-months-from-today"],
-  ["7 days ago", "/7-days-ago"],
+const groups = [
+  {
+    title: "Date tools",
+    links: [
+      ["Date Calculator", "/calculators/date-calculator"],
+      ["Days Between Dates", "/calculators/time-difference"],
+      ["Age Calculator", "/calculators/age-calculator"],
+    ],
+  },
+  {
+    title: "Time tools",
+    links: [
+      ["Current Time", "/"],
+      ["Time Zone Converter", "/calculators/timezone-converter"],
+      ["Countdown", "/calculators/countdown"],
+    ],
+  },
+  {
+    title: "Popular answers",
+    links: [
+      ["24 hours from now", "/24-hours-from-now"],
+      ["30 days from today", "/30-days-from-today"],
+      ["8 weeks from today", "/8-weeks-from-today"],
+    ],
+  },
 ] as const;
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-ink text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="border-t border-[#D9DEE5] bg-white text-ink">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Link href="/" className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-lime text-ink">
-              <Icon name="spark" className="h-5 w-5" />
-            </span>
-            <span className="font-display text-lg font-bold">WhatDateTime</span>
-          </Link>
-          <p className="mt-5 max-w-sm text-sm leading-7 text-white/55">
-            Free, focused date and time tools made for quick answers and confident planning.
-          </p>
+          <Link href="/" className="font-display text-lg font-bold tracking-[-0.02em]">WhatDateTime</Link>
+          <p className="mt-3 max-w-xs text-sm leading-6 text-ink/55">Accurate date and time tools for everyday planning.</p>
         </div>
-        <div>
-          <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-lime">Calculators</h2>
-          <ul className="mt-5 space-y-3">
-            {calculatorLinks.map(([label, href]) => (
-              <li key={href}>
-                <Link className="text-sm text-white/60 transition hover:text-white" href={href}>
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h2 className="text-xs font-bold uppercase tracking-[0.18em] text-lime">Popular answers</h2>
-          <ul className="mt-5 space-y-3">
-            {quickLinks.map(([label, href]) => (
-              <li key={href}>
-                <Link className="text-sm text-white/60 transition hover:text-white" href={href}>
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {groups.map((group) => (
+          <div key={group.title}>
+            <h2 className="text-sm font-semibold text-ink">{group.title}</h2>
+            <ul className="mt-3 space-y-2.5">
+              {group.links.map(([label, href]) => (
+                <li key={href}><Link className="text-sm text-ink/55 hover:text-fern hover:underline" href={href}>{label}</Link></li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      <div className="border-t border-white/10 px-5 py-5 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} WhatDateTime. Time, made simple.
+      <div className="border-t border-[#E5E8EB] px-5 py-5 text-center text-xs text-ink/45">
+        © {new Date().getFullYear()} WhatDateTime
       </div>
     </footer>
   );

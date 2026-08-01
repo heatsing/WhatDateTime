@@ -8,20 +8,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#10212B",
-        mist: "#F3F7F4",
-        sage: "#DCE9E1",
-        fern: "#166534",
-        lime: "#DFF35B",
-        peach: "#FFE5D4",
+        ink: "#1F2933",
+        mist: "#F6F7F8",
+        sage: "#E9EEF3",
+        fern: "#1769AA",
+        lime: "#E7F0F8",
+        peach: "#F2F4F6",
       },
       boxShadow: {
-        soft: "0 18px 55px rgba(16, 33, 43, 0.08)",
-        card: "0 1px 2px rgba(16, 33, 43, 0.05), 0 10px 30px rgba(16, 33, 43, 0.05)",
+        soft: "0 8px 24px rgba(31, 41, 51, 0.07)",
+        card: "0 1px 2px rgba(31, 41, 51, 0.05)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "sans-serif"],
-        display: ["var(--font-display)", "sans-serif"],
+        sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        display: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
     },
   },

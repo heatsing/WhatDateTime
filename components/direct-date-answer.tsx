@@ -54,48 +54,37 @@ export function DirectDateAnswer({
   return (
     <article
       data-content-stage="direct-answer"
-      className="mx-auto max-w-3xl rounded-[1.75rem] border border-ink/10 bg-white px-5 py-8 text-center shadow-card sm:px-10 sm:py-11"
+      className="mx-auto max-w-5xl rounded-xl border border-[#C8D0D8] bg-white px-5 py-7 sm:px-8 sm:py-8"
       aria-labelledby="direct-date-answer-heading"
     >
       <header>
-        <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-fern">
-          Direct answer
-        </p>
+        <p className="text-sm font-semibold text-fern">Direct answer</p>
         <h2
           id="direct-date-answer-heading"
-          className="mt-3 font-display text-xl font-bold leading-snug text-ink/70 sm:text-2xl"
+          className="mt-2 font-display text-lg font-semibold leading-snug text-ink/65 sm:text-xl"
         >
           {prompt}
         </h2>
-        <p className="mt-5" aria-live="polite">
-          <time
-            dateTime={format(
-              resultDate,
-              includesTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd",
-            )}
-            className="font-display text-3xl font-extrabold leading-tight tracking-[-0.035em] text-ink sm:text-5xl"
-          >
-            {result}
-          </time>
-        </p>
+        <p className="mt-3 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-4xl" aria-live="polite">{result}</p>
+        <time dateTime={format(resultDate, includesTime ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd")} className="sr-only">{result}</time>
       </header>
 
       {!includesTime && <MonthCalendar resultDate={resultDate} />}
 
       <section
-        className={`${includesTime ? "mt-8" : "mt-7"} rounded-2xl bg-mist px-5 py-4`}
+        className={`${includesTime ? "mt-7" : "mt-6"} rounded-md border border-[#D9DEE5] bg-mist px-4 py-3`}
         aria-labelledby="calculation-basis-heading"
       >
         <h3
           id="calculation-basis-heading"
           className="font-display text-sm font-bold text-fern"
         >
-          Calculation basis
+          Formula
         </h3>
         <p className="mt-1 text-sm leading-6 text-ink/65">{formula}</p>
       </section>
 
-      <div className="mt-9 grid gap-4 text-left sm:grid-cols-2">
+      <div className="mt-6 grid gap-3 text-left sm:grid-cols-2">
         <DateComparison
           label="Starting date"
           date={referenceDate}
@@ -126,11 +115,11 @@ function MonthCalendar({ resultDate }: { resultDate: Date }) {
 
   return (
     <section
-      className="mx-auto mt-8 max-w-sm overflow-hidden rounded-xl border border-ink/10 bg-white"
+      className="mx-auto mt-6 max-w-sm overflow-hidden rounded-md border border-[#D9DEE5] bg-white"
       aria-label={`${monthLabel} calendar`}
     >
       <table className="w-full table-fixed border-collapse">
-        <caption className="bg-sage/70 px-4 py-2.5 font-display text-base font-bold text-ink">
+        <caption className="border-b border-[#D9DEE5] bg-mist px-4 py-2.5 font-display text-sm font-semibold text-ink">
           {monthLabel}
         </caption>
         <thead>
@@ -165,7 +154,7 @@ function MonthCalendar({ resultDate }: { resultDate: Date }) {
                       aria-current={isResult ? "date" : undefined}
                       className={`mx-auto grid h-9 w-9 place-items-center rounded-full ${
                         isResult
-                          ? "bg-lime font-extrabold text-ink ring-2 ring-ink"
+                          ? "bg-fern font-bold text-white"
                           : isCurrentMonth
                             ? "font-semibold text-ink/80"
                             : "text-ink/35"
@@ -195,19 +184,19 @@ function DateComparison({
 }) {
   return (
     <section
-      className="rounded-2xl border border-ink/10 bg-mist/70 p-5 text-center"
+      className="rounded-md border border-[#D9DEE5] bg-mist p-4 text-center"
       aria-label={`${label}: ${formatLongDate(date, includesTime)}`}
     >
-      <h3 className="text-xs font-extrabold uppercase tracking-[0.16em] text-fern">
+      <h3 className="text-xs font-semibold text-fern">
         {label}
       </h3>
-      <p className="mt-4 font-display text-xl font-bold text-ink">
+      <p className="mt-3 font-display text-lg font-semibold text-ink">
         {format(date, "EEEE")}
       </p>
-      <p className="mt-1 font-display text-3xl font-extrabold tracking-[-0.03em] text-ink">
+      <p className="mt-1 font-display text-2xl font-bold tracking-[-0.02em] text-ink">
         {format(date, "MMMM d")}
       </p>
-      <p className="mt-1 font-display text-2xl font-bold text-ink/60">
+      <p className="mt-1 font-display text-xl font-semibold text-ink/55">
         {format(date, "yyyy")}
       </p>
       {includesTime && (

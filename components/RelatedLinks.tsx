@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import {
   getPageResult,
   getRelativePhrase,
@@ -38,16 +37,13 @@ export function RelatedLinks({
 
     return (
       <section aria-labelledby="related-pages" data-content-stage="nearby-results">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">
-          Nearby answers
-        </p>
-        <h2 id="related-pages" className="mt-3 font-display text-3xl font-bold text-ink">
+        <h2 id="related-pages" className="font-display text-2xl font-semibold text-ink sm:text-3xl">
           {heading}
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-ink/60">
           Compare nearby intervals without starting a new calculation.
         </p>
-        <div className="mt-7 overflow-x-auto rounded-[1.25rem] border border-ink/10 bg-white shadow-card">
+        <div className="mt-6 overflow-x-auto rounded-lg border border-[#D9DEE5] bg-white">
           <table className="w-full min-w-[32rem] border-collapse text-left text-sm sm:text-base">
             <thead className="bg-mist text-ink/65">
               <tr>
@@ -60,7 +56,7 @@ export function RelatedLinks({
                 if (page.kind !== "relative") return null;
                 const current = page.slug === currentPage.slug;
                 return (
-                  <tr key={page.slug} className={current ? "bg-sage/50 font-bold" : ""}>
+                  <tr key={page.slug} className={current ? "bg-[#E7F0F8] font-semibold" : ""}>
                     <td className="px-4 py-3.5 capitalize sm:px-5">
                       {current ? (
                         <span aria-current="page">{getRelativePhrase(page)}</span>
@@ -88,35 +84,28 @@ export function RelatedLinks({
       aria-labelledby="related-pages"
       data-content-stage="nearby-results"
     >
-      <div className="flex items-end justify-between gap-4">
+      <div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-lime">
-            Keep calculating
-          </p>
           <h2
             id="related-pages"
-            className="mt-3 font-display text-2xl font-bold text-white sm:text-3xl"
+            className="font-display text-2xl font-semibold text-ink sm:text-3xl"
           >
             {heading}
           </h2>
         </div>
       </div>
-      <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {pages.map((page) => (
           <Link
             key={page.slug}
             href={`/${page.slug}`}
-            className="group flex items-center justify-between gap-3 rounded-xl bg-white/[0.07] px-4 py-4 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white"
+            className="rounded-md border border-[#D9DEE5] bg-white px-4 py-3 text-sm font-medium text-ink/70 hover:border-[#AAB7C2] hover:text-fern"
           >
             <span>
               {`${page.kind === "relative"
                 ? getRelativePhrase(page)
                 : getSEOText(page).title.replace(/ - .+$/, "")} — ${getPageResult(page, referenceDate)}`}
             </span>
-            <ArrowUpRight
-              className="h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              aria-hidden="true"
-            />
           </Link>
         ))}
       </div>

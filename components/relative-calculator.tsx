@@ -48,7 +48,7 @@ export function RelativeCalculator({
   const phrase = getPagePhrase(slug, initialAmount);
 
   return (
-    <div className="overflow-hidden rounded-[1.75rem] border border-ink/[0.07] bg-white shadow-soft">
+    <div className="overflow-hidden rounded-xl border border-ink/15 bg-white">
       <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
         <form onSubmit={submit} className="p-6 sm:p-8">
           <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-fern">
@@ -79,7 +79,6 @@ export function RelativeCalculator({
         </form>
 
         <div className="relative flex min-h-64 items-center overflow-hidden bg-ink p-6 text-white sm:p-8">
-          <div className="noise absolute inset-0 opacity-20" />
           <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-lime/10 blur-2xl" />
           <div className="relative">
             <span className="text-xs font-bold uppercase tracking-[0.18em] text-lime">

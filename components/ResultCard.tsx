@@ -16,22 +16,19 @@ export function ResultCard({
 
   return (
     <div
-      data-content-stage="direct-answer"
-      className="relative flex h-full min-h-72 flex-col justify-center overflow-hidden bg-ink p-6 text-white sm:p-9"
+      className="flex h-full min-h-56 flex-col justify-center border-t border-[#D9DEE5] bg-[#F4F8FB] p-6 text-ink lg:border-l lg:border-t-0 sm:p-8"
       aria-live="polite"
     >
-      <div className="noise absolute inset-0 opacity-20" />
-      <div className="absolute -right-16 -top-16 h-60 w-60 rounded-full bg-lime/10 blur-3xl" />
-      <div className="relative">
-        <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-lime">
+      <div>
+        <span className="inline-flex items-center gap-2 text-sm font-semibold text-fern">
           <ResultIcon className="h-4 w-4" aria-hidden="true" />
           {label}
         </span>
-        <p className="mt-4 font-display text-3xl font-extrabold leading-tight tracking-[-0.03em] text-white sm:text-4xl">
+        <p className="mt-3 font-display text-3xl font-bold leading-tight tracking-[-0.025em] text-ink sm:text-4xl">
           {result}
         </p>
         {detail && (
-          <p className="mt-5 max-w-lg text-sm leading-6 text-white/50">
+          <p className="mt-4 max-w-lg text-sm leading-6 text-ink/55">
             {detail}
           </p>
         )}

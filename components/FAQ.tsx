@@ -9,34 +9,31 @@ export function FAQ({
 }) {
   return (
     <section
-      className="mx-auto max-w-3xl"
+      className="mx-auto max-w-4xl"
       aria-labelledby="faq-heading"
       data-content-stage="faq"
     >
-      <div className="text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">
-          Frequently asked
-        </p>
+      <div>
         <h2
           id="faq-heading"
-          className="mt-3 font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl"
+          className="font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl"
         >
           Questions about this calculation
         </h2>
       </div>
       {variant === "editorial" ? (
-        <div className="mt-8 divide-y divide-ink/10 border-y border-ink/10 text-left">
+        <div className="mt-6 divide-y divide-[#E5E8EB] border-y border-[#D9DEE5] text-left">
           {faqs.map((faq) => (
-            <article key={faq.question} className="py-7">
-              <h3 className="font-display text-lg font-bold leading-7 text-ink sm:text-xl">
+            <article key={faq.question} className="py-5">
+              <h3 className="font-display text-base font-semibold leading-7 text-ink sm:text-lg">
                 {faq.question}
               </h3>
-              <p className="mt-3 text-base leading-8 text-ink/65">{faq.answer}</p>
+              <p className="mt-2 text-sm leading-7 text-ink/65">{faq.answer}</p>
             </article>
           ))}
         </div>
       ) : (
-        <div className="mt-8 divide-y divide-ink/10 overflow-hidden rounded-[1.5rem] border border-ink/[0.07] bg-white px-5 shadow-card sm:px-7">
+        <div className="mt-8 divide-y divide-ink/10 border-y border-ink/15 bg-white">
           {faqs.map((faq) => (
             <details key={faq.question} className="group py-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-semibold text-ink">

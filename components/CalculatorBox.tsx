@@ -16,7 +16,7 @@ import type { SEOPage } from "@/lib/seoGenerator";
 import { ResultCard } from "@/components/ResultCard";
 
 const fieldClass =
-  "h-12 w-full rounded-xl border border-ink/10 bg-mist px-4 text-sm font-semibold text-ink outline-none ring-fern/25 transition focus:ring-2";
+  "h-12 w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-sm font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
 
 const unitOptions: Array<{ value: RelativeUnit; label: string }> = [
   { value: "hour", label: "Hours" },
@@ -116,6 +116,8 @@ function RelativeForm({
           <Field label="Number" htmlFor="seo-amount">
             <input
               id="seo-amount"
+              name="seo-amount"
+              autoComplete="off"
               type="number"
               inputMode="numeric"
               min={0}
@@ -128,6 +130,7 @@ function RelativeForm({
           <Field label="Unit" htmlFor="seo-unit">
             <select
               id="seo-unit"
+              name="seo-unit"
               value={unit}
               onChange={(event) =>
                 setUnit(event.target.value as RelativeUnit)
@@ -146,6 +149,8 @@ function RelativeForm({
           <Field label="Starting date" htmlFor="seo-date">
             <input
               id="seo-date"
+              name="seo-date"
+              autoComplete="off"
               type="date"
               required
               value={date}
@@ -197,6 +202,8 @@ function DifferenceForm({
           <Field label="Start date" htmlFor="difference-start">
             <input
               id="difference-start"
+              name="difference-start"
+              autoComplete="off"
               type="date"
               required
               value={start}
@@ -207,6 +214,8 @@ function DifferenceForm({
           <Field label="End date" htmlFor="difference-end">
             <input
               id="difference-end"
+              name="difference-end"
+              autoComplete="off"
               type="date"
               required
               value={end}
@@ -272,6 +281,8 @@ function TimezoneForm({
           <Field label={`Date & time in ${page.fromCity}`} htmlFor="zone-date">
             <input
               id="zone-date"
+              name="zone-date"
+              autoComplete="off"
               type="datetime-local"
               required
               value={dateTime}
@@ -298,9 +309,9 @@ function CalculatorShell({
   result: React.ReactNode;
 }) {
   return (
-    <div className="overflow-hidden rounded-[1.75rem] border border-ink/[0.07] bg-white shadow-soft">
-      <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
-        <div className="p-6 sm:p-9">{children}</div>
+    <div className="overflow-hidden rounded-xl border border-[#C8D0D8] bg-white">
+      <div className="grid lg:grid-cols-2">
+        <div className="p-6 sm:p-8">{children}</div>
         {result}
       </div>
     </div>
@@ -310,11 +321,11 @@ function CalculatorShell({
 function FormHeading() {
   return (
     <div className="flex items-center gap-3">
-      <span className="grid h-10 w-10 place-items-center rounded-xl bg-lime/70 text-ink">
+      <span className="grid h-9 w-9 place-items-center rounded-md bg-[#E7F0F8] text-fern">
         <Calculator className="h-5 w-5" aria-hidden="true" />
       </span>
       <div>
-        <p className="font-display font-bold text-ink">Calculate another value</p>
+        <p className="font-display font-semibold text-ink">Try another value</p>
         <p className="text-xs text-ink/45">Change any field for a new result</p>
       </div>
     </div>
@@ -345,7 +356,7 @@ function Field({
 
 function CalculateButton({ label = "Calculate" }: { label?: string }) {
   return (
-    <button className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 text-sm font-bold text-white transition hover:bg-fern">
+    <button className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-fern px-5 text-sm font-semibold text-white hover:bg-[#12558B]">
       {label}
       <ArrowRight className="h-4 w-4" aria-hidden="true" />
     </button>
@@ -362,8 +373,8 @@ function ReadonlyZone({
   zone: string;
 }) {
   return (
-    <div className="rounded-xl border border-ink/10 bg-mist p-3">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-fern">
+    <div className="rounded-md border border-[#D9DEE5] bg-mist p-3">
+      <p className="text-xs font-semibold text-fern">
         {label}
       </p>
       <p className="mt-1 flex items-center gap-1.5 text-sm font-bold text-ink">

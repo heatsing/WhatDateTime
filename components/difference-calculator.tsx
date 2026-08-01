@@ -11,6 +11,7 @@ import {
   CalculatorFrame,
   CalculateButton,
   FieldLabel,
+  focusCalculatorResult,
   inputClass,
   ResultHeading,
 } from "@/components/calculator-ui";
@@ -36,6 +37,7 @@ export function DifferenceCalculator({ initialTime }: { initialTime: string }) {
   function submit(event: FormEvent) {
     event.preventDefault();
     setResult(calculateDifference(new Date(start), new Date(end)));
+    focusCalculatorResult();
   }
 
   const d = result.duration;
@@ -61,10 +63,10 @@ export function DifferenceCalculator({ initialTime }: { initialTime: string }) {
     }>
       <form onSubmit={submit}>
         <FieldLabel htmlFor="diff-start">Start date & time</FieldLabel>
-        <input id="diff-start" type="datetime-local" required value={start} onChange={(e) => setStart(e.target.value)} className={inputClass} />
+        <input id="diff-start" name="diff-start" autoComplete="off" type="datetime-local" required value={start} onChange={(e) => setStart(e.target.value)} className={inputClass} />
         <div className="mt-4">
           <FieldLabel htmlFor="diff-end">End date & time</FieldLabel>
-          <input id="diff-end" type="datetime-local" required value={end} onChange={(e) => setEnd(e.target.value)} className={inputClass} />
+          <input id="diff-end" name="diff-end" autoComplete="off" type="datetime-local" required value={end} onChange={(e) => setEnd(e.target.value)} className={inputClass} />
         </div>
         <CalculateButton label="Find difference" />
       </form>
@@ -74,9 +76,9 @@ export function DifferenceCalculator({ initialTime }: { initialTime: string }) {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-white/[0.07] p-3">
-      <p className="font-display text-xl font-bold text-white">{value}</p>
-      <p className="mt-1 text-xs text-white/45">{label}</p>
+    <div className="rounded-md border border-[#D9DEE5] bg-white p-3">
+      <p className="font-display text-xl font-bold text-ink">{value}</p>
+      <p className="mt-1 text-xs text-ink/50">{label}</p>
     </div>
   );
 }

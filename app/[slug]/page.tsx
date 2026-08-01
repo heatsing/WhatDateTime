@@ -93,18 +93,17 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         ]}
       />
 
-      <section className="relative overflow-hidden px-5 pb-16 pt-10 sm:px-8 sm:pb-20 sm:pt-14">
-        <div className="absolute right-0 top-0 -z-10 h-96 w-96 rounded-full bg-lime/20 blur-3xl" />
+      <section className="border-b border-[#E5E8EB] bg-white px-5 pb-14 pt-7 sm:px-8 sm:pb-16 sm:pt-9">
         <div className="mx-auto max-w-6xl">
           <Breadcrumb current={seo.h1} />
-          <div className="mt-10 max-w-4xl">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-fern">
+          <div className="mt-8 max-w-4xl">
+            <p className="text-sm font-medium text-fern">
               {seo.eyebrow}
             </p>
-            <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.04em] text-ink sm:text-6xl">
+            <h1 className="mt-2 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-5xl">
               {seo.h1}
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-ink/60 sm:text-lg">
+            <p className="mt-3 max-w-2xl text-base leading-7 text-ink/60">
               {seo.description}
             </p>
           </div>
@@ -136,13 +135,13 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="bg-mist px-5 py-16 sm:px-8 sm:py-20">
+      <section className="bg-mist px-5 py-14 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-6xl">
           <SEOContent data={landingSections} variant="deep" page={page} formula={formula} />
         </div>
       </section>
 
-      <section className={`${page.kind === "relative" ? "bg-white" : "bg-ink"} px-5 py-16 sm:px-8 sm:py-20`}>
+      <section className="border-y border-[#E5E8EB] bg-white px-5 py-14 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-6xl">
           <RelatedLinks
             currentPage={page}
@@ -152,7 +151,7 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         </div>
       </section>
 
-      <section className="px-5 py-16 sm:px-8 sm:py-20">
+      <section className="bg-mist px-5 py-14 sm:px-8 sm:py-16">
         <FAQ faqs={faqs} variant="editorial" />
       </section>
     </>

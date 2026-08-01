@@ -16,13 +16,21 @@ html {
 
 body {
   margin: 0;
-  color: #10212b;
-  background: #fbfcf9;
+  color: #1f2933;
+  background: #f7f8fa;
+}
+
+button,
+a,
+input,
+select,
+summary {
+  touch-action: manipulation;
 }
 
 ::selection {
-  color: #10212b;
-  background: #dff35b;
+  color: #1f2933;
+  background: #dbeafe;
 }
 
 input,
@@ -36,16 +44,9 @@ input[type="datetime-local"] {
   min-height: 48px;
 }
 
-.hero-grid {
-  background-image:
-    linear-gradient(rgba(16, 33, 43, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 33, 43, 0.045) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: linear-gradient(to bottom, black 60%, transparent);
-}
-
-.noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+:focus-visible {
+  outline: 3px solid rgba(47, 128, 237, 0.45);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {

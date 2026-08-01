@@ -48,28 +48,28 @@ function CityCard({
   moment: LocalMoment;
 }) {
   return (
-    <article className="flex min-h-64 flex-col justify-between rounded-[1.5rem] border border-ink/10 bg-white p-6 shadow-card sm:p-8">
+    <article className="flex min-h-56 flex-col justify-between rounded-lg border border-[#D9DEE5] bg-white p-5 sm:p-6">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-fern">
+        <p className="text-xs font-semibold text-fern">
           {label}
         </p>
-        <h3 className="mt-2 font-display text-xl font-extrabold tracking-[-0.02em] text-ink sm:text-2xl">
+        <h3 className="mt-1 font-display text-xl font-semibold text-ink sm:text-2xl">
           {city}
         </h3>
       </div>
 
       <div className="mt-8">
-        <p className="font-display text-4xl font-extrabold tracking-[-0.04em] text-ink sm:text-5xl">
+        <p className="font-display text-4xl font-bold tracking-[-0.035em] text-ink">
           {moment.time}
         </p>
         <p className="mt-2 text-sm font-medium text-ink/65">
           {moment.fullDate}
         </p>
         <div className="mt-5 flex flex-wrap items-center gap-2 text-xs font-bold">
-          <span className="rounded-full bg-mist px-3 py-1.5 text-fern">
+          <span className="rounded-md border border-[#D9DEE5] bg-mist px-2.5 py-1 text-fern">
             {moment.abbreviation}
           </span>
-          <span className="rounded-full bg-mist px-3 py-1.5 text-ink/65">
+          <span className="rounded-md border border-[#D9DEE5] bg-mist px-2.5 py-1 text-ink/65">
             {moment.offset}
           </span>
         </div>
@@ -96,27 +96,31 @@ export function TimezoneComparison({
 
   return (
     <section
+      data-content-stage="direct-answer"
       aria-labelledby="timezone-comparison-title"
-      className="rounded-[1.5rem] bg-mist p-5 sm:p-8 lg:p-10"
+      className="rounded-xl border border-[#C8D0D8] bg-white p-5 sm:p-7"
     >
       <div className="max-w-2xl">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-fern">
+        <p className="text-sm font-semibold text-fern">
           Time comparison
         </p>
         <h2
           id="timezone-comparison-title"
-          className="mt-3 font-display text-3xl font-extrabold tracking-[-0.035em] text-ink sm:text-4xl"
+          className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl"
         >
           The same moment in both cities
         </h2>
+        <p className="mt-4 font-display text-xl font-semibold leading-snug text-ink sm:text-2xl">
+          {origin.time} in {page.fromCity} is {destination.time} in {page.toCity}.
+        </p>
       </div>
 
-      <div className="relative mt-8 grid gap-4 md:grid-cols-2 md:gap-6">
-        <div className="md:col-start-1 md:row-start-1">
+      <div className="mt-8 grid gap-4 md:grid-cols-2 md:gap-6">
+        <div className="md:col-start-1 md:row-start-2">
           <CityCard label="Origin" city={page.fromCity} moment={origin} />
         </div>
 
-        <div className="z-10 mx-auto flex w-fit items-center rounded-full bg-lime px-4 py-2 text-xs font-extrabold text-ink shadow-card md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
+        <div className="mx-auto flex w-fit items-center rounded-md border border-[#B8CCE0] bg-[#E7F0F8] px-3 py-1.5 text-xs font-semibold text-fern md:col-span-2 md:row-start-1">
           <span>{formatDifference(offsetDifference)}</span>
           <span className="mx-2 text-ink/35" aria-hidden="true">
             / 
@@ -124,7 +128,7 @@ export function TimezoneComparison({
           <span>{dayRelation}</span>
         </div>
 
-        <div className="md:col-start-2 md:row-start-1">
+        <div className="md:col-start-2 md:row-start-2">
           <CityCard
             label="Destination"
             city={page.toCity}
@@ -133,7 +137,7 @@ export function TimezoneComparison({
         </div>
       </div>
 
-      <div className="mt-8 overflow-hidden rounded-[1.5rem] border border-ink/10 bg-white shadow-card">
+      <div className="mt-6 overflow-hidden rounded-lg border border-[#D9DEE5] bg-white">
         <div className="border-b border-ink/10 px-5 py-4 sm:px-6">
           <h3 className="font-display text-lg font-extrabold text-ink">
             Nearby times
@@ -178,7 +182,7 @@ export function TimezoneComparison({
                     aria-current={isSelected ? "true" : undefined}
                     className={
                       isSelected
-                        ? "bg-lime text-ink"
+                        ? "bg-[#E7F0F8] text-ink"
                         : "border-t border-ink/10 text-ink"
                     }
                   >

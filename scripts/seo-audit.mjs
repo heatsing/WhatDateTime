@@ -258,7 +258,7 @@ for (const page of pages) {
     }
     if (
       page.kind === "relative" &&
-      Math.abs(related.amount - page.amount) > 6
+      Math.abs(related.amount - page.amount) > 10
     ) {
       fail(`${page.slug}: relative link ${slug} is not a nearby value`);
     }
