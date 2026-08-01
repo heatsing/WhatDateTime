@@ -5,6 +5,10 @@ const appDir = path.resolve(".next/server/app");
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   "https://whatdatetime.com";
+const wranglerConfig = readFileSync(path.resolve("wrangler.jsonc"), "utf8");
+if (!/"name"\s*:\s*"whatdatetime"/.test(wranglerConfig)) {
+  fail('wrangler.jsonc must target the "whatdatetime" Worker');
+}
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
 );
