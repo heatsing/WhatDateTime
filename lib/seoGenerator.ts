@@ -36,6 +36,10 @@ type EditorialPageData = {
   description: string;
   h1: string;
   eyebrow: string;
+  intro: string;
+  useCases: string[];
+  examples: string[];
+  tips: string[];
   faq: FAQItem[];
   relatedLinks: string[];
   updatedAt: string | null;

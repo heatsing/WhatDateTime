@@ -224,7 +224,7 @@ function durationDetail(page) {
 
 function relativeRelated(page) {
   const related = [];
-  for (let distance = 1; related.length < 6; distance += 1) {
+  for (let distance = 1; related.length < 10; distance += 1) {
     for (const amount of [
       page.amount - distance,
       page.amount + distance,
@@ -232,7 +232,7 @@ function relativeRelated(page) {
       if (amount < 1 || amount > maxByType[page.type]) continue;
       const match = byRelativeKey.get(`${page.type}:${amount}`);
       if (match && !related.includes(match.slug)) related.push(match.slug);
-      if (related.length === 6) break;
+      if (related.length === 10) break;
     }
   }
   return related;
@@ -810,6 +810,10 @@ for (const [type, file] of Object.entries(dataFileByType)) {
     description: page.description,
     h1: page.h1,
     eyebrow: page.eyebrow,
+    intro: page.intro,
+    useCases: page.useCases,
+    examples: page.examples,
+    tips: page.tips,
     faq: page.faq,
     relatedLinks: page.relatedLinks,
     updatedAt: page.updatedAt,
