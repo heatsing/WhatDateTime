@@ -58,7 +58,8 @@ async function getStaticPageResponse(request, env) {
     "robots.txt": "text/plain; charset=utf-8",
     "manifest.webmanifest": "application/manifest+json; charset=utf-8",
   };
-  if (metadataTypes[route]) {
+  const metadataType = metadataTypes[route] || (/^sitemap-\d+\.xml$/.test(route) ? "application/xml; charset=utf-8" : null);
+  if (metadataType) {
     const payload = await readCompressedAsset(
       env,
       new URL(`/cdn-cgi/metadata/${route}.json.gz`, url),
@@ -67,7 +68,7 @@ async function getStaticPageResponse(request, env) {
     return new Response(request.method === "HEAD" ? null : payload.body, {
       headers: {
         "Cache-Control": "public, max-age=0, must-revalidate",
-        "Content-Type": payload.contentType || metadataTypes[route],
+        "Content-Type": payload.contentType || metadataType,
       },
     });
   }

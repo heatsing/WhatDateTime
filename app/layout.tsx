@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@/app/globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
+        <GoogleAnalytics />
       </body>
     </html>
   );

@@ -229,7 +229,32 @@ for (const [description, matchingRoutes] of descriptions) {
 const sitemapPath = path.join(appDir, "sitemap.xml.body");
 if (!existsSync(sitemapPath)) fail("generated sitemap.xml is missing");
 const sitemap = readFileSync(sitemapPath, "utf8");
-const sitemapUrls = captureAll(sitemap, /<loc>(.*?)<\/loc>/g);
+const sitemapDocuments = [sitemap];
+let sitemapShardCount = 0;
+if (sitemap.includes("<sitemapindex")) {
+  const shardUrls = captureAll(sitemap, /<loc>(.*?)<\/loc>/g);
+  if (shardUrls.length === 0 || shardUrls.length !== new Set(shardUrls).size) {
+    fail("sitemap index is empty or contains duplicate shard URLs");
+  }
+  for (const shardUrl of shardUrls) {
+    const shardName = new URL(shardUrl).pathname.replace(/^\//, "");
+    if (!/^sitemap-\d+\.xml$/.test(shardName)) {
+      fail(`sitemap index contains an invalid shard URL: ${shardUrl}`);
+    }
+    const shardPath = path.join(appDir, `${shardName}.body`);
+    if (!existsSync(shardPath)) fail(`sitemap shard is missing: ${shardName}`);
+    const shard = readFileSync(shardPath, "utf8");
+    const shardEntries = captureAll(shard, /<loc>(.*?)<\/loc>/g);
+    if (shardEntries.length === 0 || shardEntries.length > 2_000) {
+      fail(`${shardName} must contain between 1 and 2000 URLs`);
+    }
+    sitemapDocuments.push(shard);
+  }
+  sitemapShardCount = shardUrls.length;
+}
+const sitemapUrls = sitemapDocuments
+  .slice(sitemapShardCount > 0 ? 1 : 0)
+  .flatMap((document) => captureAll(document, /<loc>(.*?)<\/loc>/g));
 if (sitemapUrls.length !== new Set(sitemapUrls).size) {
   fail("sitemap contains duplicate URLs");
 }
@@ -238,7 +263,7 @@ for (const route of routes) {
     fail(`/${route.route}: generated page is missing from sitemap`);
   }
 }
-if (/<lastmod>/.test(sitemap)) {
+if (sitemapDocuments.some((document) => /<lastmod>/.test(document))) {
   fail("sitemap contains lastModified without verified content dates");
 }
 
@@ -247,6 +272,7 @@ console.log(
     `Static HTML SEO check passed: ${checkedRoutes.size} indexable pages`,
     `${pageIndex.length} programmatic HTML files match the route inventory`,
     `${sitemapUrls.length} unique sitemap URLs`,
+    ...(sitemapShardCount > 0 ? [`${sitemapShardCount} sitemap shards linked from sitemap.xml`] : []),
     "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
     "duplicate titles: 0; duplicate descriptions: 0; unexpected noindex: 0",
   ].join("\n"),

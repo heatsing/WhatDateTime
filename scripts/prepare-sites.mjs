@@ -83,7 +83,7 @@ for (const relativePath of readdirSync(appOutput, {
   );
 }
 
-for (const [route, file, contentType] of [
+const metadataRoutes = [
   ["sitemap.xml", "sitemap.xml.body", "application/xml; charset=utf-8"],
   ["robots.txt", "robots.txt.body", "text/plain; charset=utf-8"],
   [
@@ -91,7 +91,19 @@ for (const [route, file, contentType] of [
     "manifest.webmanifest.body",
     "application/manifest+json; charset=utf-8",
   ],
-]) {
+];
+
+for (const file of readdirSync(appOutput)) {
+  if (/^sitemap-\d+\.xml\.body$/.test(file)) {
+    metadataRoutes.push([
+      file.replace(/\.body$/, ""),
+      file,
+      "application/xml; charset=utf-8",
+    ]);
+  }
+}
+
+for (const [route, file, contentType] of metadataRoutes) {
   const sourcePath = `${appOutput}/${file}`;
   if (!existsSync(sourcePath)) {
     throw new Error(`Missing static metadata output for /${route}`);
