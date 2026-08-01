@@ -2,8 +2,10 @@ import { Plus } from "lucide-react";
 
 export function FAQ({
   faqs,
+  variant = "accordion",
 }: {
   faqs: ReadonlyArray<{ question: string; answer: string }>;
+  variant?: "accordion" | "editorial";
 }) {
   return (
     <section
@@ -22,21 +24,34 @@ export function FAQ({
           Questions about this calculation
         </h2>
       </div>
-      <div className="mt-8 divide-y divide-ink/10 overflow-hidden rounded-[1.5rem] border border-ink/[0.07] bg-white px-5 shadow-card sm:px-7">
-        {faqs.map((faq) => (
-          <details key={faq.question} className="group py-5">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-semibold text-ink">
-              {faq.question}
-              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-mist text-fern transition group-open:rotate-45">
-                <Plus className="h-4 w-4" aria-hidden="true" />
-              </span>
-            </summary>
-            <p className="max-w-2xl pt-3 text-sm leading-7 text-ink/60">
-              {faq.answer}
-            </p>
-          </details>
-        ))}
-      </div>
+      {variant === "editorial" ? (
+        <div className="mt-8 divide-y divide-ink/10 border-y border-ink/10 text-left">
+          {faqs.map((faq) => (
+            <article key={faq.question} className="py-7">
+              <h3 className="font-display text-lg font-bold leading-7 text-ink sm:text-xl">
+                {faq.question}
+              </h3>
+              <p className="mt-3 text-base leading-8 text-ink/65">{faq.answer}</p>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-8 divide-y divide-ink/10 overflow-hidden rounded-[1.5rem] border border-ink/[0.07] bg-white px-5 shadow-card sm:px-7">
+          {faqs.map((faq) => (
+            <details key={faq.question} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-semibold text-ink">
+                {faq.question}
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-mist text-fern transition group-open:rotate-45">
+                  <Plus className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </summary>
+              <p className="max-w-2xl pt-3 text-sm leading-7 text-ink/60">
+                {faq.answer}
+              </p>
+            </details>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

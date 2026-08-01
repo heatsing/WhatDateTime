@@ -4,10 +4,13 @@ import { format } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { CalculatorBox } from "@/components/CalculatorBox";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { DirectDateAnswer } from "@/components/direct-date-answer";
+import { DirectDifferenceAnswer } from "@/components/direct-difference-answer";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/json-ld";
 import { RelatedLinks } from "@/components/RelatedLinks";
 import { SEOContent } from "@/components/SEOContent";
+import { TimezoneComparison } from "@/components/timezone-comparison";
 import {
   buildFAQs,
   getAllSEOPageIndex,
@@ -104,6 +107,15 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
             </p>
           </div>
           <div className="mt-9">
+            {page.kind === "relative" ? (
+              <DirectDateAnswer page={page} referenceDate={now} />
+            ) : page.kind === "difference" ? (
+              <DirectDifferenceAnswer page={page} referenceDate={now} />
+            ) : (
+              <TimezoneComparison page={page} referenceDate={now} />
+            )}
+          </div>
+          <div className="mt-9">
             <CalculatorBox
               page={page}
               initialResult={result}
@@ -124,11 +136,11 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
 
       <section className="bg-mist px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <SEOContent data={landingSections} />
+          <SEOContent data={landingSections} variant="editorial" />
         </div>
       </section>
 
-      <section className="bg-ink px-5 py-16 sm:px-8 sm:py-20">
+      <section className={`${page.kind === "relative" ? "bg-white" : "bg-ink"} px-5 py-16 sm:px-8 sm:py-20`}>
         <div className="mx-auto max-w-6xl">
           <RelatedLinks
             currentPage={page}
@@ -139,7 +151,7 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
       </section>
 
       <section className="px-5 py-16 sm:px-8 sm:py-20">
-        <FAQ faqs={faqs} />
+        <FAQ faqs={faqs} variant="editorial" />
       </section>
     </>
   );

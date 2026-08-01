@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CalculatorDirectory } from "@/components/calculator-directory";
 import { Icon } from "@/components/icon";
 import { JsonLd } from "@/components/json-ld";
 import { LiveClock } from "@/components/live-clock";
@@ -7,6 +8,7 @@ import { QuickAnswer } from "@/components/quick-answer";
 import { ToolCard } from "@/components/tool-card";
 import { primaryTools, siteConfig } from "@/lib/site";
 import { webApplicationSchema } from "@/lib/structured-data";
+import { getAllSEOPageIndex } from "@/lib/seoGenerator";
 
 export const metadata: Metadata = {
   title: { absolute: "WhatDateTime — Date & Time Calculators" },
@@ -23,6 +25,8 @@ const popular = [
 ] as const;
 
 export default function HomePage() {
+  const directoryPages = getAllSEOPageIndex();
+
   return (
     <>
       <JsonLd
@@ -91,6 +95,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <CalculatorDirectory pages={directoryPages} />
 
       <section className="px-5 py-20 sm:px-8 sm:py-24">
         <div className="mx-auto max-w-7xl">

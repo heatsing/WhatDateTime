@@ -7,6 +7,7 @@ type IconName =
   | "difference"
   | "globe"
   | "menu"
+  | "search"
   | "spark"
   | "timer";
 
@@ -47,6 +48,12 @@ export function Icon({
       </>
     ),
     menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+    search: (
+      <>
+        <circle cx="11" cy="11" r="7" />
+        <path d="m16.5 16.5 4 4" />
+      </>
+    ),
     spark: <path d="m12 3 1.4 4.2L18 9l-4.6 1.8L12 15l-1.4-4.2L6 9l4.6-1.8L12 3Zm6 12 .7 2.3L21 18l-2.3.7L18 21l-.7-2.3L15 18l2.3-.7L18 15Z" />,
     timer: (
       <>
