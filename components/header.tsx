@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Icon } from "@/components/icon";
 
 type NavigationGroup = {
@@ -96,6 +96,8 @@ function intentRoute(query: string) {
 
 export function Header() {
   const router = useRouter();
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
   const [panel, setPanel] = useState<"menu" | "search" | null>(null);
   const [desktopMenu, setDesktopMenu] = useState<string | null>(null);
   const [query, setQuery] = useState("");
@@ -133,13 +135,13 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink text-white">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8">
-        <Link href="/" className="shrink-0 rounded-md font-display text-base font-bold tracking-[-0.02em] text-white outline-none focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink sm:text-lg" aria-label="WhatDateTime home">
+    <header className={`sticky top-0 z-50 text-white ${isHomepage ? "border-0 bg-transparent" : "border-b border-white/10 bg-ink"}`}>
+      <div className={isHomepage ? "relative mx-auto flex h-12 max-w-[40rem] items-center bg-ink px-3" : "mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8"}>
+        <Link href="/" className={`${isHomepage ? "absolute left-1/2 -translate-x-1/2 text-sm" : "shrink-0 text-base sm:text-lg"} rounded-md font-display font-bold tracking-[-0.02em] text-white outline-none focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink`} aria-label="WhatDateTime home">
           WhatDateTime
         </Link>
 
-        <nav className="hidden h-full items-center gap-1 lg:flex" aria-label="Primary navigation">
+        <nav className={isHomepage ? "hidden" : "hidden h-full items-center gap-1 lg:flex"} aria-label="Primary navigation">
           {navigation.map((group) => (
             <div key={group.label} className="relative flex h-full items-center">
               <button
@@ -167,10 +169,10 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className={isHomepage ? "contents" : "ml-auto flex items-center gap-1"}>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center gap-2 rounded-md p-0 text-sm font-medium text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink lg:w-auto lg:px-3"
+            className={`${isHomepage ? "order-3 ml-auto" : "lg:w-auto lg:px-3"} inline-flex h-10 w-10 items-center justify-center gap-2 rounded-md p-0 text-sm font-medium text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink`}
             onClick={() => {
               setDesktopMenu(null);
               setPanel((value) => value === "search" ? null : "search");
@@ -179,11 +181,11 @@ export function Header() {
             aria-expanded={panel === "search"}
           >
             <Icon name="search" className="h-4 w-4" />
-            <span className="hidden lg:inline">Search</span>
+            <span className={isHomepage ? "hidden" : "hidden lg:inline"}>Search</span>
           </button>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-md text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink lg:hidden"
+            className={`${isHomepage ? "order-1 grid" : "grid lg:hidden"} h-10 w-10 place-items-center rounded-md text-white/75 outline-none hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink`}
             onClick={() => {
               setDesktopMenu(null);
               setPanel((value) => value === "menu" ? null : "menu");
