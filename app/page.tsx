@@ -215,11 +215,11 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+        <div className="mx-auto max-w-5xl">
           {directorySections.map((section) => <DirectoryBlock key={section.title} section={section} />)}
         </div>
 
-        <div className="grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+        <div className="mx-auto max-w-5xl">
           <section className="border-t border-[#D9DEE5] py-6 lg:py-8">
             <h2 className="flex items-center gap-2.5 font-display text-lg font-bold text-ink sm:text-xl xl:text-[22px]">
               <CircleHelp className="h-4 w-4 text-ink/65 sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
