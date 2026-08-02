@@ -44,6 +44,11 @@ input[type="datetime-local"] {
   min-height: 48px;
 }
 
+body:has(.home-reference-layout) > footer > div:first-child {
+  max-width: 44rem;
+  gap: 2rem;
+}
+
 :focus-visible {
   outline: 3px solid rgba(47, 128, 237, 0.45);
   outline-offset: 2px;

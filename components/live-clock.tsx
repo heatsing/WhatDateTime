@@ -64,12 +64,12 @@ export function LiveClock() {
 
   return (
     <section className="text-center" aria-label="Current local date and time">
-      <p className="min-h-9 whitespace-nowrap font-display text-[28px] font-bold leading-none tracking-[-0.025em] text-ink tabular-nums" aria-live="off">
+      <p className="min-h-10 whitespace-nowrap font-display text-[32px] font-bold leading-none tracking-[-0.025em] text-ink tabular-nums" aria-live="off">
         {clock.time}<span>:{clock.seconds}</span>
         {clock.period && <span className="ml-1.5 text-base font-bold tracking-normal">{clock.period}</span>}
       </p>
       <p className="mt-3 min-h-5 text-sm font-semibold text-ink/80">{clock.date}</p>
-      <p className="mt-1 min-h-4 text-[11px] text-ink/45">{clock.zone}</p>
+      <p className="mt-1 min-h-4 text-xs text-ink/45">{clock.zone}</p>
 
       <div
         className="relative mx-auto mt-4 h-[116px] w-[116px] rounded-full border-2 border-ink/70 bg-white"

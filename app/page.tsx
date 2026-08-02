@@ -168,15 +168,15 @@ const moreTools = [
 function DirectoryBlock({ section }: { section: DirectorySection }) {
   const Icon = section.icon;
   return (
-    <section className="border-t border-[#D9DEE5] py-5">
-      <h2 className="flex items-center gap-2 font-display text-[17px] font-bold text-ink">
+    <section className="border-t border-[#D9DEE5] py-6">
+      <h2 className="flex items-center gap-2 font-display text-lg font-bold text-ink sm:text-[19px]">
         <Icon className="h-4 w-4 text-ink/65" aria-hidden="true" />
         {section.title}
       </h2>
-      <p className="mt-2 text-[13px] leading-5 text-ink/70">{section.description}</p>
-      <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2">
+      <p className="mt-2 text-sm leading-6 text-ink/70">{section.description}</p>
+      <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-2.5">
         {section.links.map(([label, href]) => (
-          <Link key={`${label}-${href}`} href={href} className="min-w-0 text-[13px] font-medium leading-5 text-[#0878C9] hover:underline">
+          <Link key={`${label}-${href}`} href={href} className="min-w-0 text-sm font-medium leading-6 text-[#0878C9] hover:underline">
             {label}
           </Link>
         ))}
@@ -193,10 +193,10 @@ export default function HomePage() {
         faqSchema(homeFaqs),
       ]} />
 
-      <div className="home-reference-layout mx-auto max-w-[40rem] bg-white px-5 pb-8 sm:px-8">
-        <section className="pb-6 pt-5 text-center">
-          <h1 className="font-display text-[27px] font-bold leading-tight tracking-[-0.025em] text-ink">WhatDateTime</h1>
-          <p className="mx-auto mt-2 max-w-sm text-[12px] leading-5 text-ink/65">
+      <div className="home-reference-layout mx-auto max-w-[44rem] bg-white px-5 pb-10 sm:px-8">
+        <section className="pb-7 pt-6 text-center">
+          <h1 className="font-display text-3xl font-bold leading-tight tracking-[-0.025em] text-ink sm:text-[32px]">WhatDateTime</h1>
+          <p className="mx-auto mt-2.5 max-w-md text-[13px] leading-5 text-ink/65">
             Your source for time, time zones, and date tools.<br />
             Accurate. Fast. Always up to date.
           </p>
@@ -204,9 +204,9 @@ export default function HomePage() {
           <HomeTimezoneConverter />
         </section>
 
-        <section className="border-t border-[#D9DEE5] py-5">
-          <h2 className="font-display text-[17px] font-bold text-ink">Welcome to WhatDateTime</h2>
-          <div className="mt-3 space-y-3 text-[13px] leading-6 text-ink/75">
+        <section className="border-t border-[#D9DEE5] py-6">
+          <h2 className="font-display text-lg font-bold text-ink sm:text-[19px]">Welcome to WhatDateTime</h2>
+          <div className="mt-3 space-y-4 text-sm leading-7 text-ink/75">
             <p>Find current local time, compare time zones, and calculate dates with our free online tools.</p>
             <p>Whether you&apos;re planning a meeting, scheduling an event, or checking a future deadline, every answer is designed to be quick and clear.</p>
             <p>Times use your local time by default. Explore the directories below to convert time zones, calculate durations, add or subtract dates, and more.</p>
@@ -215,44 +215,44 @@ export default function HomePage() {
 
         {directorySections.map((section) => <DirectoryBlock key={section.title} section={section} />)}
 
-        <section className="border-t border-[#D9DEE5] py-5">
-          <h2 className="flex items-center gap-2 font-display text-[17px] font-bold text-ink">
+        <section className="border-t border-[#D9DEE5] py-6">
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold text-ink sm:text-[19px]">
             <CircleHelp className="h-4 w-4 text-ink/65" aria-hidden="true" />
             Frequently Asked Questions
           </h2>
           <div className="mt-3 border-y border-[#D9DEE5]">
             {homeFaqs.map((faq) => (
-              <details key={faq.question} className="group border-b border-[#E5E8EB] py-2.5 last:border-b-0">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[13px] font-medium text-ink">
+              <details key={faq.question} className="group border-b border-[#E5E8EB] py-3 last:border-b-0">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium text-ink">
                   {faq.question}
                   <span className="text-base text-ink/55 group-open:rotate-45" aria-hidden="true">+</span>
                 </summary>
-                <p className="pt-2 text-[12px] leading-5 text-ink/65">{faq.answer}</p>
+                <p className="pt-2 text-[13px] leading-6 text-ink/65 sm:text-sm">{faq.answer}</p>
               </details>
             ))}
           </div>
         </section>
 
-        <section className="border-t border-[#D9DEE5] py-5">
-          <h2 className="flex items-center gap-2 font-display text-[17px] font-bold text-ink">
+        <section className="border-t border-[#D9DEE5] py-6">
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold text-ink sm:text-[19px]">
             <Star className="h-4 w-4 text-[#E5A700]" aria-hidden="true" />
             More Tools You&apos;ll Love
           </h2>
-          <p className="mt-2 text-[13px] text-ink/70">Explore more free tools for everyday date and time planning.</p>
-          <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-2">
+          <p className="mt-2 text-sm leading-6 text-ink/70">Explore more free tools for everyday date and time planning.</p>
+          <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-2.5">
             {moreTools.map(([label, href]) => (
-              <Link key={label} href={href} className="text-[13px] font-medium leading-5 text-[#0878C9] hover:underline">{label}</Link>
+              <Link key={label} href={href} className="text-sm font-medium leading-6 text-[#0878C9] hover:underline">{label}</Link>
             ))}
           </div>
         </section>
 
-        <section className="border-t border-[#D9DEE5] py-5">
-          <h2 className="flex items-center gap-2 font-display text-[17px] font-bold text-ink">
+        <section className="border-t border-[#D9DEE5] py-6">
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold text-ink sm:text-[19px]">
             <ShieldCheck className="h-4 w-4 text-ink/65" aria-hidden="true" />
             Trusted, Accurate, Always Free
           </h2>
-          <p className="mt-3 text-[13px] leading-6 text-ink/75">WhatDateTime provides accurate time, time-zone, and date tools without registration or hidden fees.</p>
-          <div className="mt-4 grid grid-cols-3 gap-2 rounded-md bg-[#E8F4FD] px-3 py-3 text-center text-[10px] font-semibold text-ink/70">
+          <p className="mt-3 text-sm leading-7 text-ink/75">WhatDateTime provides accurate time, time-zone, and date tools without registration or hidden fees.</p>
+          <div className="mt-4 grid grid-cols-3 gap-2 rounded-md bg-[#E8F4FD] px-3 py-3.5 text-center text-[11px] font-semibold leading-4 text-ink/70 sm:text-xs">
             <span>● Accurate &amp; Reliable</span>
             <span>● Completely Free</span>
             <span>● No Sign-Up Required</span>

@@ -37,7 +37,7 @@ export function HomeTimezoneConverter() {
 
   return (
     <section className="mt-6 rounded-md bg-[#E8F4FD] px-4 py-4 sm:px-5" aria-labelledby="home-timezone-heading">
-      <h2 id="home-timezone-heading" className="text-center text-xs font-bold uppercase tracking-[0.02em] text-[#0878C9]">
+      <h2 id="home-timezone-heading" className="text-center text-[13px] font-bold uppercase tracking-[0.02em] text-[#0878C9]">
         Time Zone Converter
       </h2>
       <form onSubmit={convert} className="mt-3 grid items-center gap-2 sm:grid-cols-[1fr_auto_1fr_auto]">
@@ -46,7 +46,7 @@ export function HomeTimezoneConverter() {
           id="home-from-city"
           value={from}
           onChange={(event) => setFrom(event.target.value)}
-          className="h-10 min-w-0 rounded border border-[#D6E2EA] bg-white px-3 text-xs text-ink outline-none focus:border-[#0878C9]"
+          className="h-10 min-w-0 rounded border border-[#D6E2EA] bg-white px-3 text-[13px] text-ink outline-none focus:border-[#0878C9]"
         >
           {cities.map((city) => <option key={city}>{city}</option>)}
         </select>
@@ -56,16 +56,16 @@ export function HomeTimezoneConverter() {
           id="home-to-city"
           value={to}
           onChange={(event) => setTo(event.target.value)}
-          className="h-10 min-w-0 rounded border border-[#D6E2EA] bg-white px-3 text-xs text-ink outline-none focus:border-[#0878C9]"
+          className="h-10 min-w-0 rounded border border-[#D6E2EA] bg-white px-3 text-[13px] text-ink outline-none focus:border-[#0878C9]"
         >
           {cities.map((city) => <option key={city}>{city}</option>)}
         </select>
-        <button type="submit" className="h-10 rounded bg-[#0878C9] px-5 text-xs font-bold text-white hover:bg-[#0667AD] focus-visible:ring-2 focus-visible:ring-[#0878C9] focus-visible:ring-offset-2">
+        <button type="submit" className="h-10 rounded bg-[#0878C9] px-5 text-[13px] font-bold text-white hover:bg-[#0667AD] focus-visible:ring-2 focus-visible:ring-[#0878C9] focus-visible:ring-offset-2">
           Convert
         </button>
       </form>
       <div className="mt-3 text-center">
-        <Link href="/calculators/timezone-converter" className="text-xs font-semibold text-[#0878C9] hover:underline">
+        <Link href="/calculators/timezone-converter" className="text-[13px] font-semibold text-[#0878C9] hover:underline">
           World Clock →
         </Link>
       </div>
