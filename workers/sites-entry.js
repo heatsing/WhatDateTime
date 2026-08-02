@@ -53,6 +53,23 @@ async function getStaticPageResponse(request, env) {
     return env.ASSETS.fetch(request);
   }
 
+  if (route === "BingSiteAuth.xml") {
+    const assetResponse = await env.ASSETS.fetch(
+      new URL("/BingSiteAuth.xml", url),
+    );
+    if (!assetResponse.ok || !assetResponse.body) {
+      await assetResponse.body?.cancel();
+      return null;
+    }
+
+    return new Response(request.method === "HEAD" ? null : assetResponse.body, {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        "Content-Type": "application/xml; charset=utf-8",
+      },
+    });
+  }
+
   const metadataTypes = {
     "sitemap.xml": "application/xml; charset=utf-8",
     "robots.txt": "text/plain; charset=utf-8",
