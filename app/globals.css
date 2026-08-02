@@ -45,8 +45,8 @@ input[type="datetime-local"] {
 }
 
 body:has(.home-reference-layout) > footer > div:first-child {
-  max-width: 44rem;
-  gap: 2rem;
+  max-width: 90rem;
+  gap: 3rem;
 }
 
 :focus-visible {
