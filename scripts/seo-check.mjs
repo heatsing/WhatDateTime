@@ -84,6 +84,16 @@ for (const routeEntry of routes) {
   if (pageTitles.length !== 1 || !pageTitles[0].trim()) {
     fail(`/${route}: expected one non-empty title`);
   }
+  if (programmatic) {
+    const title = pageTitles[0].trim();
+    const brandSuffix = "| WhatDateTime";
+    const brandSuffixCount = title.split(brandSuffix).length - 1;
+    if (!title.endsWith(`? ${brandSuffix}`) || brandSuffixCount !== 1) {
+      fail(
+        `/${route}: expected one question-style title with one WhatDateTime suffix`,
+      );
+    }
+  }
   if (pageDescriptions.length !== 1 || !pageDescriptions[0].trim()) {
     fail(`/${route}: expected one non-empty meta description`);
   }
@@ -274,6 +284,7 @@ console.log(
     `${sitemapUrls.length} unique sitemap URLs`,
     ...(sitemapShardCount > 0 ? [`${sitemapShardCount} sitemap shards linked from sitemap.xml`] : []),
     "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
+    "all programmatic titles use a question format with one WhatDateTime suffix",
     "duplicate titles: 0; duplicate descriptions: 0; unexpected noindex: 0",
   ].join("\n"),
 );

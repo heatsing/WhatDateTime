@@ -148,6 +148,18 @@ function titleCase(value) {
   return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function relativeQuestionTitle(page, phraseTitle) {
+  if (page.unit === "hour") {
+    return page.direction === "past"
+      ? `What Time Was ${phraseTitle}?`
+      : `What Time Is ${phraseTitle}?`;
+  }
+
+  return page.direction === "past"
+    ? `What Date Was ${phraseTitle}?`
+    : `What Date Is ${phraseTitle}?`;
+}
+
 function plural(amount, unit) {
   const clean = unit.replace("-", " ");
   return amount === 1 ? clean : `${clean}s`;
@@ -289,7 +301,7 @@ function relativeContent(page) {
       answer: `Yes. Choose another start date in the calculator to measure the same ${page.amount}-${page.unit} interval from that date.`,
     },
   ];
-  const title = `${phraseTitle} - Calculate Exact ${includeTime ? "Time" : "Date"}`;
+  const title = relativeQuestionTitle(page, phraseTitle);
   const description = `Find out ${includeTime ? "the exact date and time" : "what date it will be"} ${phrase}. Use our free ${includeTime ? "time" : "date"} calculator for an instant, accurate answer.`;
 
   return {
@@ -421,7 +433,7 @@ function differenceContent(page) {
       answer: `Yes. The engine uses the actual calendar and includes February 29 whenever it falls inside this specific interval.`,
     },
   ];
-  const title = `Days Between ${start} and ${end} - Date Difference`;
+  const title = `How Many Days Are Between ${start} and ${end}?`;
   const description = `Calculate the exact number of days between ${start} and ${end}. Get a clear date difference with a free online calculator.`;
 
   return {
@@ -577,7 +589,7 @@ function timezoneContent(page) {
       answer: `${page.fromCity} uses ${page.fromZone}, while ${page.toCity} uses ${page.toZone} in this calculator.`,
     },
   ];
-  const title = `${page.fromCity} to ${page.toCity} Time Converter`;
+  const title = `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`;
   const description = `Convert time from ${page.fromCity} to ${page.toCity}. Compare current local times and time-zone offsets instantly.`;
 
   return {

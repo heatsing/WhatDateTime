@@ -51,6 +51,18 @@ function titleCase(value) {
   return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function relativeQuestionTitle(page, phraseTitle) {
+  if (page.unit === "hour") {
+    return page.direction === "past"
+      ? `What Time Was ${phraseTitle}?`
+      : `What Time Is ${phraseTitle}?`;
+  }
+
+  return page.direction === "past"
+    ? `What Date Was ${phraseTitle}?`
+    : `What Date Is ${phraseTitle}?`;
+}
+
 function humanDate(value) {
   const [year, month, day] = value.split("-").map(Number);
   return new Intl.DateTimeFormat("en-US", {
@@ -79,12 +91,12 @@ function relativePhrase(page) {
   return `${page.amount} ${unit} ${suffix}`;
 }
 
-function legacySEO(page) {
+function expectedSEO(page) {
   if (page.kind === "relative") {
     const phrase = relativePhrase(page);
     const includeTime = page.unit === "hour";
     return {
-      title: `${titleCase(phrase)} - Calculate Exact ${includeTime ? "Time" : "Date"}`,
+      title: relativeQuestionTitle(page, titleCase(phrase)),
       description: `Find out ${includeTime ? "the exact date and time" : "what date it will be"} ${phrase}. Use our free ${includeTime ? "time" : "date"} calculator for an instant, accurate answer.`,
     };
   }
@@ -92,12 +104,12 @@ function legacySEO(page) {
     const start = humanDate(page.start);
     const end = humanDate(page.end);
     return {
-      title: `Days Between ${start} and ${end} - Date Difference`,
+      title: `How Many Days Are Between ${start} and ${end}?`,
       description: `Calculate the exact number of days between ${start} and ${end}. Get a clear date difference with a free online calculator.`,
     };
   }
   return {
-    title: `${page.fromCity} to ${page.toCity} Time Converter`,
+    title: `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`,
     description: `Convert time from ${page.fromCity} to ${page.toCity}. Compare current local times and time-zone offsets instantly.`,
   };
 }
@@ -132,6 +144,7 @@ const exampleFrequency = new Map();
 const faqQuestionFrequency = new Map();
 const faqPairFrequency = new Map();
 const contentUnitFrequency = new Map();
+const titleFrequency = new Map();
 
 function increment(map, value) {
   map.set(value, (map.get(value) ?? 0) + 1);
@@ -149,11 +162,18 @@ for (const page of pages) {
     fail(`${page.slug}: invalid URL slug`);
   }
 
-  const legacy = legacySEO(source);
-  if (page.title !== legacy.title) fail(`${page.slug}: title changed`);
-  if (page.description !== legacy.description) {
+  const expected = expectedSEO(source);
+  if (page.title !== expected.title) fail(`${page.slug}: title does not match its search intent`);
+  if (page.description !== expected.description) {
     fail(`${page.slug}: meta description changed`);
   }
+  if (!page.title.endsWith("?")) {
+    fail(`${page.slug}: meta title is not a natural-language question`);
+  }
+  if (page.title.includes("WhatDateTime")) {
+    fail(`${page.slug}: data title contains the layout-level brand suffix`);
+  }
+  increment(titleFrequency, page.title);
 
   const requiredStrings = [
     "title",
@@ -301,6 +321,7 @@ for (const page of pages) {
 }
 
 for (const [label, frequency] of [
+  ["meta title", titleFrequency],
   ["intro", introFrequency],
   ["example", exampleFrequency],
   ["FAQ question", faqQuestionFrequency],
@@ -347,7 +368,8 @@ console.log(
     `minimum independent content ratio: ${(minimumUniqueRatio * 100).toFixed(1)}%`,
     `average independent content ratio: ${(averageUniqueRatio * 100).toFixed(1)}%`,
     "duplicate intros: 0; duplicate examples: 0; duplicate FAQs: 0",
-    "titles and meta descriptions match the original SEO output",
+    "question-style meta titles are unique and receive one layout-level brand suffix",
+    "meta descriptions remain unchanged",
     "all related links are valid, non-self, and category-relevant",
     "all pages have at least one incoming programmatic HTML link",
     "all pages pass the A/B indexable SEO quality gate",
