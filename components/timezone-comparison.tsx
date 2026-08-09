@@ -1,5 +1,8 @@
+"use client";
+
 import { addHours, differenceInMinutes } from "date-fns";
 import { formatInTimeZone, toZonedTime } from "date-fns-tz";
+import { useLiveReferenceDate } from "@/components/live-reference-date";
 import type { SEOPage } from "@/lib/seoGenerator";
 
 type LocalMoment = {
@@ -85,11 +88,12 @@ export function TimezoneComparison({
   page: Extract<SEOPage, { kind: "timezone" }>;
   referenceDate: Date;
 }) {
-  const origin = getLocalMoment(referenceDate, page.fromZone);
-  const destination = getLocalMoment(referenceDate, page.toZone);
+  const liveReferenceDate = useLiveReferenceDate(referenceDate);
+  const origin = getLocalMoment(liveReferenceDate, page.fromZone);
+  const destination = getLocalMoment(liveReferenceDate, page.toZone);
   const offsetDifference = differenceInMinutes(
-    toZonedTime(referenceDate, page.toZone),
-    toZonedTime(referenceDate, page.fromZone),
+    toZonedTime(liveReferenceDate, page.toZone),
+    toZonedTime(liveReferenceDate, page.fromZone),
   );
   const dayRelation = getDayRelation(origin.dateKey, destination.dateKey);
   const nearbyHours = [-2, -1, 0, 1, 2] as const;
@@ -167,7 +171,7 @@ export function TimezoneComparison({
             </thead>
             <tbody>
               {nearbyHours.map((hourDelta) => {
-                const instant = addHours(referenceDate, hourDelta);
+                const instant = addHours(liveReferenceDate, hourDelta);
                 const nearbyOrigin = getLocalMoment(instant, page.fromZone);
                 const nearbyDestination = getLocalMoment(instant, page.toZone);
                 const datesDiffer =

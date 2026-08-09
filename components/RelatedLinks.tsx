@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { LivePageResult } from "@/components/live-page-output";
 import {
-  getPageResult,
   getRelativePhrase,
   getSEOText,
   type SEOPage,
@@ -67,7 +67,10 @@ export function RelatedLinks({
                       )}
                     </td>
                     <td className="break-words px-2 py-3 text-ink/70">
-                      {getPageResult(page, referenceDate)}
+                      <LivePageResult
+                        page={page}
+                        referenceDate={referenceDate}
+                      />
                     </td>
                   </tr>
                 );
@@ -102,9 +105,13 @@ export function RelatedLinks({
             className="rounded-md border border-[#D9DEE5] bg-white px-4 py-3 text-sm font-medium text-ink/70 hover:border-[#AAB7C2] hover:text-fern"
           >
             <span>
-              {`${page.kind === "relative"
+              {page.kind === "relative"
                 ? getRelativePhrase(page)
-                : getSEOText(page).title.replace(/ - .+$/, "")} — ${getPageResult(page, referenceDate)}`}
+                : getSEOText(page).title.replace(/ - .+$/, "")} —{" "}
+              <LivePageResult
+                page={page}
+                referenceDate={referenceDate}
+              />
             </span>
           </Link>
         ))}

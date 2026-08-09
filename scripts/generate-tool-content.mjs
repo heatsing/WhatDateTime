@@ -155,6 +155,10 @@ function relativeQuestionTitle(page, phraseTitle) {
       : `What Time Is ${phraseTitle}?`;
   }
 
+  if (page.type === "days-ago") {
+    return `What Date Was ${phraseTitle} From Today?`;
+  }
+
   return page.direction === "past"
     ? `What Date Was ${phraseTitle}?`
     : `What Date Is ${phraseTitle}?`;

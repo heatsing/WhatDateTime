@@ -8,6 +8,7 @@ import { DirectDateAnswer } from "@/components/direct-date-answer";
 import { DirectDifferenceAnswer } from "@/components/direct-difference-answer";
 import { FAQ } from "@/components/FAQ";
 import { JsonLd } from "@/components/json-ld";
+import { LiveReferenceDateProvider } from "@/components/live-reference-date";
 import { RelatedLinks } from "@/components/RelatedLinks";
 import { SEOContent } from "@/components/SEOContent";
 import { TimezoneComparison } from "@/components/timezone-comparison";
@@ -93,6 +94,7 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
         ]}
       />
 
+      <LiveReferenceDateProvider initialTime={now.toISOString()}>
       <section className="bg-white px-5 pb-12 pt-6 sm:px-8 sm:pb-14 sm:pt-8">
         <div className="mx-auto max-w-3xl">
           <Breadcrumb current={seo.h1} />
@@ -137,7 +139,13 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
 
       <section className="border-t border-[#D9DEE5] bg-white px-5 py-12 sm:px-8 sm:py-14">
         <div className="mx-auto max-w-3xl">
-          <SEOContent data={landingSections} variant="deep" page={page} formula={formula} />
+            <SEOContent
+              data={landingSections}
+              variant="deep"
+              page={page}
+              formula={formula}
+              referenceDate={now}
+            />
         </div>
       </section>
 
@@ -152,8 +160,14 @@ export default async function ProgrammaticSEOPage({ params }: PageProps) {
       </section>
 
       <section className="border-t border-[#D9DEE5] bg-white px-5 py-12 sm:px-8 sm:py-14">
-        <FAQ faqs={faqs} variant="editorial" />
+        <FAQ
+          faqs={faqs}
+          variant="editorial"
+          page={page}
+          referenceDate={now}
+        />
       </section>
+      </LiveReferenceDateProvider>
     </>
   );
 }

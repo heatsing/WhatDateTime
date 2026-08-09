@@ -1,11 +1,16 @@
 import pageIndexData from "@/data/tools/index.json";
 import type { RelativeDirection, RelativeUnit } from "@/lib/dateCalculator";
 import {
-  calculateDateDifference,
-  calculateRelativeDate,
-  formatLongDate,
-  formatZonedTime,
-} from "@/lib/dateCalculator";
+  getDirectFAQ,
+  getPageFormula,
+} from "@/lib/pageCalculations";
+
+export {
+  getPageFormula,
+  getPageResult,
+  getRelativePhrase,
+  titleCase,
+} from "@/lib/pageCalculations";
 
 export type FAQItem = {
   question: string;
@@ -178,28 +183,6 @@ export async function getSEOPage(slug: string) {
   return pages.get(slug);
 }
 
-export function titleCase(value: string) {
-  return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
-}
-
-export function getRelativePhrase(page: RelativeSEOPage) {
-  const unit =
-    page.unit === "business-day"
-      ? page.amount === 1
-        ? "business day"
-        : "business days"
-      : page.amount === 1
-        ? page.unit
-        : `${page.unit}s`;
-  const suffix =
-    page.type === "hours-from-now"
-      ? "from now"
-      : page.direction === "past"
-        ? "ago"
-        : "from today";
-  return `${page.amount} ${unit} ${suffix}`;
-}
-
 export function getSEOText(page: SEOPage) {
   return {
     title: page.title,
@@ -207,52 +190,6 @@ export function getSEOText(page: SEOPage) {
     h1: page.h1,
     eyebrow: page.eyebrow,
   };
-}
-
-export function getPageResult(page: SEOPage, now: Date) {
-  if (page.kind === "relative") {
-    const result = calculateRelativeDate(
-      now,
-      page.amount,
-      page.unit,
-      page.direction,
-    );
-    return formatLongDate(result, page.unit === "hour");
-  }
-
-  if (page.kind === "difference") {
-    const days = calculateDateDifference(
-      new Date(`${page.start}T12:00:00`),
-      new Date(`${page.end}T12:00:00`),
-    );
-    return `${days.toLocaleString()} ${days === 1 ? "day" : "days"}`;
-  }
-
-  const result = formatZonedTime(now, page.toZone);
-  return `${result.time} on ${result.date} (${result.abbreviation})`;
-}
-
-export function getPageFormula(page: SEOPage, now: Date) {
-  if (page.kind === "relative") {
-    const includeTime = page.unit === "hour";
-    const start = formatLongDate(now, includeTime);
-    const result = getPageResult(page, now);
-    const operation = page.direction === "future" ? "+" : "−";
-    const interval = getRelativePhrase(page)
-      .replace(/ from now$/, "")
-      .replace(/ from today$/, "")
-      .replace(/ ago$/, "");
-    return `${start} ${operation} ${interval} = ${result}.`;
-  }
-
-  if (page.kind === "difference") {
-    const start = formatLongDate(new Date(`${page.start}T12:00:00`));
-    const end = formatLongDate(new Date(`${page.end}T12:00:00`));
-    return `${end} − ${start} = ${getPageResult(page, now)} elapsed.`;
-  }
-
-  const source = formatZonedTime(now, page.fromZone);
-  return `${source.time} on ${source.date} in ${page.fromCity} = ${getPageResult(page, now)} in ${page.toCity}.`;
 }
 
 export function getLandingSections(page: SEOPage, now: Date) {
@@ -264,21 +201,7 @@ export function getLandingSections(page: SEOPage, now: Date) {
 }
 
 export function buildFAQs(page: SEOPage, now: Date) {
-  const direct =
-    page.kind === "relative"
-      ? {
-          question: `What is the exact result for ${getRelativePhrase(page)}?`,
-          answer: `${titleCase(getRelativePhrase(page))} is ${getPageResult(page, now)} when calculated from ${formatLongDate(now, page.unit === "hour")}.`,
-        }
-      : page.kind === "difference"
-        ? {
-            question: `What is the exact difference between ${page.start} and ${page.end}?`,
-            answer: `The elapsed difference between ${page.start} and ${page.end} is ${getPageResult(page, now)}.`,
-          }
-        : {
-            question: `What is the current ${page.fromCity} to ${page.toCity} conversion?`,
-            answer: getPageFormula(page, now),
-          };
+  const direct = getDirectFAQ(page, now);
   return [direct, ...page.faq.slice(1)];
 }
 

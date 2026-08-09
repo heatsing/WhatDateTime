@@ -1,3 +1,5 @@
+"use client";
+
 import {
   addDays,
   eachDayOfInterval,
@@ -7,6 +9,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
+import { useLiveReferenceDate } from "@/components/live-reference-date";
 import {
   calculateRelativeDate,
   formatLongDate,
@@ -15,8 +18,8 @@ import {
   getPageFormula,
   getPageResult,
   getRelativePhrase,
-  type SEOPage,
-} from "@/lib/seoGenerator";
+} from "@/lib/pageCalculations";
+import type { SEOPage } from "@/lib/seoGenerator";
 
 type RelativePage = Extract<SEOPage, { kind: "relative" }>;
 
@@ -39,17 +42,21 @@ export function DirectDateAnswer({
   page,
   referenceDate,
 }: DirectDateAnswerProps) {
+  const liveReferenceDate = useLiveReferenceDate(referenceDate);
   const includesTime = page.unit === "hour";
   const phrase = getRelativePhrase(page);
   const resultDate = calculateRelativeDate(
-    referenceDate,
+    liveReferenceDate,
     page.amount,
     page.unit,
     page.direction,
   );
-  const result = getPageResult(page, referenceDate);
-  const formula = getPageFormula(page, referenceDate);
-  const prompt = `${includesTime ? "What time is" : "What date is"} ${phrase}?`;
+  const result = getPageResult(page, liveReferenceDate);
+  const formula = getPageFormula(page, liveReferenceDate);
+  const prompt =
+    page.type === "days-ago"
+      ? `What date was ${phrase} from today?`
+      : `${includesTime ? "What time is" : "What date is"} ${phrase}?`;
 
   return (
     <article
@@ -100,7 +107,7 @@ export function DirectDateAnswer({
       <div className="mt-6 grid divide-y divide-[#D9DEE5] border-y border-[#D9DEE5] text-left sm:grid-cols-2 sm:divide-x sm:divide-y-0">
         <DateComparison
           label="Starting date"
-          date={referenceDate}
+          date={liveReferenceDate}
           includesTime={includesTime}
         />
         <DateComparison

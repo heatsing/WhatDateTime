@@ -3,6 +3,7 @@ import {
   CalendarRange,
   CircleHelp,
 } from "lucide-react";
+import { LivePageFormula } from "@/components/live-page-output";
 import type { ContentSection } from "@/lib/seoGenerator";
 import {
   getRelativePhrase,
@@ -14,14 +15,21 @@ export function SEOContent({
   variant = "cards",
   page,
   formula,
+  referenceDate,
 }: {
   data: ReadonlyArray<ContentSection>;
   variant?: "cards" | "editorial" | "deep";
   page?: SEOPage;
   formula?: string;
+  referenceDate?: Date;
 }) {
-  if (variant === "deep" && page && formula) {
-    return <DeepContent page={page} formula={formula} />;
+  if (variant === "deep" && page && formula && referenceDate) {
+    return (
+      <DeepContent
+        page={page}
+        referenceDate={referenceDate}
+      />
+    );
   }
   if (variant === "editorial") {
     return <EditorialContent sections={data} />;
@@ -29,7 +37,13 @@ export function SEOContent({
   return <ContentGrid sections={data} />;
 }
 
-function DeepContent({ page, formula }: { page: SEOPage; formula: string }) {
+function DeepContent({
+  page,
+  referenceDate,
+}: {
+  page: SEOPage;
+  referenceDate: Date;
+}) {
   const subject =
     page.kind === "relative"
       ? getRelativePhrase(page)
@@ -74,7 +88,9 @@ function DeepContent({ page, formula }: { page: SEOPage; formula: string }) {
       <article data-content-stage="calculation-basis" className="mt-7 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-xl font-semibold text-ink">Calculation basis</h2>
         <p className="mt-3 text-base leading-7 text-ink/65 sm:text-[17px] sm:leading-8">{page.intro}</p>
-        <p className="mt-4 border-l-4 border-fern bg-[#F4F8FB] px-4 py-3 text-sm font-medium leading-7 text-ink">{formula}</p>
+        <p className="mt-4 border-l-4 border-fern bg-[#F4F8FB] px-4 py-3 text-sm font-medium leading-7 text-ink">
+          <LivePageFormula page={page} referenceDate={referenceDate} />
+        </p>
       </article>
 
       <article data-content-stage="how-to-use" className="mt-9 border-t border-[#D9DEE5] pt-6">
