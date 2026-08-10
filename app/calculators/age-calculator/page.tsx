@@ -3,9 +3,12 @@ import { AgeCalculator } from "@/components/age-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
 import { getBuildTime } from "@/lib/build-time";
 
+const pageDescription =
+  "Calculate age from a birth date to today or any selected date. See exact years, months, days, and total calendar days with a clear breakdown.";
+
 export const metadata: Metadata = {
   title: "Age Calculator — Exact Age in Years & Days",
-  description: "Calculate your exact age in years, months, days, and total calendar days on any date.",
+  description: pageDescription,
   alternates: { canonical: "/calculators/age-calculator" },
 };
 
@@ -23,6 +26,7 @@ export default function Page() {
       title="Age Calculator"
       eyebrow="Your story in numbers"
       description="Find an exact age in years, months, and days—or see how many calendar days have passed."
+      seoDescription={pageDescription}
       path="/calculators/age-calculator"
       faqs={faqs}
       steps={[

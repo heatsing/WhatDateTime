@@ -20,6 +20,7 @@ export function ToolPageShell({
   title,
   eyebrow,
   description,
+  seoDescription = description,
   path,
   faqs,
   steps,
@@ -28,6 +29,7 @@ export function ToolPageShell({
   title: string;
   eyebrow: string;
   description: string;
+  seoDescription?: string;
   path: string;
   faqs: ReadonlyArray<{ question: string; answer: string }>;
   steps: ReadonlyArray<{ title: string; text: string }>;
@@ -37,7 +39,7 @@ export function ToolPageShell({
     <>
       <JsonLd data={[
         faqSchema(faqs),
-        webApplicationSchema(title, description, path),
+        webApplicationSchema(title, seoDescription, path),
         breadcrumbSchema([
           { name: "Home", path: "/" },
           { name: title, path },

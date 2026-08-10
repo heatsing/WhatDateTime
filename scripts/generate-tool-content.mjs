@@ -14,6 +14,11 @@ import {
   subHours,
 } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
+import {
+  differenceMetaDescription,
+  relativeMetaDescription,
+  timezoneMetaDescription,
+} from "./seo-description.mjs";
 
 const sourceFiles = [
   "days-from-today.json",
@@ -306,7 +311,7 @@ function relativeContent(page) {
     },
   ];
   const title = relativeQuestionTitle(page, phraseTitle);
-  const description = `Find out ${includeTime ? "the exact date and time" : "what date it will be"} ${phrase}. Use our free ${includeTime ? "time" : "date"} calculator for an instant, accurate answer.`;
+  const description = relativeMetaDescription(page, phrase);
 
   return {
     ...page,
@@ -438,7 +443,7 @@ function differenceContent(page) {
     },
   ];
   const title = `How Many Days Are Between ${start} and ${end}?`;
-  const description = `Calculate the exact number of days between ${start} and ${end}. Get a clear date difference with a free online calculator.`;
+  const description = differenceMetaDescription(start, end);
 
   return {
     ...page,
@@ -594,7 +599,7 @@ function timezoneContent(page) {
     },
   ];
   const title = `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`;
-  const description = `Convert time from ${page.fromCity} to ${page.toCity}. Compare current local times and time-zone offsets instantly.`;
+  const description = timezoneMetaDescription(page.fromCity, page.toCity);
 
   return {
     ...page,

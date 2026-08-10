@@ -3,9 +3,12 @@ import { CountdownCalculator } from "@/components/countdown-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
 import { getBuildTime } from "@/lib/build-time";
 
+const pageDescription =
+  "Create a live countdown to any date and time. Track the remaining days, hours, minutes, and seconds using your device's local time zone.";
+
 export const metadata: Metadata = {
   title: "Countdown Timer — Days, Hours & Seconds",
-  description: "Create a free live countdown to any future date and time with days, hours, minutes, and seconds.",
+  description: pageDescription,
   alternates: { canonical: "/calculators/countdown" },
 };
 
@@ -23,6 +26,7 @@ export default function Page() {
       title="Countdown Timer"
       eyebrow="Make the moment count"
       description="Turn any upcoming date into a simple, live countdown you can check at a glance."
+      seoDescription={pageDescription}
       path="/calculators/countdown"
       faqs={faqs}
       steps={[

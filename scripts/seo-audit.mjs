@@ -1,4 +1,9 @@
 import { readFileSync } from "node:fs";
+import {
+  differenceMetaDescription,
+  relativeMetaDescription,
+  timezoneMetaDescription,
+} from "./seo-description.mjs";
 
 const expectedCounts = {
   "days-from-today.json": 365,
@@ -101,7 +106,7 @@ function expectedSEO(page) {
     const includeTime = page.unit === "hour";
     return {
       title: relativeQuestionTitle(page, titleCase(phrase)),
-      description: `Find out ${includeTime ? "the exact date and time" : "what date it will be"} ${phrase}. Use our free ${includeTime ? "time" : "date"} calculator for an instant, accurate answer.`,
+      description: relativeMetaDescription(page, phrase),
     };
   }
   if (page.kind === "difference") {
@@ -109,12 +114,12 @@ function expectedSEO(page) {
     const end = humanDate(page.end);
     return {
       title: `How Many Days Are Between ${start} and ${end}?`,
-      description: `Calculate the exact number of days between ${start} and ${end}. Get a clear date difference with a free online calculator.`,
+      description: differenceMetaDescription(start, end),
     };
   }
   return {
     title: `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`,
-    description: `Convert time from ${page.fromCity} to ${page.toCity}. Compare current local times and time-zone offsets instantly.`,
+    description: timezoneMetaDescription(page.fromCity, page.toCity),
   };
 }
 
@@ -169,7 +174,12 @@ for (const page of pages) {
   const expected = expectedSEO(source);
   if (page.title !== expected.title) fail(`${page.slug}: title does not match its search intent`);
   if (page.description !== expected.description) {
-    fail(`${page.slug}: meta description changed`);
+    fail(`${page.slug}: meta description does not match the shared generator`);
+  }
+  if (page.description.length < 110 || page.description.length > 175) {
+    fail(
+      `${page.slug}: meta description length ${page.description.length} is outside 110-175 characters`,
+    );
   }
   if (!page.title.endsWith("?")) {
     fail(`${page.slug}: meta title is not a natural-language question`);
@@ -373,7 +383,7 @@ console.log(
     `average independent content ratio: ${(averageUniqueRatio * 100).toFixed(1)}%`,
     "duplicate intros: 0; duplicate examples: 0; duplicate FAQs: 0",
     "question-style meta titles are unique and receive one layout-level brand suffix",
-    "meta descriptions remain unchanged",
+    "meta descriptions are unique, intent-specific, and 110-175 characters",
     "all related links are valid, non-self, and category-relevant",
     "all pages have at least one incoming programmatic HTML link",
     "all pages pass the A/B indexable SEO quality gate",

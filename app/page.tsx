@@ -20,8 +20,7 @@ import { faqSchema, webApplicationSchema } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   title: { absolute: "WhatDateTime — Date & Time Calculators" },
-  description:
-    "Calculate dates, ages, time differences, countdowns, and time zones with fast, free tools from WhatDateTime.",
+  description: siteConfig.description,
   alternates: { canonical: "/" },
 };
 

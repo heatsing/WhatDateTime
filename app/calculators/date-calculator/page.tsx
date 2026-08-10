@@ -3,9 +3,12 @@ import { DateCalculator } from "@/components/date-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
 import { getBuildTime } from "@/lib/build-time";
 
+const pageDescription =
+  "Add or subtract days, weeks, months, or years from any date. Get an exact result with calendar-aware month lengths and leap-year calculations.";
+
 export const metadata: Metadata = {
   title: "Date Calculator — Add or Subtract Dates",
-  description: "Add or subtract days, weeks, months, or years from any date with a free, accurate date calculator.",
+  description: pageDescription,
   alternates: { canonical: "/calculators/date-calculator" },
 };
 
@@ -23,6 +26,7 @@ export default function Page() {
       title="Date Calculator"
       eyebrow="Add or subtract time"
       description="Move forward or backward from any date in a few quick taps. Calendar quirks are handled for you."
+      seoDescription={pageDescription}
       path="/calculators/date-calculator"
       faqs={faqs}
       steps={[

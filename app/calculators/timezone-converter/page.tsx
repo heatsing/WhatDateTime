@@ -3,9 +3,12 @@ import { TimezoneCalculator } from "@/components/timezone-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
 import { getBuildTime } from "@/lib/build-time";
 
+const pageDescription =
+  "Convert a date and time between major world time zones. Compare local times, UTC offsets, date changes, and daylight-saving rules instantly.";
+
 export const metadata: Metadata = {
   title: "Time Zone Converter — World Time",
-  description: "Convert a date and time between popular world time zones with daylight-saving rules included.",
+  description: pageDescription,
   alternates: { canonical: "/calculators/timezone-converter" },
 };
 
@@ -23,6 +26,7 @@ export default function Page() {
       title="Time Zone Converter"
       eyebrow="One moment, anywhere"
       description="Translate a date and time between major world cities with regional clock changes handled automatically."
+      seoDescription={pageDescription}
       path="/calculators/timezone-converter"
       faqs={faqs}
       steps={[

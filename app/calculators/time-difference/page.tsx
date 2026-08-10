@@ -3,9 +3,12 @@ import { DifferenceCalculator } from "@/components/difference-calculator";
 import { ToolPageShell } from "@/components/tool-page-shell";
 import { getBuildTime } from "@/lib/build-time";
 
+const pageDescription =
+  "Calculate the exact time between two dates and times. See the duration in years, months, days, hours, minutes, seconds, and total elapsed units.";
+
 export const metadata: Metadata = {
   title: "Time Difference Calculator",
-  description: "Find the exact difference between two dates and times in days, hours, minutes, and seconds.",
+  description: pageDescription,
   alternates: { canonical: "/calculators/time-difference" },
 };
 
@@ -23,6 +26,7 @@ export default function Page() {
       title="Time Difference Calculator"
       eyebrow="Compare two moments"
       description="Measure the precise gap between two dates and times, from a readable duration down to total seconds."
+      seoDescription={pageDescription}
       path="/calculators/time-difference"
       faqs={faqs}
       steps={[
