@@ -62,22 +62,22 @@ const editorialOverrideBySlug = new Map(
 );
 
 const bySlug = new Map(sourcePages.map((page) => [page.slug, page]));
-const byRelativeKey = new Map(
-  sourcePages
-    .filter((page) => page.kind === "relative")
-    .map((page) => [`${page.type}:${page.amount}`, page]),
+const relativePagesByType = new Map(
+  Object.keys(dataFileByType)
+    .filter((type) => type !== "date-difference" && type !== "timezone-converter")
+    .map((type) => [
+      type,
+      sourcePages.filter((page) => page.kind === "relative" && page.type === type),
+    ]),
 );
-
-const maxByType = {
-  "days-from-today": 365,
-  "days-ago": 365,
-  "hours-from-now": 500,
-  "hours-ago": 500,
-  "weeks-from-today": 200,
-  "months-from-today": 300,
-  "years-from-today": 300,
-  "business-days-from-today": 1000,
-};
+const differencePages = sourcePages.filter((page) => page.kind === "difference");
+const timezonePages = sourcePages.filter((page) => page.kind === "timezone");
+const timezonePagesByOrigin = new Map(
+  [...new Set(timezonePages.map((page) => page.fromCity))].map((city) => [
+    city,
+    timezonePages.filter((page) => page.fromCity === city),
+  ]),
+);
 
 const anchors = [
   new Date("2026-01-15T10:00:00Z"),
@@ -244,19 +244,41 @@ function durationDetail(page) {
 }
 
 function relativeRelated(page) {
-  const related = [];
-  for (let distance = 1; related.length < 10; distance += 1) {
-    for (const amount of [
-      page.amount - distance,
-      page.amount + distance,
-    ]) {
-      if (amount < 1 || amount > maxByType[page.type]) continue;
-      const match = byRelativeKey.get(`${page.type}:${amount}`);
-      if (match && !related.includes(match.slug)) related.push(match.slug);
-      if (related.length === 10) break;
-    }
+  const pages = relativePagesByType.get(page.type);
+  const index = pages.findIndex((candidate) => candidate.slug === page.slug);
+  const candidates = [];
+  const addIndex = (candidateIndex) => {
+    const candidate = pages[candidateIndex];
+    if (
+      candidate &&
+      candidate.slug !== page.slug &&
+      !candidates.some((item) => item.slug === candidate.slug)
+    ) candidates.push(candidate);
+  };
+
+  // Nearby values remain prominent, while parent/child links form a shallow
+  // crawl tree so every numeric page is reachable without hundreds of hops.
+  for (const candidateIndex of [
+    index - 1,
+    index + 1,
+    index - 2,
+    index + 2,
+    Math.floor((index - 1) / 2),
+    index * 2 + 1,
+    index * 2 + 2,
+    0,
+    Math.floor((pages.length - 1) / 2),
+    pages.length - 1,
+  ]) {
+    addIndex(candidateIndex);
   }
-  return related;
+
+  for (let distance = 3; candidates.length < 10; distance += 1) {
+    addIndex(index - distance);
+    addIndex(index + distance);
+  }
+
+  return candidates.map((candidate) => candidate.slug).slice(0, 10);
 }
 
 function relativeContent(page) {
@@ -363,21 +385,33 @@ function countWeekdays(start, end) {
 }
 
 function differenceRelated(page) {
-  const differencePages = sourcePages.filter(
-    (candidate) => candidate.kind === "difference",
-  );
   const index = differencePages.findIndex(
     (candidate) => candidate.slug === page.slug,
   );
+  const candidateIndexes = [
+    index - 1,
+    index + 1,
+    Math.floor((index - 1) / 2),
+    index * 2 + 1,
+    index * 2 + 2,
+    0,
+    differencePages.length - 1,
+  ];
   const related = [];
-  for (let distance = 1; related.length < 6; distance += 1) {
-    for (const candidateIndex of [index - distance, index + distance]) {
-      const candidate = differencePages[candidateIndex];
-      if (candidate) related.push(candidate.slug);
-      if (related.length === 6) break;
-    }
+  const addIndex = (candidateIndex) => {
+    const candidate = differencePages[candidateIndex];
+    if (
+      candidate &&
+      candidate.slug !== page.slug &&
+      !related.includes(candidate.slug)
+    ) related.push(candidate.slug);
+  };
+  for (const candidateIndex of candidateIndexes) addIndex(candidateIndex);
+  for (let distance = 2; related.length < 6; distance += 1) {
+    addIndex(index - distance);
+    addIndex(index + distance);
   }
-  return related;
+  return related.slice(0, 6);
 }
 
 function differenceContent(page) {
@@ -488,49 +522,46 @@ function zoneOffset(date, zone) {
 }
 
 function timezoneRelated(page) {
-  const timezonePages = sourcePages.filter(
-    (candidate) => candidate.kind === "timezone",
-  );
-  const sameOrigin = timezonePages.filter(
-    (candidate) => candidate.fromCity === page.fromCity,
-  );
+  const sameOrigin = timezonePagesByOrigin.get(page.fromCity);
   const index = sameOrigin.findIndex(
     (candidate) => candidate.slug === page.slug,
   );
   const candidates = [];
-
-  for (const distance of [1, -1, 2, -2]) {
-    const candidate =
-      sameOrigin[(index + distance + sameOrigin.length) % sameOrigin.length];
-    if (candidate) candidates.push(candidate);
-  }
+  const addCandidate = (candidate) => {
+    if (
+      candidate &&
+      candidate.slug !== page.slug &&
+      !candidates.some((item) => item.slug === candidate.slug)
+    ) candidates.push(candidate);
+  };
 
   const reciprocal = timezonePages.find(
     (candidate) =>
       candidate.fromCity === page.toCity &&
       candidate.toCity === page.fromCity,
   );
-  if (reciprocal) candidates.push(reciprocal);
+  addCandidate(reciprocal);
 
-  const sameDestination = timezonePages.find(
-    (candidate) =>
-      candidate.toCity === page.toCity &&
-      candidate.fromCity !== page.fromCity,
-  );
-  if (sameDestination) candidates.push(sameDestination);
+  for (const candidateIndex of [
+    index - 1,
+    index + 1,
+    Math.floor((index - 1) / 2),
+    index * 2 + 1,
+    index * 2 + 2,
+    0,
+  ]) {
+    const candidate = sameOrigin[candidateIndex];
+    addCandidate(candidate);
+  }
 
-  for (const candidate of timezonePages) {
-    if (
-      candidate.fromCity === page.fromCity &&
-      ["London", "New York", "Tokyo", "Singapore"].includes(candidate.toCity)
-    ) {
-      candidates.push(candidate);
+  for (let distance = 2; candidates.length < 6; distance += 1) {
+    for (const candidateIndex of [index - distance, index + distance]) {
+      const candidate = sameOrigin[candidateIndex];
+      addCandidate(candidate);
     }
   }
 
-  return [...new Set(candidates.map((candidate) => candidate.slug))]
-    .filter((slug) => slug !== page.slug)
-    .slice(0, 6);
+  return candidates.map((candidate) => candidate.slug).slice(0, 6);
 }
 
 function convertedExample(page, isoDate) {
@@ -757,7 +788,7 @@ function scorePage(page) {
 
   return {
     ...page,
-    updatedAt: null,
+    updatedAt: "2026-08-27",
     searchIntent: {
       category:
         page.kind === "timezone"

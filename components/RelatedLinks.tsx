@@ -17,7 +17,7 @@ export function RelatedLinks({
 }) {
   const heading =
     currentPage.kind === "relative"
-      ? "Nearby date calculations"
+      ? "Related and nearby calculations"
       : currentPage.kind === "difference"
         ? "Related date differences"
         : "Related time-zone conversions";
@@ -41,7 +41,7 @@ export function RelatedLinks({
           {heading}
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-7 text-ink/60">
-          Compare nearby intervals without starting a new calculation.
+          Compare nearby values and useful reference intervals without starting a new calculation.
         </p>
         <div className="mt-5 overflow-x-auto border-y border-[#D9DEE5]">
           <table className="w-full table-fixed border-collapse text-left text-sm sm:text-base">

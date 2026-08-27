@@ -69,6 +69,7 @@ const directorySections: ReadonlyArray<DirectorySection> = [
     links: [
       ["Date Calculator", "/calculators/date-calculator"],
       ["Days Between Dates", "/calculators/time-difference"],
+      ["1-Day Date Difference", "/days-between-january-1-2026-and-january-2-2026"],
       ["Age Calculator", "/calculators/age-calculator"],
       ["Business Days Calculator", "/30-business-days-from-today"],
       ["7 Days From Today", "/7-days-from-today"],

@@ -56,6 +56,8 @@ function captureAll(html, pattern) {
 const titles = new Map();
 const descriptions = new Map();
 const checkedRoutes = new Set();
+const internalLinks = new Map();
+const programmaticSlugs = new Set(pageIndex.map((page) => page.slug));
 
 for (const routeEntry of routes) {
   const { route, expectedCanonical, programmatic } = routeEntry;
@@ -65,6 +67,12 @@ for (const routeEntry of routes) {
   }
   const html = readFileSync(htmlPath, "utf8");
   checkedRoutes.add(route);
+  internalLinks.set(
+    route,
+    captureAll(html, /href="\/([^"?#]+)"/g).filter((slug) =>
+      programmaticSlugs.has(slug),
+    ),
+  );
 
   const pageTitles = captureAll(html, /<title>(.*?)<\/title>/g);
   const pageDescriptions = captureAll(
@@ -236,6 +244,29 @@ for (const [description, matchingRoutes] of descriptions) {
   }
 }
 
+const crawlDepth = new Map([["", 0]]);
+const crawlQueue = [""];
+for (let index = 0; index < crawlQueue.length; index += 1) {
+  const route = crawlQueue[index];
+  const depth = crawlDepth.get(route);
+  for (const linkedRoute of internalLinks.get(route) || []) {
+    if (!crawlDepth.has(linkedRoute)) {
+      crawlDepth.set(linkedRoute, depth + 1);
+      crawlQueue.push(linkedRoute);
+    }
+  }
+}
+const unreachable = pageIndex.filter((page) => !crawlDepth.has(page.slug));
+if (unreachable.length > 0) {
+  fail(`${unreachable.length} programmatic pages are unreachable from the homepage`);
+}
+const maximumCrawlDepth = Math.max(
+  ...pageIndex.map((page) => crawlDepth.get(page.slug)),
+);
+if (maximumCrawlDepth > 15) {
+  fail(`maximum homepage crawl depth ${maximumCrawlDepth} exceeds 15 clicks`);
+}
+
 const sitemapPath = path.join(appDir, "sitemap.xml.body");
 if (!existsSync(sitemapPath)) fail("generated sitemap.xml is missing");
 const sitemap = readFileSync(sitemapPath, "utf8");
@@ -248,7 +279,7 @@ if (sitemap.includes("<sitemapindex")) {
   }
   for (const shardUrl of shardUrls) {
     const shardName = new URL(shardUrl).pathname.replace(/^\//, "");
-    if (!/^sitemap-\d+\.xml$/.test(shardName)) {
+    if (!/^sitemap-[a-z0-9-]+\.xml$/.test(shardName)) {
       fail(`sitemap index contains an invalid shard URL: ${shardUrl}`);
     }
     const shardPath = path.join(appDir, `${shardName}.body`);
@@ -273,8 +304,12 @@ for (const route of routes) {
     fail(`/${route.route}: generated page is missing from sitemap`);
   }
 }
-if (sitemapDocuments.some((document) => /<lastmod>/.test(document))) {
-  fail("sitemap contains lastModified without verified content dates");
+for (const document of sitemapDocuments.slice(1)) {
+  for (const lastModified of captureAll(document, /<lastmod>(.*?)<\/lastmod>/g)) {
+    if (!/^\d{4}-\d{2}-\d{2}(?:T[^<]+)?$/.test(lastModified)) {
+      fail(`sitemap contains invalid lastModified value: ${lastModified}`);
+    }
+  }
 }
 
 console.log(
@@ -283,6 +318,7 @@ console.log(
     `${pageIndex.length} programmatic HTML files match the route inventory`,
     `${sitemapUrls.length} unique sitemap URLs`,
     ...(sitemapShardCount > 0 ? [`${sitemapShardCount} sitemap shards linked from sitemap.xml`] : []),
+    `all programmatic pages are reachable within ${maximumCrawlDepth} clicks from the homepage`,
     "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
     "all programmatic titles use a question format with one WhatDateTime suffix",
     "duplicate titles: 0; duplicate descriptions: 0; unexpected noindex: 0",

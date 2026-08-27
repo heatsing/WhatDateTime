@@ -75,7 +75,7 @@ async function getStaticPageResponse(request, env) {
     "robots.txt": "text/plain; charset=utf-8",
     "manifest.webmanifest": "application/manifest+json; charset=utf-8",
   };
-  const metadataType = metadataTypes[route] || (/^sitemap-\d+\.xml$/.test(route) ? "application/xml; charset=utf-8" : null);
+  const metadataType = metadataTypes[route] || (/^sitemap-[a-z0-9-]+\.xml$/.test(route) ? "application/xml; charset=utf-8" : null);
   if (metadataType) {
     const payload = await readCompressedAsset(
       env,

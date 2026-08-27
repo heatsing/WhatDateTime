@@ -94,7 +94,7 @@ const metadataRoutes = [
 ];
 
 for (const file of readdirSync(appOutput)) {
-  if (/^sitemap-\d+\.xml\.body$/.test(file)) {
+  if (/^sitemap-[a-z0-9-]+\.xml\.body$/.test(file)) {
     metadataRoutes.push([
       file.replace(/\.body$/, ""),
       file,

@@ -181,6 +181,9 @@ for (const page of pages) {
       `${page.slug}: meta description length ${page.description.length} is outside 110-175 characters`,
     );
   }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(page.updatedAt)) {
+    fail(`${page.slug}: missing verified last-modified date`);
+  }
   if (!page.title.endsWith("?")) {
     fail(`${page.slug}: meta title is not a natural-language question`);
   }
@@ -289,12 +292,6 @@ for (const page of pages) {
     if (!related) fail(`${page.slug}: related URL ${slug} does not exist`);
     if (page.kind === "relative" && related.type !== page.type) {
       fail(`${page.slug}: relative link ${slug} is not the same calculator type`);
-    }
-    if (
-      page.kind === "relative" &&
-      Math.abs(related.amount - page.amount) > 10
-    ) {
-      fail(`${page.slug}: relative link ${slug} is not a nearby value`);
     }
     if (
       page.kind === "timezone" &&
