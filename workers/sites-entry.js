@@ -1,153 +1,41 @@
-async function readCompressedAsset(env, assetUrl) {
-  const asset = await env.ASSETS?.fetch(assetUrl);
-  if (!asset?.ok || !asset.body) {
-    await asset?.body?.cancel();
-    return null;
-  }
+const legacyRedirects = new Map([
+  ["/date-calculator", "/calculators/date-calculator"],
+  ["/time-difference-calculator", "/calculators/time-difference"],
+  ["/age-calculator", "/calculators/age-calculator"],
+  ["/countdown-timer", "/calculators/countdown"],
+  ["/time-zone-converter", "/calculators/timezone-converter"],
+]);
 
-  return new Response(
-    asset.body.pipeThrough(new DecompressionStream("gzip")),
-  ).json();
-}
-
-function routeToken(route) {
-  return route ? route.replaceAll("/", "__") : "index";
-}
-
-function canonicalRedirect(request) {
+function redirectUrl(request) {
   const url = new URL(request.url);
-  if (url.protocol === "https:" && url.hostname === "whatdatetime.com") {
-    return null;
-  }
-
-  url.protocol = "https:";
-  url.hostname = "whatdatetime.com";
-  url.port = "";
-  return Response.redirect(url.toString(), 308);
-}
-
-function extractEmbeddedFlight(html) {
-  const chunks = [];
-  const scripts =
-    html.matchAll(
-      /<script>self\.__next_f\.push\(([\s\S]*?)\)<\/script>/g,
-    );
-  for (const match of scripts) {
-    try {
-      const record = JSON.parse(match[1]);
-      if (record[0] === 1 && typeof record[1] === "string") {
-        chunks.push(record[1]);
-      }
-    } catch {
-      return null;
+  const isLocal = url.hostname === "127.0.0.1" || url.hostname === "localhost";
+  const legacyTarget = legacyRedirects.get(url.pathname.replace(/\/$/, ""));
+  if (legacyTarget) {
+    url.pathname = legacyTarget;
+    if (!isLocal) {
+      url.protocol = "https:";
+      url.hostname = "whatdatetime.com";
+      url.port = "";
     }
+    return url;
   }
-  return chunks.length > 0 ? chunks.join("") : null;
-}
-
-async function getStaticPageResponse(request, env) {
-  const url = new URL(request.url);
-  const route = url.pathname.replace(/^\/+|\/+$/g, "");
-
-  if (route.startsWith("_next/") || route === "BUILD_ID") {
-    return env.ASSETS.fetch(request);
+  if (isLocal) return null;
+  if (url.protocol !== "https:" || url.hostname !== "whatdatetime.com") {
+    url.protocol = "https:";
+    url.hostname = "whatdatetime.com";
+    url.port = "";
+    return url;
   }
-
-  if (route === "BingSiteAuth.xml") {
-    const assetResponse = await env.ASSETS.fetch(
-      new URL("/BingSiteAuth.xml", url),
-    );
-    if (!assetResponse.ok || !assetResponse.body) {
-      await assetResponse.body?.cancel();
-      return null;
-    }
-
-    return new Response(request.method === "HEAD" ? null : assetResponse.body, {
-      headers: {
-        "Cache-Control": "public, max-age=3600",
-        "Content-Type": "application/xml; charset=utf-8",
-      },
-    });
-  }
-
-  const metadataTypes = {
-    "sitemap.xml": "application/xml; charset=utf-8",
-    "robots.txt": "text/plain; charset=utf-8",
-    "manifest.webmanifest": "application/manifest+json; charset=utf-8",
-  };
-  const metadataType = metadataTypes[route] || (/^sitemap-[a-z0-9-]+\.xml$/.test(route) ? "application/xml; charset=utf-8" : null);
-  if (metadataType) {
-    const payload = await readCompressedAsset(
-      env,
-      new URL(`/cdn-cgi/metadata/${route}.json.gz`, url),
-    );
-    if (!payload || typeof payload.body !== "string") return null;
-    return new Response(request.method === "HEAD" ? null : payload.body, {
-      headers: {
-        "Cache-Control": "public, max-age=0, must-revalidate",
-        "Content-Type": payload.contentType || metadataType,
-      },
-    });
-  }
-
-  let payload = null;
-  if (route && !route.includes("/") && !route.includes(".")) {
-    payload = await readCompressedAsset(
-      env,
-      new URL(`/cdn-cgi/seo-pages/${encodeURIComponent(route)}.json.gz`, url),
-    );
-  }
-  payload ??= await readCompressedAsset(
-    env,
-    new URL(`/cdn-cgi/core-pages/${routeToken(route)}.json.gz`, url),
-  );
-
-  let status = 200;
-  if (!payload) {
-    payload = await readCompressedAsset(
-      env,
-      new URL("/cdn-cgi/core-pages/_not-found.json.gz", url),
-    );
-    status = 404;
-  }
-  if (!payload) return null;
-
-  const isRSC = request.headers.get("RSC") === "1";
-  const body = isRSC
-    ? payload.rsc ?? extractEmbeddedFlight(payload.html)
-    : payload.html;
-
-  if (typeof body !== "string") {
-    return null;
-  }
-
-  const headers = new Headers({
-    "Cache-Control": "public, max-age=0, must-revalidate",
-    "Content-Type": isRSC
-      ? "text/x-component; charset=utf-8"
-      : "text/html; charset=utf-8",
-    Vary: "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url",
-  });
-
-  return new Response(request.method === "HEAD" ? null : body, {
-    status,
-    headers,
-  });
+  return null;
 }
 
 export default {
   async fetch(request, env) {
-    const redirect = canonicalRedirect(request);
-    if (redirect) return redirect;
-
-    if (request.method === "GET" || request.method === "HEAD") {
-      const staticResponse = await getStaticPageResponse(request, env);
-      if (staticResponse) return staticResponse;
+    const target = redirectUrl(request);
+    if (target) return Response.redirect(target.toString(), 308);
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      return new Response("Method Not Allowed", { status: 405, headers: { Allow: "GET, HEAD" } });
     }
-
-    return new Response("Method Not Allowed", {
-      status: 405,
-      headers: { Allow: "GET, HEAD" },
-    });
+    return env.ASSETS.fetch(request);
   },
 };

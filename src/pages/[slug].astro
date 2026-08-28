@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import { ProgrammaticPageView } from "@/components/programmatic-page-view";
+import {
+  getAllSEOPageIndex,
+  getRelatedPages,
+  getSEOPage,
+  getSEOText,
+} from "@/lib/seoGenerator";
+
+export function getStaticPaths() {
+  return getAllSEOPageIndex().map((page) => ({ params: { slug: page.slug } }));
+}
+
+const { slug } = Astro.params;
+const page = slug ? await getSEOPage(slug) : undefined;
+if (!page) throw new Error(`Missing SEO page data for ${slug}`);
+const related = await getRelatedPages(page);
+const seo = getSEOText(page);
+const referenceTime = new Date().toISOString();
+const title = `${seo.title} | WhatDateTime`;
+---
+
+<BaseLayout title={title} description={seo.description} canonicalPath={`/${page.slug}`}>
+  <ProgrammaticPageView client:load page={page} related={related} referenceTime={referenceTime} />
+</BaseLayout>

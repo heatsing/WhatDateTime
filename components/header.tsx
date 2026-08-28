@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { Icon } from "@/components/icon";
+import { navigate } from "@/lib/browser-navigation";
 
 type NavigationGroup = {
   label: string;
@@ -94,9 +94,7 @@ function intentRoute(query: string) {
   return "/calculators/date-calculator";
 }
 
-export function Header() {
-  const router = useRouter();
-  const pathname = usePathname();
+export function Header({ pathname = "/" }: { pathname?: string }) {
   const isHomepage = pathname === "/";
   const [panel, setPanel] = useState<"menu" | "search" | null>(null);
   const [desktopMenu, setDesktopMenu] = useState<string | null>(null);
@@ -125,7 +123,7 @@ export function Header() {
     event.preventDefault();
     const value = query.trim().toLowerCase();
     if (!value) return;
-    router.push(generatedRoute(value) ?? intentRoute(value));
+    navigate(generatedRoute(value) ?? intentRoute(value));
     closeMenus();
   }
 

@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/link";
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { navigate } from "@/lib/browser-navigation";
 
 const cities = [
   "New York",
@@ -22,17 +22,16 @@ function citySlug(city: string) {
 }
 
 export function HomeTimezoneConverter() {
-  const router = useRouter();
   const [from, setFrom] = useState("New York");
   const [to, setTo] = useState("London");
 
   function convert(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (from === to) {
-      router.push("/calculators/timezone-converter");
+      navigate("/calculators/timezone-converter");
       return;
     }
-    router.push(`/${citySlug(from)}-to-${citySlug(to)}-time`);
+    navigate(`/${citySlug(from)}-to-${citySlug(to)}-time`);
   }
 
   return (

@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/link";
 import {
   CalendarDays,
   CircleHelp,
@@ -17,12 +16,6 @@ import { JsonLd } from "@/components/json-ld";
 import { LiveClock } from "@/components/live-clock";
 import { siteConfig } from "@/lib/site";
 import { faqSchema, webApplicationSchema } from "@/lib/structured-data";
-
-export const metadata: Metadata = {
-  title: { absolute: "WhatDateTime — Date & Time Calculators" },
-  description: siteConfig.description,
-  alternates: { canonical: "/" },
-};
 
 type DirectorySection = {
   title: string;

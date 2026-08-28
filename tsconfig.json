@@ -16,11 +16,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": [
         "./*"
@@ -28,11 +23,10 @@
     }
   },
   "include": [
-    "next-env.d.ts",
+    ".astro/types.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "dist/types/**/*.ts"
+    "src/**/*.astro"
   ],
   "exclude": [
     "node_modules"

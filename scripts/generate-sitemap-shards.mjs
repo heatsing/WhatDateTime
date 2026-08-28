@@ -1,71 +1,44 @@
-import {
-  existsSync,
-  readFileSync,
-  readdirSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-const appOutput = path.resolve(".next/server/app");
-const sourcePath = path.join(appOutput, "sitemap.xml.body");
+const output = path.resolve("dist");
 const shardSize = 2_000;
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://whatdatetime.com").replace(/\/$/, "");
-const pageIndex = JSON.parse(
-  readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
-);
-const typeBySlug = new Map(pageIndex.map((page) => [page.slug, page.type]));
+const siteUrl = (process.env.PUBLIC_SITE_URL || "https://whatdatetime.com").replace(/\/$/, "");
+const pageIndex = JSON.parse(readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"));
+const buildDate = new Date().toISOString().slice(0, 10);
+const coreRoutes = ["", "calculators/date-calculator", "calculators/time-difference", "calculators/age-calculator", "calculators/countdown", "calculators/timezone-converter"];
 
-if (!existsSync(sourcePath)) {
-  throw new Error(`Cannot split sitemap: ${sourcePath} does not exist`);
+mkdirSync(output, { recursive: true });
+for (const file of readdirSync(output)) {
+  if (/^sitemap(?:-[a-z0-9-]+)?\.xml$/.test(file)) rmSync(path.join(output, file));
 }
 
-const source = readFileSync(sourcePath, "utf8");
-if (source.includes("<sitemapindex")) {
-  const existingShards = [...source.matchAll(/<loc>[^<]*\/(sitemap-[a-z0-9-]+\.xml)<\/loc>/g)];
-  if (existingShards.length > 0 && existingShards.every((match) => existsSync(path.join(appOutput, `${match[1]}.body`)))) {
-    console.log(`Sitemap already split into ${existingShards.length} family shards`);
-    process.exit(0);
-  }
-  throw new Error("Sitemap index exists but one or more family shard files are missing");
+const groups = new Map([["core", coreRoutes.map((slug) => ({ slug, updatedAt: buildDate }))]]);
+for (const page of pageIndex) {
+  const pages = groups.get(page.type) || [];
+  pages.push(page);
+  groups.set(page.type, pages);
 }
 
-for (const file of readdirSync(appOutput)) {
-  if (/^sitemap-[a-z0-9-]+\.xml\.body$/.test(file)) {
-    rmSync(path.join(appOutput, file));
-  }
-}
-
-const entries = source.match(/<url>[\s\S]*?<\/url>/g) || [];
-if (entries.length === 0) {
-  throw new Error("Cannot split sitemap: no <url> entries found");
-}
-
-const entriesByFamily = new Map();
-for (const entry of entries) {
-  const url = entry.match(/<loc>(.*?)<\/loc>/)?.[1];
-  if (!url) throw new Error("Sitemap entry is missing its URL");
-  const slug = new URL(url).pathname.replace(/^\//, "");
-  const family = typeBySlug.get(slug) || "core";
-  const familyEntries = entriesByFamily.get(family) || [];
-  familyEntries.push(entry);
-  entriesByFamily.set(family, familyEntries);
-}
-
+const escapeXml = (value) => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const shardUrls = [];
-for (const [family, familyEntries] of entriesByFamily) {
-  const partCount = Math.ceil(familyEntries.length / shardSize);
-  for (let offset = 0; offset < familyEntries.length; offset += shardSize) {
+let total = 0;
+for (const [family, pages] of groups) {
+  const partCount = Math.ceil(pages.length / shardSize);
+  for (let offset = 0; offset < pages.length; offset += shardSize) {
     const part = Math.floor(offset / shardSize) + 1;
     const suffix = partCount > 1 ? `-${part}` : "";
     const fileName = `sitemap-${family}${suffix}.xml`;
-    const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${familyEntries.slice(offset, offset + shardSize).join("\n")}\n</urlset>`;
-    writeFileSync(path.join(appOutput, `${fileName}.body`), body);
+    const entries = pages.slice(offset, offset + shardSize).map((page) => {
+      const url = page.slug ? `${siteUrl}/${page.slug}` : siteUrl;
+      const lastmod = page.updatedAt || buildDate;
+      return `  <url><loc>${escapeXml(url)}</loc><lastmod>${lastmod}</lastmod></url>`;
+    });
+    writeFileSync(path.join(output, fileName), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>`);
     shardUrls.push(`${siteUrl}/${fileName}`);
+    total += entries.length;
   }
 }
 
-const indexBody = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${shardUrls.map((url) => `  <sitemap><loc>${url}</loc></sitemap>`).join("\n")}\n</sitemapindex>`;
-writeFileSync(sourcePath, indexBody);
-
-console.log(`Split ${entries.length} sitemap URLs into ${shardUrls.length} family shards of at most ${shardSize}`);
+writeFileSync(path.join(output, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${shardUrls.map((url) => `  <sitemap><loc>${url}</loc></sitemap>`).join("\n")}\n</sitemapindex>`);
+console.log(`Generated ${total} sitemap URLs in ${shardUrls.length} family shards`);

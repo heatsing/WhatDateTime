@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { navigate } from "@/lib/browser-navigation";
 import { Icon } from "@/components/icon";
 
 const options = [
@@ -16,7 +16,6 @@ const options = [
 ] as const;
 
 export function QuickAnswer() {
-  const router = useRouter();
   const [amount, setAmount] = useState(7);
   const [type, setType] = useState<(typeof options)[number][0]>("days-from-today");
 
@@ -27,7 +26,7 @@ export function QuickAnswer() {
     const safeAmount = Math.min(Math.max(Math.round(amount || 1), 1), max);
     const unit = selected?.[3] || "day";
     const suffix = selected?.[4] || "from-today";
-    router.push(
+    navigate(
       `/${safeAmount}-${safeAmount === 1 ? unit : `${unit}s`}-${suffix}`,
     );
   }

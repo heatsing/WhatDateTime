@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { navigate } from "@/lib/browser-navigation";
 import { format } from "date-fns";
 import {
   calculateRelativeDate,
@@ -22,7 +22,6 @@ export function RelativeCalculator({
   initialPrimary: string;
   initialSecondary: string;
 }) {
-  const router = useRouter();
   const definition = calculationDefinitions[slug];
   const [amount, setAmount] = useState(initialAmount);
   const [base, setBase] = useState<Date | null>(null);
@@ -42,7 +41,7 @@ export function RelativeCalculator({
       Math.max(Math.round(Number(amount) || 1), 1),
       definition.max,
     );
-    router.push(`/${slug}/${safeAmount}`);
+    navigate(`/${slug}/${safeAmount}`);
   }
 
   const phrase = getPagePhrase(slug, initialAmount);

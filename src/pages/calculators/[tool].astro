@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import {
+  CalculatorPageView,
+  calculatorMetadata,
+  type CalculatorKind,
+} from "@/components/calculator-page-view";
+
+export function getStaticPaths() {
+  const tools = [
+    ["date-calculator", "date"],
+    ["time-difference", "difference"],
+    ["age-calculator", "age"],
+    ["countdown", "countdown"],
+    ["timezone-converter", "timezone"],
+  ] as const;
+  return tools.map(([tool, kind]) => ({ params: { tool }, props: { kind } }));
+}
+
+const { kind } = Astro.props as { kind: CalculatorKind };
+const metadata = calculatorMetadata[kind];
+const title = `${metadata.title} | WhatDateTime`;
+const initialTime = new Date().toISOString();
+---
+
+<BaseLayout title={title} description={metadata.description} canonicalPath={metadata.path}>
+  <CalculatorPageView client:load kind={kind} initialTime={initialTime} />
+</BaseLayout>

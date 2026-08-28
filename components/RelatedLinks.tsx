@@ -1,10 +1,9 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { LivePageResult } from "@/components/live-page-output";
 import {
   getRelativePhrase,
-  getSEOText,
-  type SEOPage,
-} from "@/lib/seoGenerator";
+} from "@/lib/pageCalculations";
+import type { SEOPage } from "@/lib/seoGenerator";
 
 export function RelatedLinks({
   currentPage,
@@ -107,7 +106,7 @@ export function RelatedLinks({
             <span>
               {page.kind === "relative"
                 ? getRelativePhrase(page)
-                : getSEOText(page).title.replace(/ - .+$/, "")} —{" "}
+                : page.title.replace(/ - .+$/, "")} —{" "}
               <LivePageResult
                 page={page}
                 referenceDate={referenceDate}

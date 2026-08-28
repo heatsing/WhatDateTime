@@ -1,9 +1,9 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-const appDir = path.resolve(".next/server/app");
+const appDir = path.resolve("dist");
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.PUBLIC_SITE_URL ||
   "https://whatdatetime.com";
 const wranglerConfig = readFileSync(path.resolve("wrangler.jsonc"), "utf8");
 if (!/"name"\s*:\s*"whatdatetime"/.test(wranglerConfig)) {
@@ -61,7 +61,7 @@ const programmaticSlugs = new Set(pageIndex.map((page) => page.slug));
 
 for (const routeEntry of routes) {
   const { route, expectedCanonical, programmatic } = routeEntry;
-  const htmlPath = path.join(appDir, route ? `${route}.html` : "index.html");
+  const htmlPath = path.join(appDir, route ? route : "", "index.html");
   if (!existsSync(htmlPath)) {
     fail(`/${route}: generated HTML is missing at ${htmlPath}`);
   }
@@ -267,7 +267,7 @@ if (maximumCrawlDepth > 15) {
   fail(`maximum homepage crawl depth ${maximumCrawlDepth} exceeds 15 clicks`);
 }
 
-const sitemapPath = path.join(appDir, "sitemap.xml.body");
+const sitemapPath = path.join(appDir, "sitemap.xml");
 if (!existsSync(sitemapPath)) fail("generated sitemap.xml is missing");
 const sitemap = readFileSync(sitemapPath, "utf8");
 const sitemapDocuments = [sitemap];
@@ -282,7 +282,7 @@ if (sitemap.includes("<sitemapindex")) {
     if (!/^sitemap-[a-z0-9-]+\.xml$/.test(shardName)) {
       fail(`sitemap index contains an invalid shard URL: ${shardUrl}`);
     }
-    const shardPath = path.join(appDir, `${shardName}.body`);
+    const shardPath = path.join(appDir, shardName);
     if (!existsSync(shardPath)) fail(`sitemap shard is missing: ${shardName}`);
     const shard = readFileSync(shardPath, "utf8");
     const shardEntries = captureAll(shard, /<loc>(.*?)<\/loc>/g);

@@ -4,7 +4,7 @@ export const siteConfig = {
   description:
     "Check the current date and time, calculate future or past dates, compare time zones, find date differences, track ages, and create countdowns for free.",
   url:
-    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.PUBLIC_SITE_URL ||
     "https://whatdatetime.com",
 };
 

@@ -1,0 +1,13 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import HomePage from "@/components/home-page";
+import { siteConfig } from "@/lib/site";
+---
+
+<BaseLayout
+  title="WhatDateTime — Date & Time Calculators"
+  description={siteConfig.description}
+  canonicalPath="/"
+>
+  <HomePage client:load />
+</BaseLayout>

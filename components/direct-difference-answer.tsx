@@ -1,5 +1,6 @@
 import { format } from "date-fns";
-import { getPageFormula, getPageResult, type SEOPage } from "@/lib/seoGenerator";
+import { getPageFormula, getPageResult } from "@/lib/pageCalculations";
+import type { SEOPage } from "@/lib/seoGenerator";
 
 type DifferencePage = Extract<SEOPage, { kind: "difference" }>;
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/link";
 import { ChevronRight, Home } from "lucide-react";
 
 export function Breadcrumb({ current }: { current: string }) {

@@ -7,8 +7,8 @@ import { LivePageFormula } from "@/components/live-page-output";
 import type { ContentSection } from "@/lib/seoGenerator";
 import {
   getRelativePhrase,
-  type SEOPage,
-} from "@/lib/seoGenerator";
+} from "@/lib/pageCalculations";
+import type { SEOPage } from "@/lib/seoGenerator";
 
 export function SEOContent({
   data,
