@@ -31,6 +31,13 @@ const coreRoutes = [
   "calculators/age-calculator",
   "calculators/countdown",
   "calculators/timezone-converter",
+  "calculators/days-until",
+  "calculators/day-of-week",
+  "calculators/days-in-month",
+  "calculators/weeks-in-year",
+  "calculators/calendar",
+  "calculators/half-birthday",
+  "calculators/weeks-and-days-ago",
 ];
 const routes = [
   ...coreRoutes.map((route) => ({
@@ -279,15 +286,18 @@ if (sitemap.includes("<sitemapindex")) {
   }
   for (const shardUrl of shardUrls) {
     const shardName = new URL(shardUrl).pathname.replace(/^\//, "");
-    if (!/^sitemap-[a-z0-9-]+\.xml$/.test(shardName)) {
+    if (!/^sitemap-\d+\.xml$/.test(shardName)) {
       fail(`sitemap index contains an invalid shard URL: ${shardUrl}`);
     }
     const shardPath = path.join(appDir, shardName);
     if (!existsSync(shardPath)) fail(`sitemap shard is missing: ${shardName}`);
     const shard = readFileSync(shardPath, "utf8");
     const shardEntries = captureAll(shard, /<loc>(.*?)<\/loc>/g);
-    if (shardEntries.length === 0 || shardEntries.length > 2_000) {
-      fail(`${shardName} must contain between 1 and 2000 URLs`);
+    if (shardEntries.length < 1 || shardEntries.length > 1_000) {
+      fail(`${shardName} must contain between 1 and 1000 URLs`);
+    }
+    if (shardName === "sitemap-1.xml" && shardEntries.length !== 1_000) {
+      fail("sitemap-1.xml must contain exactly 1000 URLs");
     }
     sitemapDocuments.push(shard);
   }
@@ -317,7 +327,7 @@ console.log(
     `Static HTML SEO check passed: ${checkedRoutes.size} indexable pages`,
     `${pageIndex.length} programmatic HTML files match the route inventory`,
     `${sitemapUrls.length} unique sitemap URLs`,
-    ...(sitemapShardCount > 0 ? [`${sitemapShardCount} sitemap shards linked from sitemap.xml`] : []),
+    ...(sitemapShardCount > 0 ? [`${sitemapShardCount} numeric sitemap shards linked from sitemap.xml`] : []),
     `all programmatic pages are reachable within ${maximumCrawlDepth} clicks from the homepage`,
     "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
     "all programmatic titles use a question format with one WhatDateTime suffix",

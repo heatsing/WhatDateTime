@@ -61,19 +61,19 @@ export function DirectDateAnswer({
   return (
     <article
       data-content-stage="direct-answer"
-      className="mx-auto max-w-3xl py-4 text-center sm:py-6"
+      className="mx-auto max-w-4xl py-5 text-center sm:py-8"
       aria-labelledby="direct-date-answer-heading"
     >
       <header>
         <p className="text-sm font-semibold text-fern">Direct answer</p>
         <h2
           id="direct-date-answer-heading"
-          className="mx-auto mt-2 max-w-2xl font-display text-lg font-semibold leading-snug text-ink/65 sm:text-xl"
+          className="mx-auto mt-2.5 max-w-3xl font-display text-xl font-semibold leading-snug text-ink/65 sm:text-2xl"
         >
           {prompt}
         </h2>
         <p
-          className="mt-3 font-display text-3xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-[2.625rem]"
+          className="mt-4 font-display text-4xl font-bold leading-tight tracking-[-0.035em] text-ink sm:text-5xl lg:text-[56px]"
           aria-live="polite"
         >
           {result}
@@ -135,7 +135,7 @@ function MonthCalendar({ resultDate }: { resultDate: Date }) {
 
   return (
     <section
-      className="mx-auto mt-6 w-full max-w-[22.75rem] overflow-hidden rounded-lg border border-[#D9DEE5] bg-white"
+      className="mx-auto mt-7 w-full max-w-[26rem] overflow-hidden rounded-lg border border-[#D9DEE5] bg-white"
       aria-label={`${monthLabel} calendar`}
     >
       <table className="w-full table-fixed border-collapse">

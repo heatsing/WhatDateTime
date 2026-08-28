@@ -16,6 +16,9 @@ const navigation: ReadonlyArray<NavigationGroup> = [
     links: [
       ["Date Calculator", "/calculators/date-calculator"],
       ["Days Between Dates", "/calculators/time-difference"],
+      ["Days Until Date", "/calculators/days-until"],
+      ["Day of the Week", "/calculators/day-of-week"],
+      ["Calendar Generator", "/calculators/calendar"],
       ["Age Calculator", "/calculators/age-calculator"],
       ["Business Days", "/30-business-days-from-today"],
     ],
@@ -89,7 +92,24 @@ function intentRoute(query: string) {
     return "/calculators/age-calculator";
   }
   if (/countdown|until/.test(query)) {
-    return "/calculators/countdown";
+    return /days|date/.test(query)
+      ? "/calculators/days-until"
+      : "/calculators/countdown";
+  }
+  if (/day of (the )?week|weekday/.test(query)) {
+    return "/calculators/day-of-week";
+  }
+  if (/days in (a )?month/.test(query)) {
+    return "/calculators/days-in-month";
+  }
+  if (/weeks in (a )?year/.test(query)) {
+    return "/calculators/weeks-in-year";
+  }
+  if (/half birthday/.test(query)) {
+    return "/calculators/half-birthday";
+  }
+  if (/calendar/.test(query)) {
+    return "/calculators/calendar";
   }
   return "/calculators/date-calculator";
 }
@@ -134,8 +154,8 @@ export function Header({ pathname = "/" }: { pathname?: string }) {
 
   return (
     <header className={`sticky top-0 z-50 text-white ${isHomepage ? "border-0 bg-transparent" : "border-b border-white/10 bg-ink"}`}>
-      <div className={isHomepage ? "relative mx-auto flex h-[50px] max-w-[90rem] items-center bg-ink px-3 sm:px-6 lg:h-14 lg:px-12 xl:px-16" : "mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:gap-5 lg:px-8"}>
-        <Link href="/" className={`${isHomepage ? "absolute left-1/2 -translate-x-1/2 text-sm" : "shrink-0 text-base sm:text-lg"} rounded-md font-display font-bold tracking-[-0.02em] text-white outline-none focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink`} aria-label="WhatDateTime home">
+      <div className={isHomepage ? "relative mx-auto flex h-14 max-w-[90rem] items-center bg-ink px-4 sm:h-16 sm:px-8 lg:px-12 xl:px-16" : "mx-auto flex h-16 max-w-[90rem] items-center gap-3 px-5 sm:px-8 lg:gap-6 lg:px-12"}>
+        <Link href="/" className={`${isHomepage ? "absolute left-1/2 -translate-x-1/2 text-base sm:text-lg" : "shrink-0 text-lg sm:text-xl"} rounded-md font-display font-bold tracking-[-0.02em] text-white outline-none focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-ink`} aria-label="WhatDateTime home">
           WhatDateTime
         </Link>
 

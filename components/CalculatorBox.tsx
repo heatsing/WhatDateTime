@@ -22,7 +22,7 @@ import {
 import type { SEOPage } from "@/lib/seoGenerator";
 
 const fieldClass =
-  "h-12 min-w-0 max-w-full w-full rounded-md border border-[#C8D0D8] bg-white px-3.5 text-sm font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
+  "h-[52px] min-w-0 max-w-full w-full rounded-md border border-[#C8D0D8] bg-white px-4 text-base font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
 
 const unitOptions: Array<{ value: RelativeUnit; label: string }> = [
   { value: "hour", label: "Hours" },
@@ -311,8 +311,8 @@ function CalculatorShell({
   result: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-[#C8D0D8] bg-[#EEF6FC]">
-      <div className="p-4 sm:p-6">{children}</div>
+    <div className="mx-auto max-w-5xl overflow-hidden rounded-xl border border-[#C8D0D8] bg-[#EEF6FC] shadow-card">
+      <div className="p-5 sm:p-7 lg:p-8">{children}</div>
       {result}
     </div>
   );
@@ -325,10 +325,10 @@ function FormHeading() {
         <Calculator className="h-4 w-4" aria-hidden="true" />
       </span>
       <div>
-        <p className="font-display text-sm font-semibold text-ink">
+        <p className="font-display text-base font-semibold text-ink">
           Try another value
         </p>
-        <p className="text-xs text-ink/45">Change any field for a new result</p>
+        <p className="text-sm text-ink/45">Change any field for a new result</p>
       </div>
     </div>
   );
@@ -347,7 +347,7 @@ function Field({
     <div className="min-w-0">
       <label
         htmlFor={htmlFor}
-        className="mb-1.5 block text-sm font-semibold text-ink"
+        className="mb-2 block text-[15px] font-semibold text-ink"
       >
         {label}
       </label>
@@ -358,7 +358,7 @@ function Field({
 
 function CalculateButton({ label = "Calculate" }: { label?: string }) {
   return (
-    <button className="inline-flex h-12 w-full self-end items-center justify-center gap-2 rounded-md bg-fern px-4 text-sm font-semibold text-white hover:bg-[#12558B]">
+    <button className="inline-flex h-[52px] w-full self-end items-center justify-center gap-2 rounded-md bg-fern px-5 text-base font-semibold text-white hover:bg-[#12558B]">
       {label}
       <ArrowRight className="h-4 w-4" aria-hidden="true" />
     </button>

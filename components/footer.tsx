@@ -6,6 +6,8 @@ const groups = [
     links: [
       ["Date Calculator", "/calculators/date-calculator"],
       ["Days Between Dates", "/calculators/time-difference"],
+      ["Days Until Date", "/calculators/days-until"],
+      ["Calendar Generator", "/calculators/calendar"],
       ["Age Calculator", "/calculators/age-calculator"],
     ],
   },

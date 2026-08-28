@@ -110,11 +110,11 @@ export function TimezoneComparison({
         </p>
         <h2
           id="timezone-comparison-title"
-          className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl"
+          className="mt-2 font-display text-3xl font-semibold tracking-[-0.025em] text-ink sm:text-4xl"
         >
           The same moment in both cities
         </h2>
-        <p className="mt-4 font-display text-xl font-semibold leading-snug text-ink sm:text-2xl">
+        <p className="mt-5 font-display text-2xl font-semibold leading-snug text-ink sm:text-3xl lg:text-4xl">
           {origin.time} in {page.fromCity} is {destination.time} in {page.toCity}.
         </p>
       </div>

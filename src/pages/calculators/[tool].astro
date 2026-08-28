@@ -13,6 +13,13 @@ export function getStaticPaths() {
     ["age-calculator", "age"],
     ["countdown", "countdown"],
     ["timezone-converter", "timezone"],
+    ["days-until", "days-until"],
+    ["day-of-week", "day-of-week"],
+    ["days-in-month", "days-in-month"],
+    ["weeks-in-year", "weeks-in-year"],
+    ["calendar", "calendar"],
+    ["half-birthday", "half-birthday"],
+    ["weeks-and-days-ago", "weeks-and-days-ago"],
   ] as const;
   return tools.map(([tool, kind]) => ({ params: { tool }, props: { kind } }));
 }

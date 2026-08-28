@@ -22,9 +22,18 @@ export function LiveReferenceDateProvider({
 
   useEffect(() => {
     const update = () => setReferenceDate(new Date());
+    const updateWhenVisible = () => {
+      if (document.visibilityState === "visible") update();
+    };
     update();
     const timer = window.setInterval(update, 60_000);
-    return () => window.clearInterval(timer);
+    window.addEventListener("focus", update);
+    document.addEventListener("visibilitychange", updateWhenVisible);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("focus", update);
+      document.removeEventListener("visibilitychange", updateWhenVisible);
+    };
   }, []);
 
   return (

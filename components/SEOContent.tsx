@@ -79,55 +79,55 @@ function DeepContent({
         : ["IANA time-zone rules", "Daylight-saving offset handling", "Previous-day and next-day detection", "Side-by-side nearby time comparison"];
 
   return (
-    <section className="mx-auto max-w-3xl" aria-labelledby="calculation-explained">
-      <p className="text-sm font-semibold text-fern">Calculation guide</p>
-      <h2 id="calculation-explained" className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] text-ink sm:text-3xl">
+    <section className="mx-auto max-w-4xl" aria-labelledby="calculation-explained">
+      <p className="text-[15px] font-semibold text-fern sm:text-base">Calculation guide</p>
+      <h2 id="calculation-explained" className="mt-2.5 font-display text-3xl font-semibold tracking-[-0.025em] text-ink sm:text-4xl">
         Understanding {subject}
       </h2>
 
       <article data-content-stage="calculation-basis" className="mt-7 border-t border-[#D9DEE5] pt-6">
-        <h2 className="font-display text-xl font-semibold text-ink">Calculation basis</h2>
-        <p className="mt-3 text-base leading-7 text-ink/65 sm:text-[17px] sm:leading-8">{page.intro}</p>
-        <p className="mt-4 border-l-4 border-fern bg-[#F4F8FB] px-4 py-3 text-sm font-medium leading-7 text-ink">
+        <h2 className="font-display text-2xl font-semibold text-ink">Calculation basis</h2>
+        <p className="mt-4 text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">{page.intro}</p>
+        <p className="mt-5 border-l-4 border-fern bg-[#F4F8FB] px-5 py-4 text-base font-medium leading-8 text-ink">
           <LivePageFormula page={page} referenceDate={referenceDate} />
         </p>
       </article>
 
       <article data-content-stage="how-to-use" className="mt-9 border-t border-[#D9DEE5] pt-6">
-        <h2 className="font-display text-xl font-semibold text-ink">How to use this calculator</h2>
-        <p className="mt-3 max-w-3xl text-base leading-8 text-ink/60">Follow these steps to reproduce the page answer or calculate a different value.</p>
+        <h2 className="font-display text-2xl font-semibold text-ink">How to use this calculator</h2>
+        <p className="mt-3 max-w-3xl text-base leading-8 text-ink/60 sm:text-lg">Follow these steps to reproduce the page answer or calculate a different value.</p>
         <ol className="mt-6 space-y-5">
           {steps.map(([title, text], index) => (
             <li key={title} className="grid grid-cols-[2.25rem_1fr] gap-4">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[#E7F0F8] text-xs font-bold text-fern">{index + 1}</span>
-              <div><h3 className="font-display text-base font-semibold text-ink">{title}</h3><p className="mt-1.5 text-sm leading-7 text-ink/60">{text}</p></div>
+              <div><h3 className="font-display text-lg font-semibold text-ink">{title}</h3><p className="mt-1.5 text-base leading-8 text-ink/60">{text}</p></div>
             </li>
           ))}
         </ol>
       </article>
 
       <article data-content-stage="practical-scenarios" className="mt-9 border-t border-[#D9DEE5] pt-6">
-        <h2 className="font-display text-xl font-semibold text-ink">Practical applications</h2>
+        <h2 className="font-display text-2xl font-semibold text-ink">Practical applications</h2>
         <ul className="mt-4 space-y-2">
-          {page.useCases.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-sm leading-7 text-ink/65 sm:text-base">{item}</li>)}
+          {page.useCases.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-base leading-8 text-ink/65 sm:text-[17px]">{item}</li>)}
         </ul>
       </article>
 
       <div className="mt-9 space-y-9 border-t border-[#D9DEE5] pt-6">
         <article>
-          <h2 className="font-display text-xl font-semibold text-ink">Worked examples</h2>
+          <h2 className="font-display text-2xl font-semibold text-ink">Worked examples</h2>
           <ul className="mt-5 space-y-5">
-            {page.examples.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-sm leading-7 text-ink/65">{item}</li>)}
+            {page.examples.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-base leading-8 text-ink/65">{item}</li>)}
           </ul>
         </article>
         <article>
-          <h2 className="font-display text-xl font-semibold text-ink">Advanced calculation features</h2>
+          <h2 className="font-display text-2xl font-semibold text-ink">Advanced calculation features</h2>
           <ul className="mt-5 space-y-3">
-            {features.map((item) => <li key={item} className="flex gap-3 text-sm leading-7 text-ink/65"><span className="font-bold text-fern" aria-hidden="true">✓</span>{item}</li>)}
+            {features.map((item) => <li key={item} className="flex gap-3 text-base leading-8 text-ink/65"><span className="font-bold text-fern" aria-hidden="true">✓</span>{item}</li>)}
           </ul>
           <h3 className="mt-8 font-display text-xl font-bold text-ink">Accuracy tips</h3>
           <ul className="mt-4 space-y-3">
-            {page.tips.map((item) => <li key={item} className="text-sm leading-7 text-ink/65">{item}</li>)}
+            {page.tips.map((item) => <li key={item} className="text-base leading-8 text-ink/65">{item}</li>)}
           </ul>
         </article>
       </div>

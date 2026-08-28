@@ -9,10 +9,10 @@ export function DirectDifferenceAnswer({ page, referenceDate }: { page: Differen
   const end = new Date(`${page.end}T12:00:00`);
 
   return (
-    <article data-content-stage="direct-answer" className="mx-auto max-w-3xl border-y border-[#D9DEE5] bg-white py-7 text-center sm:py-8" aria-labelledby="direct-difference-heading">
+    <article data-content-stage="direct-answer" className="mx-auto max-w-4xl border-y border-[#D9DEE5] bg-white py-8 text-center sm:py-10" aria-labelledby="direct-difference-heading">
       <p className="text-sm font-semibold text-fern">Direct answer</p>
-      <h2 id="direct-difference-heading" className="mt-2 font-display text-lg font-semibold leading-snug text-ink/65 sm:text-xl">The exact elapsed difference is</h2>
-      <p className="mt-3 font-display text-4xl font-bold tracking-[-0.03em] text-ink">{getPageResult(page, referenceDate)}</p>
+      <h2 id="direct-difference-heading" className="mt-2 font-display text-xl font-semibold leading-snug text-ink/65 sm:text-2xl">The exact elapsed difference is</h2>
+      <p className="mt-4 font-display text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl lg:text-[56px]">{getPageResult(page, referenceDate)}</p>
       <section className="mt-6 border-l-4 border-fern bg-[#F4F8FB] px-4 py-3 text-left">
         <h3 className="font-display text-sm font-semibold text-fern">Formula</h3>
         <p className="mt-1 text-sm leading-6 text-ink/65">{getPageFormula(page, referenceDate)}</p>

@@ -36,14 +36,14 @@ export function RelatedLinks({
 
     return (
       <section aria-labelledby="related-pages" data-content-stage="nearby-results">
-        <h2 id="related-pages" className="font-display text-2xl font-semibold text-ink">
+        <h2 id="related-pages" className="font-display text-3xl font-semibold text-ink sm:text-4xl">
           {heading}
         </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-7 text-ink/60">
+        <p className="mt-4 max-w-3xl text-base leading-8 text-ink/60 sm:text-lg">
           Compare nearby values and useful reference intervals without starting a new calculation.
         </p>
         <div className="mt-5 overflow-x-auto border-y border-[#D9DEE5]">
-          <table className="w-full table-fixed border-collapse text-left text-sm sm:text-base">
+          <table className="w-full table-fixed border-collapse text-left text-base sm:text-[17px]">
             <thead className="text-ink/65">
               <tr>
                 <th className="w-[42%] px-1 py-3 font-semibold sm:px-2">Calculation</th>
@@ -90,7 +90,7 @@ export function RelatedLinks({
         <div>
           <h2
             id="related-pages"
-            className="font-display text-2xl font-semibold text-ink"
+            className="font-display text-3xl font-semibold text-ink sm:text-4xl"
           >
             {heading}
           </h2>
@@ -101,7 +101,7 @@ export function RelatedLinks({
           <Link
             key={page.slug}
             href={`/${page.slug}`}
-            className="rounded-md border border-[#D9DEE5] bg-white px-4 py-3 text-sm font-medium text-ink/70 hover:border-[#AAB7C2] hover:text-fern"
+            className="rounded-md border border-[#D9DEE5] bg-white px-5 py-4 text-base font-medium leading-7 text-ink/70 hover:border-[#AAB7C2] hover:text-fern"
           >
             <span>
               {page.kind === "relative"
