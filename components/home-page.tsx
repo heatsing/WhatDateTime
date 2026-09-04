@@ -15,7 +15,12 @@ import { HomeTimezoneConverter } from "@/components/home-timezone-converter";
 import { JsonLd } from "@/components/json-ld";
 import { LiveClock } from "@/components/live-clock";
 import { siteConfig } from "@/lib/site";
-import { faqSchema, webApplicationSchema } from "@/lib/structured-data";
+import {
+  faqSchema,
+  organizationSchema,
+  webApplicationSchema,
+  websiteSchema,
+} from "@/lib/structured-data";
 
 type DirectorySection = {
   title: string;
@@ -192,6 +197,8 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={[
+        organizationSchema(),
+        websiteSchema(),
         webApplicationSchema("WhatDateTime Date & Time Calculators", siteConfig.description, "/"),
         faqSchema(homeFaqs),
       ]} />

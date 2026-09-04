@@ -8,9 +8,15 @@ interface Props {
   title: string;
   description: string;
   canonicalPath: string;
+  robots?: string;
 }
 
-const { title, description, canonicalPath } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath,
+  robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+} = Astro.props;
 const canonical = canonicalPath === "/"
   ? siteConfig.url
   : new URL(canonicalPath, siteConfig.url).toString();
@@ -24,15 +30,18 @@ const canonical = canonicalPath === "/"
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="description" content={description} />
     <meta name="application-name" content={siteConfig.name} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <title>{title}</title>

@@ -48,5 +48,5 @@ for (let offset = 0; offset < pages.length; offset += shardSize) {
   total += entries.length;
 }
 
-writeFileSync(path.join(output, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${shardUrls.map((url) => `  <sitemap><loc>${url}</loc></sitemap>`).join("\n")}\n</sitemapindex>`);
+writeFileSync(path.join(output, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${shardUrls.map((url) => `  <sitemap><loc>${url}</loc><lastmod>${buildDate}</lastmod></sitemap>`).join("\n")}\n</sitemapindex>`);
 console.log(`Generated ${total} sitemap URLs in ${shardUrls.length} numeric shards of ${shardSize}`);

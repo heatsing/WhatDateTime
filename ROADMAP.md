@@ -8,7 +8,8 @@
 - Require every programmatic page to ship the full answer, calculation basis, usage, scenarios, nearby results, and FAQ flow.
 - Preserve permanent static generation, canonical consistency, structured data, sitemap coverage, and crawlable internal links.
 - Monitor production hydration, Worker errors, and indexing signals.
-- Keep every programmatic URL reachable within 15 crawlable HTML links from the homepage; the current technical gate targets a maximum depth of 10.
+- Keep every programmatic URL reachable through crawlable HTML links; the current technical gate enforces a maximum depth of 6 from the homepage.
+- Keep real 404 responses out of the index and validate language alternates, homepage entity schema, calculator schema, and sitemap-index modification dates during every build.
 - Rebuild and deploy date-dependent static HTML daily so initial answers remain current without client-side execution.
 
 ## Next

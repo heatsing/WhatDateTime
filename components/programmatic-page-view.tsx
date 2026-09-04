@@ -43,7 +43,7 @@ export function ProgrammaticPageView({
     <>
       <JsonLd data={[
         faqPageSchema(faqs),
-        calculatorApplicationSchema({ name: seo.title, description: seo.description, path }),
+        calculatorApplicationSchema({ name: seo.title, description: seo.description, path, dateModified: page.updatedAt }),
         breadcrumbListSchema([
           { name: "Home", path: "/" },
           { name: seo.h1, path },

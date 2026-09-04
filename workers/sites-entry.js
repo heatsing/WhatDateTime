@@ -36,6 +36,20 @@ export default {
     if (request.method !== "GET" && request.method !== "HEAD") {
       return new Response("Method Not Allowed", { status: 405, headers: { Allow: "GET, HEAD" } });
     }
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    const headers = new Headers(response.headers);
+    const contentType = headers.get("content-type") || "";
+    if (contentType.includes("text/html")) {
+      headers.set("Content-Language", "en");
+      headers.set("X-Content-Type-Options", "nosniff");
+    }
+    if (response.status === 404) {
+      headers.set("X-Robots-Tag", "noindex, follow");
+    }
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
   },
 };

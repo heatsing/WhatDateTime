@@ -256,19 +256,14 @@ function relativeRelated(page) {
     ) candidates.push(candidate);
   };
 
-  // Nearby values remain prominent, while parent/child links form a shallow
-  // crawl tree so every numeric page is reachable without hundreds of hops.
+  // Every page links to the family root, while each node exposes eight child
+  // ranges. This keeps the numeric inventory shallow without a giant hub page.
+  const firstChild = index * 8 + 1;
   for (const candidateIndex of [
+    0,
+    ...Array.from({ length: 8 }, (_, child) => firstChild + child),
     index - 1,
     index + 1,
-    index - 2,
-    index + 2,
-    Math.floor((index - 1) / 2),
-    index * 2 + 1,
-    index * 2 + 2,
-    0,
-    Math.floor((pages.length - 1) / 2),
-    pages.length - 1,
   ]) {
     addIndex(candidateIndex);
   }
@@ -388,14 +383,12 @@ function differenceRelated(page) {
   const index = differencePages.findIndex(
     (candidate) => candidate.slug === page.slug,
   );
+  const firstChild = index * 8 + 1;
   const candidateIndexes = [
+    0,
+    ...Array.from({ length: 8 }, (_, child) => firstChild + child),
     index - 1,
     index + 1,
-    Math.floor((index - 1) / 2),
-    index * 2 + 1,
-    index * 2 + 2,
-    0,
-    differencePages.length - 1,
   ];
   const related = [];
   const addIndex = (candidateIndex) => {
@@ -407,11 +400,11 @@ function differenceRelated(page) {
     ) related.push(candidate.slug);
   };
   for (const candidateIndex of candidateIndexes) addIndex(candidateIndex);
-  for (let distance = 2; related.length < 6; distance += 1) {
+  for (let distance = 2; related.length < 10; distance += 1) {
     addIndex(index - distance);
     addIndex(index + distance);
   }
-  return related.slice(0, 6);
+  return related.slice(0, 10);
 }
 
 function differenceContent(page) {
@@ -542,26 +535,25 @@ function timezoneRelated(page) {
   );
   addCandidate(reciprocal);
 
+  const firstChild = index * 8 + 1;
   for (const candidateIndex of [
+    0,
+    ...Array.from({ length: 8 }, (_, child) => firstChild + child),
     index - 1,
     index + 1,
-    Math.floor((index - 1) / 2),
-    index * 2 + 1,
-    index * 2 + 2,
-    0,
   ]) {
     const candidate = sameOrigin[candidateIndex];
     addCandidate(candidate);
   }
 
-  for (let distance = 2; candidates.length < 6; distance += 1) {
+  for (let distance = 2; candidates.length < 10; distance += 1) {
     for (const candidateIndex of [index - distance, index + distance]) {
       const candidate = sameOrigin[candidateIndex];
       addCandidate(candidate);
     }
   }
 
-  return candidates.map((candidate) => candidate.slug).slice(0, 6);
+  return candidates.map((candidate) => candidate.slug).slice(0, 10);
 }
 
 function convertedExample(page, isoDate) {

@@ -23,10 +23,10 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
       - name: Check out the production source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -42,5 +42,18 @@ jobs:
       - name: Build current static HTML and run SEO gates
         run: npm run build
 
+      - name: Verify Cloudflare deployment credentials
+        shell: bash
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error title=Missing Cloudflare secret::Add CLOUDFLARE_API_TOKEN in repository Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error title=Missing Cloudflare account ID::Add CLOUDFLARE_ACCOUNT_ID in repository Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          npx wrangler whoami
+
       - name: Deploy the verified static site
-        run: npx wrangler deploy workers/sites-entry.js
+        run: npx wrangler deploy --config wrangler.jsonc

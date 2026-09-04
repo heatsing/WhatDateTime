@@ -1,11 +1,40 @@
 import { siteConfig } from "@/lib/site";
 
+function absoluteUrl(path: string) {
+  return path === "/" ? siteConfig.url : `${siteConfig.url}${path}`;
+}
+
+export function organizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${siteConfig.url}/#organization`,
+    name: siteConfig.name,
+    url: siteConfig.url,
+  };
+}
+
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteConfig.url}/#website`,
+    name: siteConfig.name,
+    alternateName: "What Date Time",
+    url: siteConfig.url,
+    description: siteConfig.description,
+    inLanguage: "en-US",
+    publisher: { "@id": `${siteConfig.url}/#organization` },
+  };
+}
+
 export function faqSchema(
   faqs: ReadonlyArray<{ question: string; answer: string }>,
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    inLanguage: "en-US",
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
@@ -28,6 +57,9 @@ export function webApplicationSchema(
     name,
     description,
     url: path === "/" ? siteConfig.url : `${siteConfig.url}${path}`,
+    inLanguage: "en-US",
+    isAccessibleForFree: true,
+    provider: { "@id": `${siteConfig.url}/#organization` },
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     offers: {
@@ -48,7 +80,7 @@ export function breadcrumbSchema(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${siteConfig.url}${item.path}`,
+      item: absoluteUrl(item.path),
     })),
   };
 }

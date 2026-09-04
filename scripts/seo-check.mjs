@@ -90,6 +90,18 @@ for (const routeEntry of routes) {
     html,
     /<link rel="canonical" href="([^"]*)"/g,
   );
+  const englishAlternates = captureAll(
+    html,
+    /<link rel="alternate" hreflang="en" href="([^"]*)"/g,
+  );
+  const defaultAlternates = captureAll(
+    html,
+    /<link rel="alternate" hreflang="x-default" href="([^"]*)"/g,
+  );
+  const robotsDirectives = captureAll(
+    html,
+    /<meta name="robots" content="([^"]*)"/g,
+  );
   const h1Count = (html.match(/<h1(?:\s|>)/g) ?? []).length;
   const jsonLdScripts = captureAll(
     html,
@@ -122,6 +134,21 @@ for (const routeEntry of routes) {
   }
   if (!canonicals[0].startsWith("https://")) {
     fail(`/${route}: canonical is not absolute HTTPS`);
+  }
+  if (
+    englishAlternates.length !== 1 ||
+    englishAlternates[0] !== expectedCanonical ||
+    defaultAlternates.length !== 1 ||
+    defaultAlternates[0] !== expectedCanonical
+  ) {
+    fail(`/${route}: language alternates do not match the canonical`);
+  }
+  if (
+    robotsDirectives.length !== 1 ||
+    !robotsDirectives[0].includes("index") ||
+    !robotsDirectives[0].includes("follow")
+  ) {
+    fail(`/${route}: indexable robots directives are missing or invalid`);
   }
   if (h1Count !== 1) {
     fail(`/${route}: expected exactly one H1, received ${h1Count}`);
@@ -168,6 +195,19 @@ for (const routeEntry of routes) {
         if (lastItem && lastItem !== expectedCanonical) {
           fail(`/${route}: breadcrumb URL does not match canonical`);
         }
+      }
+    }
+  }
+  if (route === "") {
+    for (const requiredType of ["Organization", "WebSite", "WebApplication", "FAQPage"]) {
+      if (!schemaTypes.has(requiredType)) {
+        fail(`homepage: missing ${requiredType} schema`);
+      }
+    }
+  } else if (!programmatic) {
+    for (const requiredType of ["FAQPage", "WebApplication", "BreadcrumbList"]) {
+      if (!schemaTypes.has(requiredType)) {
+        fail(`/${route}: missing ${requiredType} schema`);
       }
     }
   }
@@ -270,8 +310,15 @@ if (unreachable.length > 0) {
 const maximumCrawlDepth = Math.max(
   ...pageIndex.map((page) => crawlDepth.get(page.slug)),
 );
-if (maximumCrawlDepth > 15) {
-  fail(`maximum homepage crawl depth ${maximumCrawlDepth} exceeds 15 clicks`);
+if (maximumCrawlDepth > 6) {
+  fail(`maximum homepage crawl depth ${maximumCrawlDepth} exceeds 6 clicks`);
+}
+
+const notFoundPath = path.join(appDir, "404.html");
+if (!existsSync(notFoundPath)) fail("generated 404.html is missing");
+const notFoundHtml = readFileSync(notFoundPath, "utf8");
+if (!/<meta name="robots" content="noindex, follow"/.test(notFoundHtml)) {
+  fail("404 page must be noindex, follow");
 }
 
 const sitemapPath = path.join(appDir, "sitemap.xml");
@@ -281,8 +328,15 @@ const sitemapDocuments = [sitemap];
 let sitemapShardCount = 0;
 if (sitemap.includes("<sitemapindex")) {
   const shardUrls = captureAll(sitemap, /<loc>(.*?)<\/loc>/g);
+  const shardLastModified = captureAll(sitemap, /<lastmod>(.*?)<\/lastmod>/g);
   if (shardUrls.length === 0 || shardUrls.length !== new Set(shardUrls).size) {
     fail("sitemap index is empty or contains duplicate shard URLs");
+  }
+  if (
+    shardLastModified.length !== shardUrls.length ||
+    shardLastModified.some((value) => !/^\d{4}-\d{2}-\d{2}$/.test(value))
+  ) {
+    fail("sitemap index must include a valid lastmod for every shard");
   }
   for (const shardUrl of shardUrls) {
     const shardName = new URL(shardUrl).pathname.replace(/^\//, "");

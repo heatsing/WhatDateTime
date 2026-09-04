@@ -1,11 +1,16 @@
 import { siteConfig } from "@/lib/site";
 
+function absoluteUrl(path: string) {
+  return path === "/" ? siteConfig.url : `${siteConfig.url}${path}`;
+}
+
 export function faqPageSchema(
   faqs: ReadonlyArray<{ question: string; answer: string }>,
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    inLanguage: "en-US",
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
@@ -27,7 +32,7 @@ export function breadcrumbListSchema(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${siteConfig.url}${item.path}`,
+      item: absoluteUrl(item.path),
     })),
   };
 }
@@ -36,10 +41,12 @@ export function calculatorApplicationSchema({
   name,
   description,
   path,
+  dateModified,
 }: {
   name: string;
   description: string;
   path: string;
+  dateModified?: string | null;
 }) {
   return {
     "@context": "https://schema.org",
@@ -47,6 +54,10 @@ export function calculatorApplicationSchema({
     name,
     description,
     url: `${siteConfig.url}${path}`,
+    inLanguage: "en-US",
+    isAccessibleForFree: true,
+    ...(dateModified ? { dateModified } : {}),
+    provider: { "@id": `${siteConfig.url}/#organization` },
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     browserRequirements: "Requires JavaScript for interactive calculations",
