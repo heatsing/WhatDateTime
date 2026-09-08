@@ -40,8 +40,9 @@ for (let offset = 0; offset < pages.length; offset += shardSize) {
   const fileName = `sitemap-${part}.xml`;
   const entries = pages.slice(offset, offset + shardSize).map((page) => {
     const url = page.slug ? `${siteUrl}/${page.slug}` : siteUrl;
-    const lastmod = page.updatedAt || buildDate;
-    return `  <url><loc>${escapeXml(url)}</loc><lastmod>${lastmod}</lastmod></url>`;
+    // Every exported calculator answer is rebuilt from the current reference
+    // date, so the visible answer, formula, FAQ and structured data all change.
+    return `  <url><loc>${escapeXml(url)}</loc><lastmod>${buildDate}</lastmod></url>`;
   });
   writeFileSync(path.join(output, fileName), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>`);
   shardUrls.push(`${siteUrl}/${fileName}`);

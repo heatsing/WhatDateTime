@@ -38,12 +38,13 @@ export function ProgrammaticPageView({
       : section,
   );
   const path = `/${page.slug}`;
+  const dateModified = referenceTime.slice(0, 10);
 
   return (
     <>
       <JsonLd data={[
         faqPageSchema(faqs),
-        calculatorApplicationSchema({ name: seo.title, description: seo.description, path, dateModified: page.updatedAt }),
+        calculatorApplicationSchema({ name: seo.title, description: seo.description, path, dateModified }),
         breadcrumbListSchema([
           { name: "Home", path: "/" },
           { name: seo.h1, path },

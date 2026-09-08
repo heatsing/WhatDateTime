@@ -64,6 +64,7 @@ const titles = new Map();
 const descriptions = new Map();
 const checkedRoutes = new Set();
 const internalLinks = new Map();
+const programmaticModifiedDates = new Map();
 const programmaticSlugs = new Set(pageIndex.map((page) => page.slug));
 
 for (const routeEntry of routes) {
@@ -189,6 +190,12 @@ for (const routeEntry of routes) {
         schema.url !== expectedCanonical
       ) {
         fail(`/${route}: JSON-LD URL does not match canonical`);
+      }
+      if (programmatic && schema["@type"] === "WebApplication") {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(schema.dateModified || "")) {
+          fail(`/${route}: WebApplication dateModified is missing or invalid`);
+        }
+        programmaticModifiedDates.set(route, schema.dateModified);
       }
       if (schema["@type"] === "BreadcrumbList") {
         const lastItem = schema.itemListElement?.at(-1)?.item;
@@ -360,12 +367,27 @@ if (sitemap.includes("<sitemapindex")) {
 const sitemapUrls = sitemapDocuments
   .slice(sitemapShardCount > 0 ? 1 : 0)
   .flatMap((document) => captureAll(document, /<loc>(.*?)<\/loc>/g));
+const sitemapModifiedDates = new Map(
+  sitemapDocuments
+    .slice(sitemapShardCount > 0 ? 1 : 0)
+    .flatMap((document) =>
+      [...document.matchAll(/<url><loc>(.*?)<\/loc><lastmod>(.*?)<\/lastmod><\/url>/g)]
+        .map((match) => [match[1], match[2]]),
+    ),
+);
 if (sitemapUrls.length !== new Set(sitemapUrls).size) {
   fail("sitemap contains duplicate URLs");
 }
 for (const route of routes) {
   if (!sitemapUrls.includes(route.expectedCanonical)) {
     fail(`/${route.route}: generated page is missing from sitemap`);
+  }
+  if (
+    route.programmatic &&
+    sitemapModifiedDates.get(route.expectedCanonical) !==
+      programmaticModifiedDates.get(route.route)
+  ) {
+    fail(`/${route.route}: sitemap lastmod does not match JSON-LD dateModified`);
   }
 }
 for (const document of sitemapDocuments.slice(1)) {

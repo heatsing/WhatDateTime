@@ -17,3 +17,10 @@ Record future imports with:
 - Query, page, clicks, impressions, CTR, and average position
 - Cohort decisions made from the data
 - Post-change measurement date
+
+## 2026-09-08 public discovery spot-check
+
+- A public Google search returned multiple WhatDateTime programmatic results, including hour-offset URLs crawled within the previous three days.
+- This confirms that discovery and indexing have expanded beyond the four-page owner-reported baseline, but `site:` results are not a replacement for a verified Search Console export and no total indexed count is inferred from them.
+- Production checks returned HTTP 200 to Googlebot for robots.txt, the sitemap index, the first sitemap shard, representative date pages, and a representative time-zone page.
+- The daily workflow still cannot deploy because the repository secret `CLOUDFLARE_API_TOKEN` is missing. Static builds and SEO gates succeed; deployment freshness remains dependent on restoring that secret.
