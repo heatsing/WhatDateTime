@@ -19,6 +19,20 @@ function redirectUrl(request) {
     }
     return url;
   }
+  const isContentPath =
+    url.pathname.length > 1 &&
+    url.pathname.endsWith("/") &&
+    !url.pathname.startsWith("/_astro/") &&
+    !url.pathname.slice(0, -1).split("/").at(-1)?.includes(".");
+  if (isContentPath) {
+    url.pathname = url.pathname.slice(0, -1);
+    if (!isLocal) {
+      url.protocol = "https:";
+      url.hostname = "whatdatetime.com";
+      url.port = "";
+    }
+    return url;
+  }
   if (isLocal) return null;
   if (url.protocol !== "https:" || url.hostname !== "whatdatetime.com") {
     url.protocol = "https:";
