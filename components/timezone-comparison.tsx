@@ -2,8 +2,8 @@
 
 import { addHours, differenceInMinutes } from "date-fns";
 import { formatInTimeZone, toZonedTime } from "date-fns-tz";
-import { useLiveReferenceDate } from "@/components/live-reference-date";
-import type { SEOPage } from "@/lib/seoGenerator";
+import { useEffect, useState } from "react";
+import type { TimezoneCalculationInput } from "@/lib/pageCalculations";
 
 type LocalMoment = {
   time: string;
@@ -83,12 +83,20 @@ function CityCard({
 
 export function TimezoneComparison({
   page,
-  referenceDate,
+  referenceTime,
 }: {
-  page: Extract<SEOPage, { kind: "timezone" }>;
-  referenceDate: Date;
+  page: TimezoneCalculationInput;
+  referenceTime: string;
 }) {
-  const liveReferenceDate = useLiveReferenceDate(referenceDate);
+  const [liveReferenceDate, setLiveReferenceDate] = useState(
+    () => new Date(referenceTime),
+  );
+  useEffect(() => {
+    const update = () => setLiveReferenceDate(new Date());
+    update();
+    const timer = window.setInterval(update, 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
   const origin = getLocalMoment(liveReferenceDate, page.fromZone);
   const destination = getLocalMoment(liveReferenceDate, page.toZone);
   const offsetDifference = differenceInMinutes(

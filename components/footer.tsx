@@ -36,6 +36,14 @@ export function Footer() {
         <div>
           <Link href="/" className="font-display text-lg font-bold tracking-[-0.02em]">WhatDateTime</Link>
           <p className="mt-3 max-w-xs text-sm leading-6 text-ink/55">Accurate date and time tools for everyday planning.</p>
+          <div className="mt-4 flex max-w-sm flex-wrap gap-x-4 gap-y-2">
+            <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/about">About</Link>
+            <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/calculation-methodology">Methodology</Link>
+            <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/data-sources">Data sources</Link>
+            <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/contact-and-corrections">Corrections</Link>
+            <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/privacy-policy">Privacy</Link>
+            <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/terms-of-use">Terms</Link>
+          </div>
         </div>
         {groups.map((group) => (
           <div key={group.title}>

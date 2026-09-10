@@ -19,7 +19,12 @@ import {
   parseLocalDate,
   type RelativeUnit,
 } from "@/lib/dateCalculator";
-import type { SEOPage } from "@/lib/seoGenerator";
+import type {
+  DifferenceCalculationInput,
+  PageCalculationInput,
+  RelativeCalculationInput,
+  TimezoneCalculationInput,
+} from "@/lib/pageCalculations";
 
 const fieldClass =
   "h-[52px] min-w-0 max-w-full w-full rounded-md border border-[#C8D0D8] bg-white px-4 text-base font-medium text-ink outline-none focus:border-fern focus:ring-2 focus:ring-[#1769AA]/15";
@@ -39,7 +44,7 @@ export function CalculatorBox({
   initialDate,
   initialDateTime,
 }: {
-  page: SEOPage;
+  page: PageCalculationInput;
   initialResult: string;
   initialDate: string;
   initialDateTime?: string;
@@ -73,7 +78,7 @@ function RelativeForm({
   initialResult,
   initialDate,
 }: {
-  page: Extract<SEOPage, { kind: "relative" }>;
+  page: RelativeCalculationInput;
   initialResult: string;
   initialDate: string;
 }) {
@@ -173,7 +178,7 @@ function DifferenceForm({
   page,
   initialResult,
 }: {
-  page: Extract<SEOPage, { kind: "difference" }>;
+  page: DifferenceCalculationInput;
   initialResult: string;
 }) {
   const [start, setStart] = useState(page.start);
@@ -240,7 +245,7 @@ function TimezoneForm({
   initialDate,
   initialDateTime,
 }: {
-  page: Extract<SEOPage, { kind: "timezone" }>;
+  page: TimezoneCalculationInput;
   initialResult: string;
   initialDate: string;
   initialDateTime?: string;

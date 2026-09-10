@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import { CalculatorDirectory } from "@/components/calculator-directory";
+import { getAllSEOPageIndex } from "@/lib/seoGenerator";
 import {
   CalculatorPageView,
   calculatorMetadata,
@@ -32,4 +34,5 @@ const initialTime = new Date().toISOString();
 
 <BaseLayout title={title} description={metadata.description} canonicalPath={metadata.path}>
   <CalculatorPageView client:load kind={kind} initialTime={initialTime} />
+  <CalculatorDirectory pages={getAllSEOPageIndex()} />
 </BaseLayout>

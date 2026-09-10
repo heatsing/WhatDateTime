@@ -9,7 +9,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import { useLiveReferenceDate } from "@/components/live-reference-date";
+import { useEffect, useState } from "react";
 import {
   calculateRelativeDate,
   formatLongDate,
@@ -19,13 +19,11 @@ import {
   getPageResult,
   getRelativePhrase,
 } from "@/lib/pageCalculations";
-import type { SEOPage } from "@/lib/seoGenerator";
-
-type RelativePage = Extract<SEOPage, { kind: "relative" }>;
+import type { RelativeCalculationInput } from "@/lib/pageCalculations";
 
 type DirectDateAnswerProps = {
-  page: RelativePage;
-  referenceDate: Date;
+  page: RelativeCalculationInput;
+  referenceTime: string;
 };
 
 const weekdays = [
@@ -40,9 +38,17 @@ const weekdays = [
 
 export function DirectDateAnswer({
   page,
-  referenceDate,
+  referenceTime,
 }: DirectDateAnswerProps) {
-  const liveReferenceDate = useLiveReferenceDate(referenceDate);
+  const [liveReferenceDate, setLiveReferenceDate] = useState(
+    () => new Date(referenceTime),
+  );
+  useEffect(() => {
+    const update = () => setLiveReferenceDate(new Date());
+    update();
+    const timer = window.setInterval(update, 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
   const includesTime = page.unit === "hour";
   const phrase = getRelativePhrase(page);
   const resultDate = calculateRelativeDate(

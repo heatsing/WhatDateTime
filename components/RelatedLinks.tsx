@@ -1,6 +1,6 @@
 import Link from "@/components/link";
-import { LivePageResult } from "@/components/live-page-output";
 import {
+  getPageResult,
   getRelativePhrase,
 } from "@/lib/pageCalculations";
 import type { SEOPage } from "@/lib/seoGenerator";
@@ -66,10 +66,7 @@ export function RelatedLinks({
                       )}
                     </td>
                     <td className="break-words px-2 py-3 text-ink/70">
-                      <LivePageResult
-                        page={page}
-                        referenceDate={referenceDate}
-                      />
+                      {getPageResult(page, referenceDate)}
                     </td>
                   </tr>
                 );
@@ -107,10 +104,7 @@ export function RelatedLinks({
               {page.kind === "relative"
                 ? getRelativePhrase(page)
                 : page.title.replace(/ - .+$/, "")} —{" "}
-              <LivePageResult
-                page={page}
-                referenceDate={referenceDate}
-              />
+              {getPageResult(page, referenceDate)}
             </span>
           </Link>
         ))}

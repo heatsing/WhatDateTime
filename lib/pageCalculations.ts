@@ -6,15 +6,33 @@ import {
 } from "@/lib/dateCalculator";
 import type {
   FAQItem,
+  DifferenceSEOPage,
   RelativeSEOPage,
-  SEOPage,
+  TimezoneSEOPage,
 } from "@/lib/seoGenerator";
+
+export type RelativeCalculationInput = Pick<
+  RelativeSEOPage,
+  "kind" | "type" | "amount" | "unit" | "direction"
+>;
+export type DifferenceCalculationInput = Pick<
+  DifferenceSEOPage,
+  "kind" | "type" | "start" | "end"
+>;
+export type TimezoneCalculationInput = Pick<
+  TimezoneSEOPage,
+  "kind" | "type" | "fromCity" | "fromZone" | "toCity" | "toZone"
+>;
+export type PageCalculationInput =
+  | RelativeCalculationInput
+  | DifferenceCalculationInput
+  | TimezoneCalculationInput;
 
 export function titleCase(value: string) {
   return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-export function getRelativePhrase(page: RelativeSEOPage) {
+export function getRelativePhrase(page: RelativeCalculationInput) {
   const unit =
     page.unit === "business-day"
       ? page.amount === 1
@@ -32,7 +50,7 @@ export function getRelativePhrase(page: RelativeSEOPage) {
   return `${page.amount} ${unit} ${suffix}`;
 }
 
-export function getPageResult(page: SEOPage, now: Date) {
+export function getPageResult(page: PageCalculationInput, now: Date) {
   if (page.kind === "relative") {
     const result = calculateRelativeDate(
       now,
@@ -55,7 +73,7 @@ export function getPageResult(page: SEOPage, now: Date) {
   return `${result.time} on ${result.date} (${result.abbreviation})`;
 }
 
-export function getPageFormula(page: SEOPage, now: Date) {
+export function getPageFormula(page: PageCalculationInput, now: Date) {
   if (page.kind === "relative") {
     const includeTime = page.unit === "hour";
     const start = formatLongDate(now, includeTime);
@@ -78,7 +96,7 @@ export function getPageFormula(page: SEOPage, now: Date) {
   return `${source.time} on ${source.date} in ${page.fromCity} = ${getPageResult(page, now)} in ${page.toCity}.`;
 }
 
-export function getDirectFAQ(page: SEOPage, now: Date): FAQItem {
+export function getDirectFAQ(page: PageCalculationInput, now: Date): FAQItem {
   if (page.kind === "relative") {
     return {
       question: `What is the exact result for ${getRelativePhrase(page)}?`,

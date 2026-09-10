@@ -3,12 +3,13 @@ import {
   CalendarRange,
   CircleHelp,
 } from "lucide-react";
-import { LivePageFormula } from "@/components/live-page-output";
 import type { ContentSection } from "@/lib/seoGenerator";
 import {
+  getPageFormula,
   getRelativePhrase,
 } from "@/lib/pageCalculations";
 import type { SEOPage } from "@/lib/seoGenerator";
+import { getPageFacts } from "@/lib/page-facts";
 
 export function SEOContent({
   data,
@@ -77,6 +78,7 @@ function DeepContent({
       : page.kind === "difference"
         ? ["True calendar-date boundary counting", "Automatic month and leap-year handling", "Clear start and end date comparison", "Reusable custom date inputs"]
         : ["IANA time-zone rules", "Daylight-saving offset handling", "Previous-day and next-day detection", "Side-by-side nearby time comparison"];
+  const facts = getPageFacts(page, referenceDate);
 
   return (
     <section className="mx-auto max-w-4xl" aria-labelledby="calculation-explained">
@@ -89,7 +91,7 @@ function DeepContent({
         <h2 className="font-display text-2xl font-semibold text-ink">Calculation basis</h2>
         <p className="mt-4 text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">{page.intro}</p>
         <p className="mt-5 border-l-4 border-fern bg-[#F4F8FB] px-5 py-4 text-base font-medium leading-8 text-ink">
-          <LivePageFormula page={page} referenceDate={referenceDate} />
+          {getPageFormula(page, referenceDate)}
         </p>
       </article>
 
@@ -114,6 +116,17 @@ function DeepContent({
       </article>
 
       <div className="mt-9 space-y-9 border-t border-[#D9DEE5] pt-6">
+        <article>
+          <h2 className="font-display text-2xl font-semibold text-ink">Facts for this exact calculation</h2>
+          <dl className="mt-5 divide-y divide-[#E5E8EB] border-y border-[#D9DEE5]">
+            {facts.map((fact) => (
+              <div key={fact.label} className="grid gap-1 py-4 sm:grid-cols-[12rem_1fr] sm:gap-5">
+                <dt className="font-semibold text-ink">{fact.label}</dt>
+                <dd className="text-base leading-7 text-ink/65">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
         <article>
           <h2 className="font-display text-2xl font-semibold text-ink">Worked examples</h2>
           <ul className="mt-5 space-y-5">

@@ -4,6 +4,7 @@ import {
   getDirectFAQ,
   getPageFormula,
 } from "@/lib/pageCalculations";
+import type { PageCalculationInput } from "@/lib/pageCalculations";
 
 export {
   getPageFormula,
@@ -187,9 +188,25 @@ export function getSEOText(page: SEOPage) {
   return {
     title: page.title,
     description: page.description,
-    h1: page.h1,
+    h1:
+      page.kind === "relative" && page.direction === "past"
+        ? page.title
+        : page.h1,
     eyebrow: page.eyebrow,
   };
+}
+
+export function getCalculationInput(page: SEOPage): PageCalculationInput {
+  if (page.kind === "relative") {
+    const { kind, type, amount, unit, direction } = page;
+    return { kind, type, amount, unit, direction };
+  }
+  if (page.kind === "difference") {
+    const { kind, type, start, end } = page;
+    return { kind, type, start, end };
+  }
+  const { kind, type, fromCity, fromZone, toCity, toZone } = page;
+  return { kind, type, fromCity, fromZone, toCity, toZone };
 }
 
 export function getLandingSections(page: SEOPage, now: Date) {
@@ -206,8 +223,26 @@ export function buildFAQs(page: SEOPage, now: Date) {
 }
 
 export async function getRelatedPages(page: SEOPage) {
-  const related = await Promise.all(
-    page.relatedLinks.map((slug) => getSEOPage(slug)),
-  );
+  const candidates = [...page.relatedLinks];
+  if (page.kind === "relative") {
+    const family = pageIndex.filter((entry) => entry.type === page.type);
+    const byAmount = new Map(
+      family.map((entry) => [Number(entry.slug.match(/^\d+/)?.[0]), entry.slug]),
+    );
+    for (const amount of [page.amount - 1, page.amount + 1, 1, 7, 14, 30, 60, 90, 180, 365]) {
+      const slug = byAmount.get(amount);
+      if (slug) candidates.unshift(slug);
+    }
+  } else if (page.kind === "timezone") {
+    const reverse = `${page.toCity.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-to-${page.fromCity.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-time`;
+    if (pageIndexMap.has(reverse)) candidates.unshift(reverse);
+  } else {
+    const family = pageIndex.filter((entry) => entry.type === page.type);
+    const position = family.findIndex((entry) => entry.slug === page.slug);
+    if (position > 0) candidates.unshift(family[position - 1].slug);
+    if (position >= 0 && position < family.length - 1) candidates.unshift(family[position + 1].slug);
+  }
+  const slugs = [...new Set(candidates)].filter((slug) => slug !== page.slug);
+  const related = await Promise.all(slugs.map((slug) => getSEOPage(slug)));
   return related.filter((item): item is SEOPage => Boolean(item));
 }

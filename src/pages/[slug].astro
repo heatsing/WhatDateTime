@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/src/layouts/BaseLayout.astro";
-import { ProgrammaticPageView } from "@/components/programmatic-page-view";
+import ProgrammaticPageView from "@/src/components/ProgrammaticPageView.astro";
 import {
   getAllSEOPageIndex,
   getRelatedPages,
@@ -22,5 +22,5 @@ const title = `${seo.title} | WhatDateTime`;
 ---
 
 <BaseLayout title={title} description={seo.description} canonicalPath={`/${page.slug}`}>
-  <ProgrammaticPageView client:load page={page} related={related} referenceTime={referenceTime} />
+  <ProgrammaticPageView page={page} related={related} referenceTime={referenceTime} />
 </BaseLayout>

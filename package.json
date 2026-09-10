@@ -6,10 +6,12 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/generate-sitemap-shards.mjs && node scripts/seo-check.mjs",
     "start": "astro preview",
+    "test": "node scripts/calculation-tests.mjs",
     "lint": "astro check",
     "seo:generate": "node scripts/generate-seo-data.mjs && node scripts/generate-tool-content.mjs",
+    "seo:baseline": "node scripts/create-seo-baseline.mjs",
     "seo:audit": "node scripts/seo-audit.mjs",
-    "seo:check": "node scripts/seo-audit.mjs && node scripts/generate-sitemap-shards.mjs && node scripts/seo-check.mjs",
+    "seo:check": "node scripts/seo-audit.mjs && node scripts/generate-sitemap-shards.mjs && node scripts/seo-check.mjs && node scripts/seo-sample-report.mjs",
     "typecheck": "astro check"
   },
   "dependencies": {

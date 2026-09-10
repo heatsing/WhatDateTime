@@ -1,7 +1,13 @@
 import Link from "@/components/link";
 import { ChevronRight, Home } from "lucide-react";
 
-export function Breadcrumb({ current }: { current: string }) {
+export function Breadcrumb({
+  current,
+  parent,
+}: {
+  current: string;
+  parent?: { name: string; path: string };
+}) {
   return (
     <nav
       aria-label="Breadcrumb"
@@ -15,6 +21,14 @@ export function Breadcrumb({ current }: { current: string }) {
         Home
       </Link>
       <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      {parent && (
+        <>
+          <Link href={parent.path} className="shrink-0 transition hover:text-fern">
+            {parent.name}
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        </>
+      )}
       <span className="truncate text-ink/70">{current}</span>
     </nav>
   );

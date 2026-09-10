@@ -5,7 +5,7 @@ const output = path.resolve("dist");
 const shardSize = 1_000;
 const siteUrl = (process.env.PUBLIC_SITE_URL || "https://whatdatetime.com").replace(/\/$/, "");
 const pageIndex = JSON.parse(readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"));
-const buildDate = new Date().toISOString().slice(0, 10);
+const revisions = JSON.parse(readFileSync(new URL("../data/seo-revisions.json", import.meta.url), "utf8"));
 const coreRoutes = [
   "",
   "calculators/date-calculator",
@@ -20,34 +20,60 @@ const coreRoutes = [
   "calculators/calendar",
   "calculators/half-birthday",
   "calculators/weeks-and-days-ago",
+  "about",
+  "calculation-methodology",
+  "data-sources",
+  "contact-and-corrections",
+  "privacy-policy",
+  "terms-of-use",
 ];
+const sitemapNames = {
+  "days-from-today": "sitemap-days-from-today",
+  "days-ago": "sitemap-days-ago",
+  "hours-from-now": "sitemap-hours-from-now",
+  "hours-ago": "sitemap-hours-ago",
+  "weeks-from-today": "sitemap-weeks-from-today",
+  "months-from-today": "sitemap-months-from-today",
+  "years-from-today": "sitemap-years-from-today",
+  "business-days-from-today": "sitemap-business-days-from-today",
+  "date-difference": "sitemap-date-differences",
+  "timezone-converter": "sitemap-time-zone-conversions",
+};
 
 mkdirSync(output, { recursive: true });
 for (const file of readdirSync(output)) {
   if (/^sitemap(?:-[a-z0-9-]+)?\.xml$/.test(file)) rmSync(path.join(output, file));
 }
 
-const pages = [
-  ...coreRoutes.map((slug) => ({ slug, updatedAt: buildDate })),
-  ...pageIndex,
-];
-
 const escapeXml = (value) => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-const shardUrls = [];
+const groups = [{ name: "sitemap-core", revision: revisions.site, pages: coreRoutes.map((slug) => ({ slug })) }];
+for (const [type, baseName] of Object.entries(sitemapNames)) {
+  const familyPages = pageIndex.filter((page) => page.type === type);
+  for (let offset = 0; offset < familyPages.length; offset += shardSize) {
+    const part = Math.floor(offset / shardSize) + 1;
+    groups.push({
+      name: familyPages.length > shardSize ? `${baseName}-${part}` : baseName,
+      revision: revisions[type],
+      pages: familyPages.slice(offset, offset + shardSize),
+    });
+  }
+}
+
+const sitemapEntries = [];
 let total = 0;
-for (let offset = 0; offset < pages.length; offset += shardSize) {
-  const part = Math.floor(offset / shardSize) + 1;
-  const fileName = `sitemap-${part}.xml`;
-  const entries = pages.slice(offset, offset + shardSize).map((page) => {
+for (const group of groups) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(group.revision || "")) {
+    throw new Error(`${group.name}: missing stable content revision`);
+  }
+  const fileName = `${group.name}.xml`;
+  const entries = group.pages.map((page) => {
     const url = page.slug ? `${siteUrl}/${page.slug}` : siteUrl;
-    // Every exported calculator answer is rebuilt from the current reference
-    // date, so the visible answer, formula, FAQ and structured data all change.
-    return `  <url><loc>${escapeXml(url)}</loc><lastmod>${buildDate}</lastmod></url>`;
+    return `  <url><loc>${escapeXml(url)}</loc><lastmod>${group.revision}</lastmod></url>`;
   });
   writeFileSync(path.join(output, fileName), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>`);
-  shardUrls.push(`${siteUrl}/${fileName}`);
+  sitemapEntries.push({ url: `${siteUrl}/${fileName}`, lastmod: group.revision });
   total += entries.length;
 }
 
-writeFileSync(path.join(output, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${shardUrls.map((url) => `  <sitemap><loc>${url}</loc><lastmod>${buildDate}</lastmod></sitemap>`).join("\n")}\n</sitemapindex>`);
-console.log(`Generated ${total} sitemap URLs in ${shardUrls.length} numeric shards of ${shardSize}`);
+writeFileSync(path.join(output, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.map((entry) => `  <sitemap><loc>${entry.url}</loc><lastmod>${entry.lastmod}</lastmod></sitemap>`).join("\n")}\n</sitemapindex>`);
+console.log(`Generated ${total} sitemap URLs in ${groups.length} semantic shards (maximum ${shardSize} URLs each)`);

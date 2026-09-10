@@ -1,0 +1,56 @@
+---
+import BaseLayout from "@/src/layouts/BaseLayout.astro";
+import { JsonLd } from "@/components/json-ld";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import { breadcrumbListSchema } from "@/lib/schema";
+import { siteConfig } from "@/lib/site";
+import { getSiteRevision } from "@/lib/seo-taxonomy";
+import type { TrustPageData } from "@/src/data/trust-pages";
+
+const { page } = Astro.props as { page: TrustPageData };
+const path = `/${page.slug}`;
+---
+
+<BaseLayout title={page.title} description={page.description} canonicalPath={path}>
+  <JsonLd data={[
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: page.h1,
+      description: page.description,
+      url: `${siteConfig.url}${path}`,
+      dateModified: getSiteRevision(),
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${siteConfig.url}/#website` },
+    },
+    breadcrumbListSchema([
+      { name: "Home", path: "/" },
+      { name: page.h1, path },
+    ]),
+  ]} />
+  <section class="bg-white px-5 py-10 sm:px-8 sm:py-14 lg:py-16">
+    <div class="mx-auto max-w-4xl">
+      <Breadcrumb current={page.h1} />
+      <header class="mt-8 border-b border-[#D9DEE5] pb-8">
+        <p class="text-[15px] font-semibold text-fern">WhatDateTime standards</p>
+        <h1 class="mt-2.5 font-display text-4xl font-bold tracking-[-0.035em] text-ink sm:text-5xl">{page.h1}</h1>
+        <p class="mt-4 max-w-3xl text-lg leading-9 text-ink/65">{page.intro}</p>
+      </header>
+      <div class="divide-y divide-[#D9DEE5]">
+        {page.sections.map((section) => (
+          <article class="py-8">
+            <h2 class="font-display text-2xl font-semibold text-ink">{section.title}</h2>
+            <div class="mt-4 space-y-4">
+              {section.paragraphs.map((paragraph) => <p class="text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">{paragraph}</p>)}
+            </div>
+          </article>
+        ))}
+      </div>
+      {page.slug === "contact-and-corrections" && (
+        <p class="border-l-4 border-fern bg-[#F4F8FB] px-5 py-4 text-base leading-8 text-ink">
+          Report an issue at <a class="font-semibold text-fern underline" href="https://github.com/heatsing/WhatDateTime/issues">github.com/heatsing/WhatDateTime/issues</a>.
+        </p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

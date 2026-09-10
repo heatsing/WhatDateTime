@@ -8,6 +8,7 @@
 - Error documents must return the correct HTTP status and use `noindex, follow`; they must never enter the sitemap.
 - Canonicals must be absolute and self-referencing. Metadata, visible content, schema, and sitemap URLs must agree.
 - Run `npm run seo:check` and `npm run build` before production deployment.
+- Sitemap `lastmod` and JSON-LD `dateModified` must use stable material revision dates, never an ordinary build timestamp.
 - Improve long-form content in measured cohorts of 10–20 URLs, prioritizing verified GSC demand.
 - Apply the complete landing-page framework sitewide; reserve cohort limits for bespoke editorial rewrites, not required structural coverage.
 - Do not change the established UI while performing technical SEO maintenance.

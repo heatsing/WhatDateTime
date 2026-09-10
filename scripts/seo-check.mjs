@@ -24,6 +24,9 @@ for (const hostname of ["whatdatetime.com", "www.whatdatetime.com"]) {
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
 );
+const baseline = JSON.parse(
+  readFileSync(new URL("../data/seo-url-baseline.json", import.meta.url), "utf8"),
+);
 const coreRoutes = [
   "",
   "calculators/date-calculator",
@@ -38,19 +41,48 @@ const coreRoutes = [
   "calculators/calendar",
   "calculators/half-birthday",
   "calculators/weeks-and-days-ago",
+  "about",
+  "calculation-methodology",
+  "data-sources",
+  "contact-and-corrections",
+  "privacy-policy",
+  "terms-of-use",
 ];
+const trustRoutes = new Set([
+  "about",
+  "calculation-methodology",
+  "data-sources",
+  "contact-and-corrections",
+  "privacy-policy",
+  "terms-of-use",
+]);
 const routes = [
   ...coreRoutes.map((route) => ({
     route,
     expectedCanonical: route ? `${siteUrl}/${route}` : siteUrl,
     programmatic: false,
+    trust: trustRoutes.has(route),
   })),
   ...pageIndex.map((page) => ({
     route: page.slug,
     expectedCanonical: `${siteUrl}/${page.slug}`,
     programmatic: true,
+    trust: false,
   })),
 ];
+const knownRoutes = new Set(routes.map((entry) => entry.route));
+const sitemapFamilyNames = {
+  "days-from-today": /^sitemap-days-from-today\.xml$/,
+  "days-ago": /^sitemap-days-ago\.xml$/,
+  "hours-from-now": /^sitemap-hours-from-now\.xml$/,
+  "hours-ago": /^sitemap-hours-ago\.xml$/,
+  "weeks-from-today": /^sitemap-weeks-from-today\.xml$/,
+  "months-from-today": /^sitemap-months-from-today\.xml$/,
+  "years-from-today": /^sitemap-years-from-today\.xml$/,
+  "business-days-from-today": /^sitemap-business-days-from-today\.xml$/,
+  "date-difference": /^sitemap-date-differences\.xml$/,
+  "timezone-converter": /^sitemap-time-zone-conversions-\d+\.xml$/,
+};
 
 function fail(message) {
   throw new Error(`Static HTML SEO check failed: ${message}`);
@@ -68,7 +100,7 @@ const programmaticModifiedDates = new Map();
 const programmaticSlugs = new Set(pageIndex.map((page) => page.slug));
 
 for (const routeEntry of routes) {
-  const { route, expectedCanonical, programmatic } = routeEntry;
+  const { route, expectedCanonical, programmatic, trust } = routeEntry;
   const htmlPath = path.join(appDir, route ? route : "", "index.html");
   if (!existsSync(htmlPath)) {
     fail(`/${route}: generated HTML is missing at ${htmlPath}`);
@@ -81,6 +113,17 @@ for (const routeEntry of routes) {
       programmaticSlugs.has(slug),
     ),
   );
+  for (const href of captureAll(html, /href="(\/[^"?#]*)"/g)) {
+    const linkedRoute = href.replace(/^\//, "").replace(/\/$/, "");
+    if (
+      linkedRoute &&
+      !knownRoutes.has(linkedRoute) &&
+      !linkedRoute.startsWith("_astro/") &&
+      !existsSync(path.join(appDir, linkedRoute))
+    ) {
+      fail(`/${route}: internal link points to a missing route: ${href}`);
+    }
+  }
 
   const pageTitles = captureAll(html, /<title>(.*?)<\/title>/g);
   const pageDescriptions = captureAll(
@@ -104,6 +147,7 @@ for (const routeEntry of routes) {
     /<meta name="robots" content="([^"]*)"/g,
   );
   const h1Count = (html.match(/<h1(?:\s|>)/g) ?? []).length;
+  const h1Text = captureAll(html, /<h1[^>]*>(.*?)<\/h1>/g)[0]?.replace(/<[^>]+>/g, "").trim();
   const jsonLdScripts = captureAll(
     html,
     /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
@@ -154,6 +198,13 @@ for (const routeEntry of routes) {
   if (h1Count !== 1) {
     fail(`/${route}: expected exactly one H1, received ${h1Count}`);
   }
+  if (
+    programmatic &&
+    /-(?:day|days|hour|hours)-ago$/.test(route) &&
+    (!h1Text?.startsWith("What ") || !h1Text.includes(" Was "))
+  ) {
+    fail(`/${route}: past-time H1 must use the same Was tense as its title`);
+  }
   if (!jsonLdScripts.length) {
     fail(`/${route}: JSON-LD is missing`);
   }
@@ -169,6 +220,12 @@ for (const routeEntry of routes) {
   }
   if (programmatic && !html.includes('aria-live="polite"')) {
     fail(`/${route}: pre-rendered calculator answer is missing`);
+  }
+  if (programmatic) {
+    const islandTags = html.match(/<astro-island[^>]+>/g) ?? [];
+    if (islandTags.some((tag) => tag.includes("intro") || tag.includes("useCases") || tag.length > 2_500)) {
+      fail(`/${route}: a client island serializes long-form page content`);
+    }
   }
 
   const schemaTypes = new Set();
@@ -198,6 +255,9 @@ for (const routeEntry of routes) {
         programmaticModifiedDates.set(route, schema.dateModified);
       }
       if (schema["@type"] === "BreadcrumbList") {
+        if (programmatic && schema.itemListElement?.length !== 3) {
+          fail(`/${route}: programmatic breadcrumb must contain three levels`);
+        }
         const lastItem = schema.itemListElement?.at(-1)?.item;
         if (lastItem && lastItem !== expectedCanonical) {
           fail(`/${route}: breadcrumb URL does not match canonical`);
@@ -209,6 +269,12 @@ for (const routeEntry of routes) {
     for (const requiredType of ["Organization", "WebSite", "WebApplication", "FAQPage"]) {
       if (!schemaTypes.has(requiredType)) {
         fail(`homepage: missing ${requiredType} schema`);
+      }
+    }
+  } else if (trust) {
+    for (const requiredType of ["WebPage", "BreadcrumbList"]) {
+      if (!schemaTypes.has(requiredType)) {
+        fail(`/${route}: missing ${requiredType} schema`);
       }
     }
   } else if (!programmatic) {
@@ -260,11 +326,13 @@ for (const routeEntry of routes) {
     if ((nearbyBlock.match(/href="\//g) ?? []).length < 4) {
       fail(`/${route}: nearby or related results lack crawlable links`);
     }
-    if (
-      !faqSchema?.mainEntity?.length ||
-      !faqSchema.mainEntity[0]?.acceptedAnswer?.text?.includes(answerMatch[1])
-    ) {
-      fail(`/${route}: FAQ schema does not repeat the direct answer`);
+    if (!faqSchema?.mainEntity?.length || faqSchema.mainEntity.length < 5) {
+      fail(`/${route}: FAQ schema must contain the visible stable FAQs`);
+    }
+    for (const entity of faqSchema.mainEntity) {
+      if (!entity?.name || !entity?.acceptedAnswer?.text || !html.includes(entity.name)) {
+        fail(`/${route}: FAQ schema does not match a visible FAQ`);
+      }
     }
 
     for (const requiredType of [
@@ -347,7 +415,7 @@ if (sitemap.includes("<sitemapindex")) {
   }
   for (const shardUrl of shardUrls) {
     const shardName = new URL(shardUrl).pathname.replace(/^\//, "");
-    if (!/^sitemap-\d+\.xml$/.test(shardName)) {
+    if (!/^sitemap-[a-z0-9]+(?:-[a-z0-9]+)*\.xml$/.test(shardName)) {
       fail(`sitemap index contains an invalid shard URL: ${shardUrl}`);
     }
     const shardPath = path.join(appDir, shardName);
@@ -356,9 +424,6 @@ if (sitemap.includes("<sitemapindex")) {
     const shardEntries = captureAll(shard, /<loc>(.*?)<\/loc>/g);
     if (shardEntries.length < 1 || shardEntries.length > 1_000) {
       fail(`${shardName} must contain between 1 and 1000 URLs`);
-    }
-    if (shardName === "sitemap-1.xml" && shardEntries.length !== 1_000) {
-      fail("sitemap-1.xml must contain exactly 1000 URLs");
     }
     sitemapDocuments.push(shard);
   }
@@ -375,8 +440,34 @@ const sitemapModifiedDates = new Map(
         .map((match) => [match[1], match[2]]),
     ),
 );
+const sitemapFileByUrl = new Map();
+for (const document of sitemapDocuments.slice(sitemapShardCount > 0 ? 1 : 0)) {
+  const file = sitemapDocuments.indexOf(document) > 0
+    ? new URL(captureAll(sitemap, /<loc>(.*?)<\/loc>/g)[sitemapDocuments.indexOf(document) - 1]).pathname.split("/").pop()
+    : "sitemap.xml";
+  for (const url of captureAll(document, /<loc>(.*?)<\/loc>/g)) sitemapFileByUrl.set(url, file);
+}
 if (sitemapUrls.length !== new Set(sitemapUrls).size) {
   fail("sitemap contains duplicate URLs");
+}
+if (sitemapUrls.length < baseline.total) {
+  fail(`sitemap URL count ${sitemapUrls.length} is below baseline ${baseline.total}`);
+}
+for (const baselineUrl of baseline.urls) {
+  if (!sitemapUrls.includes(baselineUrl)) {
+    fail(`baseline URL disappeared from sitemap: ${baselineUrl}`);
+  }
+}
+for (const url of sitemapUrls) {
+  if (
+    ((!url.startsWith(`${siteUrl}/`) && url !== siteUrl) ||
+      url.startsWith("http://") ||
+      url.includes("www.") ||
+      url.includes("?") ||
+      (url !== siteUrl && url.endsWith("/")))
+  ) {
+    fail(`sitemap contains a non-canonical URL: ${url}`);
+  }
 }
 for (const route of routes) {
   if (!sitemapUrls.includes(route.expectedCanonical)) {
@@ -388,6 +479,13 @@ for (const route of routes) {
       programmaticModifiedDates.get(route.route)
   ) {
     fail(`/${route.route}: sitemap lastmod does not match JSON-LD dateModified`);
+  }
+}
+for (const page of pageIndex) {
+  const url = `${siteUrl}/${page.slug}`;
+  const sitemapFile = sitemapFileByUrl.get(url);
+  if (!sitemapFamilyNames[page.type]?.test(sitemapFile || "")) {
+    fail(`/${page.slug}: appears in the wrong semantic sitemap: ${sitemapFile}`);
   }
 }
 for (const document of sitemapDocuments.slice(1)) {
@@ -403,7 +501,8 @@ console.log(
     `Static HTML SEO check passed: ${checkedRoutes.size} indexable pages`,
     `${pageIndex.length} programmatic HTML files match the route inventory`,
     `${sitemapUrls.length} unique sitemap URLs`,
-    ...(sitemapShardCount > 0 ? [`${sitemapShardCount} numeric sitemap shards linked from sitemap.xml`] : []),
+    ...(sitemapShardCount > 0 ? [`${sitemapShardCount} semantic sitemap shards linked from sitemap.xml`] : []),
+    `${baseline.total} baseline URLs preserved`,
     `all programmatic pages are reachable within ${maximumCrawlDepth} clicks from the homepage`,
     "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
     "all programmatic titles use a question format with one WhatDateTime suffix",
