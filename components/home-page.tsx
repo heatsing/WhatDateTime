@@ -58,6 +58,8 @@ const directorySections: ReadonlyArray<DirectorySection> = [
       ["Toronto & Berlin", "/toronto-to-berlin-time"],
       ["Sydney & Tokyo", "/sydney-to-tokyo-time"],
       ["Singapore & Dubai", "/singapore-to-dubai-time"],
+      ["New York & Rome", "/new-york-to-rome-time"],
+      ["Washington DC & Denver", "/washington-dc-to-denver-time"],
     ],
   },
   {
@@ -83,6 +85,7 @@ const directorySections: ReadonlyArray<DirectorySection> = [
       ["7 Days Ago", "/7-days-ago"],
       ["8 Weeks From Today", "/8-weeks-from-today"],
       ["12 Months From Today", "/12-months-from-today"],
+      ["194 Months From Today", "/194-months-from-today"],
     ],
   },
   {

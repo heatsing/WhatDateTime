@@ -27,6 +27,7 @@ export function SEOContent({
   if (variant === "deep" && page && formula && referenceDate) {
     return (
       <DeepContent
+        data={data}
         page={page}
         referenceDate={referenceDate}
       />
@@ -39,12 +40,18 @@ export function SEOContent({
 }
 
 function DeepContent({
+  data,
   page,
   referenceDate,
 }: {
+  data: ReadonlyArray<ContentSection>;
   page: SEOPage;
   referenceDate: Date;
 }) {
+  const sectionByStage = new Map(data.map((section) => [section.stage, section]));
+  const calculationBasis = sectionByStage.get("calculation-basis")?.text ?? page.intro;
+  const howToUse = sectionByStage.get("how-to-use")?.text;
+  const practicalScenarios = sectionByStage.get("practical-scenarios")?.text;
   const subject =
     page.kind === "relative"
       ? getRelativePhrase(page)
@@ -89,7 +96,7 @@ function DeepContent({
 
       <article data-content-stage="calculation-basis" className="mt-7 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-2xl font-semibold text-ink">Calculation basis</h2>
-        <p className="mt-4 text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">{page.intro}</p>
+        <p className="mt-4 text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">{calculationBasis}</p>
         <p className="mt-5 border-l-4 border-fern bg-[#F4F8FB] px-5 py-4 text-base font-medium leading-8 text-ink">
           {getPageFormula(page, referenceDate)}
         </p>
@@ -97,7 +104,7 @@ function DeepContent({
 
       <article data-content-stage="how-to-use" className="mt-9 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-2xl font-semibold text-ink">How to use this calculator</h2>
-        <p className="mt-3 max-w-3xl text-base leading-8 text-ink/60 sm:text-lg">Follow these steps to reproduce the page answer or calculate a different value.</p>
+        <p className="mt-3 max-w-3xl text-base leading-8 text-ink/60 sm:text-lg">{howToUse ?? "Follow these steps to reproduce the page answer or calculate a different value."}</p>
         <ol className="mt-6 space-y-5">
           {steps.map(([title, text], index) => (
             <li key={title} className="grid grid-cols-[2.25rem_1fr] gap-4">
@@ -110,7 +117,8 @@ function DeepContent({
 
       <article data-content-stage="practical-scenarios" className="mt-9 border-t border-[#D9DEE5] pt-6">
         <h2 className="font-display text-2xl font-semibold text-ink">Practical applications</h2>
-        <ul className="mt-4 space-y-2">
+        {practicalScenarios && <p className="mt-4 text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">{practicalScenarios}</p>}
+        <ul className="mt-5 space-y-2">
           {page.useCases.map((item) => <li key={item} className="border-l-2 border-[#B8CCE0] pl-4 text-base leading-8 text-ink/65 sm:text-[17px]">{item}</li>)}
         </ul>
       </article>

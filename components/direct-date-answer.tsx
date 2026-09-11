@@ -9,6 +9,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { useEffect, useState } from "react";
 import {
   calculateRelativeDate,
@@ -24,6 +25,7 @@ import type { RelativeCalculationInput } from "@/lib/pageCalculations";
 type DirectDateAnswerProps = {
   page: RelativeCalculationInput;
   referenceTime: string;
+  initialTimeZone: string;
 };
 
 const weekdays = [
@@ -39,9 +41,10 @@ const weekdays = [
 export function DirectDateAnswer({
   page,
   referenceTime,
+  initialTimeZone,
 }: DirectDateAnswerProps) {
   const [liveReferenceDate, setLiveReferenceDate] = useState(
-    () => new Date(referenceTime),
+    () => toZonedTime(new Date(referenceTime), initialTimeZone),
   );
   useEffect(() => {
     const update = () => setLiveReferenceDate(new Date());

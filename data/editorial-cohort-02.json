@@ -1,0 +1,227 @@
+[
+  {
+    "slug": "190-months-from-today",
+    "content": { "sections": [
+      { "title": "Converting 190 months into calendar years", "text": "A 190-month interval contains 15 complete calendar years and 10 additional months. The calculation advances by calendar months, so it preserves the starting day when that day exists in the destination month and applies month-end handling when it does not." },
+      { "title": "Planning near a sixteen-year horizon", "text": "This interval is useful for long-dated education, property, pension, licensing, and family milestones that fall two months before a full sixteen-year anniversary. Record the original day of month because it determines the final calendar date." },
+      { "title": "Why a day estimate is not equivalent", "text": "Multiplying 190 by an average month length produces only an estimate. The exact endpoint must pass through the actual sequence of 28-, 29-, 30-, and 31-day months, including every leap year in the interval." }
+    ] },
+    "faq": [
+      { "question": "How many years and months are 190 months?", "answer": "190 months equals 15 complete years and 10 additional months." },
+      { "question": "Is 190 months the same as 5,700 days?", "answer": "No. Calendar months have different lengths, so a fixed 5,700-day interval can end on a different date." },
+      { "question": "What happens when 190 months starts on the 31st?", "answer": "If the destination month lacks that day, calendar month-end handling resolves the result to a valid date." },
+      { "question": "Are leap years included in a 190-month calculation?", "answer": "Yes. Every intervening February uses its actual 28- or 29-day length." },
+      { "question": "Can I calculate 190 months from another starting date?", "answer": "Yes. Change the starting date while keeping the amount at 190 and the unit set to months." }
+    ]
+  },
+  {
+    "slug": "191-months-from-today",
+    "content": { "sections": [
+      { "title": "The calendar structure of 191 months", "text": "191 months is 15 complete years plus 11 months. It lands one calendar month before the corresponding sixteen-year anniversary, which makes the month-based result easier to verify than an approximate conversion to days." },
+      { "title": "Using a one-month-before-anniversary date", "text": "The result can serve as an advance reminder for renewals, maturity dates, enrollment milestones, and long-term reviews scheduled one month before a sixteen-year mark. Keep the time zone and start date documented when coordinating the deadline." },
+      { "title": "Month-end and leap-year checks", "text": "The engine applies each real calendar month and all leap-year rules. A starting date late in the month may require destination-month adjustment, while ordinary day numbers remain unchanged." }
+    ] },
+    "faq": [
+      { "question": "What is 191 months in years and months?", "answer": "It is 15 years and 11 months, or one month short of 16 years." },
+      { "question": "Does 191 months preserve the day of month?", "answer": "It does when the destination month contains that day; otherwise month-end adjustment is required." },
+      { "question": "Why not convert 191 months using 30 days per month?", "answer": "A 30-day assumption ignores short and long months and can produce the wrong endpoint." },
+      { "question": "Will February 29 affect 191 months?", "answer": "It can. Leap days are part of the real calendar traversed by the calculation." },
+      { "question": "Is 191 months an elapsed or inclusive count?", "answer": "It is a calendar addition from the selected start; inclusive day counting is a separate convention." }
+    ]
+  },
+  {
+    "slug": "192-months-from-today",
+    "content": { "sections": [
+      { "title": "Why 192 months is exactly sixteen years", "text": "192 months divides evenly into 16 calendar years because each year contains 12 months. The result should match adding sixteen years to the same starting date, subject to the calendar rule used when a leap-day start has no February 29 in the destination year." },
+      { "title": "Sixteen-year anniversary uses", "text": "A sixteen-year horizon appears in education planning, long-term savings, property records, warranties, family anniversaries, and eligibility reviews. A calendar-year calculation is preferable to a fixed-day estimate for these anniversary-style dates." },
+      { "title": "Verifying the endpoint", "text": "Check that the destination month and ordinary day match the start, then verify the destination year is sixteen years later. For a February 29 start, review the displayed valid-date adjustment separately." }
+    ] },
+    "faq": [
+      { "question": "How many years are 192 months?", "answer": "192 months is exactly 16 calendar years." },
+      { "question": "Is 192 months always the same as adding 16 years?", "answer": "Yes for standard calendar arithmetic, with special handling needed for a February 29 start in a non-leap destination year." },
+      { "question": "How many days are in 192 months?", "answer": "There is no single fixed total because the interval depends on the start date and the leap years crossed." },
+      { "question": "Does the weekday stay the same after 192 months?", "answer": "Not necessarily. Ordinary years shift the weekday and leap days can add another shift." },
+      { "question": "Can the sixteen-year result cross multiple leap years?", "answer": "Yes. The calculator follows every leap year between the selected start and endpoint." }
+    ]
+  },
+  {
+    "slug": "193-months-from-today",
+    "content": { "sections": [
+      { "title": "Breaking 193 months into 16 years and 1 month", "text": "A 193-month interval consists of 192 months, or sixteen years, followed by one additional calendar month. This decomposition provides a simple manual check without replacing real month-length arithmetic with an average-day estimate." },
+      { "title": "One month beyond a sixteen-year anniversary", "text": "The endpoint is useful for follow-up reviews, grace periods, renewal extensions, and project phases scheduled one month after a long-term anniversary. Verify whether the governing rule says calendar month or a fixed number of days." },
+      { "title": "Handling the final added month", "text": "The final one-month step can encounter a shorter destination month. The calculator keeps the original day when possible and otherwise returns a valid month-end date while retaining the full sixteen-year portion." }
+    ] },
+    "faq": [
+      { "question": "How long is 193 months?", "answer": "193 months equals 16 years and 1 month." },
+      { "question": "How can I check a 193-month result manually?", "answer": "Add sixteen calendar years first, then add one more calendar month." },
+      { "question": "Can the last month change the day number?", "answer": "Yes, if the destination month does not contain the starting day number." },
+      { "question": "Is 193 months a fixed number of weeks?", "answer": "No. Calendar months vary in length, so the exact week-and-day duration depends on the starting date." },
+      { "question": "Are weekends relevant to 193 months from today?", "answer": "No days are skipped; weekends remain part of the calendar interval." }
+    ]
+  },
+  {
+    "slug": "194-months-from-today",
+    "content": { "sections": [
+      { "title": "Calculating sixteen years and two months", "text": "194 months equals 16 complete years plus 2 calendar months. A reliable manual check is to move the year forward by sixteen, then advance two month positions while keeping the day number when the destination calendar permits it." },
+      { "title": "When a 194-month date is useful", "text": "This long interval can support maturity schedules, education timelines, property records, licensing reviews, and family milestones that occur two months after a sixteen-year anniversary. Store the starting date with the result so the month-end rule remains auditable." },
+      { "title": "Calendar arithmetic versus approximation", "text": "The endpoint cannot be verified by treating every month as 30 days. The calculation crosses the actual Gregorian calendar, includes all leap days, and resolves short destination months using valid calendar dates." }
+    ] },
+    "faq": [
+      { "question": "How many years and months is 194 months?", "answer": "194 months is 16 years and 2 months." },
+      { "question": "What is the easiest way to verify 194 months from today?", "answer": "Add sixteen years to the start and then add two calendar months, checking the final month length." },
+      { "question": "Does 194 months use an average month length?", "answer": "No. It uses actual calendar months rather than an average number of days." },
+      { "question": "Can a leap day change the 194-month endpoint?", "answer": "Leap days are included in the traversed calendar and can affect the elapsed-day total and weekday." },
+      { "question": "Does the 194-month calculation exclude non-working days?", "answer": "No. Calendar month arithmetic includes weekends and holidays." }
+    ]
+  },
+  {
+    "slug": "195-months-from-today",
+    "content": { "sections": [
+      { "title": "A sixteen-year, three-month interval", "text": "195 months decomposes into 16 years and 3 months. The additional three months represent one calendar quarter after the sixteen-year anniversary, although the exact elapsed-day count depends on which months and leap years are crossed." },
+      { "title": "Quarter-after-anniversary planning", "text": "The endpoint suits quarterly reviews scheduled after a long-term anniversary, including portfolio checks, education plans, maintenance cycles, and contract follow-ups. Calendar quarters and ninety-day periods are not always interchangeable." },
+      { "title": "Checking three additional months", "text": "After adding sixteen years, advance three named calendar months rather than adding ninety days. This preserves the intended month-based rule and handles month-end dates correctly." }
+    ] },
+    "faq": [
+      { "question": "What does 195 months equal?", "answer": "195 months equals 16 years and 3 months." },
+      { "question": "Is the extra three months exactly 90 days?", "answer": "Not always. Three consecutive calendar months can contain different total numbers of days." },
+      { "question": "Is 195 months one quarter after 16 years?", "answer": "It is three calendar months after the sixteen-year point, which is a calendar-quarter interval." },
+      { "question": "How are short months handled?", "answer": "The calculator retains the day when valid and applies a valid month-end result when necessary." },
+      { "question": "Can I reuse this page with a custom date?", "answer": "Yes. Select another starting date and keep 195 months as the interval." }
+    ]
+  },
+  {
+    "slug": "196-months-from-today",
+    "content": { "sections": [
+      { "title": "Understanding 196 calendar months", "text": "196 months is 16 years and 4 months. Separating the interval into a sixteen-year anniversary and a four-month extension makes the arithmetic transparent while the calculator handles the varying month lengths." },
+      { "title": "Four-month extension scenarios", "text": "A four-month extension after a long-term milestone can appear in academic terms, staged renewals, development plans, maintenance schedules, and delayed eligibility reviews. Use the exact start day rather than recording only the month and year." },
+      { "title": "Why the start day matters", "text": "Starting on the 28th, 29th, 30th, or 31st can produce different month-end behavior. Earlier day numbers normally carry into the destination month unchanged." }
+    ] },
+    "faq": [
+      { "question": "How many years is 196 months?", "answer": "196 months is 16 years and 4 months." },
+      { "question": "Can 196 months be calculated as sixteen years plus four months?", "answer": "Yes. That decomposition follows the same calendar-month intent." },
+      { "question": "Why can the day of month change?", "answer": "A destination month may not contain a late starting day such as the 31st." },
+      { "question": "Do holidays extend a 196-month endpoint?", "answer": "No. Holidays do not alter ordinary calendar-month addition." },
+      { "question": "Is the weekday predictable without calculating?", "answer": "Not reliably, because the interval crosses years of different lengths and may include leap days." }
+    ]
+  },
+  {
+    "slug": "197-months-from-today",
+    "content": { "sections": [
+      { "title": "Breaking down 197 months", "text": "197 months equals 16 full years and 5 more calendar months. This form is more meaningful than a decimal-year estimate because the final five months retain their real names and lengths." },
+      { "title": "Five months after a long-term milestone", "text": "The date can be used for review periods, extended warranties, training plans, savings checkpoints, or documentation deadlines scheduled five months after a sixteen-year event. State whether the final day itself is included in any policy count." },
+      { "title": "Leap years and destination validity", "text": "Leap days contribute to the elapsed duration, and the destination date must exist in its final month. The calculator applies both rules automatically." }
+    ] },
+    "faq": [
+      { "question": "What is 197 months in years and months?", "answer": "It is 16 years and 5 months." },
+      { "question": "Is 197 months the same duration from every start date?", "answer": "It is the same number of calendar months, but its elapsed number of days varies by the months and leap years crossed." },
+      { "question": "Are Saturdays and Sundays counted?", "answer": "Yes. No calendar dates are removed from a month-based calculation." },
+      { "question": "Can 197 months end in a different month day?", "answer": "Yes, when the final month lacks the original late-month day number." },
+      { "question": "How should I document the result?", "answer": "Keep the start date, the 197-month rule, the endpoint, and any separate inclusive-count requirement together." }
+    ]
+  },
+  {
+    "slug": "198-months-from-today",
+    "content": { "sections": [
+      { "title": "Sixteen and a half calendar years", "text": "198 months equals 16 years and 6 months, often described as sixteen and a half calendar years. The six-month portion is calendar-based and should not be replaced with a fixed 180- or 183-day assumption." },
+      { "title": "Half-year milestone applications", "text": "This interval supports mid-year reviews following a long anniversary, including education, investment, maintenance, licensing, and family planning. A six-month anniversary provides a clearer rule than an estimated number of days." },
+      { "title": "Comparing six months with fixed days", "text": "Six calendar months can span different day totals depending on the starting month and leap year. Calculate the month endpoint first, then compare a fixed-day result only if the governing requirement uses days." }
+    ] },
+    "faq": [
+      { "question": "How many years and months are 198 months?", "answer": "198 months equals 16 years and 6 months." },
+      { "question": "Is 198 months exactly sixteen and a half years?", "answer": "Yes when half a year means six calendar months after sixteen complete years." },
+      { "question": "Is the six-month portion always 182 days?", "answer": "No. Its exact day count depends on the particular months and whether February has 28 or 29 days." },
+      { "question": "Does a month-end start need special handling?", "answer": "Yes. The result must remain a valid date when the destination month is shorter." },
+      { "question": "Can I compare 198 months with a day interval?", "answer": "Yes, but calculate them separately because calendar months and fixed days use different rules." }
+    ]
+  },
+  {
+    "slug": "new-york-to-rome-time",
+    "content": { "sections": [
+      { "title": "New York and Rome offset rules", "text": "New York uses America/New_York and Rome uses Europe/Rome. Their normal modern gap is six hours with Rome ahead, but the United States and Europe change daylight-saving time on different dates, creating short periods when the gap is five hours." },
+      { "title": "Finding workable meeting hours", "text": "A New York morning usually falls in the Rome afternoon. For recurring meetings, check every occurrence around March and late October or early November instead of assuming that a previously used offset remains valid." },
+      { "title": "Travel and deadline interpretation", "text": "Airline times are stated in each airport's local zone, while a shared online deadline represents one instant. Convert the stated New York wall time first and verify whether the Rome result stays on the same calendar date." }
+    ] },
+    "faq": [
+      { "question": "Is Rome normally six hours ahead of New York?", "answer": "Under current rules it usually is, but the gap can temporarily be five hours because the two regions change clocks on different dates." },
+      { "question": "Why does the New York to Rome difference change in March?", "answer": "The United States normally starts daylight time before Europe, temporarily shortening the difference." },
+      { "question": "Can a New York evening be the next day in Rome?", "answer": "Yes. Late afternoon and evening times in New York can convert past midnight in Rome." },
+      { "question": "Which zones does this conversion use?", "answer": "It uses America/New_York for New York and Europe/Rome for Rome." },
+      { "question": "What should I check for a recurring New York–Rome meeting?", "answer": "Convert each date around daylight-saving transitions and confirm the date shown in both cities." }
+    ]
+  },
+  {
+    "slug": "rome-to-new-york-time",
+    "content": { "sections": [
+      { "title": "Converting Rome business hours to New York", "text": "Rome is generally six hours ahead of New York under current rules. A Rome afternoon therefore maps to a New York morning, with temporary five-hour differences during the weeks when American and European daylight-saving schedules are out of alignment." },
+      { "title": "Avoiding reverse-conversion mistakes", "text": "Subtracting a remembered offset is risky near clock changes. Enter the Rome local date and time in Europe/Rome so the converter can identify the correct New York offset for that instant." },
+      { "title": "Same-day and previous-day results", "text": "Most daytime Rome conversions remain on the same date in New York, while very early Rome times can map to the previous evening in New York. Always retain the destination date with the clock time." }
+    ] },
+    "faq": [
+      { "question": "How far behind Rome is New York?", "answer": "New York is usually six hours behind Rome, with temporary five-hour gaps during mismatched daylight-saving transition periods." },
+      { "question": "Can Rome morning time be the previous day in New York?", "answer": "Yes. Early Rome hours can convert to the previous calendar evening in New York." },
+      { "question": "Does this page simply subtract six hours?", "answer": "No. It applies Europe/Rome and America/New_York rules for the selected date." },
+      { "question": "Why can recurring meeting times shift?", "answer": "Rome and New York do not always enter and leave daylight time on the same dates." },
+      { "question": "What date should be entered in the converter?", "answer": "Enter the date as observed in Rome because Rome is the source city on this page." }
+    ]
+  },
+  {
+    "slug": "washington-dc-to-denver-time",
+    "content": { "sections": [
+      { "title": "Eastern Time to Mountain Time", "text": "Washington DC uses America/New_York and Denver uses America/Denver. Under their modern United States rules, Denver is two hours behind Washington DC, and both zones normally change between standard and daylight time on the same dates." },
+      { "title": "Coordinating federal and Mountain schedules", "text": "The conversion is useful for government calls, broadcast times, travel, remote teams, and deadlines announced in Eastern Time. Include the date and zone label because historical rules and future policy can differ from today's pattern." },
+      { "title": "Calendar-date boundaries", "text": "A Washington DC time shortly after midnight can still be the previous date in Denver. Midday business-hour conversions normally remain on the same calendar day." }
+    ] },
+    "faq": [
+      { "question": "How many hours behind Washington DC is Denver?", "answer": "Denver is normally two hours behind Washington DC under current modern time-zone rules." },
+      { "question": "Do Washington DC and Denver change clocks together?", "answer": "They currently follow the same United States daylight-saving transition schedule, while retaining a two-hour separation." },
+      { "question": "Can the Denver date be one day earlier?", "answer": "Yes. A Washington DC time during the first two hours after midnight can still be on the previous date in Denver." },
+      { "question": "Which IANA zones are used?", "answer": "Washington DC uses America/New_York and Denver uses America/Denver." },
+      { "question": "Is Eastern Time the source on this page?", "answer": "Yes. Enter the local date and time as stated in Washington DC, then read the Denver result." }
+    ]
+  },
+  {
+    "slug": "denver-to-washington-dc-time",
+    "content": { "sections": [
+      { "title": "Mountain Time to Washington DC", "text": "Denver's America/Denver time is normally two hours behind Washington DC's America/New_York time. Converting eastward therefore adds two hours under their current synchronized United States daylight-saving rules." },
+      { "title": "Scheduling eastbound communications", "text": "A Denver morning becomes a later Washington DC morning or afternoon. This matters for federal office hours, market-related calls, travel itineraries, national broadcasts, and teams with an Eastern Time cutoff." },
+      { "title": "When the destination date advances", "text": "Late Denver evening times can cross midnight in Washington DC. The destination date is part of the answer and should not be omitted from invitations or deadline notes." }
+    ] },
+    "faq": [
+      { "question": "How many hours ahead of Denver is Washington DC?", "answer": "Washington DC is normally two hours ahead of Denver." },
+      { "question": "Does converting Denver to Washington DC add two hours?", "answer": "Under current rules it normally does, but the calculator still evaluates the selected date using both IANA zones." },
+      { "question": "Can Washington DC be on the next day?", "answer": "Yes. A late-night Denver time can convert to after midnight in Washington DC." },
+      { "question": "What source zone should I use for Denver?", "answer": "Use America/Denver, which applies Denver's Mountain standard or daylight offset for the selected date." },
+      { "question": "Are the daylight-saving transitions synchronized?", "answer": "Under current United States rules, Denver and Washington DC change on the same dates." }
+    ]
+  },
+  {
+    "slug": "washington-dc-to-phoenix-time",
+    "content": { "sections": [
+      { "title": "Why the Washington DC–Phoenix gap changes", "text": "Washington DC observes Eastern daylight-saving time, while Phoenix in America/Phoenix generally remains on Mountain Standard Time. Phoenix is therefore usually two hours behind during Eastern standard time and three hours behind during Eastern daylight time." },
+      { "title": "Seasonal meeting planning", "text": "A recurring Washington DC meeting can appear one hour earlier in Phoenix after the Eastern clock change. Recheck spring and autumn occurrences even though Phoenix itself does not move its clocks." },
+      { "title": "Arizona time-zone precision", "text": "Use America/Phoenix rather than a generic Mountain Time label. Most of Arizona does not observe daylight-saving time, making the selected city and date essential to an accurate conversion." }
+    ] },
+    "faq": [
+      { "question": "Is Phoenix two or three hours behind Washington DC?", "answer": "It is generally two hours behind during Eastern standard time and three hours behind during Eastern daylight time." },
+      { "question": "Does Phoenix observe daylight-saving time?", "answer": "Phoenix generally remains on Mountain Standard Time and does not make the seasonal clock change." },
+      { "question": "Why does the difference change if Phoenix does not change clocks?", "answer": "Washington DC changes between Eastern Standard and Eastern Daylight Time, altering the gap." },
+      { "question": "Which Phoenix zone does the calculator use?", "answer": "It uses the IANA zone America/Phoenix." },
+      { "question": "Can Washington DC midnight be the previous day in Phoenix?", "answer": "Yes. The two- or three-hour subtraction can move an early Washington DC time to the previous Phoenix date." }
+    ]
+  },
+  {
+    "slug": "phoenix-to-washington-dc-time",
+    "content": { "sections": [
+      { "title": "Phoenix time to Eastern Time", "text": "Phoenix stays on America/Phoenix standard time while Washington DC moves between Eastern Standard and Eastern Daylight Time. Washington DC is normally two hours ahead in its standard-time season and three hours ahead in its daylight-time season." },
+      { "title": "Recurring calls from Arizona", "text": "A fixed Phoenix meeting shifts by one hour on the Washington DC clock when the Eastern zone changes season. Calendar invitations should use named zones so the event service can adjust the destination correctly." },
+      { "title": "Late-evening date changes", "text": "Adding two or three hours to a Phoenix evening can place Washington DC on the next calendar date. Check both the date and the clock value before publishing a deadline or itinerary." }
+    ] },
+    "faq": [
+      { "question": "How far ahead is Washington DC from Phoenix?", "answer": "Washington DC is generally two hours ahead during Eastern standard time and three hours ahead during Eastern daylight time." },
+      { "question": "Will a Phoenix meeting shift in Washington DC during the year?", "answer": "Yes. Washington DC changes clocks while Phoenix generally does not." },
+      { "question": "Can the converted Washington DC date be tomorrow?", "answer": "Yes. Late Phoenix evening times can become the next day in Washington DC." },
+      { "question": "Should I label Phoenix as Mountain Daylight Time?", "answer": "No. Phoenix generally remains on Mountain Standard Time; use America/Phoenix for precision." },
+      { "question": "Does the converter account for Washington DC daylight time?", "answer": "Yes. America/New_York supplies the Eastern offset applicable to the selected date." }
+    ]
+  }
+]

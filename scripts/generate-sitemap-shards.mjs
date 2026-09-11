@@ -46,7 +46,8 @@ for (const file of readdirSync(output)) {
 }
 
 const escapeXml = (value) => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-const groups = [{ name: "sitemap-core", revision: revisions.site, pages: coreRoutes.map((slug) => ({ slug })) }];
+const pageRevision = (page, fallback) => revisions.pages?.[page.slug] || fallback;
+const groups = [{ name: "sitemap-core", revision: revisions.site, pages: coreRoutes.map((slug) => ({ slug, revision: revisions.site })) }];
 for (const [type, baseName] of Object.entries(sitemapNames)) {
   const familyPages = pageIndex.filter((page) => page.type === type);
   for (let offset = 0; offset < familyPages.length; offset += shardSize) {
@@ -54,7 +55,7 @@ for (const [type, baseName] of Object.entries(sitemapNames)) {
     groups.push({
       name: familyPages.length > shardSize ? `${baseName}-${part}` : baseName,
       revision: revisions[type],
-      pages: familyPages.slice(offset, offset + shardSize),
+      pages: familyPages.slice(offset, offset + shardSize).map((page) => ({ ...page, revision: pageRevision(page, revisions[type]) })),
     });
   }
 }
@@ -68,10 +69,10 @@ for (const group of groups) {
   const fileName = `${group.name}.xml`;
   const entries = group.pages.map((page) => {
     const url = page.slug ? `${siteUrl}/${page.slug}` : siteUrl;
-    return `  <url><loc>${escapeXml(url)}</loc><lastmod>${group.revision}</lastmod></url>`;
+    return `  <url><loc>${escapeXml(url)}</loc><lastmod>${page.revision || group.revision}</lastmod></url>`;
   });
   writeFileSync(path.join(output, fileName), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>`);
-  sitemapEntries.push({ url: `${siteUrl}/${fileName}`, lastmod: group.revision });
+  sitemapEntries.push({ url: `${siteUrl}/${fileName}`, lastmod: group.pages.reduce((latest, page) => page.revision > latest ? page.revision : latest, group.revision) });
   total += entries.length;
 }
 

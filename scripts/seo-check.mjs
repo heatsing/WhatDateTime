@@ -27,6 +27,10 @@ const pageIndex = JSON.parse(
 const baseline = JSON.parse(
   readFileSync(new URL("../data/seo-url-baseline.json", import.meta.url), "utf8"),
 );
+const indexingCohort = JSON.parse(
+  readFileSync(new URL("../data/editorial-cohort-02.json", import.meta.url), "utf8"),
+);
+const indexingCohortBySlug = new Map(indexingCohort.map((page) => [page.slug, page]));
 const coreRoutes = [
   "",
   "calculators/date-calculator",
@@ -90,6 +94,15 @@ function fail(message) {
 
 function captureAll(html, pattern) {
   return [...html.matchAll(pattern)].map((match) => match[1]);
+}
+
+function escapeHtmlText(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#x27;");
 }
 
 const titles = new Map();
@@ -226,6 +239,11 @@ for (const routeEntry of routes) {
     if (islandTags.some((tag) => tag.includes("intro") || tag.includes("useCases") || tag.length > 2_500)) {
       fail(`/${route}: a client island serializes long-form page content`);
     }
+    const editorialPage = indexingCohortBySlug.get(route);
+    const editorialLead = editorialPage?.content?.sections?.[0]?.text?.slice(0, 48);
+    if (editorialLead && !html.includes(escapeHtmlText(editorialLead))) {
+      fail(`/${route}: indexed-page cohort content is not visible in static HTML`);
+    }
   }
 
   const schemaTypes = new Set();
@@ -351,6 +369,20 @@ for (const routeEntry of routes) {
     ...(descriptions.get(pageDescriptions[0]) ?? []),
     route,
   ]);
+}
+
+for (const [hub, types] of [
+  ["calculators/date-calculator", new Set(["months-from-today"])],
+  ["calculators/timezone-converter", new Set(["timezone-converter"])],
+]) {
+  const hubLinks = new Set(internalLinks.get(hub) ?? []);
+  for (const page of pageIndex.filter((entry) =>
+    types.has(entry.type) && indexingCohortBySlug.has(entry.slug),
+  )) {
+    if (!hubLinks.has(page.slug)) {
+      fail(`/${hub}: missing direct link to indexed-page cohort URL /${page.slug}`);
+    }
+  }
 }
 
 for (const [title, matchingRoutes] of titles) {

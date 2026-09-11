@@ -1,5 +1,6 @@
 import Link from "@/components/link";
 import type { SEOPageIndex, SEOPage } from "@/lib/seoGenerator";
+import indexingCohort from "@/data/editorial-cohort-02.json";
 
 type PageType = SEOPage["type"];
 
@@ -106,6 +107,8 @@ const groups: ReadonlyArray<{
   },
 ] as const;
 
+const indexingCohortSlugs = new Set(indexingCohort.map((page) => page.slug));
+
 function linkLabel(slug: string) {
   return slug.replaceAll("-", " ");
 }
@@ -130,11 +133,16 @@ export function CalculatorDirectory({
             const fallback = pages
               .filter((page) => group.types.includes(page.type))
               .slice(0, 8);
-            const selected = group.preferred
+            const preferred = group.preferred
               ? group.preferred
                   .map((slug) => pageMap.get(slug))
                   .filter((page): page is SEOPageIndex => Boolean(page))
               : fallback;
+            const selected = [...preferred, ...pages.filter((page) =>
+              group.types.includes(page.type) && indexingCohortSlugs.has(page.slug),
+            )].filter((page, index, list) =>
+              list.findIndex((candidate) => candidate.slug === page.slug) === index,
+            );
 
             return (
               <details

@@ -73,8 +73,9 @@ export function getFamilyDetails(page: Pick<SEOPage, "type">) {
   return familyDetails[page.type];
 }
 
-export function getContentRevision(page: Pick<SEOPage, "type">) {
-  return revisions[page.type] ?? revisions.site;
+export function getContentRevision(page: Pick<SEOPage, "type" | "slug">) {
+  const pageRevisions = "pages" in revisions ? revisions.pages as Record<string, string> : {};
+  return pageRevisions[page.slug] ?? revisions[page.type] ?? revisions.site;
 }
 
 export function getSiteRevision() {

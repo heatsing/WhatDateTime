@@ -38,6 +38,7 @@ const formula = getPageFormula(calculation, now);
 const path = `/${page.slug}`;
 const family = getFamilyDetails(page);
 const dateModified = getContentRevision(page);
+const initialTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 ---
 
 <JsonLd data={[
@@ -59,7 +60,7 @@ const dateModified = getContentRevision(page);
     </div>
     <div class="mt-9 lg:mt-11">
       {page.kind === "relative" ? (
-        <DirectDateAnswer client:load page={relativeCalculation!} referenceTime={referenceTime} />
+        <DirectDateAnswer client:load page={relativeCalculation!} referenceTime={referenceTime} initialTimeZone={initialTimeZone} />
       ) : page.kind === "difference" ? (
         <DirectDifferenceAnswer page={page} referenceDate={now} />
       ) : (

@@ -24,3 +24,11 @@ Record future imports with:
 - This confirms that discovery and indexing have expanded beyond the four-page owner-reported baseline, but `site:` results are not a replacement for a verified Search Console export and no total indexed count is inferred from them.
 - Production checks returned HTTP 200 to Googlebot for robots.txt, the sitemap index, the first sitemap shard, representative date pages, and a representative time-zone page.
 - The daily workflow still cannot deploy because the repository secret `CLOUDFLARE_API_TOKEN` is missing. Static builds and SEO gates succeed; deployment freshness remains dependent on restoring that secret.
+
+## 2026-09-11 indexed-page evidence cohort
+
+- The site owner reported indexing for `/194-months-from-today`, `/new-york-to-rome-time`, and `/washington-dc-to-denver-time`. This is owner-reported indexing evidence because a Search Console export is still not stored in the repository.
+- A public search spot-check also surfaced additional WhatDateTime pages, including nearby month calculations and reverse or related city conversions. The evidence therefore indicates expanding discovery rather than an index limited to exactly three URLs.
+- The three reported pages seed a 15-page editorial cohort: nine nearby 190–198 month calculations and six bidirectional New York–Rome, Washington DC–Denver, and Washington DC–Phoenix conversions.
+- Metadata and URLs remain unchanged. The cohort receives visible bespoke calculation guidance, direct hub links, reciprocal or nearby links, and page-specific stable revision dates.
+- Recheck impressions, indexed counts, and query-to-page matches after deployment; do not infer ranking improvement without a Search Console comparison window.

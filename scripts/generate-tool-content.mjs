@@ -51,15 +51,15 @@ const sourcePages = sourceFiles.flatMap((file) =>
     readFileSync(new URL(`../data/${file}`, import.meta.url), "utf8"),
   ),
 );
-const editorialOverrides = JSON.parse(
-  readFileSync(
-    new URL("../data/editorial-cohort-01.json", import.meta.url),
-    "utf8",
-  ),
+const editorialOverrides = ["editorial-cohort-01.json", "editorial-cohort-02.json"].flatMap(
+  (file) => JSON.parse(readFileSync(new URL(`../data/${file}`, import.meta.url), "utf8")),
 );
 const editorialOverrideBySlug = new Map(
   editorialOverrides.map((override) => [override.slug, override]),
 );
+if (editorialOverrideBySlug.size !== editorialOverrides.length) {
+  throw new Error("Editorial cohort files contain a duplicate slug");
+}
 
 const bySlug = new Map(sourcePages.map((page) => [page.slug, page]));
 const relativePagesByType = new Map(
