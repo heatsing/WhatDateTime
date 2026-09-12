@@ -7,6 +7,7 @@ import {
   getSEOPage,
   getSEOText,
 } from "@/lib/seoGenerator";
+import { getBuildTime } from "@/lib/build-time";
 
 export function getStaticPaths() {
   return getAllSEOPageIndex().map((page) => ({ params: { slug: page.slug } }));
@@ -17,7 +18,7 @@ const page = slug ? await getSEOPage(slug) : undefined;
 if (!page) throw new Error(`Missing SEO page data for ${slug}`);
 const related = await getRelatedPages(page);
 const seo = getSEOText(page);
-const referenceTime = new Date().toISOString();
+const referenceTime = getBuildTime();
 const title = `${seo.title} | WhatDateTime`;
 ---
 

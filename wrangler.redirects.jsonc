@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "whatdatetime-www-redirect",
+  "main": "workers/www-redirect.js",
+  "compatibility_date": "2026-09-12",
+  "routes": [
+    {
+      "pattern": "www.whatdatetime.com",
+      "custom_domain": true
+    }
+  ]
+}

@@ -32,3 +32,10 @@ Record future imports with:
 - The three reported pages seed a 15-page editorial cohort: nine nearby 190–198 month calculations and six bidirectional New York–Rome, Washington DC–Denver, and Washington DC–Phoenix conversions.
 - Metadata and URLs remain unchanged. The cohort receives visible bespoke calculation guidance, direct hub links, reciprocal or nearby links, and page-specific stable revision dates.
 - Recheck impressions, indexed counts, and query-to-page matches after deployment; do not infer ranking improvement without a Search Console comparison window.
+
+## 2026-09-12 Cloudflare delivery architecture
+
+- Production was exhausting the Workers free-tier request allowance because `assets.run_worker_first` sent every matching HTML, JavaScript, CSS, sitemap, robots, and verification-file request through the Worker before static asset delivery.
+- The canonical site now uses asset-first delivery so matching static files bypass Worker billing. The `www` hostname is isolated behind a minimal redirect Worker, while the main Worker remains available for unmatched routes and 404 handling.
+- The scheduled GitHub workflow now performs build and SEO verification only. Cloudflare deployment occurs only on a manual workflow dispatch, preventing missing deployment secrets or an unnecessary daily 10,000-file upload from failing the scheduled check.
+- Ordinary builds use a deterministic reference timestamp so repeated verification output is byte-stable. Manual releases keep that snapshot by default, and the optional `refresh_dates` input explicitly requests a full static date refresh; client hydration continues to calibrate displayed answers to the visitor's live local clock.

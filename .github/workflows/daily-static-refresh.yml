@@ -1,20 +1,26 @@
-name: Daily static date refresh
+name: Daily SEO verification and manual production release
 
 on:
   schedule:
     # 00:20 Asia/Shanghai. Scheduled workflows use UTC.
     - cron: "20 16 * * *"
   workflow_dispatch:
+    inputs:
+      refresh_dates:
+        description: "Refresh the static date snapshot (rewrites date-dependent HTML)"
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
-  group: whatdatetime-production
+  group: whatdatetime-verification-and-release
   cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  build-and-deploy:
+  verify-or-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
@@ -39,10 +45,16 @@ jobs:
           npm run typecheck
           npm run lint
 
+      - name: Use a fresh reference time for a manual production release
+        if: github.event_name == 'workflow_dispatch' && inputs.refresh_dates
+        shell: bash
+        run: echo "WHATDATETIME_BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')" >> "$GITHUB_ENV"
+
       - name: Build current static HTML and run SEO gates
         run: npm run build
 
       - name: Verify Cloudflare deployment credentials
+        if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
@@ -56,4 +68,5 @@ jobs:
           npx wrangler whoami
 
       - name: Deploy the verified static site
-        run: npx wrangler deploy --config wrangler.jsonc
+        if: github.event_name == 'workflow_dispatch'
+        run: npm run deploy

@@ -12,7 +12,10 @@
     "seo:baseline": "node scripts/create-seo-baseline.mjs",
     "seo:audit": "node scripts/seo-audit.mjs",
     "seo:check": "node scripts/seo-audit.mjs && node scripts/generate-sitemap-shards.mjs && node scripts/seo-check.mjs && node scripts/seo-sample-report.mjs",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "deploy:main": "wrangler deploy --config wrangler.jsonc",
+    "deploy:www": "wrangler deploy --config wrangler.redirects.jsonc",
+    "deploy": "npm run deploy:main && npm run deploy:www"
   },
   "dependencies": {
     "date-fns": "^4.1.0",

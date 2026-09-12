@@ -10,7 +10,7 @@
 - Monitor production hydration, Worker errors, and indexing signals.
 - Keep every programmatic URL reachable through crawlable HTML links; the current technical gate enforces a maximum depth of 6 from the homepage.
 - Keep real 404 responses out of the index and validate language alternates, homepage entity schema, calculator schema, and sitemap-index modification dates during every build.
-- Rebuild and deploy date-dependent static HTML daily so initial answers remain current without client-side execution.
+- Verify the static export daily without deploying it. Normal page and asset requests use Cloudflare's asset-first path; intentional production releases refresh the static answer snapshot while browser hydration immediately calibrates answers to each visitor's current local date and time.
 - Keep sitemap `lastmod` and page JSON-LD `dateModified` synchronized with stable, material content revision dates; ordinary date-answer rebuilds must not advance them.
 
 ## Next

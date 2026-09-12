@@ -6,20 +6,42 @@ const siteUrl =
   process.env.PUBLIC_SITE_URL ||
   "https://whatdatetime.com";
 const wranglerConfig = readFileSync(path.resolve("wrangler.jsonc"), "utf8");
+const redirectWranglerConfig = readFileSync(
+  path.resolve("wrangler.redirects.jsonc"),
+  "utf8",
+);
+const redirectWorker = readFileSync(
+  path.resolve("workers/www-redirect.js"),
+  "utf8",
+);
 if (!/"name"\s*:\s*"whatdatetime"/.test(wranglerConfig)) {
   fail('wrangler.jsonc must target the "whatdatetime" Worker');
 }
 if (!/"main"\s*:\s*"workers\/sites-entry\.js"/.test(wranglerConfig)) {
   fail("wrangler.jsonc must deploy the static SEO Worker entrypoint");
 }
-for (const hostname of ["whatdatetime.com", "www.whatdatetime.com"]) {
-  if (
-    !new RegExp(
-      `"pattern"\\s*:\\s*"${hostname.replaceAll(".", "\\.")}"[\\s\\S]*?"custom_domain"\\s*:\\s*true`,
-    ).test(wranglerConfig)
-  ) {
-    fail(`wrangler.jsonc must bind the ${hostname} custom domain`);
-  }
+if (!/"run_worker_first"\s*:\s*false/.test(wranglerConfig)) {
+  fail("wrangler.jsonc must serve matching static assets before invoking the Worker");
+}
+if (!/"pattern"\s*:\s*"whatdatetime\.com"[\s\S]*?"custom_domain"\s*:\s*true/.test(wranglerConfig)) {
+  fail("wrangler.jsonc must bind the canonical whatdatetime.com custom domain");
+}
+if (/www\.whatdatetime\.com/.test(wranglerConfig)) {
+  fail("the main static Worker must not bind www.whatdatetime.com");
+}
+if (
+  !/"name"\s*:\s*"whatdatetime-www-redirect"/.test(redirectWranglerConfig) ||
+  !/"pattern"\s*:\s*"www\.whatdatetime\.com"[\s\S]*?"custom_domain"\s*:\s*true/.test(
+    redirectWranglerConfig,
+  )
+) {
+  fail("wrangler.redirects.jsonc must bind www.whatdatetime.com to the redirect Worker");
+}
+if (
+  !/hostname\s*=\s*"whatdatetime\.com"/.test(redirectWorker) ||
+  !/Response\.redirect\([\s\S]*?308\)/.test(redirectWorker)
+) {
+  fail("the www redirect Worker must preserve the path and issue a 308 to whatdatetime.com");
 }
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
