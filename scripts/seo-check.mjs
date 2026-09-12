@@ -17,11 +17,11 @@ const redirectWorker = readFileSync(
 if (!/"name"\s*:\s*"whatdatetime"/.test(wranglerConfig)) {
   fail('wrangler.jsonc must target the "whatdatetime" Worker');
 }
-if (!/"main"\s*:\s*"workers\/sites-entry\.js"/.test(wranglerConfig)) {
-  fail("wrangler.jsonc must deploy the static SEO Worker entrypoint");
+if (/"main"\s*:/.test(wranglerConfig)) {
+  fail("wrangler.jsonc must remain asset-only so page and 404 requests do not invoke Worker code");
 }
-if (!/"run_worker_first"\s*:\s*false/.test(wranglerConfig)) {
-  fail("wrangler.jsonc must serve matching static assets before invoking the Worker");
+if (/"run_worker_first"\s*:/.test(wranglerConfig)) {
+  fail("asset-only delivery must not configure a Worker-first request path");
 }
 if (!/"pattern"\s*:\s*"whatdatetime\.com"[\s\S]*?"custom_domain"\s*:\s*true/.test(wranglerConfig)) {
   fail("wrangler.jsonc must bind the canonical whatdatetime.com custom domain");
