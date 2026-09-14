@@ -6,11 +6,12 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { DirectDateAnswer } from "@/components/direct-date-answer";
 import { DirectDifferenceAnswer } from "@/components/direct-difference-answer";
 import { FAQ } from "@/components/FAQ";
+import { CurrentTimePanel, HourAnswerDetails, LiveRelatedHourLinks } from "@/components/hour-answer-details";
 import { JsonLd } from "@/components/json-ld";
 import { RelatedLinks } from "@/components/RelatedLinks";
 import { SEOContent } from "@/components/SEOContent";
 import { TimezoneComparison } from "@/components/timezone-comparison";
-import type { SEOPage } from "@/lib/seoGenerator";
+import type { RelativeSEOPage, SEOPage } from "@/lib/seoGenerator";
 import { getCalculationInput, getSEOText } from "@/lib/seoGenerator";
 import { getPageFormula, getPageResult } from "@/lib/pageCalculations";
 import type { RelativeCalculationInput, TimezoneCalculationInput } from "@/lib/pageCalculations";
@@ -39,6 +40,19 @@ const path = `/${page.slug}`;
 const family = getFamilyDetails(page);
 const dateModified = getContentRevision(page);
 const initialTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+const isHourRelative = (candidate: SEOPage): candidate is RelativeSEOPage => candidate.kind === "relative" && candidate.unit === "hour";
+const isHourPage = page.kind === "relative" && page.unit === "hour";
+const hourLinks = page.kind === "relative" && page.direction === "past"
+  ? [1, 2, 3, 6, 12, 24].map((amount) => ({ label: `${amount} ${amount === 1 ? "Hour" : "Hours"} Ago`, path: `/${amount}-${amount === 1 ? "hour" : "hours"}-ago` }))
+  : [1, 2, 3, 6, 12, 24].map((amount) => ({ label: `${amount} ${amount === 1 ? "Hour" : "Hours"} From Now`, path: `/${amount}-${amount === 1 ? "hour" : "hours"}-from-now` }));
+const relatedHourPages = related
+  .filter(isHourRelative)
+  .slice(0, 6)
+  .map((candidate) => ({ kind: candidate.kind, slug: candidate.slug, type: candidate.type, amount: candidate.amount, unit: candidate.unit, direction: candidate.direction }));
+const currentHourPage = page.kind === "relative"
+  ? { kind: page.kind, slug: page.slug, type: page.type, amount: page.amount, unit: page.unit, direction: page.direction }
+  : undefined;
+const crawlableHourLinks = related.filter(isHourRelative);
 ---
 
 <JsonLd data={[
@@ -50,6 +64,69 @@ const initialTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC
     { name: seo.h1, path },
   ]),
 ]} />
+{isHourPage ? (
+  <div class="bg-[#f8fbfe] px-4 pb-14 pt-5 sm:px-6 lg:px-10 xl:px-14">
+    <div class="mx-auto max-w-[90rem]">
+      <Breadcrumb current={seo.h1} parent={{ name: family.hubName, path: family.hubPath }} />
+      <div class="mt-5 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div class="min-w-0">
+          <header>
+            <h1 class="font-display text-[34px] font-bold leading-tight tracking-[-0.035em] text-[#0c2146] sm:text-[42px]">{seo.h1}</h1>
+            <p class="mt-2 max-w-4xl text-base leading-7 text-[#405776]">{seo.description}</p>
+            <p class="mt-1 text-xs text-[#536b8d]">Updated live from your local device time.</p>
+          </header>
+
+          <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white px-4 sm:px-6">
+            <DirectDateAnswer client:load page={relativeCalculation!} referenceTime={referenceTime} initialTimeZone={initialTimeZone} />
+          </div>
+          <div class="mt-5">
+            <CalculatorBox
+              client:load
+              page={calculation}
+              initialResult={result}
+              initialDate={format(now, "yyyy-MM-dd")}
+              initialDateTime={format(now, "yyyy-MM-dd'T'HH:mm")}
+            />
+            <noscript><p class="mt-3 text-sm text-[#536b8d]">The direct answer and formula above are available without JavaScript. Enable JavaScript to change calculator inputs.</p></noscript>
+          </div>
+          <div class="mt-5"><HourAnswerDetails client:load page={relativeCalculation!} referenceTime={referenceTime} /></div>
+          <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6"><LiveRelatedHourLinks client:load currentPage={currentHourPage!} pages={relatedHourPages} referenceTime={referenceTime} /></div>
+          <section class="mt-5 rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6" aria-labelledby="more-hour-links-heading">
+            <h2 id="more-hour-links-heading" class="font-display text-xl font-bold text-[#10264b]">More Time Questions</h2>
+            <div class="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+              {crawlableHourLinks.map((candidate) => (
+                <a class="text-sm font-semibold leading-6 text-[#0969da] hover:underline" href={`/${candidate.slug}`}>
+                  {candidate.amount} {candidate.amount === 1 ? "Hour" : "Hours"} {candidate.direction === "future" ? "From Now" : "Ago"}
+                </a>
+              ))}
+            </div>
+          </section>
+          <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6"><FAQ faqs={page.faq} variant="editorial" /></div>
+        </div>
+
+        <aside class="space-y-5" aria-label="Time calculation navigation">
+          <section class="rounded-sm border border-[#d8e1ed] bg-white p-4">
+            <h2 class="font-display text-lg font-bold text-[#10264b]">Popular Time Tools</h2>
+            <nav class="mt-3 divide-y divide-[#e2e7ee] border-t border-[#d8e1ed]" aria-label="Popular time tools">
+              <a class="block py-3 text-sm font-semibold text-[#0969da] hover:underline" href="/calculators/time-difference">Time Difference</a>
+              <a class="block py-3 text-sm font-semibold text-[#0969da] hover:underline" href="/1-hour-from-now">Add or Subtract Time</a>
+              <a class="block py-3 text-sm font-semibold text-[#0969da] hover:underline" href="/calculators/countdown">Countdown Timer</a>
+              <a class="block py-3 text-sm font-semibold text-[#0969da] hover:underline" href="/calculators/timezone-converter">Time Zone Converter</a>
+            </nav>
+          </section>
+          <section class="rounded-sm border border-[#d8e1ed] bg-white p-4">
+            <h2 class="font-display text-lg font-bold text-[#10264b]">{page.direction === "past" ? "Hours Ago" : "Hours From Now"}</h2>
+            <nav class="mt-3 divide-y divide-[#e2e7ee] border-t border-[#d8e1ed]" aria-label="Related hour calculations">
+              {hourLinks.map((link) => <a class="block py-3 text-sm font-semibold text-[#0969da] hover:underline" href={link.path}>{link.label}</a>)}
+            </nav>
+          </section>
+          <CurrentTimePanel client:load referenceTime={referenceTime} />
+        </aside>
+      </div>
+    </div>
+  </div>
+) : (
+<>
 <section class="bg-white px-5 pb-14 pt-7 sm:px-8 sm:pb-16 sm:pt-10 lg:pb-20 lg:pt-12">
   <div class="mx-auto max-w-5xl">
     <Breadcrumb current={seo.h1} parent={{ name: family.hubName, path: family.hubPath }} />
@@ -90,3 +167,5 @@ const initialTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC
 <section class="border-t border-[#D9DEE5] bg-white px-5 py-14 sm:px-8 sm:py-16 lg:py-20">
   <FAQ faqs={page.faq} variant="editorial" />
 </section>
+</>
+)}

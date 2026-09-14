@@ -1,4 +1,5 @@
 import Link from "@/components/link";
+import { Icon } from "@/components/icon";
 
 const groups = [
   {
@@ -20,21 +21,27 @@ const groups = [
     ],
   },
   {
-    title: "Popular answers",
+    title: "About",
     links: [
-      ["24 hours from now", "/24-hours-from-now"],
-      ["30 days from today", "/30-days-from-today"],
-      ["8 weeks from today", "/8-weeks-from-today"],
+      ["About Us", "/about"],
+      ["Methodology", "/calculation-methodology"],
+      ["Data Sources", "/data-sources"],
+      ["Privacy Policy", "/privacy-policy"],
+      ["Terms of Use", "/terms-of-use"],
     ],
   },
 ] as const;
 
-export function Footer() {
+export function Footer({ pathname = "/" }: { pathname?: string }) {
+  void pathname;
   return (
-    <footer className="border-t border-[#D9DEE5] bg-white text-ink">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="border-t border-[#cfd9e6] bg-[#f7f9fc] text-ink">
+      <div className="mx-auto grid max-w-[90rem] gap-10 px-5 py-12 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-10 xl:px-14">
         <div>
-          <Link href="/" className="font-display text-lg font-bold tracking-[-0.02em]">WhatDateTime</Link>
+          <Link href="/" className="inline-flex items-center gap-2 font-display text-lg font-bold tracking-[-0.02em] text-[#10264b]">
+            <span className="grid h-8 w-8 place-items-center rounded-md bg-[#0969da] text-white"><Icon name="calendar" className="h-5 w-5" /></span>
+            WhatDateTime
+          </Link>
           <p className="mt-3 max-w-xs text-sm leading-6 text-ink/55">Accurate date and time tools for everyday planning.</p>
           <div className="mt-4 flex max-w-sm flex-wrap gap-x-4 gap-y-2">
             <Link className="text-xs text-ink/55 hover:text-fern hover:underline" href="/about">About</Link>
@@ -56,7 +63,7 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="border-t border-[#E5E8EB] px-5 py-5 text-center text-xs text-ink/45">
+      <div className="border-t border-[#d8e1ed] px-5 py-5 text-center text-xs text-ink/45">
         © {new Date().getFullYear()} WhatDateTime
       </div>
     </footer>

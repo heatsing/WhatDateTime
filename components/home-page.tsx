@@ -1,17 +1,6 @@
+"use client";
+
 import Link from "@/components/link";
-import {
-  CalendarDays,
-  CircleHelp,
-  Clock3,
-  Globe2,
-  MapPinned,
-  ShieldCheck,
-  Star,
-  Users,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
-import { HomeTimezoneConverter } from "@/components/home-timezone-converter";
 import { JsonLd } from "@/components/json-ld";
 import { LiveClock } from "@/components/live-clock";
 import { siteConfig } from "@/lib/site";
@@ -21,176 +10,155 @@ import {
   webApplicationSchema,
   websiteSchema,
 } from "@/lib/structured-data";
+import {
+  CalendarDays,
+  CakeSlice,
+  ChevronRight,
+  CircleHelp,
+  Clock3,
+  Globe2,
+  Hourglass,
+  type LucideIcon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
-type DirectorySection = {
+type ToolLink = {
   title: string;
   description: string;
+  href: string;
   icon: LucideIcon;
-  links: ReadonlyArray<readonly [string, string]>;
 };
 
-const directorySections: ReadonlyArray<DirectorySection> = [
-  {
-    title: "Cities by Continent",
-    description: "Browse major cities around the world and compare their local time.",
-    icon: MapPinned,
-    links: [
-      ["New York to London", "/new-york-to-london-time"],
-      ["London to Tokyo", "/london-to-tokyo-time"],
-      ["Los Angeles to Sydney", "/los-angeles-to-sydney-time"],
-      ["Paris to Singapore", "/paris-to-singapore-time"],
-      ["Dubai to Toronto", "/dubai-to-toronto-time"],
-      ["Berlin to New York", "/berlin-to-new-york-time"],
-      ["Tokyo to Los Angeles", "/tokyo-to-los-angeles-time"],
-      ["Sydney to London", "/sydney-to-london-time"],
-    ],
-  },
-  {
-    title: "Popular Time Zones",
-    description: "Quick links to commonly compared international time zones.",
-    icon: Clock3,
-    links: [
-      ["New York & London", "/new-york-to-london-time"],
-      ["London & Singapore", "/london-to-singapore-time"],
-      ["Tokyo & New York", "/tokyo-to-new-york-time"],
-      ["Paris & Dubai", "/paris-to-dubai-time"],
-      ["Los Angeles & London", "/los-angeles-to-london-time"],
-      ["Toronto & Berlin", "/toronto-to-berlin-time"],
-      ["Sydney & Tokyo", "/sydney-to-tokyo-time"],
-      ["Singapore & Dubai", "/singapore-to-dubai-time"],
-      ["New York & Rome", "/new-york-to-rome-time"],
-      ["Washington DC & Denver", "/washington-dc-to-denver-time"],
-    ],
-  },
-  {
-    title: "Date Calculators",
-    description: "Add, subtract, or compare calendar dates for planning and deadlines.",
-    icon: CalendarDays,
-    links: [
-      ["Date Calculator", "/calculators/date-calculator"],
-      ["Days Between Dates", "/calculators/time-difference"],
-      ["Days Until Date", "/calculators/days-until"],
-      ["Day of the Week", "/calculators/day-of-week"],
-      ["Days in a Month", "/calculators/days-in-month"],
-      ["Weeks in a Year", "/calculators/weeks-in-year"],
-      ["Calendar Generator", "/calculators/calendar"],
-      ["Half Birthday", "/calculators/half-birthday"],
-      ["Weeks and Days Ago", "/calculators/weeks-and-days-ago"],
-      ["1-Day Date Difference", "/days-between-january-1-2026-and-january-2-2026"],
-      ["Age Calculator", "/calculators/age-calculator"],
-      ["Business Days Calculator", "/30-business-days-from-today"],
-      ["7 Days From Today", "/7-days-from-today"],
-      ["30 Days From Today", "/30-days-from-today"],
-      ["90 Days From Today", "/90-days-from-today"],
-      ["7 Days Ago", "/7-days-ago"],
-      ["8 Weeks From Today", "/8-weeks-from-today"],
-      ["12 Months From Today", "/12-months-from-today"],
-      ["194 Months From Today", "/194-months-from-today"],
-    ],
-  },
-  {
-    title: "Time Calculators",
-    description: "Work with time durations, differences, countdowns, and conversions.",
-    icon: Clock3,
-    links: [
-      ["Time Zone Converter", "/calculators/timezone-converter"],
-      ["Time Difference", "/calculators/time-difference"],
-      ["Countdown Timer", "/calculators/countdown"],
-      ["1 Hour From Now", "/1-hour-from-now"],
-      ["6 Hours From Now", "/6-hours-from-now"],
-      ["12 Hours From Now", "/12-hours-from-now"],
-      ["24 Hours From Now", "/24-hours-from-now"],
-      ["1 Hour Ago", "/1-hour-ago"],
-      ["12 Hours Ago", "/12-hours-ago"],
-      ["24 Hours Ago", "/24-hours-ago"],
-    ],
-  },
-  {
-    title: "Meeting Planner",
-    description: "Find practical time overlaps between widely used business locations.",
-    icon: Users,
-    links: [
-      ["New York–London Meeting", "/new-york-to-london-time"],
-      ["London–Dubai Meeting", "/london-to-dubai-time"],
-      ["Tokyo–Singapore Meeting", "/tokyo-to-singapore-time"],
-      ["Berlin–Toronto Meeting", "/berlin-to-toronto-time"],
-      ["Los Angeles–Tokyo Meeting", "/los-angeles-to-tokyo-time"],
-      ["Paris–New York Meeting", "/paris-to-new-york-time"],
-      ["Sydney–London Meeting", "/sydney-to-london-time"],
-      ["Singapore–New York Meeting", "/singapore-to-new-york-time"],
-    ],
-  },
-  {
-    title: "World Clock",
-    description: "Check and compare the current time in major cities worldwide.",
-    icon: Globe2,
-    links: [
-      ["New York to London Time", "/new-york-to-london-time"],
-      ["London to New York Time", "/london-to-new-york-time"],
-      ["Tokyo to London Time", "/tokyo-to-london-time"],
-      ["Los Angeles to New York Time", "/los-angeles-to-new-york-time"],
-      ["Paris to London Time", "/paris-to-london-time"],
-      ["Sydney to Singapore Time", "/sydney-to-singapore-time"],
-      ["Singapore to Tokyo Time", "/singapore-to-tokyo-time"],
-      ["Dubai to Berlin Time", "/dubai-to-berlin-time"],
-    ],
-  },
-  {
-    title: "Common Date & Time Tools",
-    description: "Everyday utilities for frequently requested date and time answers.",
-    icon: Wrench,
-    links: [
-      ["Current Date & Time", "/"],
-      ["Date Calculator", "/calculators/date-calculator"],
-      ["Age Calculator", "/calculators/age-calculator"],
-      ["Countdown", "/calculators/countdown"],
-      ["Time Zone Converter", "/calculators/timezone-converter"],
-      ["5 Business Days", "/5-business-days-from-today"],
-      ["14 Days From Today", "/14-days-from-today"],
-      ["30 Days Ago", "/30-days-ago"],
-      ["4 Weeks From Today", "/4-weeks-from-today"],
-      ["1 Year From Today", "/1-year-from-today"],
-    ],
-  },
-];
-
-const homeFaqs = [
-  { question: "What time is it right now?", answer: "The clock at the top of this page uses your device time zone and updates every second." },
-  { question: "How do I convert time zones?", answer: "Choose a source city and destination city in the converter, then select Convert to open the matching comparison." },
-  { question: "How do I calculate the difference between two dates?", answer: "Use the Days Between Dates calculator to enter both dates and receive the elapsed days and calendar breakdown." },
-  { question: "What is UTC time?", answer: "UTC is the global time standard used as the reference point for local time-zone offsets." },
-  { question: "How do I plan a meeting across time zones?", answer: "Open one of the city comparison pages to see both local times together and account for their current offsets." },
+const calculatorLinks: ReadonlyArray<ToolLink> = [
+  { title: "Date Calculator", description: "Add or subtract days, weeks, months, or years from a date.", href: "/calculators/date-calculator", icon: CalendarDays },
+  { title: "Days Between Two Dates", description: "Calculate the exact number of days between two dates.", href: "/calculators/time-difference", icon: CalendarDays },
+  { title: "Days Until Date", description: "Find out how many days remain until a specific date.", href: "/calculators/days-until", icon: CalendarDays },
+  { title: "Business Days Calculator", description: "Add working days while automatically skipping weekends.", href: "/30-business-days-from-today", icon: CalendarDays },
+  { title: "Weeks and Days Ago", description: "Calculate a past date using weeks and days together.", href: "/calculators/weeks-and-days-ago", icon: CalendarDays },
+  { title: "Day of the Week", description: "Find the weekday for any calendar date.", href: "/calculators/day-of-week", icon: CalendarDays },
+  { title: "Calendar by Month and Year", description: "View a monthly calendar and its week numbers.", href: "/calculators/calendar", icon: CalendarDays },
+  { title: "How Many Days in a Month", description: "Check the number of days in any month and year.", href: "/calculators/days-in-month", icon: CalendarDays },
+  { title: "Age Calculator", description: "Calculate age from a birth date in years, months, and days.", href: "/calculators/age-calculator", icon: CakeSlice },
+  { title: "Half Birthday Calculator", description: "Find the date exactly six months after a birthday.", href: "/calculators/half-birthday", icon: CakeSlice },
+  { title: "Countdown Timer", description: "Create a live countdown to any date and time.", href: "/calculators/countdown", icon: Hourglass },
+  { title: "Time Difference Calculator", description: "Compare the duration between two dates and times.", href: "/calculators/time-difference", icon: Clock3 },
+  { title: "Hours From Now", description: "Open a precise calculation for 24 hours from now.", href: "/24-hours-from-now", icon: Clock3 },
+  { title: "Hours Ago", description: "See the exact local date and time 12 hours ago.", href: "/12-hours-ago", icon: Clock3 },
+  { title: "Time Zone Converter", description: "Compare local times between cities around the world.", href: "/calculators/timezone-converter", icon: Globe2 },
+  { title: "Weeks in a Year", description: "Check whether a year contains 52 or 53 ISO weeks.", href: "/calculators/weeks-in-year", icon: CalendarDays },
 ] as const;
 
-const moreTools = [
+const popularAnswers = [
+  ["30 Days From Today", "/30-days-from-today"],
+  ["90 Days From Today", "/90-days-from-today"],
+  ["6 Weeks From Today", "/6-weeks-from-today"],
+  ["1 Year From Today", "/1-year-from-today"],
+  ["12 Hours From Now", "/12-hours-from-now"],
+  ["30 Days Ago", "/30-days-ago"],
+  ["Days Between Two Dates", "/calculators/time-difference"],
+  ["How Many Days in a Month?", "/calculators/days-in-month"],
+  ["100 Days From Today", "/100-days-from-today"],
+  ["What Time Is It in London?", "/new-york-to-london-time"],
+  ["1 Month From Today", "/1-month-from-today"],
+  ["1-Day Date Difference", "/days-between-january-1-2026-and-january-2-2026"],
+  ["What Day Is It Today?", "/calculators/day-of-week"],
+  ["How Many Weeks in a Year?", "/calculators/weeks-in-year"],
+  ["Add 7 Days to a Date", "/calculators/date-calculator"],
+  ["Subtract 14 Days From a Date", "/calculators/date-calculator"],
+] as const;
+
+const popularTools = [
   ["Date Calculator", "/calculators/date-calculator"],
-  ["Time Difference", "/calculators/time-difference"],
+  ["Days Between Dates", "/calculators/time-difference"],
+  ["Time Zone Converter", "/calculators/timezone-converter"],
   ["Age Calculator", "/calculators/age-calculator"],
   ["Countdown Timer", "/calculators/countdown"],
-  ["Business Days", "/30-business-days-from-today"],
-  ["Time Zone Converter", "/calculators/timezone-converter"],
-  ["Days Until Date", "/calculators/days-until"],
-  ["Day of the Week", "/calculators/day-of-week"],
-  ["Calendar Generator", "/calculators/calendar"],
-  ["100 Days From Today", "/100-days-from-today"],
-  ["365 Days From Today", "/365-days-from-today"],
 ] as const;
 
-function DirectoryBlock({ section }: { section: DirectorySection }) {
-  const Icon = section.icon;
+const popularZones = [
+  ["New York to London", "/new-york-to-london-time"],
+  ["London to Tokyo", "/london-to-tokyo-time"],
+  ["Tokyo to New York", "/tokyo-to-new-york-time"],
+  ["Sydney to Singapore", "/sydney-to-singapore-time"],
+  ["Dubai to London", "/dubai-to-london-time"],
+  ["Paris to Los Angeles", "/paris-to-los-angeles-time"],
+] as const;
+
+const homeFaqs = [
+  { question: "What time is it right now?", answer: "The clock above uses your device time zone and updates every second, so it shows your current local date and time." },
+  { question: "How do I calculate days between two dates?", answer: "Open the Days Between Dates calculator, select a start date and an end date, and calculate the elapsed calendar duration." },
+  { question: "How do I convert time zones?", answer: "Use the Time Zone Converter to choose two cities and compare their local times and UTC offsets." },
+  { question: "Are my calculations stored?", answer: "No. WhatDateTime performs calculations in your browser and does not require an account." },
+] as const;
+
+function ToolRow({ tool }: { tool: ToolLink }) {
+  const ToolIcon = tool.icon;
   return (
-    <section className="border-t border-[#D9DEE5] py-6 lg:py-8">
-      <h2 className="flex items-center gap-3 font-display text-xl font-bold text-ink sm:text-2xl xl:text-[26px]">
-        <Icon className="h-5 w-5 text-ink/65 sm:h-6 sm:w-6" aria-hidden="true" />
-        {section.title}
-      </h2>
-      <p className="mt-2.5 text-[15px] leading-7 text-ink/70 sm:text-base lg:text-[17px] lg:leading-8">{section.description}</p>
-      <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-2.5 lg:mt-5 lg:gap-x-10 lg:gap-y-3">
-        {section.links.map(([label, href]) => (
-          <Link key={`${label}-${href}`} href={href} className="min-w-0 text-[15px] font-medium leading-7 text-[#0878C9] hover:underline sm:text-base lg:text-[17px]">
+    <Link
+      href={tool.href}
+      className="group flex min-h-[76px] items-center gap-4 border-b border-[#d8e1ed] px-4 py-3.5 outline-none last:border-b-0 hover:bg-[#f7faff] focus-visible:bg-[#f7faff] sm:px-5"
+    >
+      <ToolIcon className="h-7 w-7 shrink-0 text-[#0969da]" strokeWidth={1.8} aria-hidden="true" />
+      <span className="min-w-0 flex-1">
+        <span className="block text-[15px] font-semibold leading-5 text-[#075fc5] group-hover:underline">{tool.title}</span>
+        <span className="mt-0.5 block text-[13px] leading-[18px] text-[#4f6684]">{tool.description}</span>
+      </span>
+      <ChevronRight className="h-4 w-4 shrink-0 text-[#0b74e5]" aria-hidden="true" />
+    </Link>
+  );
+}
+
+function SidebarList({ title, links }: { title: string; links: ReadonlyArray<readonly [string, string]> }) {
+  return (
+    <section className="mt-8 first:mt-0">
+      <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-[#10264b]">{title}</h2>
+      <div className="mt-2 border-y border-[#d8e1ed]">
+        {links.map(([label, href]) => (
+          <Link key={`${label}-${href}`} href={href} className="group flex min-h-11 items-center justify-between gap-3 border-b border-[#d8e1ed] px-2 py-2.5 text-sm font-medium text-[#0969da] last:border-b-0 hover:bg-[#f7faff] hover:underline">
             {label}
+            <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
           </Link>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function isoWeekNumber(date: Date) {
+  const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const day = utcDate.getUTCDay() || 7;
+  utcDate.setUTCDate(utcDate.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 1));
+  return Math.ceil(((utcDate.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
+}
+
+function TodaySummary() {
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+    const timer = window.setInterval(() => setNow(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const year = now?.getFullYear();
+  const start = year ? new Date(year, 0, 1) : null;
+  const dayOfYear = now && start ? Math.floor((Date.UTC(year!, now.getMonth(), now.getDate()) - Date.UTC(year!, 0, 1)) / 86_400_000) + 1 : null;
+  const daysInYear = year && new Date(year, 1, 29).getMonth() === 1 ? 366 : 365;
+  const weekNumber = now ? isoWeekNumber(now) : null;
+
+  return (
+    <section className="mt-8">
+      <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-[#10264b]">Today</h2>
+      <div className="mt-2 rounded-sm border border-[#d8e1ed] bg-white text-sm text-[#405776]">
+        <p className="border-b border-[#e3e8ef] px-4 py-3 font-medium text-[#253b5e]">
+          {now ? new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" }).format(now) : "Your local date"}
+        </p>
+        <dl>
+          <div className="flex justify-between gap-4 border-b border-[#e3e8ef] px-4 py-3"><dt>Day of year</dt><dd className="font-semibold text-[#10264b]">{dayOfYear ?? "—"} of {year ? daysInYear : "—"}</dd></div>
+          <div className="flex justify-between gap-4 border-b border-[#e3e8ef] px-4 py-3"><dt>Week number</dt><dd className="font-semibold text-[#10264b]">{weekNumber ?? "—"}</dd></div>
+          <div className="flex justify-between gap-4 px-4 py-3"><dt>Days remaining</dt><dd className="font-semibold text-[#10264b]">{dayOfYear ? daysInYear - dayOfYear : "—"}</dd></div>
+        </dl>
       </div>
     </section>
   );
@@ -206,77 +174,72 @@ export default function HomePage() {
         faqSchema(homeFaqs),
       ]} />
 
-      <div className="home-reference-layout mx-auto max-w-[90rem] bg-white px-5 pb-12 sm:px-8 lg:px-12 xl:px-16">
-        <section className="pb-10 pt-9 text-center sm:pb-12 sm:pt-11 lg:pb-16 lg:pt-14">
-          <div className="mx-auto max-w-4xl">
-            <h1 className="font-display text-4xl font-bold leading-tight tracking-[-0.03em] text-ink sm:text-5xl lg:text-[56px]">WhatDateTime</h1>
-            <p className="mx-auto mt-3 max-w-2xl text-[15px] leading-6 text-ink/65 sm:text-base sm:leading-7 lg:mt-4 lg:text-lg lg:leading-8">
-              Your source for time, time zones, and date tools.<br />
-              Accurate. Fast. Always up to date.
-            </p>
-            <div className="mt-7 lg:mt-10"><LiveClock /></div>
-            <HomeTimezoneConverter />
-          </div>
-        </section>
+      <div className="home-reference-layout bg-white">
+        <div className="mx-auto max-w-[90rem] px-4 pb-14 sm:px-6 lg:px-10 xl:px-14">
+          <nav aria-label="Breadcrumb" className="py-4 text-sm font-medium text-[#0969da]">
+            <Link href="/">Home</Link>
+          </nav>
 
-        <section className="mx-auto max-w-6xl border-t border-[#D9DEE5] py-8 lg:py-10">
-          <h2 className="font-display text-xl font-bold text-ink sm:text-2xl lg:text-[28px]">Welcome to WhatDateTime</h2>
-          <div className="mt-4 space-y-4 text-[15px] leading-7 text-ink/75 sm:text-base lg:mt-5 lg:text-lg lg:leading-9">
-            <p>Find current local time, compare time zones, and calculate dates with our free online tools.</p>
-            <p>Whether you&apos;re planning a meeting, scheduling an event, or checking a future deadline, every answer is designed to be quick and clear.</p>
-            <p>Times use your local time by default. Explore the directories below to convert time zones, calculate durations, add or subtract dates, and more.</p>
-          </div>
-        </section>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-10">
+            <div className="min-w-0">
+              <header>
+                <h1 className="font-display text-[32px] font-bold leading-tight tracking-[-0.035em] text-[#0c2146] sm:text-[38px]">Current Date and Time</h1>
+                <p className="mt-1 text-base text-[#536b8d] sm:text-lg">Check your local time, date, and time zone.</p>
+              </header>
 
-        <div className="mx-auto max-w-6xl">
-          {directorySections.map((section) => <DirectoryBlock key={section.title} section={section} />)}
-        </div>
+              <div className="mt-4"><LiveClock /></div>
 
-        <div className="mx-auto max-w-6xl">
-          <section className="border-t border-[#D9DEE5] py-6 lg:py-8">
-            <h2 className="flex items-center gap-3 font-display text-xl font-bold text-ink sm:text-2xl xl:text-[26px]">
-              <CircleHelp className="h-4 w-4 text-ink/65 sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
-              Frequently Asked Questions
-            </h2>
-            <div className="mt-4 border-y border-[#D9DEE5]">
-              {homeFaqs.map((faq) => (
-                <details key={faq.question} className="group border-b border-[#E5E8EB] py-3 last:border-b-0 lg:py-3.5">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-medium text-ink sm:text-base lg:text-[17px]">
-                    {faq.question}
-                    <span className="text-base text-ink/55 group-open:rotate-45" aria-hidden="true">+</span>
-                  </summary>
-                  <p className="pt-2 text-sm leading-7 text-ink/65 sm:text-base lg:text-[17px] lg:leading-8">{faq.answer}</p>
-                </details>
-              ))}
+              <section id="all-calculators" className="mt-10 scroll-mt-24">
+                <h2 className="font-display text-[28px] font-bold leading-tight tracking-[-0.03em] text-[#10264b] sm:text-[32px]">Date &amp; Time Calculators</h2>
+                <p className="mt-1 text-[15px] text-[#536b8d] sm:text-base">Choose a calculator for dates, times, calendars, or time zones.</p>
+                <div className="mt-4 grid overflow-hidden rounded-sm border border-[#d8e1ed] bg-white md:grid-cols-2">
+                  <div className="border-[#d8e1ed] md:border-r">
+                    {calculatorLinks.filter((_, index) => index % 2 === 0).map((tool) => <ToolRow key={`${tool.title}-${tool.href}`} tool={tool} />)}
+                  </div>
+                  <div className="border-t border-[#d8e1ed] md:border-t-0">
+                    {calculatorLinks.filter((_, index) => index % 2 === 1).map((tool) => <ToolRow key={`${tool.title}-${tool.href}`} tool={tool} />)}
+                  </div>
+                </div>
+                <Link href="/calculators/date-calculator" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0969da] hover:underline">Open the date calculator <span aria-hidden="true">→</span></Link>
+              </section>
+
+              <section className="mt-10">
+                <h2 className="font-display text-[28px] font-bold leading-tight tracking-[-0.03em] text-[#10264b] sm:text-[32px]">Popular Date and Time Answers</h2>
+                <p className="mt-1 text-[15px] text-[#536b8d] sm:text-base">Quick links to common date and time questions.</p>
+                <div className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {popularAnswers.map(([label, href]) => (
+                    <Link key={`${label}-${href}`} href={href} className="text-sm font-medium leading-6 text-[#0969da] hover:underline">{label}</Link>
+                  ))}
+                </div>
+              </section>
+
+              <section className="mt-10">
+                <h2 className="font-display text-[28px] font-bold leading-tight tracking-[-0.03em] text-[#10264b] sm:text-[32px]">Free Date and Time Tools</h2>
+                <p className="mt-2 max-w-4xl text-[15px] leading-7 text-[#536b8d]">WhatDateTime provides focused online tools for calculating dates, checking time zones, comparing durations, and planning deadlines. Every calculator is free to use and opens without registration.</p>
+                <div className="mt-5 grid gap-6 sm:grid-cols-2">
+                  <div><h3 className="font-semibold text-[#10264b]">Plan dates accurately</h3><p className="mt-1 text-sm leading-6 text-[#536b8d]">Add or subtract calendar units, find weekdays, calculate date differences, and check business-day deadlines.</p></div>
+                  <div><h3 className="font-semibold text-[#10264b]">Work across time zones</h3><p className="mt-1 text-sm leading-6 text-[#536b8d]">Compare cities and UTC offsets before scheduling calls, travel, releases, and international events.</p></div>
+                </div>
+              </section>
+
+              <section className="mt-10" aria-labelledby="home-faq-heading">
+                <h2 id="home-faq-heading" className="flex items-center gap-2 font-display text-[28px] font-bold tracking-[-0.03em] text-[#10264b] sm:text-[32px]"><CircleHelp className="h-6 w-6" aria-hidden="true" />Frequently Asked Questions</h2>
+                <div className="mt-4 rounded-sm border border-[#d8e1ed]">
+                  {homeFaqs.map((faq) => (
+                    <details key={faq.question} className="group border-b border-[#d8e1ed] last:border-b-0">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-medium text-[#10264b] sm:text-[15px]">{faq.question}<span className="text-[#536b8d] group-open:rotate-45" aria-hidden="true">+</span></summary>
+                      <p className="px-4 pb-4 text-sm leading-6 text-[#536b8d]">{faq.answer}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
             </div>
-          </section>
 
-          <div>
-            <section className="border-t border-[#D9DEE5] py-6 lg:py-8">
-              <h2 className="flex items-center gap-3 font-display text-xl font-bold text-ink sm:text-2xl xl:text-[26px]">
-                <Star className="h-4 w-4 text-[#E5A700] sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
-                More Tools You&apos;ll Love
-              </h2>
-              <p className="mt-2.5 text-[15px] leading-7 text-ink/70 sm:text-base lg:text-[17px] lg:leading-8">Explore more free tools for everyday date and time planning.</p>
-              <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-2.5 lg:mt-5 lg:gap-y-3">
-                {moreTools.map(([label, href]) => (
-                  <Link key={label} href={href} className="text-[15px] font-medium leading-7 text-[#0878C9] hover:underline sm:text-base lg:text-[17px]">{label}</Link>
-                ))}
-              </div>
-            </section>
-
-            <section className="border-t border-[#D9DEE5] py-6 lg:py-8">
-              <h2 className="flex items-center gap-3 font-display text-xl font-bold text-ink sm:text-2xl xl:text-[26px]">
-                <ShieldCheck className="h-4 w-4 text-ink/65 sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
-                Trusted, Accurate, Always Free
-              </h2>
-              <p className="mt-3 text-[15px] leading-8 text-ink/75 sm:text-base lg:text-[17px]">WhatDateTime provides accurate time, time-zone, and date tools without registration or hidden fees.</p>
-              <div className="mt-4 grid grid-cols-3 gap-2 rounded-md bg-[#E8F4FD] px-3 py-3.5 text-center text-[11px] font-semibold leading-4 text-ink/70 sm:text-xs lg:text-[13px]">
-                <span>● Accurate &amp; Reliable</span>
-                <span>● Completely Free</span>
-                <span>● No Sign-Up Required</span>
-              </div>
-            </section>
+            <aside className="border-t border-[#d8e1ed] pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0" aria-label="Popular tools and current date details">
+              <SidebarList title="Popular Tools" links={popularTools} />
+              <SidebarList title="Popular Time Zones" links={popularZones} />
+              <TodaySummary />
+            </aside>
           </div>
         </div>
       </div>

@@ -49,16 +49,19 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
       result={
         <>
           <ResultHeading>{formatInTimeZone(result, displayZone, "EEEE, MMMM d, yyyy")}</ResultHeading>
-          <p className="mt-4 text-sm text-ink/60">
+          <p className="mt-3 text-sm text-[#536b8d]">
             {operation === "add" ? "Adding" : "Subtracting"} {Math.abs(amount)} {unit}{Math.abs(amount) === 1 ? "" : "s"}.
           </p>
         </>
       }
     >
       <form onSubmit={submit}>
-        <FieldLabel htmlFor="base-date">Start date</FieldLabel>
-        <input id="base-date" name="base-date" autoComplete="off" type="date" required value={baseInput} onChange={(e) => setBaseInput(e.target.value)} className={inputClass} />
-        <div className="mt-4 grid grid-cols-2 gap-3">
+        <h2 className="font-display text-xl font-bold text-[#10264b]">Calculate a New Date</h2>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.75fr_0.7fr_0.85fr]">
+          <div>
+            <FieldLabel htmlFor="base-date">Start date</FieldLabel>
+            <input id="base-date" name="base-date" autoComplete="off" type="date" required value={baseInput} onChange={(e) => setBaseInput(e.target.value)} className={inputClass} />
+          </div>
           <div>
             <FieldLabel htmlFor="operation">Operation</FieldLabel>
             <select id="operation" name="operation" value={operation} onChange={(e) => setOperation(e.target.value as typeof operation)} className={inputClass}>
@@ -70,15 +73,15 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
             <FieldLabel htmlFor="date-amount">Amount</FieldLabel>
             <input id="date-amount" name="date-amount" autoComplete="off" type="number" inputMode="numeric" min={0} value={amount} onChange={(e) => setAmount(Number(e.target.value))} className={inputClass} />
           </div>
-        </div>
-        <div className="mt-4">
-          <FieldLabel htmlFor="date-unit">Unit</FieldLabel>
-          <select id="date-unit" name="date-unit" value={unit} onChange={(e) => setUnit(e.target.value as TimeUnit)} className={inputClass}>
-            <option value="day">Days</option>
-            <option value="week">Weeks</option>
-            <option value="month">Months</option>
-            <option value="year">Years</option>
-          </select>
+          <div>
+            <FieldLabel htmlFor="date-unit">Unit</FieldLabel>
+            <select id="date-unit" name="date-unit" value={unit} onChange={(e) => setUnit(e.target.value as TimeUnit)} className={inputClass}>
+              <option value="day">Days</option>
+              <option value="week">Weeks</option>
+              <option value="month">Months</option>
+              <option value="year">Years</option>
+            </select>
+          </div>
         </div>
         <CalculateButton label="Calculate date" />
       </form>

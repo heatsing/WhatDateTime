@@ -50,7 +50,7 @@ const canonical = canonicalPath === "/"
     <a href="#main-content" class="fixed left-4 top-3 z-[100] -translate-y-20 rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white focus:translate-y-0">Skip to main content</a>
     <Header client:load pathname={Astro.url.pathname} />
     <main id="main-content" tabindex="-1"><slot /></main>
-    <Footer />
+    <Footer pathname={Astro.url.pathname} />
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-LLS4S0NQH8"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];

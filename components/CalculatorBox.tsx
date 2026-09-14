@@ -69,6 +69,7 @@ export function CalculatorBox({
       page={page}
       initialResult={initialResult}
       initialDate={initialDate}
+      initialDateTime={initialDateTime}
     />
   );
 }
@@ -77,19 +78,23 @@ function RelativeForm({
   page,
   initialResult,
   initialDate,
+  initialDateTime,
 }: {
   page: RelativeCalculationInput;
   initialResult: string;
   initialDate: string;
+  initialDateTime?: string;
 }) {
+  const isHourPage = page.unit === "hour";
   const [amount, setAmount] = useState(page.amount);
   const [unit, setUnit] = useState<RelativeUnit>(page.unit);
-  const [date, setDate] = useState(initialDate);
+  const [date, setDate] = useState(isHourPage && initialDateTime ? initialDateTime : initialDate);
   const [result, setResult] = useState(initialResult);
+  const startingDate = isHourPage ? new Date(date) : parseLocalDate(date);
 
   useEffect(() => {
     const current = new Date();
-    setDate(format(current, "yyyy-MM-dd"));
+    setDate(format(current, isHourPage ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd"));
     const next = calculateRelativeDate(
       current,
       page.amount,
@@ -97,12 +102,12 @@ function RelativeForm({
       page.direction,
     );
     setResult(formatLongDate(next, page.unit === "hour"));
-  }, [page.amount, page.direction, page.unit]);
+  }, [isHourPage, page.amount, page.direction, page.unit]);
 
   function calculate(event: FormEvent) {
     event.preventDefault();
     const next = calculateRelativeDate(
-      parseLocalDate(date),
+      startingDate,
       Math.max(0, amount),
       unit,
       page.direction,
@@ -116,7 +121,7 @@ function RelativeForm({
         <CompactResult
           label="Calculated result"
           result={result}
-          detail={`Calculated ${page.direction === "future" ? "forward" : "backward"} from ${format(parseLocalDate(date), "MMMM d, yyyy")}.`}
+          detail={`Calculated ${page.direction === "future" ? "forward" : "backward"} from ${format(startingDate, isHourPage ? "MMMM d, yyyy 'at' h:mm a" : "MMMM d, yyyy")}.`}
           kind={unit === "hour" ? "time" : "date"}
         />
       }
@@ -155,12 +160,12 @@ function RelativeForm({
               ))}
             </select>
           </Field>
-          <Field label="Starting date" htmlFor="seo-date">
+          <Field label={isHourPage ? "Starting date & time" : "Starting date"} htmlFor="seo-date">
             <input
               id="seo-date"
               name="seo-date"
               autoComplete="off"
-              type="date"
+              type={isHourPage ? "datetime-local" : "date"}
               required
               value={date}
               onChange={(event) => setDate(event.target.value)}
