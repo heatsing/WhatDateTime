@@ -142,12 +142,12 @@ export function Header({ pathname = "/" }: { pathname?: string }) {
         <nav className="ml-auto hidden h-full items-center gap-0.5 lg:flex" aria-label="Primary navigation">
           {navigation.map((group) => (
             <div key={group.label} className="relative flex h-full items-center">
-              <button type="button" className={`inline-flex h-10 items-center gap-1 rounded-md px-3 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-[#0969da] ${muted}`} aria-expanded={desktopMenu === group.label} onClick={() => { setPanel(null); setDesktopMenu((value) => value === group.label ? null : group.label); }}>
-                {group.label}<span aria-hidden="true" className="text-[10px]">⌄</span>
+              <button type="button" className={`inline-flex h-11 items-center gap-1.5 rounded-md px-3 text-base font-semibold outline-none focus-visible:ring-2 focus-visible:ring-[#0969da] ${muted}`} aria-expanded={desktopMenu === group.label} onClick={() => { setPanel(null); setDesktopMenu((value) => value === group.label ? null : group.label); }}>
+                {group.label}<span aria-hidden="true" className="text-xs">⌄</span>
               </button>
               {desktopMenu === group.label && (
                 <div className="absolute left-0 top-[58px] w-60 rounded-md border border-[#d8e1ed] bg-white p-2 text-[#10264b] shadow-soft">
-                  {group.links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} onClick={closeMenus} className="block rounded-sm px-3 py-2.5 text-sm font-medium text-[#405776] outline-none hover:bg-[#f2f6fb] hover:text-[#075fc5] focus-visible:bg-[#f2f6fb]">{label}</Link>)}
+                  {group.links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} onClick={closeMenus} className="block rounded-sm px-3 py-2.5 text-base font-medium text-[#405776] outline-none hover:bg-[#f2f6fb] hover:text-[#075fc5] focus-visible:bg-[#f2f6fb]">{label}</Link>)}
                 </div>
               )}
             </div>
@@ -157,7 +157,7 @@ export function Header({ pathname = "/" }: { pathname?: string }) {
           <form onSubmit={search} className="ml-3 hidden w-[285px] shrink-0 xl:flex">
             <label htmlFor="desktop-site-search" className="sr-only">Search tools and time zones</label>
             <div className="relative w-full">
-              <input id="desktop-site-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search tools, time zones..." autoComplete="off" className="h-11 w-full rounded-md border border-[#cbd6e4] bg-white pl-4 pr-11 text-sm text-[#10264b] outline-none placeholder:text-[#73849b] focus:border-[#0969da] focus:ring-2 focus:ring-[#0969da]/15" />
+              <input id="desktop-site-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search tools, time zones..." autoComplete="off" className="h-11 w-full rounded-md border border-[#cbd6e4] bg-white pl-4 pr-11 text-base text-[#10264b] outline-none placeholder:text-[#73849b] focus:border-[#0969da] focus:ring-2 focus:ring-[#0969da]/15" />
               <button type="submit" className="absolute right-0 top-0 grid h-11 w-11 place-items-center text-[#0969da]" aria-label="Search"><Icon name="search" className="h-5 w-5" /></button>
             </div>
           </form>
@@ -190,8 +190,8 @@ export function Header({ pathname = "/" }: { pathname?: string }) {
           <div className="mx-auto grid max-w-3xl gap-6 sm:grid-cols-2">
             {navigation.map((group) => (
               <section key={group.label}>
-                <h2 className="text-xs font-semibold uppercase tracking-[0.08em] text-[#657893]">{group.label}</h2>
-                <div className="mt-2 grid">{group.links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} onClick={closeMenus} className="-mx-2 rounded-sm px-2 py-2 text-sm font-medium text-[#405776] hover:bg-[#f2f6fb] hover:text-[#075fc5]">{label}</Link>)}</div>
+                <h2 className="text-sm font-semibold uppercase tracking-[0.08em] text-[#657893]">{group.label}</h2>
+                <div className="mt-2 grid">{group.links.map(([label, href]) => <Link key={`${label}-${href}`} href={href} onClick={closeMenus} className="-mx-2 rounded-sm px-2 py-2.5 text-base font-medium text-[#405776] hover:bg-[#f2f6fb] hover:text-[#075fc5]">{label}</Link>)}</div>
               </section>
             ))}
           </div>
