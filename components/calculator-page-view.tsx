@@ -247,6 +247,145 @@ const configs = {
   },
 } as const;
 
+const calculatorContent: Record<CalculatorKind, {
+  methodology: { title: string; paragraphs: ReadonlyArray<string> };
+  accuracy: { title: string; text: string };
+  useCases: ReadonlyArray<string>;
+}> = {
+  date: {
+    methodology: {
+      title: "How Date Addition and Subtraction Works",
+      paragraphs: [
+        "The calculator starts with the date you enter and moves by the selected calendar unit. Days and weeks use fixed day counts, while months and years follow actual calendar boundaries rather than an estimated number of days.",
+        "When a destination month is shorter than the starting month, the result is adjusted to a valid date. Leap years, February 29, and year changes are handled as part of the Gregorian calendar calculation.",
+      ],
+    },
+    accuracy: { title: "Month-end dates", text: "Adding one month to a late-month date may land on the final valid day of the destination month. Always use the displayed calendar result instead of assuming every month has 30 days." },
+    useCases: ["Set project and contract deadlines", "Calculate renewal and expiration dates", "Plan travel and event dates", "Add terms to invoices or payment schedules", "Check school and training milestones", "Verify future or historical anniversaries"],
+  },
+  difference: {
+    methodology: {
+      title: "How the Time Difference Is Calculated",
+      paragraphs: [
+        "The two entered timestamps are converted into comparable moments, then the elapsed interval between them is measured. The result is shown both as a readable calendar duration and as total days, hours, minutes, and seconds.",
+        "Calendar years and months do not have fixed lengths, so the calendar breakdown can differ from simply dividing total hours. The totals remain useful when a schedule, payroll record, or duration rule is expressed in one fixed unit.",
+      ],
+    },
+    accuracy: { title: "Local-time interpretation", text: "Both entries use your device's local time zone. If the interval crosses a daylight-saving clock change, elapsed hours can differ from the number of calendar-date boundaries crossed." },
+    useCases: ["Measure project or task duration", "Compare arrival and departure times", "Calculate working or study sessions", "Check elapsed time between events", "Convert a duration into total hours", "Verify timestamp-based records"],
+  },
+  age: {
+    methodology: {
+      title: "How Exact Age Is Calculated",
+      paragraphs: [
+        "Exact age is measured in completed calendar years first, followed by completed months and remaining days. This avoids treating a year as a fixed 365-day period or a month as a fixed 30-day period.",
+        "The selected as-of date controls the answer, so the tool can calculate a current age or an age on a past or future date. Leap days and different month lengths are included automatically.",
+      ],
+    },
+    accuracy: { title: "Birthday boundaries", text: "A new year of age is completed on the calendar anniversary of the birth date. February 29 birthdays require the valid-date convention shown by the calculator in non-leap years." },
+    useCases: ["Check age on an application date", "Plan birthday milestones", "Confirm age-based eligibility", "Calculate a child's exact age", "Compare age on a historical date", "Find total elapsed calendar days"],
+  },
+  countdown: {
+    methodology: {
+      title: "How the Live Countdown Works",
+      paragraphs: [
+        "The target date and time are interpreted in your device's local time zone. The remaining duration is recalculated every second and separated into complete days, hours, minutes, and seconds.",
+        "The countdown reaches zero at the exact local timestamp you selected. It does not remove weekends or business closures because it measures continuous elapsed time.",
+      ],
+    },
+    accuracy: { title: "Keep this page open", text: "The countdown updates from your device clock and the target is not stored in a database. If you close the page, enter the target again when you return." },
+    useCases: ["Track an event or launch", "Count down to a trip", "Monitor an assignment deadline", "Prepare for a meeting start", "Follow a birthday or anniversary", "Time a personal milestone"],
+  },
+  timezone: {
+    methodology: {
+      title: "How Time Zone Conversion Works",
+      paragraphs: [
+        "The source wall-clock time is interpreted using the selected region's time-zone rules. That moment is then displayed in the destination zone, including the correct calendar date and UTC offset.",
+        "Named regional zones are used instead of fixed abbreviations because offsets can change with daylight-saving rules. A conversion may therefore produce a different date or a seasonal difference between the same two cities.",
+      ],
+    },
+    accuracy: { title: "Date-specific offsets", text: "Time-zone offsets are calculated for the date you enter. Recheck recurring meetings near daylight-saving transitions because regions may change clocks on different dates." },
+    useCases: ["Schedule international meetings", "Convert flight and arrival times", "Coordinate remote teams", "Publish global event times", "Check overseas deadlines", "Plan calls with family or clients"],
+  },
+  "days-until": {
+    methodology: {
+      title: "How Days Until a Date Are Counted",
+      paragraphs: [
+        "The calculator compares the starting calendar date with the target calendar date and counts the date boundaries between them. Tomorrow is one day from today because one midnight boundary separates the two dates.",
+        "The total is also expressed as complete seven-day weeks plus remaining days. Weekends and holidays remain in the count because this tool measures calendar days, not business days.",
+      ],
+    },
+    accuracy: { title: "Exclusive starting date", text: "The starting date is treated as day zero. If a rule calls the starting date day one, apply that separate inclusive-count convention to the displayed interval." },
+    useCases: ["Count down to a deadline", "Plan a vacation or event", "Track an exam or application date", "Measure days until a birthday", "Check a delivery window", "Compare future calendar milestones"],
+  },
+  "day-of-week": {
+    methodology: {
+      title: "How a Date's Weekday Is Determined",
+      paragraphs: [
+        "The entered date is placed on the Gregorian calendar and matched to its weekday. The same calculation also identifies its ordinal position within the year and its ISO week number.",
+        "ISO weeks start on Monday, and ISO week 1 is the week containing the year's first Thursday. This means the first or last few calendar dates of a year can belong to a neighboring ISO week-year.",
+      ],
+    },
+    accuracy: { title: "Calendar system", text: "Results use the proleptic Gregorian calendar for supported dates. Historical locations that adopted the Gregorian calendar later may have used a different civil calendar at the time." },
+    useCases: ["Verify the weekday of an event", "Check a historical calendar date", "Plan an anniversary", "Identify an ISO reporting week", "Confirm a future appointment day", "Find a date's day-of-year number"],
+  },
+  "days-in-month": {
+    methodology: {
+      title: "How Month Length Is Determined",
+      paragraphs: [
+        "April, June, September, and November contain 30 days; most other months contain 31. February contains 28 days in a common year and 29 days in a leap year.",
+        "A year is normally a leap year when divisible by four. Century years are exceptions unless they are also divisible by 400, which is why 2000 was a leap year but 1900 was not.",
+      ],
+    },
+    accuracy: { title: "Gregorian leap-year rule", text: "The calculation applies the complete divisible-by-4, century, and divisible-by-400 rules rather than checking divisibility by four alone." },
+    useCases: ["Plan monthly schedules", "Validate date input ranges", "Count billing-period days", "Check February in a future year", "Prepare calendar templates", "Verify month-end deadlines"],
+  },
+  "weeks-in-year": {
+    methodology: {
+      title: "How ISO Weeks in a Year Are Counted",
+      paragraphs: [
+        "An ISO week begins on Monday and ends on Sunday. ISO week 1 is the week containing January 4, equivalently the week containing the first Thursday of the year.",
+        "Every ISO week-year contains 52 or 53 numbered weeks. A calendar year still contains 365 days, or 366 in a leap year, so its opening and closing dates may fall in a neighboring ISO week-year.",
+      ],
+    },
+    accuracy: { title: "ISO year versus calendar year", text: "The ISO week-year can begin in late December or end in early January. Use the displayed ISO total for weekly reporting rather than dividing calendar days by seven." },
+    useCases: ["Prepare weekly reporting calendars", "Plan payroll periods", "Check years with ISO week 53", "Organize production schedules", "Build school-week plans", "Validate week-numbered datasets"],
+  },
+  calendar: {
+    methodology: {
+      title: "How the Monthly Calendar Is Generated",
+      paragraphs: [
+        "The generator identifies the weekday of the month's first day and the exact number of days in that month. It then fills complete Sunday-through-Saturday rows with the selected month and adjacent dates.",
+        "Showing nearby dates keeps every row complete and makes plans that cross a month boundary easier to read. February and leap years are resolved from the selected year.",
+      ],
+    },
+    accuracy: { title: "Six-week calendar view", text: "The grid includes enough adjacent-month dates to maintain complete weeks. Only dates belonging to the selected month are treated as its calendar days." },
+    useCases: ["Plan a monthly schedule", "Review historical dates", "Create an event calendar", "Check weekends and weekdays", "Map deadlines across months", "Prepare a printable planning reference"],
+  },
+  "half-birthday": {
+    methodology: {
+      title: "How a Half Birthday Is Calculated",
+      paragraphs: [
+        "A half birthday is found by adding six calendar months to the entered birthday. This keeps the date tied to a calendar-month anniversary rather than assuming half of 365 days.",
+        "Because consecutive six-month periods contain different month lengths, the elapsed day total can vary. Late-month birthdays are adjusted when the destination month does not contain the same day number.",
+      ],
+    },
+    accuracy: { title: "Six months, not a fixed day count", text: "The tool adds six calendar months. A fixed 182- or 183-day calculation can produce a different date and represents a different rule." },
+    useCases: ["Celebrate a child's half birthday", "Mark a six-month milestone", "Plan an age-based photo session", "Schedule a midyear check-in", "Calculate six months from a birth date", "Compare full and half birthdays"],
+  },
+  "weeks-and-days-ago": {
+    methodology: {
+      title: "How Weeks and Days Ago Are Calculated",
+      paragraphs: [
+        "Each complete week is converted to seven calendar days, then the additional days are added to that interval. The combined total is subtracted from the current local calendar date.",
+        "The calculation moves across real month and year boundaries and includes every weekend and holiday. The displayed weekday provides a quick check of the resulting past date.",
+      ],
+    },
+    accuracy: { title: "Live local starting date", text: "The starting date comes from your device when the page loads. Reopening the calculator on another day produces a newly calibrated result." },
+    useCases: ["Reconstruct a past deadline", "Date notes recorded by elapsed weeks", "Check a previous appointment", "Find a historical milestone", "Verify a delivery or follow-up date", "Convert a relative date into a calendar date"],
+  },
+};
+
 export const calculatorMetadata = Object.fromEntries(Object.entries(configs).map(([kind, config]) => [kind, {
   title: config.metadataTitle,
   description: config.seoDescription,
@@ -268,5 +407,5 @@ export function CalculatorPageView({ kind, initialTime }: { kind: CalculatorKind
     : kind === "half-birthday" ? <HalfBirthdayCalculator initialTime={initialTime} />
     : <WeeksAndDaysAgoCalculator initialTime={initialTime} />;
 
-  return <ToolPageShell {...config}>{calculator}</ToolPageShell>;
+  return <ToolPageShell {...config} {...calculatorContent[kind]}>{calculator}</ToolPageShell>;
 }

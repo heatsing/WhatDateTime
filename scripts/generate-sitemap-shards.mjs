@@ -47,7 +47,11 @@ for (const file of readdirSync(output)) {
 
 const escapeXml = (value) => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const pageRevision = (page, fallback) => revisions.pages?.[page.slug] || fallback;
-const groups = [{ name: "sitemap-core", revision: revisions.site, pages: coreRoutes.map((slug) => ({ slug, revision: revisions.site })) }];
+const groups = [{
+  name: "sitemap-core",
+  revision: revisions.site,
+  pages: coreRoutes.map((slug) => ({ slug, revision: revisions.corePages?.[slug] || revisions.site })),
+}];
 for (const [type, baseName] of Object.entries(sitemapNames)) {
   const familyPages = pageIndex.filter((page) => page.type === type);
   for (let offset = 0; offset < familyPages.length; offset += shardSize) {

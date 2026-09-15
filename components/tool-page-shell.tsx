@@ -36,7 +36,7 @@ function SidebarLinks({ title, links }: { title: string; links: ReadonlyArray<Ca
   );
 }
 
-export function ToolPageShell({ title, description, seoDescription = description, path, faqs, steps, children }: {
+export function ToolPageShell({ title, description, seoDescription = description, path, faqs, steps, methodology, accuracy, useCases, children }: {
   title: string;
   eyebrow: string;
   description: string;
@@ -44,6 +44,9 @@ export function ToolPageShell({ title, description, seoDescription = description
   path: string;
   faqs: ReadonlyArray<{ question: string; answer: string }>;
   steps: ReadonlyArray<{ title: string; text: string }>;
+  methodology: { title: string; paragraphs: ReadonlyArray<string> };
+  accuracy: { title: string; text: string };
+  useCases: ReadonlyArray<string>;
   children: React.ReactNode;
 }) {
   const related = calculatorLinks.filter((link) => link.href !== path);
@@ -82,23 +85,20 @@ export function ToolPageShell({ title, description, seoDescription = description
               </section>
 
               <section className="mt-10">
-                <h2 className="font-display text-[28px] font-bold tracking-[-0.03em] text-[#10264b]">How This Calculator Works</h2>
-                <p className="mt-3 text-[15px] leading-7 text-[#405776]">{seoDescription} The result uses the values entered in the calculator and applies Gregorian calendar or time-zone rules where relevant.</p>
+                <h2 className="font-display text-[28px] font-bold tracking-[-0.03em] text-[#10264b]">{methodology.title}</h2>
+                <div className="mt-3 space-y-3 text-[15px] leading-7 text-[#405776]">
+                  {methodology.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                </div>
                 <aside className="mt-5 border-l-4 border-[#0b74e5] bg-[#edf6ff] px-5 py-4">
-                  <h3 className="font-semibold text-[#075fc5]">Calculation accuracy</h3>
-                  <p className="mt-1 text-sm leading-6 text-[#405776]">Dates, month lengths, leap years, clock times, and selected time-zone rules are calculated directly from the inputs shown above.</p>
+                  <h3 className="font-semibold text-[#075fc5]">{accuracy.title}</h3>
+                  <p className="mt-1 text-sm leading-6 text-[#405776]">{accuracy.text}</p>
                 </aside>
               </section>
 
               <section className="mt-10">
                 <h2 className="font-display text-[28px] font-bold tracking-[-0.03em] text-[#10264b]">Common Ways to Use This Tool</h2>
                 <ul className="mt-4 grid list-disc gap-x-8 gap-y-2 pl-5 text-sm leading-6 text-[#405776] sm:grid-cols-2">
-                  <li>Plan project milestones and submission deadlines</li>
-                  <li>Check travel dates and international schedules</li>
-                  <li>Compare calendar intervals and future events</li>
-                  <li>Verify personal dates, birthdays, and reminders</li>
-                  <li>Prepare business and school schedules</li>
-                  <li>Double-check dates before sharing a result</li>
+                  {useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
                 </ul>
               </section>
 

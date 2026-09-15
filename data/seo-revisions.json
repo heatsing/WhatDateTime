@@ -10,6 +10,20 @@
   "business-days-from-today": "2026-09-10",
   "date-difference": "2026-09-10",
   "timezone-converter": "2026-09-10",
+  "corePages": {
+    "calculators/date-calculator": "2026-09-15",
+    "calculators/time-difference": "2026-09-15",
+    "calculators/age-calculator": "2026-09-15",
+    "calculators/countdown": "2026-09-15",
+    "calculators/timezone-converter": "2026-09-15",
+    "calculators/days-until": "2026-09-15",
+    "calculators/day-of-week": "2026-09-15",
+    "calculators/days-in-month": "2026-09-15",
+    "calculators/weeks-in-year": "2026-09-15",
+    "calculators/calendar": "2026-09-15",
+    "calculators/half-birthday": "2026-09-15",
+    "calculators/weeks-and-days-ago": "2026-09-15"
+  },
   "pages": {
     "190-months-from-today": "2026-09-11",
     "191-months-from-today": "2026-09-11",
