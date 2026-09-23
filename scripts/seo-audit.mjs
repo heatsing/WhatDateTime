@@ -1,5 +1,8 @@
 import { readFileSync } from "node:fs";
+import { checkDescriptionFacts } from "./seo-description-tests.mjs";
 import {
+  DESCRIPTION_MIN_LENGTH,
+  DESCRIPTION_MAX_LENGTH,
   differenceMetaDescription,
   relativeMetaDescription,
   timezoneMetaDescription,
@@ -114,12 +117,12 @@ function expectedSEO(page) {
     const end = humanDate(page.end);
     return {
       title: `How Many Days Are Between ${start} and ${end}?`,
-      description: differenceMetaDescription(start, end),
+      description: differenceMetaDescription(page),
     };
   }
   return {
     title: `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`,
-    description: timezoneMetaDescription(page.fromCity, page.toCity),
+    description: timezoneMetaDescription(page),
   };
 }
 
@@ -154,6 +157,9 @@ const faqQuestionFrequency = new Map();
 const faqPairFrequency = new Map();
 const contentUnitFrequency = new Map();
 const titleFrequency = new Map();
+const descriptionFrequency = new Map();
+
+checkDescriptionFacts();
 
 function increment(map, value) {
   map.set(value, (map.get(value) ?? 0) + 1);
@@ -176,9 +182,9 @@ for (const page of pages) {
   if (page.description !== expected.description) {
     fail(`${page.slug}: meta description does not match the shared generator`);
   }
-  if (page.description.length < 110 || page.description.length > 175) {
+  if (page.description.length < DESCRIPTION_MIN_LENGTH || page.description.length > DESCRIPTION_MAX_LENGTH) {
     fail(
-      `${page.slug}: meta description length ${page.description.length} is outside 110-175 characters`,
+      `${page.slug}: meta description length ${page.description.length} is outside ${DESCRIPTION_MIN_LENGTH}-${DESCRIPTION_MAX_LENGTH} characters`,
     );
   }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(page.updatedAt)) {
@@ -191,6 +197,7 @@ for (const page of pages) {
     fail(`${page.slug}: data title contains the layout-level brand suffix`);
   }
   increment(titleFrequency, page.title);
+  increment(descriptionFrequency, page.description);
 
   const requiredStrings = [
     "title",
@@ -333,6 +340,7 @@ for (const page of pages) {
 
 for (const [label, frequency] of [
   ["meta title", titleFrequency],
+  ["meta description", descriptionFrequency],
   ["intro", introFrequency],
   ["example", exampleFrequency],
   ["FAQ question", faqQuestionFrequency],
@@ -380,7 +388,7 @@ console.log(
     `average independent content ratio: ${(averageUniqueRatio * 100).toFixed(1)}%`,
     "duplicate intros: 0; duplicate examples: 0; duplicate FAQs: 0",
     "question-style meta titles are unique and receive one layout-level brand suffix",
-    "meta descriptions are unique, intent-specific, and 110-175 characters",
+    `meta descriptions include page-specific facts and use ${DESCRIPTION_MIN_LENGTH}-${DESCRIPTION_MAX_LENGTH} characters`,
     "all related links are valid, non-self, and category-relevant",
     "all pages have at least one incoming programmatic HTML link",
     "all pages pass the A/B indexable SEO quality gate",

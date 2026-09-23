@@ -7,6 +7,7 @@
     "build": "astro build && node scripts/generate-sitemap-shards.mjs && node scripts/seo-check.mjs",
     "start": "astro preview",
     "test": "node scripts/calculation-tests.mjs",
+    "test:seo-descriptions": "node scripts/seo-description-tests.mjs",
     "lint": "astro check",
     "seo:generate": "node scripts/generate-seo-data.mjs && node scripts/generate-tool-content.mjs",
     "seo:baseline": "node scripts/create-seo-baseline.mjs",

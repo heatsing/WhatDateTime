@@ -1,5 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { checkDescriptionFacts } from "./seo-description-tests.mjs";
+
+checkDescriptionFacts();
 
 const appDir = path.resolve("dist");
 const siteUrl =
@@ -45,6 +48,12 @@ if (
 }
 const pageIndex = JSON.parse(
   readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
+);
+const expectedDescriptions = new Map(
+  [...new Set(pageIndex.map((page) => page.dataFile))].flatMap((file) =>
+    JSON.parse(readFileSync(new URL(`../data/tools/${file}`, import.meta.url), "utf8"))
+      .map((page) => [page.slug, page.description]),
+  ),
 );
 const baseline = JSON.parse(
   readFileSync(new URL("../data/seo-url-baseline.json", import.meta.url), "utf8"),
@@ -204,6 +213,25 @@ for (const routeEntry of routes) {
   if (pageDescriptions.length !== 1 || !pageDescriptions[0].trim()) {
     fail(`/${route}: expected one non-empty meta description`);
   }
+  if (programmatic) {
+    const expectedDescription = expectedDescriptions.get(route);
+    if (!expectedDescription || pageDescriptions[0] !== escapeHtmlText(expectedDescription)) {
+      fail(`/${route}: static meta description differs from the page-data description`);
+    }
+    for (const [label, pattern] of [
+      ["Open Graph", /<meta property="og:description" content="([^"]*)"/g],
+      ["Twitter", /<meta name="twitter:description" content="([^"]*)"/g],
+    ]) {
+      const values = captureAll(html, pattern);
+      if (values.length !== 1 || values[0] !== pageDescriptions[0]) {
+        fail(`/${route}: ${label} description must match the canonical page description`);
+      }
+    }
+    const body = html.slice(html.indexOf("<body"));
+    if (!body.includes(`>${escapeHtmlText(expectedDescription)}</p>`)) {
+      fail(`/${route}: page-specific summary is not visible in the initial HTML`);
+    }
+  }
   if (canonicals.length !== 1) {
     fail(`/${route}: expected exactly one canonical`);
   }
@@ -289,6 +317,9 @@ for (const routeEntry of routes) {
         fail(`/${route}: JSON-LD URL does not match canonical`);
       }
       if (programmatic && schema["@type"] === "WebApplication") {
+        if (schema.description !== expectedDescriptions.get(route)) {
+          fail(`/${route}: JSON-LD description differs from the visible page summary`);
+        }
         if (!/^\d{4}-\d{2}-\d{2}$/.test(schema.dateModified || "")) {
           fail(`/${route}: WebApplication dateModified is missing or invalid`);
         }
@@ -560,6 +591,7 @@ console.log(
     `all programmatic pages are reachable within ${maximumCrawlDepth} clicks from the homepage`,
     "canonical, metadata, H1, six-stage landing flow, formula, and JSON-LD checks passed",
     "all programmatic titles use a question format with one WhatDateTime suffix",
+    "page data, static description, Open Graph, Twitter, visible summary, and JSON-LD agree",
     "duplicate titles: 0; duplicate descriptions: 0; unexpected noindex: 0",
   ].join("\n"),
 );

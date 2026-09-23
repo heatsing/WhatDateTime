@@ -470,7 +470,7 @@ function differenceContent(page) {
     },
   ];
   const title = `How Many Days Are Between ${start} and ${end}?`;
-  const description = differenceMetaDescription(start, end);
+  const description = differenceMetaDescription(page);
 
   return {
     ...page,
@@ -622,7 +622,7 @@ function timezoneContent(page) {
     },
   ];
   const title = `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`;
-  const description = timezoneMetaDescription(page.fromCity, page.toCity);
+  const description = timezoneMetaDescription(page);
 
   return {
     ...page,
