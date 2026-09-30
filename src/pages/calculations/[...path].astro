@@ -1,0 +1,18 @@
+---
+import BaseLayout from '@/src/layouts/BaseLayout.astro';
+import { calculationDirectories } from '@/lib/siteInventory';
+import { Breadcrumb } from '@/components/Breadcrumb';
+import { JsonLd } from '@/components/json-ld';
+import { breadcrumbListSchema } from '@/lib/schema';
+export function getStaticPaths(){return calculationDirectories.map(route=>({params:{path:route.slug.slice('calculations/'.length)},props:{route}}));}
+const {route}=Astro.props;
+---
+<BaseLayout title={`${route.title} | WhatDateTime`} description={route.description} canonicalPath={`/${route.slug}`}>
+  <JsonLd data={[{'@context':'https://schema.org','@type':'CollectionPage',name:route.title,url:`https://whatdatetime.com/${route.slug}`},breadcrumbListSchema([{name:'Home',path:'/'},{name:'Date Calculator',path:'/calculators/date-calculator'},{name:route.title,path:`/${route.slug}`}])]} />
+  <div class="bg-[#f8fbfe] px-4 pb-14 pt-5 sm:px-6 lg:px-10 xl:px-14"><div class="mx-auto max-w-[90rem] space-y-6">
+    <Breadcrumb current={route.title} parent={{name:'Date Calculator',path:'/calculators/date-calculator'}}/>
+    <h1 class="font-display text-[34px] font-bold text-[#0c2146] sm:text-[42px]">{route.title}</h1><p>{route.description}</p>
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{route.links.map(link=><li><a class="capitalize text-[#006cff] underline" href={link.path}>{link.label}</a></li>)}</ul>
+    {route.parts>1&&<nav aria-label="Calculation directory pages" class="flex flex-wrap gap-4">{Array.from({length:route.parts},(_,i)=><a class="text-[#006cff] underline" aria-current={i+1===route.part?'page':undefined} href={`/calculations/${route.type}${i?`/${i+1}`:''}`}>Page {i+1}</a>)}</nav>}
+  </div></div>
+</BaseLayout>

@@ -1,32 +1,14 @@
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { getPageIndexEligibility } from '../lib/indexEligibility.ts';
+import { hubRoutes, calculationDirectories, coreSlugs } from '../lib/siteInventory.ts';
 
 const output = path.resolve("dist");
 const shardSize = 1_000;
 const siteUrl = (process.env.PUBLIC_SITE_URL || "https://whatdatetime.com").replace(/\/$/, "");
 const pageIndex = JSON.parse(readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"));
 const revisions = JSON.parse(readFileSync(new URL("../data/seo-revisions.json", import.meta.url), "utf8"));
-const coreRoutes = [
-  "",
-  "calculators/date-calculator",
-  "calculators/time-difference",
-  "calculators/age-calculator",
-  "calculators/countdown",
-  "calculators/timezone-converter",
-  "calculators/days-until",
-  "calculators/day-of-week",
-  "calculators/days-in-month",
-  "calculators/weeks-in-year",
-  "calculators/calendar",
-  "calculators/half-birthday",
-  "calculators/weeks-and-days-ago",
-  "about",
-  "calculation-methodology",
-  "data-sources",
-  "contact-and-corrections",
-  "privacy-policy",
-  "terms-of-use",
-];
+const coreRoutes = coreSlugs;
 const sitemapNames = {
   "days-from-today": "sitemap-days-from-today",
   "days-ago": "sitemap-days-ago",
@@ -52,14 +34,16 @@ const groups = [{
   revision: revisions.site,
   pages: coreRoutes.map((slug) => ({ slug, revision: revisions.corePages?.[slug] || revisions.site })),
 }];
+groups.push({name:'sitemap-city-hubs',revision:'2026-09-26',pages:hubRoutes.map(page=>({...page,revision:'2026-09-26'}))});
+groups.push({name:'sitemap-calculation-directories',revision:'2026-09-26',pages:calculationDirectories.map(page=>({...page,revision:'2026-09-26'}))});
 for (const [type, baseName] of Object.entries(sitemapNames)) {
-  const familyPages = pageIndex.filter((page) => page.type === type);
+  const familyPages = pageIndex.filter((page) => page.type === type && getPageIndexEligibility(page).indexable);
   for (let offset = 0; offset < familyPages.length; offset += shardSize) {
     const part = Math.floor(offset / shardSize) + 1;
     groups.push({
       name: familyPages.length > shardSize ? `${baseName}-${part}` : baseName,
-      revision: revisions[type],
-      pages: familyPages.slice(offset, offset + shardSize).map((page) => ({ ...page, revision: pageRevision(page, revisions[type]) })),
+      revision: type==='timezone-converter'?'2026-09-26':revisions[type],
+      pages: familyPages.slice(offset, offset + shardSize).map((page) => ({ ...page, revision: type==='timezone-converter'?'2026-09-26':pageRevision(page, revisions[type]) })),
     });
   }
 }

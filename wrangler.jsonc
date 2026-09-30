@@ -1,12 +1,17 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "whatdatetime",
+  "main": "workers/on-demand.tsx",
+  "tsconfig": "workers/tsconfig.json",
+  "rules": [{ "type": "Text", "globs": ["**/*.html"], "fallthrough": true }],
   "compatibility_date": "2026-07-26",
   "compatibility_flags": [
     "nodejs_compat",
+    "assets_navigation_has_no_effect",
     "global_fetch_strictly_public"
   ],
   "assets": {
+    "binding": "ASSETS",
     "directory": "dist",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"

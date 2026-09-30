@@ -44,6 +44,7 @@ jobs:
         run: |
           npm run typecheck
           npm run lint
+          npm run test
 
       - name: Use a fresh reference time for a manual production release
         if: github.event_name == 'workflow_dispatch' && inputs.refresh_dates
@@ -52,6 +53,21 @@ jobs:
 
       - name: Build current static HTML and run SEO gates
         run: npm run build
+
+      - name: Verify navigation through the local Cloudflare runtime
+        shell: bash
+        run: |
+          npx wrangler dev --local --ip 127.0.0.1 --port 8790 --show-interactive-dev-session false > /tmp/whatdatetime-wrangler.log 2>&1 &
+          worker_pid=$!
+          trap 'kill "$worker_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:8790/ > /dev/null; then break; fi
+            sleep 2
+          done
+          npm run test:ssr
+
+      - name: Verify Worker packaging without deploying
+        run: npx wrangler deploy --dry-run --outdir workers/generated/dry-run
 
       - name: Verify Cloudflare deployment credentials
         if: github.event_name == 'workflow_dispatch'
@@ -67,6 +83,6 @@ jobs:
           fi
           npx wrangler whoami
 
-      - name: Deploy the verified static site
+      - name: Deploy the verified assets-first site
         if: github.event_name == 'workflow_dispatch'
         run: npm run deploy

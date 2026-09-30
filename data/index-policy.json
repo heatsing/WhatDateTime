@@ -1,0 +1,26 @@
+{
+  "version": "2026-09-26",
+  "basis": "Editorial launch priorities, not measured search volume. Owner-reported evidence is protected pending a GSC export.",
+  "priority5": ["new-york", "london", "tokyo", "los-angeles", "paris", "singapore", "sydney", "dubai"],
+  "priority4": ["toronto", "berlin", "chicago", "san-francisco", "vancouver", "mexico-city", "sao-paulo", "rome", "amsterdam", "zurich", "mumbai", "delhi", "hong-kong", "shanghai", "seoul", "melbourne", "washington-dc", "dallas", "seattle", "beijing"],
+  "protected": {
+    "194-months-from-today": "Owner-reported Google indexing; not independently verified in GSC",
+    "new-york-to-rome-time": "Owner-reported Google indexing; not independently verified in GSC",
+    "washington-dc-to-denver-time": "Owner-reported Google indexing; not independently verified in GSC",
+    "150-hours-ago": "Owner-supplied search result screenshot",
+    "49-hours-ago": "Owner-supplied search result screenshot",
+    "82-hours-from-now": "Owner-supplied search result screenshot",
+    "berlin-to-brisbane-time": "Owner-supplied search result screenshot"
+  },
+  "curated": ["190-months-from-today", "191-months-from-today", "192-months-from-today", "193-months-from-today", "195-months-from-today", "196-months-from-today", "197-months-from-today", "198-months-from-today", "rome-to-new-york-time", "denver-to-washington-dc-time", "washington-dc-to-phoenix-time", "phoenix-to-washington-dc-time"],
+  "relative": {
+    "days-from-today": {"max": 90, "extra": [100, 180, 270, 365]},
+    "days-ago": {"max": 90, "extra": [100, 180, 365]},
+    "hours-from-now": {"max": 48, "extra": [72, 96, 120, 168]},
+    "hours-ago": {"max": 48, "extra": [72, 96, 120, 168]},
+    "weeks-from-today": {"max": 26, "extra": [52]},
+    "months-from-today": {"max": 24, "extra": [36, 48, 60, 120]},
+    "years-from-today": {"max": 10, "extra": [18, 21, 25, 50, 100]},
+    "business-days-from-today": {"max": 30, "extra": [60, 90, 100, 260]}
+  }
+}

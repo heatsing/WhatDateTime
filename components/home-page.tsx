@@ -45,6 +45,7 @@ const calculatorLinks: ReadonlyArray<ToolLink> = [
   { title: "Hours From Now", description: "Open a precise calculation for 24 hours from now.", href: "/24-hours-from-now", icon: Clock3 },
   { title: "Hours Ago", description: "See the exact local date and time 12 hours ago.", href: "/12-hours-ago", icon: Clock3 },
   { title: "Time Zone Converter", description: "Compare local times between cities around the world.", href: "/calculators/timezone-converter", icon: Globe2 },
+  { title: "World Clock", description: "Explore city clocks, UTC offsets, and working hours by region.", href: "/time", icon: Globe2 },
   { title: "Weeks in a Year", description: "Check whether a year contains 52 or 53 ISO weeks.", href: "/calculators/weeks-in-year", icon: CalendarDays },
 ] as const;
 
@@ -58,9 +59,9 @@ const popularAnswers = [
   ["Days Between Two Dates", "/calculators/time-difference"],
   ["How Many Days in a Month?", "/calculators/days-in-month"],
   ["100 Days From Today", "/100-days-from-today"],
-  ["What Time Is It in London?", "/new-york-to-london-time"],
+  ["What Time Is It in London?", "/time/london"],
   ["1 Month From Today", "/1-month-from-today"],
-  ["1-Day Date Difference", "/days-between-january-1-2026-and-january-2-2026"],
+  ["World Clock by Region", "/time"],
   ["What Day Is It Today?", "/calculators/day-of-week"],
   ["How Many Weeks in a Year?", "/calculators/weeks-in-year"],
   ["Add 7 Days to a Date", "/calculators/date-calculator"],

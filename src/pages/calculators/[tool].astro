@@ -3,6 +3,7 @@ import BaseLayout from "@/src/layouts/BaseLayout.astro";
 import { CalculatorDirectory } from "@/components/calculator-directory";
 import { getAllSEOPageIndex } from "@/lib/seoGenerator";
 import { getBuildTime } from "@/lib/build-time";
+import { getPageIndexEligibility } from '@/lib/indexEligibility';
 import {
   CalculatorPageView,
   calculatorMetadata,
@@ -35,5 +36,5 @@ const initialTime = getBuildTime();
 
 <BaseLayout title={title} description={metadata.description} canonicalPath={metadata.path}>
   <CalculatorPageView client:load kind={kind} initialTime={initialTime} />
-  <CalculatorDirectory pages={getAllSEOPageIndex()} />
+  <CalculatorDirectory pages={getAllSEOPageIndex().filter(page=>getPageIndexEligibility(page).indexable)} />
 </BaseLayout>

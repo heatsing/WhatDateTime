@@ -1,0 +1,16 @@
+---
+// Build-only shell. prepare-on-demand.mjs moves it out of the public asset tree.
+import BaseLayout from '@/src/layouts/BaseLayout.astro';
+---
+<BaseLayout title="__WDT_TITLE__" description="__WDT_DESCRIPTION__" canonicalPath="/render-shell" robots="noindex, follow">
+  <div id="on-demand-content"></div>
+  <script id="on-demand-props" type="application/json" is:inline>__WDT_PROPS__</script>
+  <script>
+    import React from 'react';
+    import { hydrateRoot } from 'react-dom/client';
+    import { OnDemandPage } from '@/components/on-demand-page';
+    const container=document.getElementById('on-demand-content');
+    const data=document.getElementById('on-demand-props');
+    if (container&&data) hydrateRoot(container,React.createElement(OnDemandPage,JSON.parse(data.textContent||'{}')));
+  </script>
+</BaseLayout>

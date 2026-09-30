@@ -1,0 +1,658 @@
+[
+  {
+    "slug": "new-york",
+    "name": "New York",
+    "zone": "America/New_York",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "london",
+    "name": "London",
+    "zone": "Europe/London",
+    "country": "United Kingdom",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "tokyo",
+    "name": "Tokyo",
+    "zone": "Asia/Tokyo",
+    "country": "Japan",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "los-angeles",
+    "name": "Los Angeles",
+    "zone": "America/Los_Angeles",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "paris",
+    "name": "Paris",
+    "zone": "Europe/Paris",
+    "country": "France",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "sydney",
+    "name": "Sydney",
+    "zone": "Australia/Sydney",
+    "country": "Australia",
+    "region": "oceania",
+    "seasonalPolicy": "south"
+  },
+  {
+    "slug": "singapore",
+    "name": "Singapore",
+    "zone": "Asia/Singapore",
+    "country": "Singapore",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "dubai",
+    "name": "Dubai",
+    "zone": "Asia/Dubai",
+    "country": "United Arab Emirates",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "toronto",
+    "name": "Toronto",
+    "zone": "America/Toronto",
+    "country": "Canada",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "berlin",
+    "name": "Berlin",
+    "zone": "Europe/Berlin",
+    "country": "Germany",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "chicago",
+    "name": "Chicago",
+    "zone": "America/Chicago",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "san-francisco",
+    "name": "San Francisco",
+    "zone": "America/Los_Angeles",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "vancouver",
+    "name": "Vancouver",
+    "zone": "America/Vancouver",
+    "country": "Canada",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "mexico-city",
+    "name": "Mexico City",
+    "zone": "America/Mexico_City",
+    "country": "Mexico",
+    "region": "north-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "sao-paulo",
+    "name": "São Paulo",
+    "zone": "America/Sao_Paulo",
+    "country": "Brazil",
+    "region": "south-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "buenos-aires",
+    "name": "Buenos Aires",
+    "zone": "America/Argentina/Buenos_Aires",
+    "country": "Argentina",
+    "region": "south-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "madrid",
+    "name": "Madrid",
+    "zone": "Europe/Madrid",
+    "country": "Spain",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "rome",
+    "name": "Rome",
+    "zone": "Europe/Rome",
+    "country": "Italy",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "amsterdam",
+    "name": "Amsterdam",
+    "zone": "Europe/Amsterdam",
+    "country": "Netherlands",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "zurich",
+    "name": "Zurich",
+    "zone": "Europe/Zurich",
+    "country": "Switzerland",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "moscow",
+    "name": "Moscow",
+    "zone": "Europe/Moscow",
+    "country": "Russia",
+    "region": "europe",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "istanbul",
+    "name": "Istanbul",
+    "zone": "Europe/Istanbul",
+    "country": "Türkiye",
+    "region": "europe",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "cairo",
+    "name": "Cairo",
+    "zone": "Africa/Cairo",
+    "country": "Egypt",
+    "region": "africa",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "johannesburg",
+    "name": "Johannesburg",
+    "zone": "Africa/Johannesburg",
+    "country": "South Africa",
+    "region": "africa",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "mumbai",
+    "name": "Mumbai",
+    "zone": "Asia/Kolkata",
+    "country": "India",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "delhi",
+    "name": "Delhi",
+    "zone": "Asia/Kolkata",
+    "country": "India",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "bangkok",
+    "name": "Bangkok",
+    "zone": "Asia/Bangkok",
+    "country": "Thailand",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "hong-kong",
+    "name": "Hong Kong",
+    "zone": "Asia/Hong_Kong",
+    "country": "Hong Kong",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "shanghai",
+    "name": "Shanghai",
+    "zone": "Asia/Shanghai",
+    "country": "China",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "seoul",
+    "name": "Seoul",
+    "zone": "Asia/Seoul",
+    "country": "South Korea",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "melbourne",
+    "name": "Melbourne",
+    "zone": "Australia/Melbourne",
+    "country": "Australia",
+    "region": "oceania",
+    "seasonalPolicy": "south"
+  },
+  {
+    "slug": "auckland",
+    "name": "Auckland",
+    "zone": "Pacific/Auckland",
+    "country": "New Zealand",
+    "region": "oceania",
+    "seasonalPolicy": "south"
+  },
+  {
+    "slug": "honolulu",
+    "name": "Honolulu",
+    "zone": "Pacific/Honolulu",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "washington-dc",
+    "name": "Washington DC",
+    "zone": "America/New_York",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "boston",
+    "name": "Boston",
+    "zone": "America/New_York",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "miami",
+    "name": "Miami",
+    "zone": "America/New_York",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "dallas",
+    "name": "Dallas",
+    "zone": "America/Chicago",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "houston",
+    "name": "Houston",
+    "zone": "America/Chicago",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "denver",
+    "name": "Denver",
+    "zone": "America/Denver",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "phoenix",
+    "name": "Phoenix",
+    "zone": "America/Phoenix",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "seattle",
+    "name": "Seattle",
+    "zone": "America/Los_Angeles",
+    "country": "United States",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "montreal",
+    "name": "Montreal",
+    "zone": "America/Toronto",
+    "country": "Canada",
+    "region": "north-america",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "lima",
+    "name": "Lima",
+    "zone": "America/Lima",
+    "country": "Peru",
+    "region": "south-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "bogota",
+    "name": "Bogota",
+    "zone": "America/Bogota",
+    "country": "Colombia",
+    "region": "south-america",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "santiago",
+    "name": "Santiago",
+    "zone": "America/Santiago",
+    "country": "Chile",
+    "region": "south-america",
+    "seasonalPolicy": "south"
+  },
+  {
+    "slug": "lisbon",
+    "name": "Lisbon",
+    "zone": "Europe/Lisbon",
+    "country": "Portugal",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "dublin",
+    "name": "Dublin",
+    "zone": "Europe/Dublin",
+    "country": "Ireland",
+    "region": "europe",
+    "seasonalPolicy": "seasonal"
+  },
+  {
+    "slug": "brussels",
+    "name": "Brussels",
+    "zone": "Europe/Brussels",
+    "country": "Belgium",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "vienna",
+    "name": "Vienna",
+    "zone": "Europe/Vienna",
+    "country": "Austria",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "prague",
+    "name": "Prague",
+    "zone": "Europe/Prague",
+    "country": "Czechia",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "warsaw",
+    "name": "Warsaw",
+    "zone": "Europe/Warsaw",
+    "country": "Poland",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "stockholm",
+    "name": "Stockholm",
+    "zone": "Europe/Stockholm",
+    "country": "Sweden",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "oslo",
+    "name": "Oslo",
+    "zone": "Europe/Oslo",
+    "country": "Norway",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "copenhagen",
+    "name": "Copenhagen",
+    "zone": "Europe/Copenhagen",
+    "country": "Denmark",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "helsinki",
+    "name": "Helsinki",
+    "zone": "Europe/Helsinki",
+    "country": "Finland",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "athens",
+    "name": "Athens",
+    "zone": "Europe/Athens",
+    "country": "Greece",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "kyiv",
+    "name": "Kyiv",
+    "zone": "Europe/Kyiv",
+    "country": "Ukraine",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "bucharest",
+    "name": "Bucharest",
+    "zone": "Europe/Bucharest",
+    "country": "Romania",
+    "region": "europe",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "riyadh",
+    "name": "Riyadh",
+    "zone": "Asia/Riyadh",
+    "country": "Saudi Arabia",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "doha",
+    "name": "Doha",
+    "zone": "Asia/Qatar",
+    "country": "Qatar",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "jerusalem",
+    "name": "Jerusalem",
+    "zone": "Asia/Jerusalem",
+    "country": "Israel",
+    "region": "asia",
+    "seasonalPolicy": "north"
+  },
+  {
+    "slug": "tehran",
+    "name": "Tehran",
+    "zone": "Asia/Tehran",
+    "country": "Iran",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "karachi",
+    "name": "Karachi",
+    "zone": "Asia/Karachi",
+    "country": "Pakistan",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "dhaka",
+    "name": "Dhaka",
+    "zone": "Asia/Dhaka",
+    "country": "Bangladesh",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "kathmandu",
+    "name": "Kathmandu",
+    "zone": "Asia/Kathmandu",
+    "country": "Nepal",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "colombo",
+    "name": "Colombo",
+    "zone": "Asia/Colombo",
+    "country": "Sri Lanka",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "jakarta",
+    "name": "Jakarta",
+    "zone": "Asia/Jakarta",
+    "country": "Indonesia",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "manila",
+    "name": "Manila",
+    "zone": "Asia/Manila",
+    "country": "Philippines",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "taipei",
+    "name": "Taipei",
+    "zone": "Asia/Taipei",
+    "country": "Taiwan",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "kuala-lumpur",
+    "name": "Kuala Lumpur",
+    "zone": "Asia/Kuala_Lumpur",
+    "country": "Malaysia",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "ho-chi-minh-city",
+    "name": "Ho Chi Minh City",
+    "zone": "Asia/Ho_Chi_Minh",
+    "country": "Vietnam",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "osaka",
+    "name": "Osaka",
+    "zone": "Asia/Tokyo",
+    "country": "Japan",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "beijing",
+    "name": "Beijing",
+    "zone": "Asia/Shanghai",
+    "country": "China",
+    "region": "asia",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "perth",
+    "name": "Perth",
+    "zone": "Australia/Perth",
+    "country": "Australia",
+    "region": "oceania",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "brisbane",
+    "name": "Brisbane",
+    "zone": "Australia/Brisbane",
+    "country": "Australia",
+    "region": "oceania",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "adelaide",
+    "name": "Adelaide",
+    "zone": "Australia/Adelaide",
+    "country": "Australia",
+    "region": "oceania",
+    "seasonalPolicy": "south"
+  },
+  {
+    "slug": "wellington",
+    "name": "Wellington",
+    "zone": "Pacific/Auckland",
+    "country": "New Zealand",
+    "region": "oceania",
+    "seasonalPolicy": "south"
+  },
+  {
+    "slug": "nairobi",
+    "name": "Nairobi",
+    "zone": "Africa/Nairobi",
+    "country": "Kenya",
+    "region": "africa",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "lagos",
+    "name": "Lagos",
+    "zone": "Africa/Lagos",
+    "country": "Nigeria",
+    "region": "africa",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "casablanca",
+    "name": "Casablanca",
+    "zone": "Africa/Casablanca",
+    "country": "Morocco",
+    "region": "africa",
+    "seasonalPolicy": "ramadan"
+  },
+  {
+    "slug": "cape-town",
+    "name": "Cape Town",
+    "zone": "Africa/Johannesburg",
+    "country": "South Africa",
+    "region": "africa",
+    "seasonalPolicy": "none"
+  },
+  {
+    "slug": "accra",
+    "name": "Accra",
+    "zone": "Africa/Accra",
+    "country": "Ghana",
+    "region": "africa",
+    "seasonalPolicy": "none"
+  }
+]

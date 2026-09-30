@@ -1,0 +1,397 @@
+// Historical corpus checks, not a claim that content similarity establishes index value.
+import { readFileSync } from "node:fs";
+import { checkDescriptionFacts } from "./seo-description-tests.mjs";
+import {
+  DESCRIPTION_MIN_LENGTH,
+  DESCRIPTION_MAX_LENGTH,
+  differenceMetaDescription,
+  relativeMetaDescription,
+  timezoneMetaDescription,
+} from "./seo-description.mjs";
+
+const expectedCounts = {
+  "days-from-today.json": 365,
+  "days-ago.json": 365,
+  "hours-from-now.json": 500,
+  "hours-ago.json": 500,
+  "weeks.json": 200,
+  "months.json": 300,
+  "years.json": 300,
+  "business-days.json": 1000,
+  "date-difference.json": 500,
+  "timezone.json": 5964,
+};
+
+const sourcePages = [];
+for (const [file, expected] of Object.entries(expectedCounts)) {
+  const records = JSON.parse(
+    readFileSync(new URL(`../data/${file}`, import.meta.url), "utf8"),
+  );
+  if (records.length !== expected) {
+    throw new Error(`${file}: expected ${expected}, received ${records.length}`);
+  }
+  sourcePages.push(...records);
+}
+
+const pageIndex = JSON.parse(
+  readFileSync(new URL("../data/tools/index.json", import.meta.url), "utf8"),
+);
+const editorialOverrides = JSON.parse(
+  readFileSync(
+    new URL("../data/editorial-cohort-01.json", import.meta.url),
+    "utf8",
+  ),
+);
+const dataFiles = [...new Set(pageIndex.map((page) => page.dataFile))];
+const pages = dataFiles.flatMap((file) =>
+  JSON.parse(
+    readFileSync(new URL(`../data/tools/${file}`, import.meta.url), "utf8"),
+  ),
+);
+const sourceBySlug = new Map(sourcePages.map((page) => [page.slug, page]));
+const pageBySlug = new Map(pages.map((page) => [page.slug, page]));
+const indexBySlug = new Map(pageIndex.map((page) => [page.slug, page]));
+
+function fail(message) {
+  throw new Error(`SEO audit failed: ${message}`);
+}
+
+function titleCase(value) {
+  return value.replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function relativeQuestionTitle(page, phraseTitle) {
+  if (page.unit === "hour") {
+    return page.direction === "past"
+      ? `What Time Was ${phraseTitle}?`
+      : `What Time Is ${phraseTitle}?`;
+  }
+
+  if (page.type === "days-ago") {
+    return `What Date Was ${phraseTitle} From Today?`;
+  }
+
+  return page.direction === "past"
+    ? `What Date Was ${phraseTitle}?`
+    : `What Date Is ${phraseTitle}?`;
+}
+
+function humanDate(value) {
+  const [year, month, day] = value.split("-").map(Number);
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+function relativePhrase(page) {
+  const unit =
+    page.unit === "business-day"
+      ? page.amount === 1
+        ? "business day"
+        : "business days"
+      : page.amount === 1
+        ? page.unit
+        : `${page.unit}s`;
+  const suffix =
+    page.type === "hours-from-now"
+      ? "from now"
+      : page.direction === "past"
+        ? "ago"
+        : "from today";
+  return `${page.amount} ${unit} ${suffix}`;
+}
+
+function expectedSEO(page) {
+  if (page.kind === "relative") {
+    const phrase = relativePhrase(page);
+    const includeTime = page.unit === "hour";
+    return {
+      title: relativeQuestionTitle(page, titleCase(phrase)),
+      description: relativeMetaDescription(page, phrase),
+    };
+  }
+  if (page.kind === "difference") {
+    const start = humanDate(page.start);
+    const end = humanDate(page.end);
+    return {
+      title: `How Many Days Are Between ${start} and ${end}?`,
+      description: differenceMetaDescription(page),
+    };
+  }
+  return {
+    title: `What Is the Time Difference Between ${page.fromCity} and ${page.toCity}?`,
+    description: timezoneMetaDescription(page),
+  };
+}
+
+if (
+  pages.length !== sourcePages.length ||
+  pageIndex.length !== pages.length ||
+  pages.length !== 9994
+) {
+  fail(`expected ${sourcePages.length} enriched pages, received ${pages.length}`);
+}
+if (pageBySlug.size !== pages.length) fail("duplicate enriched URL slug");
+
+for (const override of editorialOverrides) {
+  const page = pageBySlug.get(override.slug);
+  if (!page) fail(`${override.slug}: editorial cohort page is missing`);
+  const landingText = page.content.sections
+    .map((section) => section.text)
+    .join(" ");
+  if (
+    !override.content.sections.every((section) =>
+      landingText.includes(section.text),
+    ) ||
+    JSON.stringify(page.faq) !== JSON.stringify(override.faq)
+  ) {
+    fail(`${override.slug}: editorial cohort content was not applied`);
+  }
+}
+
+const introFrequency = new Map();
+const exampleFrequency = new Map();
+const faqQuestionFrequency = new Map();
+const faqPairFrequency = new Map();
+const contentUnitFrequency = new Map();
+const titleFrequency = new Map();
+const descriptionFrequency = new Map();
+
+checkDescriptionFacts();
+
+function increment(map, value) {
+  map.set(value, (map.get(value) ?? 0) + 1);
+}
+
+for (const page of pages) {
+  const source = sourceBySlug.get(page.slug);
+  const indexEntry = indexBySlug.get(page.slug);
+  if (!source) fail(`${page.slug}: URL was not present in the original corpus`);
+  if (!indexEntry) fail(`${page.slug}: missing from lightweight route index`);
+  if (indexEntry.type !== page.type || indexEntry.kind !== page.kind) {
+    fail(`${page.slug}: route index and content record disagree`);
+  }
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(page.slug)) {
+    fail(`${page.slug}: invalid URL slug`);
+  }
+
+  const expected = expectedSEO(source);
+  if (page.title !== expected.title) fail(`${page.slug}: title does not match its search intent`);
+  if (page.description !== expected.description) {
+    fail(`${page.slug}: meta description does not match the shared generator`);
+  }
+  if (page.description.length < DESCRIPTION_MIN_LENGTH || page.description.length > DESCRIPTION_MAX_LENGTH) {
+    fail(
+      `${page.slug}: meta description length ${page.description.length} is outside ${DESCRIPTION_MIN_LENGTH}-${DESCRIPTION_MAX_LENGTH} characters`,
+    );
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(page.updatedAt)) {
+    fail(`${page.slug}: missing verified last-modified date`);
+  }
+  if (!page.title.endsWith("?")) {
+    fail(`${page.slug}: meta title is not a natural-language question`);
+  }
+  if (page.title.includes("WhatDateTime")) {
+    fail(`${page.slug}: data title contains the layout-level brand suffix`);
+  }
+  increment(titleFrequency, page.title);
+  increment(descriptionFrequency, page.description);
+
+  const requiredStrings = [
+    "title",
+    "description",
+    "h1",
+    "eyebrow",
+    "intro",
+  ];
+  for (const key of requiredStrings) {
+    if (typeof page[key] !== "string" || page[key].trim().length < 10) {
+      fail(`${page.slug}: missing or thin ${key}`);
+    }
+  }
+  for (const [key, minimum] of [
+    ["useCases", 3],
+    ["examples", 3],
+    ["tips", 3],
+    ["faq", 5],
+    ["relatedLinks", 4],
+    ["keywords", 5],
+  ]) {
+    if (!Array.isArray(page[key]) || page[key].length < minimum) {
+      fail(`${page.slug}: ${key} must contain at least ${minimum} items`);
+    }
+  }
+  if (page.content?.sections?.length !== 3) {
+    fail(`${page.slug}: content must provide exactly three UI sections`);
+  }
+  const expectedStages = [
+    "calculation-basis",
+    "how-to-use",
+    "practical-scenarios",
+  ];
+  if (
+    page.content.sections.some(
+      (section, index) => section.stage !== expectedStages[index],
+    )
+  ) {
+    fail(`${page.slug}: landing-page content stages are incomplete or unordered`);
+  }
+  if (
+    !page.searchIntent?.category ||
+    !page.searchIntent?.rationale ||
+    page.searchIntent?.evidence !== "modeled"
+  ) {
+    fail(`${page.slug}: missing transparent search-intent model`);
+  }
+  if (
+    !page.seoScore ||
+    page.seoScore.score < 75 ||
+    !["A", "B"].includes(page.seoScore.grade) ||
+    !["index", "index-observe"].includes(page.seoScore.action)
+  ) {
+    fail(`${page.slug}: page quality score is below the indexable gate`);
+  }
+  for (const factor of [
+    "content",
+    "searchIntent",
+    "internalLinks",
+    "contentLength",
+    "templateSimilarity",
+  ]) {
+    if (typeof page.seoScore.factors?.[factor] !== "number") {
+      fail(`${page.slug}: missing SEO score factor ${factor}`);
+    }
+  }
+  if (JSON.stringify(page).includes("{{result}}")) {
+    fail(`${page.slug}: unresolved real-time content placeholder`);
+  }
+
+  increment(introFrequency, page.intro);
+  for (const example of page.examples) increment(exampleFrequency, example);
+  for (const faq of page.faq) {
+    increment(faqQuestionFrequency, faq.question);
+    increment(faqPairFrequency, `${faq.question}\n${faq.answer}`);
+  }
+
+  const units = [
+    page.intro,
+    ...page.useCases,
+    ...page.examples,
+    ...page.tips,
+    ...page.faq.map((faq) => `${faq.question}\n${faq.answer}`),
+    ...page.content.sections.map(
+      (section) => `${section.title}\n${section.text}`,
+    ),
+  ];
+  page.__auditUnits = units;
+
+  const relatedSet = new Set(page.relatedLinks);
+  if (
+    relatedSet.size !== page.relatedLinks.length ||
+    relatedSet.has(page.slug)
+  ) {
+    fail(`${page.slug}: related links contain duplicates or a self-link`);
+  }
+  for (const slug of page.relatedLinks) {
+    const related = pageBySlug.get(slug);
+    if (!related) fail(`${page.slug}: related URL ${slug} does not exist`);
+    if (page.kind === "relative" && related.type !== page.type) {
+      fail(`${page.slug}: relative link ${slug} is not the same calculator type`);
+    }
+    if (
+      page.kind === "timezone" &&
+      (related.kind !== "timezone" ||
+        ![
+          page.fromCity,
+          page.toCity,
+        ].some(
+          (city) =>
+            city === related.fromCity || city === related.toCity,
+        ))
+    ) {
+      fail(`${page.slug}: timezone link ${slug} has no useful city relationship`);
+    }
+    if (page.kind === "difference" && related.kind !== "difference") {
+      fail(`${page.slug}: date-difference link ${slug} is not relevant`);
+    }
+  }
+
+  const serialized = JSON.stringify(page);
+  if (page.kind === "relative") {
+    if (
+      !serialized.includes(String(page.amount)) ||
+      !serialized.includes(relativePhrase(page))
+    ) {
+      fail(`${page.slug}: relative content lacks page-specific calculations`);
+    }
+  } else if (page.kind === "difference") {
+    if (!serialized.includes(humanDate(page.start)) || !serialized.includes(humanDate(page.end))) {
+      fail(`${page.slug}: date-difference content lacks both endpoint dates`);
+    }
+  } else if (
+    !serialized.includes(page.fromZone) ||
+    !serialized.includes(page.toZone)
+  ) {
+    fail(`${page.slug}: timezone content lacks both IANA zones`);
+  }
+}
+
+for (const [label, frequency] of [
+  ["meta title", titleFrequency],
+  ["meta description", descriptionFrequency],
+  ["intro", introFrequency],
+  ["example", exampleFrequency],
+  ["FAQ question", faqQuestionFrequency],
+  ["FAQ pair", faqPairFrequency],
+]) {
+  const duplicate = [...frequency.entries()].find(([, count]) => count > 1);
+  if (duplicate) fail(`duplicate ${label}: ${duplicate[0]}`);
+}
+
+for (const page of pages) {
+  for (const unit of page.__auditUnits) increment(contentUnitFrequency, unit);
+}
+
+const incomingLinks = new Map(pages.map((page) => [page.slug, 0]));
+for (const page of pages) {
+  for (const slug of page.relatedLinks) {
+    incomingLinks.set(slug, (incomingLinks.get(slug) ?? 0) + 1);
+  }
+}
+const orphan = [...incomingLinks.entries()].find(([, count]) => count === 0);
+if (orphan) fail(`${orphan[0]}: page has no crawlable related-page entry`);
+
+let minimumUniqueRatio = 1;
+let totalUniqueRatio = 0;
+for (const page of pages) {
+  const uniqueUnits = page.__auditUnits.filter(
+    (unit) => contentUnitFrequency.get(unit) === 1,
+  ).length;
+  const ratio = uniqueUnits / page.__auditUnits.length;
+  minimumUniqueRatio = Math.min(minimumUniqueRatio, ratio);
+  totalUniqueRatio += ratio;
+  if (ratio <= 0.7) {
+    fail(
+      `${page.slug}: independent content ratio ${(ratio * 100).toFixed(1)}% is not above 70%`,
+    );
+  }
+  delete page.__auditUnits;
+}
+
+const averageUniqueRatio = totalUniqueRatio / pages.length;
+console.log(
+  [
+    `SEO audit passed: ${pages.length} unchanged unique URLs`,
+    `minimum independent content ratio: ${(minimumUniqueRatio * 100).toFixed(1)}%`,
+    `average independent content ratio: ${(averageUniqueRatio * 100).toFixed(1)}%`,
+    "duplicate intros: 0; duplicate examples: 0; duplicate FAQs: 0",
+    "question-style meta titles are unique and receive one layout-level brand suffix",
+    `meta descriptions include page-specific facts and use ${DESCRIPTION_MIN_LENGTH}-${DESCRIPTION_MAX_LENGTH} characters`,
+    "all related links are valid, non-self, and category-relevant",
+    "all pages have at least one incoming programmatic HTML link",
+    "all pages pass the A/B indexable SEO quality gate",
+  ].join("\n"),
+);

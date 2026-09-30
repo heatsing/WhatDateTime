@@ -1,0 +1,206 @@
+{
+  "origin": "http://127.0.0.1:8790",
+  "checkedAt": "2026-09-29T00:09:08.914Z",
+  "samples": [
+    {
+      "path": "/",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com",
+      "mode": "static"
+    },
+    {
+      "path": "/time/new-york",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/time/new-york",
+      "mode": "static"
+    },
+    {
+      "path": "/time/london",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/time/london",
+      "mode": "static"
+    },
+    {
+      "path": "/new-york-to-london-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/new-york-to-london-time",
+      "mode": "static"
+    },
+    {
+      "path": "/los-angeles-to-new-york-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/los-angeles-to-new-york-time",
+      "mode": "static"
+    },
+    {
+      "path": "/london-to-tokyo-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/london-to-tokyo-time",
+      "mode": "static"
+    },
+    {
+      "path": "/499-hours-ago",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/499-hours-ago",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/days-between-january-1-2026-and-january-2-2026",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/days-between-january-1-2026-and-january-2-2026",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/new-york-to-brisbane-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/new-york-to-brisbane-time",
+      "mode": "static"
+    },
+    {
+      "path": "/singapore-to-zurich-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/singapore-to-zurich-time",
+      "mode": "static"
+    },
+    {
+      "path": "/moscow-to-new-york-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/moscow-to-new-york-time",
+      "mode": "static"
+    },
+    {
+      "path": "/oslo-to-new-york-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/oslo-to-new-york-time",
+      "mode": "static"
+    },
+    {
+      "path": "/tokyo-to-adelaide-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/tokyo-to-adelaide-time",
+      "mode": "static"
+    },
+    {
+      "path": "/toronto-to-hong-kong-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/toronto-to-hong-kong-time",
+      "mode": "static"
+    },
+    {
+      "path": "/seoul-to-rome-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/seoul-to-rome-time",
+      "mode": "static"
+    },
+    {
+      "path": "/beijing-to-los-angeles-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/beijing-to-los-angeles-time",
+      "mode": "static"
+    },
+    {
+      "path": "/paris-to-wellington-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/paris-to-wellington-time",
+      "mode": "static"
+    },
+    {
+      "path": "/sao-paulo-to-hong-kong-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/sao-paulo-to-hong-kong-time",
+      "mode": "static"
+    },
+    {
+      "path": "/berlin-to-dublin-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/berlin-to-dublin-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/madrid-to-dhaka-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/madrid-to-dhaka-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/johannesburg-to-seattle-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/johannesburg-to-seattle-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/melbourne-to-brisbane-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/melbourne-to-brisbane-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/houston-to-washington-dc-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/houston-to-washington-dc-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/bogota-to-vienna-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/bogota-to-vienna-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/prague-to-seattle-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/prague-to-seattle-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/athens-to-washington-dc-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/athens-to-washington-dc-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/tehran-to-bangkok-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/tehran-to-bangkok-time",
+      "mode": "on-demand"
+    },
+    {
+      "path": "/manila-to-zurich-time",
+      "status": 200,
+      "robots": "noindex, follow",
+      "canonical": "https://whatdatetime.com/manila-to-zurich-time",
+      "mode": "on-demand"
+    }
+  ],
+  "unknownRoutes": 404,
+  "converterAlias": "preserved",
+  "trailingSlash": "normalized",
+  "head": "passed"
+}

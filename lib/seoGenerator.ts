@@ -1,4 +1,5 @@
 import pageIndexData from "@/data/tools/index.json";
+import { getPageIndexEligibility } from './indexEligibility';
 import type { RelativeDirection, RelativeUnit } from "@/lib/dateCalculator";
 import {
   getDirectFAQ,
@@ -242,7 +243,7 @@ export async function getRelatedPages(page: SEOPage) {
     if (position > 0) candidates.unshift(family[position - 1].slug);
     if (position >= 0 && position < family.length - 1) candidates.unshift(family[position + 1].slug);
   }
-  const slugs = [...new Set(candidates)].filter((slug) => slug !== page.slug);
+  const slugs = [...new Set(candidates)].filter((slug) => slug !== page.slug && pageIndexMap.has(slug) && getPageIndexEligibility(pageIndexMap.get(slug)!).indexable).slice(0, 12);
   const related = await Promise.all(slugs.map((slug) => getSEOPage(slug)));
   return related.filter((item): item is SEOPage => Boolean(item));
 }

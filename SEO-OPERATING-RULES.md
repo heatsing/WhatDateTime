@@ -12,3 +12,14 @@
 - Improve long-form content in measured cohorts of 10–20 URLs, prioritizing verified GSC demand.
 - Apply the complete landing-page framework sitewide; reserve cohort limits for bespoke editorial rewrites, not required structural coverage.
 - Do not change the established UI while performing technical SEO maintenance.
+
+## Authorized eligibility refactor — 2026-09-26
+
+The latest user brief explicitly supersedes the all-index, all-sitemap and
+all-SSG requirements above. Keep every existing URL functional, HTTP 200 and
+self-canonical, but use the shared eligibility engine for index/noindex and
+sitemap membership. Protect evidence-backed URLs, use transparent editorial
+priorities (not invented search volume), and target approximately 1,000–2,500
+indexable URLs initially. Only eligible URLs require crawl-depth coverage.
+City/region hubs and functional time-zone modules are authorized additions;
+retain the existing visual system. No bulk filler or URL deletion is authorized.

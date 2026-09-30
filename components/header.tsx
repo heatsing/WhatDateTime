@@ -26,6 +26,7 @@ const navigation: ReadonlyArray<NavigationGroup> = [
     label: "Time",
     links: [
       ["Current Time", "/"],
+      ["World Clock by Region", "/time"],
       ["Hours From Now", "/24-hours-from-now"],
       ["Hours Ago", "/12-hours-ago"],
       ["Countdown Timer", "/calculators/countdown"],
@@ -36,6 +37,8 @@ const navigation: ReadonlyArray<NavigationGroup> = [
     label: "Time Zones",
     links: [
       ["Time Zone Converter", "/calculators/timezone-converter"],
+      ["New York City Time", "/time/new-york"],
+      ["London City Time", "/time/london"],
       ["New York to London", "/new-york-to-london-time"],
       ["London to Tokyo", "/london-to-tokyo-time"],
       ["Tokyo to New York", "/tokyo-to-new-york-time"],

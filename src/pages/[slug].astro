@@ -8,9 +8,12 @@ import {
   getSEOText,
 } from "@/lib/seoGenerator";
 import { getBuildTime } from "@/lib/build-time";
+import { getPageIndexEligibility, getPairCities, robotsFor } from '@/lib/indexEligibility';
+import { TimezoneExperience } from '@/components/timezone-experience';
+import { relatedPairLinks, cityPairs } from '@/lib/siteInventory';
 
 export function getStaticPaths() {
-  return getAllSEOPageIndex().map((page) => ({ params: { slug: page.slug } }));
+  return getAllSEOPageIndex().filter(page => getPageIndexEligibility(page).indexable).map((page) => ({ params: { slug: page.slug } }));
 }
 
 const { slug } = Astro.params;
@@ -20,8 +23,9 @@ const related = await getRelatedPages(page);
 const seo = getSEOText(page);
 const referenceTime = getBuildTime();
 const title = `${seo.title} | WhatDateTime`;
+const pair = page.kind === 'timezone' ? getPairCities(page.slug) : undefined;
 ---
 
-<BaseLayout title={title} description={seo.description} canonicalPath={`/${page.slug}`}>
-  <ProgrammaticPageView page={page} related={related} referenceTime={referenceTime} />
+<BaseLayout title={title} description={seo.description} canonicalPath={`/${page.slug}`} robots={robotsFor(getPageIndexEligibility(page))}>
+  {pair ? <TimezoneExperience client:load from={pair[0]} to={pair[1]} title={seo.h1} description={seo.description} path={`/${page.slug}`} initialTime={referenceTime} related={relatedPairLinks(page.slug)} directoryPath={cityPairs(pair[0].slug).length ? `/time/${pair[0].slug}/conversions` : undefined} /> : <ProgrammaticPageView page={page} related={related} referenceTime={referenceTime} />}
 </BaseLayout>

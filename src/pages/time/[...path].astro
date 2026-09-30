@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/src/layouts/BaseLayout.astro';
+import { TimezoneExperience } from '@/components/timezone-experience';
+import { Breadcrumb } from '@/components/Breadcrumb';
+import { JsonLd } from '@/components/json-ld';
+import { breadcrumbListSchema } from '@/lib/schema';
+import { getBuildTime } from '@/lib/build-time';
+import { cities, getCity, regionName, regions } from '@/lib/indexEligibility';
+import { hubRoutes, cityLinks, cityPairs, directoryLinks, directorySize } from '@/lib/siteInventory';
+import type { HubRoute } from '@/lib/siteInventory';
+export function getStaticPaths() {
+  return hubRoutes.map(route=>({params:{path:route.slug==='time'?undefined:route.slug.slice(5)},props:{route}}));
+}
+const {route}=Astro.props as {route:HubRoute};
+const city=route.city?getCity(route.city):undefined;
+const parent=city?{name:city.name,path:`/time/${city.slug}`}:{name:'World Clock',path:'/time'};
+const links=route.kind==='directory'?directoryLinks(city!.slug,route.part!):route.kind==='root'?regions.map(region=>({path:`/time/regions/${region}`,label:regionName(region)})):cities.filter(c=>c.region===route.region).sort((a,b)=>b.priority-a.priority).map(c=>({path:`/time/${c.slug}`,label:`${c.name}, ${c.country}`}));
+const parts=city?Math.ceil(cityPairs(city.slug).length/directorySize):0;
+---
+<BaseLayout title={`${route.title} | WhatDateTime`} description={route.description} canonicalPath={`/${route.slug}`}>
+  {route.kind==='city'&&city ? <TimezoneExperience client:load from={city} title={route.title} description={route.description} path={`/${route.slug}`} initialTime={getBuildTime()} related={cityLinks(city.slug)} directoryPath={parts?`/time/${city.slug}/conversions`:undefined} /> : <div class="bg-[#f8fbfe] px-4 pb-14 pt-5 sm:px-6 lg:px-10 xl:px-14"><div class="mx-auto max-w-[90rem] space-y-6">
+    <JsonLd data={[{'@context':'https://schema.org','@type':'CollectionPage',name:route.title,description:route.description,url:`https://whatdatetime.com/${route.slug}`},breadcrumbListSchema([{name:'Home',path:'/'},...(route.kind==='root'?[]:[parent]),{name:route.title,path:`/${route.slug}`}])]} />
+    <Breadcrumb current={route.title} parent={route.kind==='root'?undefined:parent}/>
+    <h1 class="font-display text-[34px] font-bold leading-tight text-[#0c2146] sm:text-[42px]">{route.title}</h1><p>{route.description}</p>
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{links.map(link=><li><a class="text-[#006cff] underline underline-offset-2" href={link.path}>{link.label}</a></li>)}</ul>
+    {parts>1&&<nav aria-label="Conversion directory pages" class="flex flex-wrap gap-4">{Array.from({length:parts},(_,i)=><a aria-current={i+1===route.part?'page':undefined} class="text-[#006cff] underline" href={`/time/${city!.slug}/conversions${i?`/${i+1}`:''}`}>Page {i+1}</a>)}</nav>}
+    {route.kind==='root'&&<section><h2 class="text-2xl font-bold text-[#10264b]">Featured city clocks</h2><ul class="mt-4 grid gap-3 sm:grid-cols-2">{cities.filter(c=>c.priority===5).map(c=><li><a class="text-[#006cff] underline" href={`/time/${c.slug}`}>{c.name}</a></li>)}</ul></section>}
+    <p><a class="text-[#006cff] underline" href="/calculators/timezone-converter">Time Zone Converter</a> · <a class="text-[#006cff] underline" href="/time">All regions</a></p>
+  </div></div>}
+</BaseLayout>

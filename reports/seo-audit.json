@@ -1,0 +1,29 @@
+{
+  "policyVersion": "2026-09-26",
+  "before": {
+    "total": 10013,
+    "indexable": 10013,
+    "sitemap": 10013
+  },
+  "after": {
+    "total": 10262,
+    "indexable": 2236,
+    "noindex": 8026,
+    "core": 19,
+    "cityHubs": 82,
+    "cityPairs": 5964,
+    "indexableCityPairs": 1561,
+    "directoryAndRegionPages": 167,
+    "sitemapURLs": 2236,
+    "sitemapShards": 13,
+    "maxCrawlDepth": 6
+  },
+  "checked": {
+    "staticHTML": 2236,
+    "onDemandHTMLSamples": 20,
+    "metadataRecords": 10262,
+    "knownRoutes": 10262
+  },
+  "errors": [],
+  "evidence": "Editorial priorities and owner-reported indexing; no verified GSC query/page export. No indexing or traffic promise."
+}

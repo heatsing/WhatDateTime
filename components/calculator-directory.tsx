@@ -125,7 +125,7 @@ export function CalculatorDirectory({
       <div className="mx-auto max-w-6xl">
         <div className="max-w-3xl">
           <h2 className="font-display text-2xl font-semibold text-ink sm:text-3xl">Browse calculations</h2>
-          <p className="mt-2 text-sm leading-6 text-ink/55">Direct links to frequently requested date, duration, business-day, and world-time answers.</p>
+          <p className="mt-2 text-sm leading-6 text-ink/55">Browse selected date, duration, business-day, and world-time answers.</p>
         </div>
 
         <div className="mt-6 divide-y divide-[#D9DEE5] border-y border-[#D9DEE5]">
@@ -143,6 +143,7 @@ export function CalculatorDirectory({
             )].filter((page, index, list) =>
               list.findIndex((candidate) => candidate.slug === page.slug) === index,
             );
+            if (!selected.length) return null;
 
             return (
               <details
@@ -154,6 +155,7 @@ export function CalculatorDirectory({
                   <span className="text-xl text-fern transition group-open:rotate-45">+</span>
                 </summary>
                 <div className="mt-4 grid gap-x-6 gap-y-2 border-t border-[#E5E8EB] pt-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {group.types.map(type=><Link key={type} href={type==='timezone-converter'?'/time':`/calculations/${type}`} className="text-sm font-semibold text-fern hover:underline">Browse {type.replaceAll('-',' ')}</Link>)}
                   {selected.map((page) => (
                     <Link
                       key={page.slug}

@@ -12,3 +12,4 @@ out
 *.tsbuildinfo
 .DS_Store
 /dogfood-output/
+/workers/generated/
