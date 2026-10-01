@@ -5,9 +5,12 @@
 Implemented the latest attached request in the actual **Astro 5 + React** project,
 not a replacement Next.js project. The attachment explicitly supersedes the old
 all-index/all-sitemap/all-SSG policy. No original content URL or calculator was
-deleted. This is a source-code delivery; production release is a separate step.
-Final local browser acceptance was completed on 2026-09-30. Source is prepared
-on `seo/index-eligibility-hubs`, keeping the production main branch unchanged.
+deleted. Final local browser acceptance was completed on 2026-09-30. Following
+the owner's explicit push-and-deploy request, `seo/index-eligibility-hubs` was
+fast-forwarded into `main` and commit `80c2594` was deployed on 2026-09-30.
+See `reports/production-release-2026-09-30.md` for production versions, checks
+and the 2026-10-01 live-clock follow-up. Initial source-only delivery is complete;
+the release described in that report is now live.
 
 ## Before / after
 
@@ -143,10 +146,12 @@ See `reports/browser-qa.md` for the final desktop/mobile interaction evidence.
    immediately and on focus/visibility; on-demand HTML uses request time. IANA
    rule accuracy depends on runtime/cache data and future legislation. Device
    clocks are not an independently synchronized atomic-time service.
-4. Local HTTP/browser/packaging tests do not verify production DNS/TLS, Cloudflare
-   zone-level HTTP→HTTPS settings, actual Worker CPU quotas or production logs.
-   Verify these on an intentional release. Regular GitHub schedules still only
-   verify; they do not deploy all pages daily.
+4. Local tests alone do not verify production delivery. The release report now
+   records successful production HTTPS/redirect checks, selected browser flows,
+   exact sitemap file comparisons and filtered Worker traces. These are bounded
+   observations, not a load test, a global DNS audit or a guarantee about account
+   CPU/request quotas. Regular GitHub schedules still only verify; they do not
+   deploy all pages daily.
 5. `npm install` reports nine dependency advisories (one critical, six high, two
    low) in the existing dependency tree. Some fixes require a major Astro upgrade.
    This refactor does not claim to resolve them or run `npm audit fix --force`.
