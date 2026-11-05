@@ -5,7 +5,6 @@ import {
   addWeeks,
   addYears,
   differenceInCalendarDays,
-  differenceInDays,
   differenceInHours,
   differenceInMinutes,
   differenceInMonths,
@@ -16,6 +15,7 @@ import {
   isValid,
   subDays,
   subHours,
+  type Duration,
 } from "date-fns";
 
 export const calculationSlugs = [
@@ -157,14 +157,21 @@ export function calculateDateOffset(
   });
 }
 
-export function calculateDifference(start: Date, end: Date) {
+export function calculateDifference(start: Date, end: Date, durationBasis: "calendar" | "elapsed" = "calendar") {
   const ordered = start <= end ? { start, end } : { start: end, end: start };
-  const duration = intervalToDuration(ordered);
   const seconds = Math.abs(differenceInSeconds(end, start));
+  // A deterministic elapsed-time preview is safe before the browser's time
+  // zone is known. Interactive results retain local calendar years/months.
+  const duration: Duration = durationBasis === "elapsed" ? {
+    days: Math.floor(seconds / 86400),
+    hours: Math.floor(seconds / 3600) % 24,
+    minutes: Math.floor(seconds / 60) % 60,
+    seconds: seconds % 60,
+  } : intervalToDuration(ordered);
 
   return {
     duration,
-    totalDays: Math.abs(differenceInDays(end, start)),
+    totalDays: Math.floor(seconds / 86400),
     totalHours: Math.abs(differenceInHours(end, start)),
     totalMinutes: Math.abs(differenceInMinutes(end, start)),
     totalSeconds: seconds,

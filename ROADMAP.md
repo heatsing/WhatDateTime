@@ -18,7 +18,7 @@
 - Import verified GSC query/page data.
 - Protect any additional URLs with verified impressions, clicks or ranking before the first eligibility deployment. Current protections only cover evidence supplied by the owner; no complete GSC export exists locally.
 - Review a 10–20-page cohort after real crawl/indexing data; change eligibility only with recorded evidence. Never promise that fewer indexable pages guarantees Google inclusion.
-- Plan a separately tested framework/dependency security upgrade; the existing Astro 5 dependency tree has npm audit advisories that this SEO refactor does not resolve.
+- Plan a separately tested Astro major-version security upgrade. The 2026-11-05 project repair reduced npm audit findings from 18 to 4 through compatible updates and tested sharp/esbuild overrides; Astro, Zod and their dependents still carry 1 critical, 2 high and 1 low finding. See `reports/project-review-2026-11-05.md` before removing the overrides or upgrading the framework.
 - Improve visible content in cohorts of 10–20 pages selected from real impressions.
 - Measure the expanded time-zone cohort and the seven focused date utilities before proposing further route growth.
 - Expand only when new page families pass the page-creation gates.

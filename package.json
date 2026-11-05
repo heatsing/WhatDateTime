@@ -7,7 +7,7 @@
     "prebuild": "node scripts/generate-timezone-transitions.mjs",
     "build": "astro build && node scripts/prepare-on-demand.mjs && node scripts/generate-sitemap-shards.mjs && node scripts/seo-check.mjs",
     "start": "astro preview",
-    "test": "node scripts/calculation-tests.mjs && node scripts/timezone-policy-tests.mjs",
+    "test": "node scripts/calculation-tests.mjs && node scripts/timezone-policy-tests.mjs && node scripts/project-regression-tests.mjs",
     "test:seo-descriptions": "node scripts/seo-description-tests.mjs",
     "test:ssr": "node scripts/ssr-smoke-tests.mjs",
     "lint": "astro check",
@@ -28,6 +28,13 @@
     "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
+  },
+  "overrides": {
+    "esbuild@^0.27.3": "0.28.1",
+    "sharp": "0.35.5",
+    "vite": {
+      "esbuild": "0.25.12"
+    }
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

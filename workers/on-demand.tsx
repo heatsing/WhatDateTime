@@ -83,7 +83,9 @@ export default {
         headers: { Allow: "GET, HEAD" },
       });
     const slug = url.pathname.replace(/^\//, "").replace(/\/$/, "");
-    const alias = (aliases as Record<string, string>)[slug];
+    const alias = Object.hasOwn(aliases, slug)
+      ? (aliases as Record<string, string>)[slug]
+      : undefined;
     if (alias) {
       url.pathname = alias;
       return Response.redirect(url.toString(), 308);

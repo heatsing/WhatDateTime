@@ -1,6 +1,6 @@
 {
   "origin": "http://127.0.0.1:8790",
-  "checkedAt": "2026-09-30T10:23:50.264Z",
+  "checkedAt": "2026-11-05T00:46:07.257Z",
   "samples": [
     {
       "path": "/",
@@ -200,6 +200,7 @@
     }
   ],
   "unknownRoutes": 404,
+  "unknownRouteCount": 7,
   "converterAlias": "preserved",
   "trailingSlash": "normalized",
   "head": "passed"

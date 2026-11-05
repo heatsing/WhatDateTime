@@ -31,9 +31,9 @@ export function offsetMinutes(instant: Date, zone: string): number {
     .formatToParts(instant)
     .find((p) => p.type === "timeZoneName")!.value;
   if (label === "GMT") return 0;
-  const m = /^GMT([+-])(\d{1,2})(?::(\d{2}))?$/.exec(label);
+  const m = /^GMT([+-])(\d{1,2})(?::(\d{2}))?(?::(\d{2}))?$/.exec(label);
   if (!m) throw new Error(`Unsupported offset ${label}`);
-  return (m[1] === "-" ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3] || 0));
+  return (m[1] === "-" ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3] || 0) + Number(m[4] || 0) / 60);
 }
 export function localISO(instant: Date, zone: string) {
   const parts = Object.fromEntries(
@@ -41,7 +41,7 @@ export function localISO(instant: Date, zone: string) {
       .formatToParts(instant)
       .map((p) => [p.type, p.value]),
   );
-  return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  return `${parts.year.padStart(4, "0")}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
 }
 export function utcLabel(minutes: number) {
   return `UTC${minutes < 0 ? "−" : "+"}${Math.floor(Math.abs(minutes) / 60)}${Math.abs(minutes) % 60 ? ":" + String(Math.abs(minutes) % 60).padStart(2, "0") : ""}`;
@@ -82,6 +82,7 @@ export function displayDate(instant: Date, zone: string) {
 }
 export function resolveWallTime(local: string, zone: string): Date[] {
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(local)) return [];
+  if (local.startsWith("0000-")) return [];
   const raw = new Date(`${local}:00Z`);
   if (
     !Number.isFinite(raw.getTime()) ||
@@ -310,7 +311,7 @@ export function pairFAQs(from: City, to: City, now: Date) {
     },
     {
       question: `Can I plan a meeting between ${from.name} and ${to.name}?`,
-      answer: `Select a local date and time in ${from.name}. The planner converts it to ${to.name}; the overlap calculation assumes Monday–Friday, 9 AM–5 PM in both cities, excluding public holidays.`,
+      answer: `Select a local date and time in ${from.name}. The planner converts it to ${to.name}; the overlap calculation assumes Monday–Friday, 9 AM–5 PM in both cities. Public holidays and individual availability are not accounted for.`,
     },
     {
       question: `How are skipped or repeated times in ${from.name} handled?`,

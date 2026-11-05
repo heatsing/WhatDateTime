@@ -9,7 +9,7 @@ import {
   Clock3,
   MapPin,
 } from "lucide-react";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import {
   calculateDateDifference,
@@ -91,10 +91,12 @@ function RelativeForm({
   const [date, setDate] = useState(isHourPage && initialDateTime ? initialDateTime : initialDate);
   const [result, setResult] = useState(initialResult);
   const startingDate = isHourPage ? new Date(date) : parseLocalDate(date);
+  const [resultDate, setResultDate] = useState(date);
 
   useEffect(() => {
     const current = new Date();
     setDate(format(current, isHourPage ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd"));
+    setResultDate(format(current, isHourPage ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd"));
     const next = calculateRelativeDate(
       current,
       page.amount,
@@ -106,13 +108,16 @@ function RelativeForm({
 
   function calculate(event: FormEvent) {
     event.preventDefault();
+    if (!isValid(startingDate) || !Number.isFinite(amount)) return;
     const next = calculateRelativeDate(
       startingDate,
       Math.max(0, amount),
       unit,
       page.direction,
     );
+    if (!isValid(next)) return;
     setResult(formatLongDate(next, unit === "hour"));
+    setResultDate(date);
   }
 
   return (
@@ -121,7 +126,7 @@ function RelativeForm({
         <CompactResult
           label="Calculated result"
           result={result}
-          detail={`Calculated ${page.direction === "future" ? "forward" : "backward"} from ${format(startingDate, isHourPage ? "MMMM d, yyyy 'at' h:mm a" : "MMMM d, yyyy")}.`}
+          detail={`Calculated ${page.direction === "future" ? "forward" : "backward"} from ${format(isHourPage ? new Date(resultDate) : parseLocalDate(resultDate), isHourPage ? "MMMM d, yyyy 'at' h:mm a" : "MMMM d, yyyy")}.`}
           kind={unit === "hour" ? "time" : "date"}
         />
       }

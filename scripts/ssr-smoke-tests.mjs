@@ -100,12 +100,16 @@ for (const slug of routes) {
     mode: shouldIndex ? "static" : "on-demand",
   });
 }
-for (const pathname of [
+const unknownPaths = [
   "/missing-city-to-invented-city-time",
   "/time/missing-city",
   "/render-shell",
   "/this-route-does-not-exist",
-]) {
+  "/__proto__",
+  "/constructor",
+  "/toString",
+];
+for (const pathname of unknownPaths) {
   const response = await navigate(origin + pathname);
   assert.equal(response.status, 404, pathname);
 }
@@ -130,6 +134,7 @@ fs.writeFileSync(
       checkedAt: new Date().toISOString(),
       samples: evidence,
       unknownRoutes: 404,
+      unknownRouteCount: unknownPaths.length,
       converterAlias: "preserved",
       trailingSlash: "normalized",
       head: "passed",
@@ -139,5 +144,5 @@ fs.writeFileSync(
   ) + "\n",
 );
 console.log(
-  `HTTP smoke passed: ${routes.length} public pages, including 10 eligible and 10 noindex city pairs, 4 genuine 404s, query canonicals, converter alias and HEAD.`,
+  `HTTP smoke passed: ${routes.length} public pages, including 10 eligible and 10 noindex city pairs, ${unknownPaths.length} genuine 404s, query canonicals, converter alias and HEAD.`,
 );

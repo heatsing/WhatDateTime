@@ -2,6 +2,8 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
+import { isValid } from "date-fns";
+import { parseCalendarDate } from "@/lib/date-input";
 import {
   calculateDateOffset,
   inputDate,
@@ -29,6 +31,8 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
   const [operation, setOperation] = useState<"add" | "subtract">("add");
   const [result, setResult] = useState(() => calculateDateOffset(initialBase, 10, "day", "add"));
   const [displayZone, setDisplayZone] = useState("UTC");
+  const [applied, setApplied] = useState({ amount: 10, unit: "day" as TimeUnit, operation: "add" as "add" | "subtract" });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const current = new Date();
@@ -39,8 +43,15 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    const base = new Date(`${baseInput}T12:00:00`);
-    setResult(calculateDateOffset(base, Math.abs(amount), unit, operation));
+    const base = parseCalendarDate(baseInput);
+    const next = calculateDateOffset(base, Math.abs(amount), unit, operation);
+    if (!isValid(next) || !Number.isSafeInteger(amount) || next.getFullYear() < 1 || next.getFullYear() > 9999) {
+      setError("Choose a valid date and whole-number amount with a result between years 1 and 9999.");
+      return;
+    }
+    setError("");
+    setResult(next);
+    setApplied({ amount, unit, operation });
     focusCalculatorResult();
   }
 
@@ -50,7 +61,7 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
         <>
           <ResultHeading>{formatInTimeZone(result, displayZone, "EEEE, MMMM d, yyyy")}</ResultHeading>
           <p className="mt-3 text-sm text-[#536b8d]">
-            {operation === "add" ? "Adding" : "Subtracting"} {Math.abs(amount)} {unit}{Math.abs(amount) === 1 ? "" : "s"}.
+            {applied.operation === "add" ? "Adding" : "Subtracting"} {Math.abs(applied.amount)} {applied.unit}{Math.abs(applied.amount) === 1 ? "" : "s"}.
           </p>
         </>
       }
@@ -84,6 +95,7 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
           </div>
         </div>
         <CalculateButton label="Calculate date" />
+        {error && <p role="alert">{error}</p>}
       </form>
     </CalculatorFrame>
   );

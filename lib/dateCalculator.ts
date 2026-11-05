@@ -15,6 +15,7 @@ import {
   subYears,
 } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
+import { parseCalendarDate } from "./date-input.ts";
 
 export type RelativeUnit =
   | "hour"
@@ -72,7 +73,7 @@ export function formatZonedTime(date: Date, timeZone: string) {
 }
 
 export function parseLocalDate(value: string) {
-  return new Date(`${value}T12:00:00`);
+  return parseCalendarDate(value);
 }
 
 export function pluralizeUnit(unit: RelativeUnit, amount: number) {

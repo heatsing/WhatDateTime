@@ -1,8 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
-import { inputDateTime, inputDateTimeUTC } from "@/lib/calculator";
+import { formatInTimeZone } from "date-fns-tz";
+import { localISO, resolveWallTime, offsetMinutes, utcLabel } from "@/lib/timezoneFacts";
 import {
   CalculatorFrame,
   CalculateButton,
@@ -32,12 +32,6 @@ const timeZones = [
   "Pacific/Auckland",
 ] as const;
 
-const initialResult = {
-  date: "Thursday, January 1, 2026",
-  time: "5:00 PM",
-  zone: "GMT",
-};
-
 function zoneLabel(zone: string) {
   return zone.replaceAll("_", " ").replace("/", " · ");
 }
@@ -46,29 +40,17 @@ export function TimezoneCalculator({ initialTime }: { initialTime: string }) {
   const initialDate = useMemo(() => new Date(initialTime), [initialTime]);
   const initialSource = "America/New_York";
   const initialInput = useMemo(
-    () => inputDateTimeUTC(initialDate),
+    () => localISO(initialDate, initialSource),
     [initialDate],
   );
   const [input, setInput] = useState(initialInput);
   const [source, setSource] = useState(initialSource);
   const [target, setTarget] = useState("Europe/London");
-  const [isMounted, setIsMounted] = useState(false);
-  const [instant, setInstant] = useState(() =>
-    fromZonedTime(
-      initialInput,
-      initialSource,
-    ),
-  );
-  const result = useMemo(
-    () => isMounted
-      ? {
-          date: formatInTimeZone(instant, target, "EEEE, MMMM d, yyyy"),
-          time: formatInTimeZone(instant, target, "h:mm a"),
-          zone: formatInTimeZone(instant, target, "zzz"),
-        }
-      : initialResult,
-    [instant, isMounted, target],
-  );
+  const [conversion, setConversion] = useState(() => ({
+    instants: resolveWallTime(initialInput, initialSource),
+    source: initialSource,
+    target: "Europe/London",
+  }));
 
   useEffect(() => {
     const current = new Date();
@@ -78,28 +60,28 @@ export function TimezoneCalculator({ initialTime }: { initialTime: string }) {
     )
       ? localZone
       : initialSource;
-    const nextInput = inputDateTime(current);
+    const nextInput = localISO(current, nextSource);
     setInput(nextInput);
     setSource(nextSource);
-    setInstant(fromZonedTime(nextInput, nextSource));
-    setIsMounted(true);
+    setConversion({ instants: resolveWallTime(nextInput, nextSource), source: nextSource, target: "Europe/London" });
   }, []);
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    setInstant(fromZonedTime(input, source));
+    setConversion({ instants: resolveWallTime(input, source), source, target });
     focusCalculatorResult();
   }
 
   return (
     <CalculatorFrame result={
-      <>
-        <ResultHeading>{result.time}</ResultHeading>
-        <p className="mt-3 text-lg font-semibold text-ink/65">{result.date}</p>
+      conversion.instants.length ? conversion.instants.map((instant, index) => <div key={instant.toISOString()}>
+        {conversion.instants.length > 1 && <p className="mt-3 text-sm">Occurrence {index + 1} ({utcLabel(offsetMinutes(instant, conversion.source))})</p>}
+        <ResultHeading>{formatInTimeZone(instant, conversion.target, "h:mm a")}</ResultHeading>
+        <p className="mt-3 text-lg font-semibold text-ink/65">{formatInTimeZone(instant, conversion.target, "EEEE, MMMM d, yyyy")}</p>
         <div className="mt-5 inline-flex w-fit rounded-md border border-[#B8CCE0] bg-white px-3 py-1.5 text-xs font-semibold text-fern">
-          {zoneLabel(target)} · {result.zone}
+          {zoneLabel(conversion.target)} · {formatInTimeZone(instant, conversion.target, "zzz")}
         </div>
-      </>
+      </div>) : <p role="alert">This local time is invalid or skipped by a clock change. Choose another time.</p>
     }>
       <form onSubmit={submit}>
         <FieldLabel htmlFor="zone-datetime">Date & time</FieldLabel>

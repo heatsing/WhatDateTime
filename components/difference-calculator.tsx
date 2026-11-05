@@ -24,7 +24,7 @@ export function DifferenceCalculator({ initialTime }: { initialTime: string }) {
   );
   const [start, setStart] = useState(inputDateTimeUTC(now));
   const [end, setEnd] = useState(inputDateTimeUTC(later));
-  const [result, setResult] = useState(() => calculateDifference(now, later));
+  const [result, setResult] = useState(() => calculateDifference(now, later, "elapsed"));
 
   useEffect(() => {
     const current = new Date();
