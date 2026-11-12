@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
+import { toolEvent } from "@/lib/tool-events";
 import { isValid } from "date-fns";
 import { parseCalendarDate } from "@/lib/date-input";
 import {
@@ -33,13 +34,25 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
   const [displayZone, setDisplayZone] = useState("UTC");
   const [applied, setApplied] = useState({ amount: 10, unit: "day" as TimeUnit, operation: "add" as "add" | "subtract" });
   const [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
+  const [custom, setCustom] = useState(false);
+  const [appliedStart, setAppliedStart] = useState(inputDateUTC(today));
 
   useEffect(() => {
-    const current = new Date();
-    setDisplayZone(Intl.DateTimeFormat().resolvedOptions().timeZone);
-    setBaseInput(inputDate(current));
-    setResult(calculateDateOffset(current, 10, "day", "add"));
-  }, []);
+    setReady(true);
+    if (custom) return;
+    const update = () => {
+      const current = new Date();
+      setDisplayZone(Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC");
+      setBaseInput(inputDate(current));
+      setAppliedStart(inputDate(current));
+      setResult(calculateDateOffset(current, 10, "day", "add"));
+    };
+    update();
+    const timer = setInterval(update, 60000);
+    window.addEventListener("focus", update);
+    return () => { clearInterval(timer); window.removeEventListener("focus", update); };
+  }, [custom]);
 
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -50,8 +63,11 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
       return;
     }
     setError("");
+    setCustom(true);
     setResult(next);
+    setAppliedStart(baseInput);
     setApplied({ amount, unit, operation });
+    toolEvent("calculate", "date");
     focusCalculatorResult();
   }
 
@@ -59,14 +75,15 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
     <CalculatorFrame
       result={
         <>
+          {!ready && <p>Example — fixed starting date {baseInput} (UTC), not today.</p>}
           <ResultHeading>{formatInTimeZone(result, displayZone, "EEEE, MMMM d, yyyy")}</ResultHeading>
           <p className="mt-3 text-sm text-[#536b8d]">
-            {applied.operation === "add" ? "Adding" : "Subtracting"} {Math.abs(applied.amount)} {applied.unit}{Math.abs(applied.amount) === 1 ? "" : "s"}.
+            {applied.operation === "add" ? "Adding" : "Subtracting"} {Math.abs(applied.amount)} {applied.unit}{Math.abs(applied.amount) === 1 ? "" : "s"} from {appliedStart} ({displayZone}). The starting date is not counted.
           </p>
         </>
       }
     >
-      <form onSubmit={submit}>
+      <form onSubmit={submit} onChange={() => setCustom(true)}>
         <h2 className="font-display text-xl font-bold text-[#10264b]">Calculate a New Date</h2>
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.35fr_0.75fr_0.7fr_0.85fr]">
           <div>
@@ -95,6 +112,7 @@ export function DateCalculator({ initialTime }: { initialTime: string }) {
           </div>
         </div>
         <CalculateButton label="Calculate date" />
+        <button type="button" className="mt-3 min-h-11 text-sm font-semibold text-[#0969da] underline" onClick={() => {setCustom(false);setAmount(10);setUnit("day");setOperation("add");setApplied({amount:10,unit:"day",operation:"add"});setError("");}}>Reset to today</button>
         {error && <p role="alert">{error}</p>}
       </form>
     </CalculatorFrame>

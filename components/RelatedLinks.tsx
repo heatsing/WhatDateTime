@@ -1,19 +1,26 @@
+import { useRelativeState } from "./use-relative-state";
+import { relativeText } from "@/lib/relative-state";
 import Link from "@/components/link";
 import {
   getPageResult,
   getRelativePhrase,
 } from "@/lib/pageCalculations";
-import type { SEOPage } from "@/lib/seoGenerator";
+import type { PageCalculationInput } from "@/lib/pageCalculations";
+
+type RelatedPage = PageCalculationInput & { slug: string; title: string };
 
 export function RelatedLinks({
   currentPage,
   pages,
   referenceDate,
+  referenceTime,
 }: {
-  currentPage: SEOPage;
-  pages: SEOPage[];
+  currentPage: RelatedPage;
+  pages: RelatedPage[];
   referenceDate: Date;
+  referenceTime?: string;
 }) {
+  const { state } = useRelativeState(currentPage.kind === "relative" ? currentPage : {kind:"relative",type:"hours-from-now",unit:"hour",amount:0,direction:"future"}, referenceTime || referenceDate.toISOString());
   const heading =
     currentPage.kind === "relative"
       ? "Related and nearby calculations"
@@ -40,7 +47,7 @@ export function RelatedLinks({
           {heading}
         </h2>
         <p className="mt-4 max-w-3xl text-base leading-8 text-ink/60 sm:text-lg">
-          Compare nearby values and useful reference intervals without starting a new calculation.
+          Compare intervals from the same starting point ({state.zone}; {state.mode === "example" ? "fixed example" : state.mode}).
         </p>
         <div className="mt-5 overflow-x-auto border-y border-[#D9DEE5]">
           <table className="w-full table-fixed border-collapse text-left text-base sm:text-[17px]">
@@ -58,7 +65,7 @@ export function RelatedLinks({
                   <tr key={page.slug} className={current ? "bg-[#E7F0F8] font-semibold" : ""}>
                     <td className="break-words px-1 py-3 capitalize sm:px-2">
                       {current ? (
-                        <span aria-current="page">{getRelativePhrase(page)}</span>
+                        <span aria-current="page">{getRelativePhrase(state.page)}</span>
                       ) : (
                         <Link href={`/${page.slug}`} className="font-semibold text-fern transition hover:text-ink">
                           {getRelativePhrase(page)}
@@ -66,7 +73,7 @@ export function RelatedLinks({
                       )}
                     </td>
                     <td className="break-words px-2 py-3 text-ink/70">
-                      {getPageResult(page, referenceDate)}
+                      {relativeText(state, current ? state.page : page)}
                     </td>
                   </tr>
                 );

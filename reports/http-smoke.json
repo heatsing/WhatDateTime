@@ -1,7 +1,119 @@
 {
   "origin": "http://127.0.0.1:8790",
-  "checkedAt": "2026-11-05T00:46:07.257Z",
+  "checkedAt": "2026-11-12T22:08:22.300Z",
   "samples": [
+    {
+      "path": "/8-hours-from-now",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/8-hours-from-now",
+      "mode": "static"
+    },
+    {
+      "path": "/15-hours-ago",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/15-hours-ago",
+      "mode": "static"
+    },
+    {
+      "path": "/10-hours-ago",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/10-hours-ago",
+      "mode": "static"
+    },
+    {
+      "path": "/72-hours-from-now",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/72-hours-from-now",
+      "mode": "static"
+    },
+    {
+      "path": "/48-hours-from-now",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/48-hours-from-now",
+      "mode": "static"
+    },
+    {
+      "path": "/18-hours-from-now",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/18-hours-from-now",
+      "mode": "static"
+    },
+    {
+      "path": "/calculators/countdown",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/calculators/countdown",
+      "mode": "static"
+    },
+    {
+      "path": "/calculators/date-calculator",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/calculators/date-calculator",
+      "mode": "static"
+    },
+    {
+      "path": "/calculators/business-days",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/calculators/business-days",
+      "mode": "static"
+    },
+    {
+      "path": "/calculations/hours-from-now",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/calculations/hours-from-now",
+      "mode": "static"
+    },
+    {
+      "path": "/8-business-days-from-today",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/8-business-days-from-today",
+      "mode": "static"
+    },
+    {
+      "path": "/90-business-days-from-today",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/90-business-days-from-today",
+      "mode": "static"
+    },
+    {
+      "path": "/35-business-days-from-today",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/35-business-days-from-today",
+      "mode": "static"
+    },
+    {
+      "path": "/toronto-to-new-york-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/toronto-to-new-york-time",
+      "mode": "static"
+    },
+    {
+      "path": "/london-to-toronto-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/london-to-toronto-time",
+      "mode": "static"
+    },
+    {
+      "path": "/singapore-to-melbourne-time",
+      "status": 200,
+      "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      "canonical": "https://whatdatetime.com/singapore-to-melbourne-time",
+      "mode": "static"
+    },
     {
       "path": "/",
       "status": 200,

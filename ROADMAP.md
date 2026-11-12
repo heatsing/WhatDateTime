@@ -2,6 +2,8 @@
 
 ## Current
 
+- November 13 repair: explicit UTC examples, shared live/custom calculation state, a generic business-day tool, local countdown save/share, selected-date time-zone summaries and evidence-based restoration of the 35-business-day URL. See `reports/recovery-2026-11-13.md`; production release is separate from source synchronization.
+
 - Maintain 9,994 programmatic pages and all existing calculator routes.
 - Preserve access to the original 10,007 baseline URLs plus six trust pages. Since the explicit 2026-09-26 brief, indexing and sitemap inclusion follow `data/index-policy.json`, not raw inventory size.
 - Maintain the focused date utility set: days until, day of week, days in month, weeks in year, calendar generator, half birthday, and weeks-and-days ago.

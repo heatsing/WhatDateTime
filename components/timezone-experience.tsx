@@ -93,8 +93,10 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
   const date = localISO(now, from.zone).slice(0, 10);
   const local = selected || `${date}T09:00`;
   const selectedDate = local.slice(0, 10);
-  const faqs = to ? pairFAQs(from, to, now) : cityFAQs(from, now);
-  const season = citySeason(from, now);
+  const nine = resolveWallTime(`${selectedDate}T09:00`, from.zone)[0];
+  const reference = to ? (nine || now) : now;
+  const faqs = to ? pairFAQs(from, to, reference) : cityFAQs(from, now);
+  const season = citySeason(from, reference);
   const table = useMemo(
     () => (to ? conversionTable(selectedDate, from.zone, to.zone) : []),
     [selectedDate, from.zone, to?.zone],
@@ -104,8 +106,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
     [selectedDate, from.zone, to?.zone],
   );
   const instants = to ? resolveWallTime(local, from.zone) : [];
-  const nine = resolveWallTime(`${date}T09:00`, from.zone)[0];
-  const periods = to ? pairSeasons(from, to, Number(date.slice(0, 4))) : [];
+  const periods = to ? pairSeasons(from, to, Number(selectedDate.slice(0, 4))) : [];
   const targets = cities
     .filter((c) => c.slug !== from.slug)
     .sort((a, b) => b.priority - a.priority)
@@ -133,7 +134,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
               name: title,
               description,
               path,
-              dateModified: "2026-09-26",
+              dateModified: "2026-11-13",
             }),
             breadcrumbListSchema([
               { name: "Home", path: "/" },
@@ -154,7 +155,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
           <p className="mt-2 text-sm text-[#536b8d]">
             {live
               ? "Live clock — based on your device clock."
-              : "HTML snapshot — enable JavaScript for live clocks."}{" "}
+              : "Example — fixed reference instant, not the current time. Enable JavaScript for live clocks."}{" "}
             As of{" "}
             {now
               .toISOString()
@@ -169,31 +170,31 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
               <h2 className={heading}>9 AM in {from.name}</h2>
               <p className="mt-3 text-2xl font-semibold">
                 {nine
-                  ? `On ${date}, 9:00 AM in ${from.name} is ${displayTime(nine, to.zone)} in ${to.name} (${dateShift(date, nine, to.zone)}).`
+                  ? `On ${selectedDate}, 9:00 AM in ${from.name} is ${displayTime(nine, to.zone)} in ${to.name} (${dateShift(selectedDate, nine, to.zone)}).`
                   : "This local time does not occur on this date."}
               </p>
               <p className="mt-3">
                 {differenceLabel(
-                  offsetMinutes(now, to.zone) - offsetMinutes(now, from.zone),
+                  offsetMinutes(reference, to.zone) - offsetMinutes(reference, from.zone),
                   from.name,
                   to.name,
                 )}
               </p>
               <p className="mt-2 text-sm">
-                Conversion: {utcLabel(offsetMinutes(now, to.zone))} − (
-                {utcLabel(offsetMinutes(now, from.zone))}) ={" "}
+                Conversion: {utcLabel(offsetMinutes(reference, to.zone))} − (
+                {utcLabel(offsetMinutes(reference, from.zone))}) ={" "}
                 {durationLabel(
-                  offsetMinutes(now, to.zone) - offsetMinutes(now, from.zone),
+                  offsetMinutes(reference, to.zone) - offsetMinutes(reference, from.zone),
                 )}{" "}
-                {offsetMinutes(now, to.zone) >= offsetMinutes(now, from.zone)
+                {offsetMinutes(reference, to.zone) >= offsetMinutes(reference, from.zone)
                   ? "ahead"
                   : "behind"}{" "}
-                at the current instant.
+                at the 9 AM reference on {selectedDate}.
               </p>
             </section>
             <section
               className={`${panel} grid gap-6 sm:grid-cols-2`}
-              aria-label="Current city times"
+              aria-label={live ? "Current city times" : "Example city times"}
             >
               <Clock city={from} now={now} />
               <Clock city={to} now={now} />
@@ -318,12 +319,12 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
               </h2>
               <p className="mt-2">
                 {from.name}: {season.status} {to.name}:{" "}
-                {citySeason(to, now).status}
+                {citySeason(to, reference).status}
               </p>
               <p className="mt-2">
                 {season.standard !== null &&
-                citySeason(to, now).standard !== null
-                  ? `Standard-offset comparison: ${differenceLabel(citySeason(to, now).standard! - season.standard, from.name, to.name)} This compares standard offsets, not necessarily simultaneous seasons.`
+                citySeason(to, reference).standard !== null
+                  ? `Standard-offset comparison: ${differenceLabel(citySeason(to, reference).standard! - season.standard, from.name, to.name)} This compares standard offsets, not necessarily simultaneous seasons.`
                   : "Seasonal adjustments are listed below without assuming that the smaller offset is legally standard time."}
               </p>
               <p className="mt-2">

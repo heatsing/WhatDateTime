@@ -15385,9 +15385,9 @@
   },
   {
     "slug": "35-business-days-from-today",
-    "indexable": false,
-    "priority": 2,
-    "reason": "Long-tail interval; tool retained, await demand evidence"
+    "indexable": true,
+    "reason": "Protected: Owner-provided 2026-11-13 GSC summary: 2 historical clicks, 155 impressions; original export pending. Useful maintained weekday tool restored after review.",
+    "priority": 5
   },
   {
     "slug": "36-business-days-from-today",

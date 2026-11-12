@@ -33,7 +33,7 @@ const calculatorLinks: ReadonlyArray<ToolLink> = [
   { title: "Date Calculator", description: "Add or subtract days, weeks, months, or years from a date.", href: "/calculators/date-calculator", icon: CalendarDays },
   { title: "Days Between Two Dates", description: "Calculate the exact number of days between two dates.", href: "/calculators/time-difference", icon: CalendarDays },
   { title: "Days Until Date", description: "Find out how many days remain until a specific date.", href: "/calculators/days-until", icon: CalendarDays },
-  { title: "Business Days Calculator", description: "Add working days while automatically skipping weekends.", href: "/30-business-days-from-today", icon: CalendarDays },
+  { title: "Business Days Calculator", description: "Add working days while automatically skipping weekends.", href: "/calculators/business-days", icon: CalendarDays },
   { title: "Weeks and Days Ago", description: "Calculate a past date using weeks and days together.", href: "/calculators/weeks-and-days-ago", icon: CalendarDays },
   { title: "Day of the Week", description: "Find the weekday for any calendar date.", href: "/calculators/day-of-week", icon: CalendarDays },
   { title: "Calendar by Month and Year", description: "View a monthly calendar and its week numbers.", href: "/calculators/calendar", icon: CalendarDays },

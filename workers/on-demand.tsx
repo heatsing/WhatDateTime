@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import { OnDemandPage } from "../components/on-demand-page";
 import type { OnDemandData, OnDemandProps } from "../components/on-demand-page";
 import { getPairCities } from "../lib/indexEligibility";
+import { getFamilyDetails } from "../lib/seo-taxonomy";
 import {
   getDirectFAQ,
   getPageFormula,
@@ -29,12 +30,13 @@ export function renderOnDemand(
   const page = pages.get(slug);
   if (!page) return undefined;
   const pair = page.kind === "timezone" ? getPairCities(slug) : undefined;
+  const family = getFamilyDetails(page);
   const related = pair
     ? (cityLinks as Record<string, { path: string; label: string }[]>)[
         pair[0].slug
       ] || []
     : [
-        { path: "/calculators/date-calculator", label: "Date Calculator" },
+        { path: family.hubPath, label: family.hubName },
         { path: "/calculators/time-difference", label: "Days Between Dates" },
         { path: "/30-days-from-today", label: "30 Days From Today" },
       ];

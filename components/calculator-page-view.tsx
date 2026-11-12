@@ -87,12 +87,13 @@ const configs = {
     metadataTitle: "Countdown Timer — Days, Hours & Seconds",
     title: "Countdown Timer", eyebrow: "Make the moment count",
     description: "Turn any upcoming date into a simple, live countdown you can check at a glance.",
-    seoDescription: "Create a live countdown to any date and time. Track the remaining days, hours, minutes, and seconds using your device's local time zone.",
+    seoDescription: "Create a named countdown in your chosen time zone. Save the target on this device or share a link that counts down to the same instant anywhere.",
     path: "/calculators/countdown",
     faqs: [
       { question: "How do I start a countdown?", answer: "Choose a future date and time, then select Start countdown. The display updates once per second." },
-      { question: "What time zone does the countdown use?", answer: "The selected date and time use your device's local time zone." },
-      { question: "Will the countdown keep running if I close the page?", answer: "The target is not stored. Keep the page open to watch it, or enter the same target again when you return." },
+      { question: "What time zone does the countdown use?", answer: "It defaults to your device's time zone. You can enter another IANA zone, such as Europe/London. A shared target retains its original zone and exact UTC instant." },
+      { question: "Will the countdown keep running if I close the page?", answer: "Choose Save target to store the started countdown on this device. It is restored on your next visit, with remaining time recalculated from the current clock. A share link restores the same target on another device." },
+      { question: "How do I remove a saved countdown?", answer: "Choose Clear and reset. This removes the saved target from this browser and starts a new seven-day countdown. Share links already sent to others are not revoked." },
       { question: "What happens when the timer reaches zero?", answer: "All units stop at zero and the timer displays a clear 'Time's up' message." },
     ],
     steps: [
@@ -289,11 +290,11 @@ const calculatorContent: Record<CalculatorKind, {
     methodology: {
       title: "How the Live Countdown Works",
       paragraphs: [
-        "The target date and time are interpreted in your device's local time zone. The remaining duration is recalculated every second and separated into complete days, hours, minutes, and seconds.",
+        "The target date and time are interpreted in the named time zone and stored as a UTC instant. Nonexistent and ambiguous clock-change times require you to choose an unambiguous target. Remaining time is recalculated every second in complete 24-hour days, hours, minutes, and seconds.",
         "The countdown reaches zero at the exact local timestamp you selected. It does not remove weekends or business closures because it measures continuous elapsed time.",
       ],
     },
-    accuracy: { title: "Keep this page open", text: "The countdown updates from your device clock and the target is not stored in a database. If you close the page, enter the target again when you return." },
+    accuracy: { title: "Save or share the exact target", text: "Start the countdown before saving or sharing. Save target uses this browser's local storage; Copy share link includes the event name, UTC instant and zone in a URL fragment. Anyone with the link can read those details. No account or database is required." },
     useCases: ["Track an event or launch", "Count down to a trip", "Monitor an assignment deadline", "Prepare for a meeting start", "Follow a birthday or anniversary", "Time a personal milestone"],
   },
   timezone: {

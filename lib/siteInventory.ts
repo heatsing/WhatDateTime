@@ -10,6 +10,7 @@ import {
 export const coreSlugs = [
   "",
   "calculators/date-calculator",
+  "calculators/business-days",
   "calculators/time-difference",
   "calculators/age-calculator",
   "calculators/countdown",

@@ -21,14 +21,14 @@ const familyDetails: Record<
   },
   "hours-from-now": {
     label: "Hours From Now",
-    hubName: "Date Calculator",
-    hubPath: "/calculators/date-calculator",
+    hubName: "Hours From Now",
+    hubPath: "/calculations/hours-from-now",
     sitemap: "sitemap-hours-from-now.xml",
   },
   "hours-ago": {
     label: "Hours Ago",
-    hubName: "Date Calculator",
-    hubPath: "/calculators/date-calculator",
+    hubName: "Hour Calculator",
+    hubPath: "/calculations/hours-from-now",
     sitemap: "sitemap-hours-ago.xml",
   },
   "weeks-from-today": {
@@ -51,8 +51,8 @@ const familyDetails: Record<
   },
   "business-days-from-today": {
     label: "Business Days From Today",
-    hubName: "Date Calculator",
-    hubPath: "/calculators/date-calculator",
+    hubName: "Business Days Calculator",
+    hubPath: "/calculators/business-days",
     sitemap: "sitemap-business-days-from-today.xml",
   },
   "date-difference": {

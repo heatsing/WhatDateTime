@@ -42,10 +42,10 @@ export function getRelativePhrase(page: RelativeCalculationInput) {
         ? page.unit
         : `${page.unit}s`;
   const suffix =
-    page.type === "hours-from-now"
-      ? "from now"
-      : page.direction === "past"
-        ? "ago"
+    page.direction === "past"
+      ? "ago"
+      : page.unit === "hour"
+        ? "from now"
         : "from today";
   return `${page.amount} ${unit} ${suffix}`;
 }

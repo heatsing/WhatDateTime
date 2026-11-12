@@ -9,15 +9,15 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
-import { useEffect, useState } from "react";
+import { formatInTimeZone, toZonedTime } from "date-fns-tz";
+import { useRelativeState } from "./use-relative-state";
+import { relativeResult, relativeText, relativeFormula } from "@/lib/relative-state";
+import { toolEvent } from "@/lib/tool-events";
+import { dateShift, localISO } from "@/lib/timezoneFacts";
 import {
-  calculateRelativeDate,
   formatLongDate,
 } from "@/lib/dateCalculator";
 import {
-  getPageFormula,
-  getPageResult,
   getRelativePhrase,
 } from "@/lib/pageCalculations";
 import type { RelativeCalculationInput } from "@/lib/pageCalculations";
@@ -39,48 +39,39 @@ const weekdays = [
 ] as const;
 
 export function DirectDateAnswer({
-  page,
+  page: originalPage,
   referenceTime,
-  initialTimeZone,
 }: DirectDateAnswerProps) {
-  const [liveReferenceDate, setLiveReferenceDate] = useState(
-    () => toZonedTime(new Date(referenceTime), initialTimeZone),
-  );
-  useEffect(() => {
-    const update = () => setLiveReferenceDate(new Date());
-    update();
-    const timer = window.setInterval(update, 60_000);
-    return () => window.clearInterval(timer);
-  }, []);
+  const { state } = useRelativeState(originalPage, referenceTime);
+  const page = state.page;
+  const liveReferenceDate = new Date(state.instant);
+  const format = (date: Date, pattern: string) => formatInTimeZone(date, state.zone, pattern);
   const includesTime = page.unit === "hour";
   const phrase = getRelativePhrase(page);
-  const resultDate = calculateRelativeDate(
-    liveReferenceDate,
-    page.amount,
-    page.unit,
-    page.direction,
-  );
-  const result = getPageResult(page, liveReferenceDate);
-  const formula = getPageFormula(page, liveReferenceDate);
+  const resultDate = relativeResult(state);
+  const result = relativeText(state);
+  const formula = relativeFormula(state);
+  const status = state.mode === "example" ? `Example — starting ${format(liveReferenceDate, "MMM d, yyyy h:mm a")} UTC; not the current answer.` : `${state.mode === "custom" ? "Custom calculation" : "Live answer"} · ${state.zone}`;
   const prompt =
-    page.type === "days-ago"
+    state.mode === "custom" ? "Result from your chosen starting date"
+    : page.direction === "past" && !includesTime
       ? `What date was ${phrase} from today?`
       : `${includesTime ? "What time is" : "What date is"} ${phrase}?`;
 
   if (includesTime) {
     return (
       <article
-        data-content-stage="direct-answer"
+        data-reference={state.instant} data-mode={state.mode} data-content-stage="direct-answer"
         className="py-4 text-center sm:py-5"
         aria-labelledby="direct-date-answer-heading"
       >
         <header>
           <div className="-mx-4 -mt-4 bg-[#0875d1] px-4 py-2 text-left sm:-mx-6 sm:-mt-5 sm:px-5">
             <h2 id="direct-date-answer-heading" className="text-sm font-bold text-white">
-              {`${page.amount} ${page.amount === 1 ? "Hour" : "Hours"} ${page.direction === "future" ? "From Now" : "Ago"}`}
+              {`${page.amount} ${page.amount === 1 ? "Hour" : "Hours"} ${state.mode === "custom" ? page.direction === "future" ? "After Start" : "Before Start" : state.mode === "example" ? "— Example" : page.direction === "future" ? "From Now" : "Ago"}`}
             </h2>
           </div>
-          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6c7f9b]">Direct answer</p>
+          <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#6c7f9b]">{status}</p>
           <p className="mt-1 font-display text-4xl font-bold leading-none tracking-[-0.04em] text-[#0c2146] sm:text-5xl" aria-live="polite">
             {format(resultDate, "h:mm a")}
           </p>
@@ -88,9 +79,10 @@ export function DirectDateAnswer({
           <p className="mt-2 text-sm text-[#405776]">
             {page.amount === 1 ? "One hour" : `${page.amount} hours`} {page.direction === "future" ? "from" : "before"} {format(liveReferenceDate, "h:mm a")} is <strong>{format(resultDate, "h:mm a")}</strong>.
           </p>
+          <p className="mt-2 text-sm text-[#405776]">Calendar transition: {dateShift(localISO(liveReferenceDate, state.zone).slice(0, 10), resultDate, state.zone)} ({state.zone}).</p>
           <button
             type="button"
-            onClick={() => navigator.clipboard?.writeText(`${format(resultDate, "h:mm a")} on ${format(resultDate, "EEEE, MMMM d, yyyy")}`)}
+            onClick={async () => { try { await navigator.clipboard.writeText(`${result} (${state.zone}). ${formula}`); toolEvent("copy", "relative"); } catch { /* Answer remains selectable when the clipboard is unavailable. */ } }}
             className="mt-3 rounded-sm border border-[#b8c7d9] bg-white px-3 py-1.5 text-xs font-semibold text-[#0969da] hover:bg-[#f3f8fd]"
           >
             Copy answer
@@ -104,9 +96,9 @@ export function DirectDateAnswer({
         </section>
 
         <div className="mx-auto mt-4 grid max-w-3xl items-center gap-3 sm:grid-cols-[1fr_auto_1fr]">
-          <TimeComparison label="Starting time" date={liveReferenceDate} />
+          <TimeComparison label="Starting time" date={toZonedTime(liveReferenceDate, state.zone)} />
           <span className="hidden text-2xl font-bold text-[#315f8d] sm:block" aria-hidden="true">→</span>
-          <TimeComparison label="Result time" date={resultDate} />
+          <TimeComparison label="Result time" date={toZonedTime(resultDate, state.zone)} />
         </div>
       </article>
     );
@@ -114,12 +106,12 @@ export function DirectDateAnswer({
 
   return (
     <article
-      data-content-stage="direct-answer"
+      data-reference={state.instant} data-mode={state.mode} data-content-stage="direct-answer"
       className="mx-auto max-w-4xl py-5 text-center sm:py-8"
       aria-labelledby="direct-date-answer-heading"
     >
       <header>
-        <p className="text-sm font-semibold text-fern">Direct answer</p>
+        <p className="text-sm font-semibold text-fern">{status}</p>
         <h2
           id="direct-date-answer-heading"
           className="mx-auto mt-2.5 max-w-3xl font-display text-xl font-semibold leading-snug text-ink/65 sm:text-2xl"
@@ -143,7 +135,7 @@ export function DirectDateAnswer({
         </time>
       </header>
 
-      {!includesTime && <MonthCalendar resultDate={resultDate} />}
+      {!includesTime && <MonthCalendar resultDate={toZonedTime(resultDate, state.zone)} />}
 
       <section
         className={`${includesTime ? "mt-7" : "mt-6"} w-full rounded-md border-y border-[#D9DEE5] bg-[#F4F8FB] px-4 py-3.5`}
@@ -161,12 +153,12 @@ export function DirectDateAnswer({
       <div className="mt-6 grid divide-y divide-[#D9DEE5] border-y border-[#D9DEE5] text-left sm:grid-cols-2 sm:divide-x sm:divide-y-0">
         <DateComparison
           label="Starting date"
-          date={liveReferenceDate}
+          date={toZonedTime(liveReferenceDate, state.zone)}
           includesTime={includesTime}
         />
         <DateComparison
           label="Result date"
-          date={resultDate}
+          date={toZonedTime(resultDate, state.zone)}
           includesTime={includesTime}
         />
       </div>

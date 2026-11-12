@@ -1,4 +1,7 @@
-"use client";
+import { useRelativeState } from "./use-relative-state";
+import { relativeText, relativeResult } from "@/lib/relative-state";
+import { resolveWallTime } from "@/lib/timezoneFacts";
+import { toolEvent } from "@/lib/tool-events";
 
 import { FormEvent, useEffect, useState } from "react";
 import {
@@ -9,12 +12,9 @@ import {
   Clock3,
   MapPin,
 } from "lucide-react";
-import { format, isValid } from "date-fns";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import {
   calculateDateDifference,
-  calculateRelativeDate,
-  formatLongDate,
   formatZonedTime,
   parseLocalDate,
   type RelativeUnit,
@@ -43,8 +43,10 @@ export function CalculatorBox({
   initialResult,
   initialDate,
   initialDateTime,
+  referenceTime,
 }: {
   page: PageCalculationInput;
+  referenceTime?: string;
   initialResult: string;
   initialDate: string;
   initialDateTime?: string;
@@ -66,6 +68,7 @@ export function CalculatorBox({
 
   return (
     <RelativeForm
+      referenceTime={referenceTime}
       page={page}
       initialResult={initialResult}
       initialDate={initialDate}
@@ -74,114 +77,52 @@ export function CalculatorBox({
   );
 }
 
-function RelativeForm({
-  page,
-  initialResult,
-  initialDate,
-  initialDateTime,
-}: {
-  page: RelativeCalculationInput;
-  initialResult: string;
-  initialDate: string;
-  initialDateTime?: string;
+function RelativeForm({ page, initialDate, referenceTime }: {
+  page: RelativeCalculationInput; initialResult: string; initialDate: string; initialDateTime?: string; referenceTime?: string;
 }) {
-  const isHourPage = page.unit === "hour";
-  const [amount, setAmount] = useState(page.amount);
+  const { state, update, hold, reset } = useRelativeState(page, referenceTime || initialDate + "T12:00:00.000Z");
+  const [editing, setEditing] = useState(false);
+  const [amount, setAmount] = useState(String(page.amount));
   const [unit, setUnit] = useState<RelativeUnit>(page.unit);
-  const [date, setDate] = useState(isHourPage && initialDateTime ? initialDateTime : initialDate);
-  const [result, setResult] = useState(initialResult);
-  const startingDate = isHourPage ? new Date(date) : parseLocalDate(date);
-  const [resultDate, setResultDate] = useState(date);
-
+  const [direction, setDirection] = useState(page.direction);
+  const [date, setDate] = useState(formatInTimeZone(new Date(state.instant), state.zone, "yyyy-MM-dd'T'HH:mm"));
+  const [error, setError] = useState("");
   useEffect(() => {
-    const current = new Date();
-    setDate(format(current, isHourPage ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd"));
-    setResultDate(format(current, isHourPage ? "yyyy-MM-dd'T'HH:mm" : "yyyy-MM-dd"));
-    const next = calculateRelativeDate(
-      current,
-      page.amount,
-      page.unit,
-      page.direction,
-    );
-    setResult(formatLongDate(next, page.unit === "hour"));
-  }, [isHourPage, page.amount, page.direction, page.unit]);
-
+    if (!editing) setDate(formatInTimeZone(new Date(state.instant), state.zone, "yyyy-MM-dd'T'HH:mm"));
+  }, [state.instant, state.zone, editing]);
+  function edit() { if (!editing) { hold(); setEditing(true); } }
   function calculate(event: FormEvent) {
     event.preventDefault();
-    if (!isValid(startingDate) || !Number.isFinite(amount)) return;
-    const next = calculateRelativeDate(
-      startingDate,
-      Math.max(0, amount),
-      unit,
-      page.direction,
-    );
-    if (!isValid(next)) return;
-    setResult(formatLongDate(next, unit === "hour"));
-    setResultDate(date);
+    const instants = resolveWallTime(date, state.zone);
+    const quantity = Number(amount);
+    if (instants.length !== 1 || amount.trim() === "" || !Number.isSafeInteger(quantity) || quantity < 0 || quantity > 10000) {
+      setError(instants.length > 1 ? "This time occurs twice during a clock change. Choose an unambiguous time or use the Time Zone Converter." : "Enter a valid date and a whole-number amount from 0 to 10,000. Skipped clock-change times are not valid.");
+      return;
+    }
+    const next = { ...state, page: { ...page, amount: quantity, unit, direction }, instant: instants[0].toISOString(), mode: "custom" as const };
+    try {
+      const resultYear = relativeResult(next).getUTCFullYear();
+      if (resultYear < 1 || resultYear > 9999) throw new RangeError();
+      relativeText(next);
+    } catch { setError("Choose a result between years 1 and 9999."); return; }
+    update(next); setEditing(true); setError(""); toolEvent("calculate", "relative");
   }
-
-  return (
-    <CalculatorShell
-      result={
-        <CompactResult
-          label="Calculated result"
-          result={result}
-          detail={`Calculated ${page.direction === "future" ? "forward" : "backward"} from ${format(isHourPage ? new Date(resultDate) : parseLocalDate(resultDate), isHourPage ? "MMMM d, yyyy 'at' h:mm a" : "MMMM d, yyyy")}.`}
-          kind={unit === "hour" ? "time" : "date"}
-        />
-      }
-    >
-      <form onSubmit={calculate}>
-        <FormHeading />
-        <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_minmax(0,1.25fr)_minmax(9rem,0.85fr)]">
-          <Field label="Number" htmlFor="seo-amount">
-            <input
-              id="seo-amount"
-              name="seo-amount"
-              autoComplete="off"
-              type="number"
-              inputMode="numeric"
-              min={0}
-              max={10000}
-              value={amount}
-              onChange={(event) => setAmount(Number(event.target.value))}
-              className={fieldClass}
-            />
-          </Field>
-          <Field label="Unit" htmlFor="seo-unit">
-            <select
-              id="seo-unit"
-              name="seo-unit"
-              value={unit}
-              onChange={(event) =>
-                setUnit(event.target.value as RelativeUnit)
-              }
-              className={fieldClass}
-            >
-              {unitOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label={isHourPage ? "Starting date & time" : "Starting date"} htmlFor="seo-date">
-            <input
-              id="seo-date"
-              name="seo-date"
-              autoComplete="off"
-              type={isHourPage ? "datetime-local" : "date"}
-              required
-              value={date}
-              onChange={(event) => setDate(event.target.value)}
-              className={fieldClass}
-            />
-          </Field>
-          <CalculateButton />
-        </div>
-      </form>
-    </CalculatorShell>
-  );
+  return <CalculatorShell result={<CompactResult label={state.mode === "example" ? "Example result (UTC)" : state.mode === "custom" ? "Custom result" : "Live result"} result={relativeText(state)} detail={`Starting point: ${formatInTimeZone(new Date(state.instant), state.zone, "MMMM d, yyyy 'at' h:mm a")} (${state.zone}).`} kind={state.page.unit === "hour" ? "time" : "date"} />}>
+    <form onSubmit={calculate}>
+      <FormHeading />
+      <p className="mt-2 text-sm text-[#536b8d]">{state.mode === "example" ? "Example — fixed starting conditions in UTC. Enable JavaScript for current local time." : `${state.mode === "custom" ? "Custom calculation" : "Live calculation"} · ${state.zone}`}</p>
+      {unit === "business-day" && <p className="mt-2 text-sm text-[#536b8d]">Weekends are excluded. Public holidays are not excluded. The starting date is not counted.</p>}
+      <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2">
+        <Field label="Number" htmlFor="seo-amount"><input id="seo-amount" type="number" required min={0} max={10000} step={1} value={amount} onChange={e=>{edit();setAmount(e.target.value);}} className={fieldClass}/></Field>
+        <Field label="Unit" htmlFor="seo-unit"><select id="seo-unit" value={unit} onChange={e=>{edit();setUnit(e.target.value as RelativeUnit);}} className={fieldClass}>{unitOptions.map(o=><option key={o.value} value={o.value}>{o.label}</option>)}</select></Field>
+        <Field label="Direction" htmlFor="seo-direction"><select id="seo-direction" value={direction} onChange={e=>{edit();setDirection(e.target.value as typeof direction);}} className={fieldClass}><option value="future">Add</option><option value="past">Subtract</option></select></Field>
+        <Field label={`Starting date & time (${state.zone})`} htmlFor="seo-date"><input id="seo-date" type="datetime-local" required value={date} onChange={e=>{edit();setDate(e.target.value);}} className={fieldClass}/></Field>
+      </div>
+      <CalculateButton />
+      <button type="button" className="mt-3 min-h-11 text-sm font-semibold text-[#0969da] underline" onClick={()=>{setEditing(false);setAmount(String(page.amount));setUnit(page.unit);setDirection(page.direction);setError("");reset();}}>Reset to current time</button>
+      {error && <p role="alert">{error}</p>}
+    </form>
+  </CalculatorShell>;
 }
 
 function DifferenceForm({

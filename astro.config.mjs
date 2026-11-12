@@ -2,6 +2,9 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 
+// Build examples have an explicit UTC basis, never the developer machine zone.
+process.env.TZ = "UTC";
+
 export default defineConfig({
   site: "https://whatdatetime.com",
   output: "static",

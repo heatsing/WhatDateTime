@@ -47,7 +47,7 @@ export const primaryTools = [
   {
     title: "Business Days",
     description: "Add working days while automatically skipping weekends.",
-    href: "/30-business-days-from-today",
+    href: "/calculators/business-days",
     icon: "calendar",
     tone: "lime",
   },

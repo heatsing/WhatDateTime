@@ -9,7 +9,7 @@ const calculatorLinks = [
   { title: "Date Calculator", detail: "Add or subtract calendar units.", href: "/calculators/date-calculator" },
   { title: "Days Between Dates", detail: "Measure the interval between dates.", href: "/calculators/time-difference" },
   { title: "Days Until Date", detail: "Count days until a target date.", href: "/calculators/days-until" },
-  { title: "Business Days Calculator", detail: "Calculate working-day deadlines.", href: "/30-business-days-from-today" },
+  { title: "Business Days Calculator", detail: "Calculate working-day deadlines.", href: "/calculators/business-days" },
   { title: "Age Calculator", detail: "Find an exact age from a birth date.", href: "/calculators/age-calculator" },
   { title: "Day of the Week", detail: "Identify the weekday for any date.", href: "/calculators/day-of-week" },
   { title: "Calendar Generator", detail: "View any month and year.", href: "/calculators/calendar" },
@@ -67,7 +67,7 @@ export function ToolPageShell({ title, description, seoDescription = description
               <header>
                 <h1 className="font-display text-[38px] font-bold leading-tight tracking-[-0.04em] text-[#0c2146] sm:text-[46px]">{title}</h1>
                 <p className="mt-2 text-lg leading-7 text-[#263d60]">{description}</p>
-                <p className="mt-3 max-w-4xl text-sm leading-6 text-[#536b8d]">{seoDescription}</p>
+                {seoDescription !== description && <p className="mt-3 max-w-4xl text-sm leading-6 text-[#536b8d]">{seoDescription}</p>}
               </header>
 
               <div className="mt-7">{children}</div>

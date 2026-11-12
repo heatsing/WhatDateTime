@@ -15,3 +15,13 @@ bounded directory pages, and a first phase of approximately 1,000–2,500 indexa
 URLs. No additional number-answer pages or city-pair combinations are authorized
 by this refactor. Directory pages need unique metadata, useful real links and
 pagination; do not pad them with invented FAQs or examples to satisfy prose quotas.
+
+## 2026-11-13 generic business-day tool
+
+The current request explicitly authorizes a reusable business-day entry if none
+exists. `/calculators/business-days` adds arbitrary start date, amount and
+direction using the existing engine, with explicit weekend/holiday/start-day
+rules. It serves tool intent rather than another numeric answer. The existing
+numbered routes are retained and link back to the tool. Unique metadata,
+self-canonical, schemas, sitemap, accessible inputs and full build/SEO gates
+were checked; see `reports/recovery-2026-11-13.md`.

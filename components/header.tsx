@@ -19,7 +19,7 @@ const navigation: ReadonlyArray<NavigationGroup> = [
       ["Days Until Date", "/calculators/days-until"],
       ["Day of the Week", "/calculators/day-of-week"],
       ["Age Calculator", "/calculators/age-calculator"],
-      ["Business Days", "/30-business-days-from-today"],
+      ["Business Days", "/calculators/business-days"],
     ],
   },
   {

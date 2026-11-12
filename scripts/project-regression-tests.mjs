@@ -32,8 +32,25 @@ await build({
     import { AgeCalculator } from './components/age-calculator';
     import { DifferenceCalculator } from './components/difference-calculator';
     import { CountdownCalculator } from './components/countdown-calculator';
+    import { DirectDateAnswer } from './components/direct-date-answer';
+    import { HourAnswerDetails } from './components/hour-answer-details';
+    import { CalculatorBox } from './components/CalculatorBox';
+    import { relativeResult } from './lib/relative-state';
+    import { formatInTimeZone } from 'date-fns-tz';
+    import assert from 'node:assert/strict';
+    const calculation = {kind:'relative',type:'days-from-today',unit:'day',amount:1,direction:'future'};
+    const spring = {page:calculation,instant:'2026-03-07T17:00:00Z',zone:'America/New_York',mode:'custom'};
+    assert.equal(relativeResult(spring).toISOString(), '2026-03-08T16:00:00.000Z');
+    assert.equal(relativeResult({...spring,page:{...calculation,unit:'hour',amount:24}}).toISOString(), '2026-03-08T17:00:00.000Z');
+    const fold = {...spring,instant:'2026-11-01T05:30:00Z',page:{...calculation,unit:'hour',amount:1}};
+    assert.equal(relativeResult(fold).toISOString(),'2026-11-01T06:30:00.000Z');
+    assert.equal(formatInTimeZone(relativeResult(fold),fold.zone,'HH:mm XXX'),'01:30 -05:00');
     const initialTime = process.argv[2];
     const components = {...utilities, TimezoneCalculator, DateCalculator, AgeCalculator, DifferenceCalculator, CountdownCalculator};
+    const page = {kind:'relative',type:'hours-from-now',unit:'hour',amount:8,direction:'future'};
+    components.Answer = () => React.createElement(DirectDateAnswer,{page,referenceTime:initialTime,initialTimeZone:'UTC'});
+    components.Timeline = () => React.createElement(HourAnswerDetails,{page,referenceTime:initialTime});
+    components.RelativeForm = () => React.createElement(CalculatorBox,{page,referenceTime:initialTime,initialDate:initialTime.slice(0,10),initialResult:''});
     const results = Object.fromEntries(Object.entries(components).map(([name, Component]) =>
       [name, renderToString(React.createElement(Component, {initialTime}))]));
     console.log(JSON.stringify(results));

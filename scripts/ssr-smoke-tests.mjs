@@ -21,6 +21,10 @@ const samples = [
   ),
 ];
 const routes = [
+  "8-hours-from-now", "15-hours-ago", "10-hours-ago", "72-hours-from-now", "48-hours-from-now", "18-hours-from-now",
+  "calculators/countdown", "calculators/date-calculator", "calculators/business-days", "calculations/hours-from-now",
+  "8-business-days-from-today", "90-business-days-from-today", "35-business-days-from-today",
+  "toronto-to-new-york-time", "london-to-toronto-time", "singapore-to-melbourne-time",
   "",
   "time/new-york",
   "time/london",
@@ -80,6 +84,10 @@ for (const slug of routes) {
     ...html.matchAll(/type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
   ].map((m) => JSON.parse(m[1]));
   assert(schemas.length > 0, slug);
+  if (record?.kind === "relative") {
+    assert(html.includes("Example") && html.includes("UTC"), `${slug}: static/reference label`);
+    assert(!html.includes('initialTimeZone="Asia/Shanghai"'), `${slug}: no assumed visitor zone`);
+  }
   if (record?.kind === "timezone")
     assert(
       html.includes("data-conversion-table") &&

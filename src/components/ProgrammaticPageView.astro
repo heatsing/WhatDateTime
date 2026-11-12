@@ -16,6 +16,7 @@ import { getCalculationInput, getSEOText } from "@/lib/seoGenerator";
 import { getPageFormula, getPageResult } from "@/lib/pageCalculations";
 import type { RelativeCalculationInput, TimezoneCalculationInput } from "@/lib/pageCalculations";
 import { getContentRevision, getFamilyDetails } from "@/lib/seo-taxonomy";
+import { relativeFAQs } from "@/lib/calculation-faq";
 import {
   breadcrumbListSchema,
   calculatorApplicationSchema,
@@ -34,12 +35,15 @@ const calculation = getCalculationInput(page);
 const relativeCalculation = page.kind === "relative" ? calculation as RelativeCalculationInput : undefined;
 const timezoneCalculation = page.kind === "timezone" ? calculation as TimezoneCalculationInput : undefined;
 const seo = getSEOText(page);
+const faqs = page.kind === "relative" ? relativeFAQs(page) : page.faq;
+const relatedData = related.map(candidate => ({ ...getCalculationInput(candidate), slug: candidate.slug, title: candidate.title }));
+const relatedCurrent = { ...calculation, slug: page.slug, title: page.title };
 const result = getPageResult(calculation, now);
 const formula = getPageFormula(calculation, now);
 const path = `/${page.slug}`;
 const family = getFamilyDetails(page);
 const dateModified = getContentRevision(page);
-const initialTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+const initialTimeZone = "UTC";
 const isHourRelative = (candidate: SEOPage): candidate is RelativeSEOPage => candidate.kind === "relative" && candidate.unit === "hour";
 const isHourPage = page.kind === "relative" && page.unit === "hour";
 const hourLinks = page.kind === "relative" && page.direction === "past"
@@ -56,7 +60,7 @@ const crawlableHourLinks = related.filter(isHourRelative);
 ---
 
 <JsonLd data={[
-  faqPageSchema(page.faq),
+  faqPageSchema(faqs),
   calculatorApplicationSchema({ name: seo.title, description: seo.description, path, dateModified }),
   breadcrumbListSchema([
     { name: "Home", path: "/" },
@@ -73,7 +77,7 @@ const crawlableHourLinks = related.filter(isHourRelative);
           <header>
             <h1 class="font-display text-[34px] font-bold leading-tight tracking-[-0.035em] text-[#0c2146] sm:text-[42px]">{seo.h1}</h1>
             <p class="mt-2 max-w-4xl text-base leading-7 text-[#405776]">{seo.description}</p>
-            <p class="mt-1 text-xs text-[#536b8d]">Updated live from your local device time.</p>
+            <p class="mt-1 text-xs text-[#536b8d]">The example uses UTC. Enable JavaScript for a live answer in your device time zone.</p>
           </header>
 
           <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white px-4 sm:px-6">
@@ -83,11 +87,12 @@ const crawlableHourLinks = related.filter(isHourRelative);
             <CalculatorBox
               client:load
               page={calculation}
+              referenceTime={referenceTime}
               initialResult={result}
               initialDate={format(now, "yyyy-MM-dd")}
               initialDateTime={format(now, "yyyy-MM-dd'T'HH:mm")}
             />
-            <noscript><p class="mt-3 text-sm text-[#536b8d]">The direct answer and formula above are available without JavaScript. Enable JavaScript to change calculator inputs.</p></noscript>
+            <noscript><p class="mt-3 text-sm text-[#536b8d]">Without JavaScript the answer and formula above are fixed UTC examples, not current results. Enable JavaScript to change calculator inputs.</p></noscript>
           </div>
           <div class="mt-5"><HourAnswerDetails client:load page={relativeCalculation!} referenceTime={referenceTime} /></div>
           <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6"><LiveRelatedHourLinks client:load currentPage={currentHourPage!} pages={relatedHourPages} referenceTime={referenceTime} /></div>
@@ -101,7 +106,7 @@ const crawlableHourLinks = related.filter(isHourRelative);
               ))}
             </div>
           </section>
-          <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6"><FAQ faqs={page.faq} variant="editorial" /></div>
+          <div class="mt-5 rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6"><FAQ faqs={faqs} variant="editorial" /></div>
         </div>
 
         <aside class="space-y-5" aria-label="Time calculation navigation">
@@ -148,11 +153,12 @@ const crawlableHourLinks = related.filter(isHourRelative);
       <CalculatorBox
         client:load
         page={calculation}
-        initialResult={result}
+        referenceTime={referenceTime}
+              initialResult={result}
         initialDate={format(now, "yyyy-MM-dd")}
         initialDateTime={page.kind === "timezone" ? formatInTimeZone(now, page.fromZone, "yyyy-MM-dd'T'HH:mm") : undefined}
       />
-      <noscript><p class="mt-3 text-center text-sm text-ink/55">The exact answer and formula above are available without JavaScript. Enable JavaScript to change the calculator inputs.</p></noscript>
+      <noscript><p class="mt-3 text-center text-sm text-ink/55">Without JavaScript, relative dates above are fixed UTC examples, not current results. Enable JavaScript to change the calculator inputs.</p></noscript>
     </div>
   </div>
 </section>
@@ -162,10 +168,10 @@ const crawlableHourLinks = related.filter(isHourRelative);
   </div>
 </section>
 <section class="border-t border-[#D9DEE5] bg-white px-5 py-14 sm:px-8 sm:py-16 lg:py-20">
-  <div class="mx-auto max-w-4xl"><RelatedLinks currentPage={page} pages={related} referenceDate={now} /></div>
+  <div class="mx-auto max-w-4xl">{page.kind === "relative" ? <RelatedLinks client:load currentPage={relatedCurrent} pages={relatedData} referenceDate={now} referenceTime={referenceTime} /> : <RelatedLinks currentPage={relatedCurrent} pages={relatedData} referenceDate={now} referenceTime={referenceTime} />}</div>
 </section>
 <section class="border-t border-[#D9DEE5] bg-white px-5 py-14 sm:px-8 sm:py-16 lg:py-20">
-  <FAQ faqs={page.faq} variant="editorial" />
+  <FAQ faqs={faqs} variant="editorial" />
 </section>
 </>
 )}

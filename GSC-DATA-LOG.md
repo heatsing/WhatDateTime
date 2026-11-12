@@ -2,6 +2,16 @@
 
 No verified Google Search Console export is stored in this repository yet.
 
+## 2026-11-13 owner-supplied performance summary and repair
+
+- Supplied window: 2026-08-11 through 2026-11-10; 316 clicks and 253,726 impressions. 96.45% of impressions occurred on August 12–16. The last 28 days had 65 impressions and zero clicks. These are owner-provided figures, not an independently imported GSC export.
+- The supplied page table reports 2 clicks and 155 impressions for `/35-business-days-from-today`. The September 26 eligibility policy limited the family to 1–30 plus selected exceptions, so 35 was accessible with noindex but absent from sitemap. After checking its weekday calculation and purpose, this one URL is protected and restored to indexing/sitemap. No other legacy page is removed or newly noindexed.
+- The fixed September 26 reference comes from `lib/build-time.ts`, intentionally introduced for byte-stable asset delivery. This pass labels it as an explicit UTC example, shares browser live/custom state, and does not reinstate daily full-site deployment.
+- Repository history is not deployment/CDN history. No causal attribution is made between stale snapshots, the eligibility policy, or the exposure decline. Need original query/page/day exports, Page Indexing reasons, URL Inspection rendered HTML/last crawl, and production release/cache/WAF logs.
+- Keep the current sitemap family split. Compare affected cohorts only after an intentional deployment and new crawl evidence; do not promise rankings or infer a penalty from low clicks.
+
+Implementation and verification: `reports/recovery-2026-11-13.md`.
+
 ## 2026-08-27 indexing baseline
 
 - The site owner reported that the Page Indexing report shows 4 indexed pages.

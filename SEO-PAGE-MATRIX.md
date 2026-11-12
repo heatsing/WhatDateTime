@@ -13,7 +13,7 @@
 | Date difference | 500 |
 | Time-zone conversion | 5,964 |
 | **Programmatic total** | **9,994** |
-| Primary calculators | 5 |
+| Primary calculators | 6 |
 | Focused date utilities | 7 |
 | Homepage | 1 |
 
@@ -24,13 +24,17 @@ in a year, monthly calendars, half birthdays, and combined weeks-and-days-ago.
 
 The inventory in `data/tools/index.json` is authoritative. This document is a review summary, not a second route source.
 
-## Current eligibility policy (2026-09-26)
+## Current eligibility policy (2026-09-26, reviewed 2026-11-13)
 
-All 9,994 original programmatic routes remain accessible. Of these, 1,968 are
-eligible for index/SSG and 8,026 use on-demand HTML with `noindex, follow`.
+All 9,994 original programmatic routes remain accessible. Of these, 1,969 are
+eligible for index/SSG and 8,025 use on-demand HTML with `noindex, follow`.
 The city-pair subset has 5,964 accessible URLs, of which 1,561 are eligible.
 There are 82 new city hubs plus 167 region/paginated directory pages. Along with
-19 core/trust pages, totals are 10,262 accessible and 2,236 indexable URLs.
+20 core/trust pages, totals are 10,263 accessible and 2,238 indexable URLs.
+
+The November 13 review adds one generic business-day calculator and restores
+the existing 35-business-day answer to indexing based on owner-reported GSC
+history and its maintained functionality. No new numbered answer pages were added.
 
 `lib/siteInventory.ts` defines new hub/directory routes. `lib/indexEligibility.ts`
 is the only eligibility authority. Generated counts and per-URL reasons live in

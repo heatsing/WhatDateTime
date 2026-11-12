@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/src/layouts/BaseLayout.astro';
+import { ToolPageShell } from '@/components/tool-page-shell';
+import { RelativeTool } from '@/components/relative-tool';
+import { getBuildTime } from '@/lib/build-time';
+const title = 'Business Days Calculator';
+const description = 'Add or subtract working days from a chosen date. Skip Saturdays and Sundays, exclude the starting date, and see the resulting weekday. Holidays are not excluded.';
+---
+<BaseLayout title={`${title} | WhatDateTime`} description={description} canonicalPath="/calculators/business-days">
+  <ToolPageShell eyebrow="Weekday planning" title={title} description={description} path="/calculators/business-days"
+    steps={[{title:'Choose a start',text:'Enter the starting date and time.'},{title:'Choose an interval',text:'Enter working days and choose add or subtract.'},{title:'Review the date',text:'The starting day is excluded; only Monday–Friday count.'}]}
+    methodology={{title:'How business days are counted',paragraphs:['Move forward or backward one date at a time, counting only Monday through Friday. The starting date does not count. Zero days leaves it unchanged.','Weekends are excluded. Public holidays are not excluded. Check the applicable holiday calendar before using this as an official deadline.']}}
+    accuracy={{title:'Example: a Friday start',text:'One business day after Friday is Monday; one business day before Monday is Friday. This is not a legal deadline calculator.'}}
+    useCases={['Estimate a weekday turnaround','Plan a project milestone','Compare delivery windows']}
+    faqs={[{question:'Are public holidays excluded?',answer:'No. Only Saturdays and Sundays are excluded.'},{question:'Does the starting date count?',answer:'No. Counting starts on the next or previous date. Zero days returns the starting date.'},{question:'Can I subtract business days?',answer:'Yes. Choose Subtract to move backward, skipping weekends.'}]}>
+    <RelativeTool client:load initialTime={getBuildTime()} business />
+    <p class="mt-5"><a href="/30-business-days-from-today">30 business days from today</a> · <a href="/35-business-days-from-today">35 business days from today</a> · <a href="/calculations/business-days-from-today">Browse working-day answers</a></p>
+  </ToolPageShell>
+</BaseLayout>

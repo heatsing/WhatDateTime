@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useRelativeState } from "./use-relative-state";
+import { relativeText, relativeFormula } from "@/lib/relative-state";
 import { format } from "date-fns";
 import { CalculatorBox } from "./CalculatorBox";
 import { Breadcrumb } from "./Breadcrumb";
@@ -6,6 +7,8 @@ import { FAQ } from "./FAQ";
 import { JsonLd } from "./json-ld";
 import { TimezoneExperience } from "./timezone-experience";
 import { getPairCities } from "../lib/indexEligibility";
+import { getFamilyDetails } from "../lib/seo-taxonomy";
+import { relativeFAQs } from "../lib/calculation-faq";
 import type { PageCalculationInput } from "../lib/pageCalculations";
 import {
   getDirectFAQ,
@@ -42,24 +45,10 @@ export function OnDemandPage({
   related,
   snapshot,
 }: OnDemandProps) {
-  const [now, setNow] = useState(() => new Date(initialTime));
-  const [live, setLive] = useState(false);
-  useEffect(() => {
-    if (page.kind === "timezone") return;
-    const update = () => {
-      setNow(new Date());
-      setLive(true);
-    };
-    update();
-    const timer = setInterval(update, 30000);
-    window.addEventListener("focus", update);
-    document.addEventListener("visibilitychange", update);
-    return () => {
-      clearInterval(timer);
-      window.removeEventListener("focus", update);
-      document.removeEventListener("visibilitychange", update);
-    };
-  }, [page.kind]);
+  const { state } = useRelativeState(page.kind === "relative" ? page : {kind:"relative",type:"hours-from-now",amount:0,unit:"hour",direction:"future"}, initialTime);
+  const now = new Date(state.instant);
+  const live = state.mode !== "example";
+  const family = getFamilyDetails(page);
   if (page.kind === "timezone") {
     const pair = getPairCities(page.slug)!;
     return (
@@ -74,8 +63,9 @@ export function OnDemandPage({
       />
     );
   }
-  const faqs =
-    !live && snapshot
+  const faqs = page.kind === "relative"
+    ? relativeFAQs(page)
+    : !live && snapshot
       ? snapshot.faqs
       : [getDirectFAQ(page, now), ...page.faq.slice(1)];
   return (
@@ -93,7 +83,7 @@ export function OnDemandPage({
             }),
             breadcrumbListSchema([
               { name: "Home", path: "/" },
-              { name: "Date Calculator", path: "/calculators/date-calculator" },
+              { name: family.hubName, path: family.hubPath },
               { name: page.h1, path: `/${page.slug}` },
             ]),
             faqPageSchema(faqs),
@@ -102,8 +92,8 @@ export function OnDemandPage({
         <Breadcrumb
           current={page.h1}
           parent={{
-            name: "Date Calculator",
-            path: "/calculators/date-calculator",
+            name: family.hubName,
+            path: family.hubPath,
           }}
         />
         <h1 className="font-display text-[34px] font-bold leading-tight text-[#0c2146] sm:text-[42px]">
@@ -113,19 +103,18 @@ export function OnDemandPage({
         <section className="rounded-sm border border-[#d8e1ed] bg-white p-5 sm:p-6">
           <h2 className="text-xl font-bold">Direct answer</h2>
           <p className="mt-3 text-3xl font-semibold" data-direct-answer>
-            {!live && snapshot ? snapshot.result : getPageResult(page, now)}
+            {page.kind === "relative" ? relativeText(state) : !live && snapshot ? snapshot.result : getPageResult(page, now)}
           </p>
           <p className="mt-3" data-formula>
-            {!live && snapshot ? snapshot.formula : getPageFormula(page, now)}
+            {page.kind === "relative" ? relativeFormula(state) : !live && snapshot ? snapshot.formula : getPageFormula(page, now)}
           </p>
           <p className="mt-3 text-sm text-[#536b8d]">
-            Reference instant: {now.toISOString()}. The server snapshot uses
-            UTC; JavaScript updates the calculation to your device’s local date
-            and time.
+            Reference instant: {state.instant} · {state.zone} · {state.mode}. The initial reference is server-rendered; custom inputs remain fixed until reset.
           </p>
         </section>
         <CalculatorBox
           page={page}
+          referenceTime={initialTime}
           initialResult={
             snapshot?.result || getPageResult(page, new Date(initialTime))
           }

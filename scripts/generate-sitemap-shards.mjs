@@ -34,16 +34,16 @@ const groups = [{
   revision: revisions.site,
   pages: coreRoutes.map((slug) => ({ slug, revision: revisions.corePages?.[slug] || revisions.site })),
 }];
-groups.push({name:'sitemap-city-hubs',revision:'2026-09-26',pages:hubRoutes.map(page=>({...page,revision:'2026-09-26'}))});
-groups.push({name:'sitemap-calculation-directories',revision:'2026-09-26',pages:calculationDirectories.map(page=>({...page,revision:'2026-09-26'}))});
+groups.push({name:'sitemap-city-hubs',revision:revisions['timezone-converter'],pages:hubRoutes.map(page=>({...page,revision:revisions['timezone-converter']}))});
+groups.push({name:'sitemap-calculation-directories',revision:revisions['timezone-converter'],pages:calculationDirectories.map(page=>({...page,revision:revisions.directories}))});
 for (const [type, baseName] of Object.entries(sitemapNames)) {
   const familyPages = pageIndex.filter((page) => page.type === type && getPageIndexEligibility(page).indexable);
   for (let offset = 0; offset < familyPages.length; offset += shardSize) {
     const part = Math.floor(offset / shardSize) + 1;
     groups.push({
       name: familyPages.length > shardSize ? `${baseName}-${part}` : baseName,
-      revision: type==='timezone-converter'?'2026-09-26':revisions[type],
-      pages: familyPages.slice(offset, offset + shardSize).map((page) => ({ ...page, revision: type==='timezone-converter'?'2026-09-26':pageRevision(page, revisions[type]) })),
+      revision: type==='timezone-converter'?revisions['timezone-converter']:revisions[type],
+      pages: familyPages.slice(offset, offset + shardSize).map((page) => ({ ...page, revision: type==='timezone-converter'?revisions['timezone-converter']:pageRevision(page, revisions[type]) })),
     });
   }
 }

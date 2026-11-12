@@ -4,6 +4,7 @@
   "priority5": ["new-york", "london", "tokyo", "los-angeles", "paris", "singapore", "sydney", "dubai"],
   "priority4": ["toronto", "berlin", "chicago", "san-francisco", "vancouver", "mexico-city", "sao-paulo", "rome", "amsterdam", "zurich", "mumbai", "delhi", "hong-kong", "shanghai", "seoul", "melbourne", "washington-dc", "dallas", "seattle", "beijing"],
   "protected": {
+    "35-business-days-from-today": "Owner-provided 2026-11-13 GSC summary: 2 historical clicks, 155 impressions; original export pending. Useful maintained weekday tool restored after review.",
     "194-months-from-today": "Owner-reported Google indexing; not independently verified in GSC",
     "new-york-to-rome-time": "Owner-reported Google indexing; not independently verified in GSC",
     "washington-dc-to-denver-time": "Owner-reported Google indexing; not independently verified in GSC",

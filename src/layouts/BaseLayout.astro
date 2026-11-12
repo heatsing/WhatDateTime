@@ -56,7 +56,8 @@ const canonical = canonicalPath === "/"
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-LLS4S0NQH8');
+      // Countdown fragments contain user-supplied event names and targets.
+      gtag('config', 'G-LLS4S0NQH8', { page_location: location.origin + location.pathname + location.search });
     </script>
   </body>
 </html>
