@@ -18,12 +18,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { parseCalendarDate } from "./date-input.ts";
 
 export type RelativeUnit =
-  | "hour"
-  | "day"
-  | "week"
-  | "month"
-  | "year"
-  | "business-day";
+  "hour" | "day" | "week" | "month" | "year" | "business-day";
 
 export type RelativeDirection = "future" | "past";
 
@@ -33,7 +28,7 @@ export function calculateRelativeDate(
   unit: RelativeUnit,
   direction: RelativeDirection = "future",
 ) {
-  const value = Math.abs(Math.trunc(amount));
+  const value = Math.abs(unit === "hour" ? amount : Math.trunc(amount));
   const future = direction === "future";
 
   switch (unit) {

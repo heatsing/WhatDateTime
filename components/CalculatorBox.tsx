@@ -2,6 +2,7 @@ import { useRelativeState } from "./use-relative-state";
 import { relativeText, relativeResult } from "@/lib/relative-state";
 import { resolveWallTime } from "@/lib/timezoneFacts";
 import { toolEvent } from "@/lib/tool-events";
+import { offsetInputHelp, parseOffsetAmount } from "@/lib/offset-input";
 
 import { FormEvent, useEffect, useState } from "react";
 import {
@@ -77,52 +78,209 @@ export function CalculatorBox({
   );
 }
 
-function RelativeForm({ page, initialDate, referenceTime }: {
-  page: RelativeCalculationInput; initialResult: string; initialDate: string; initialDateTime?: string; referenceTime?: string;
+function RelativeForm({
+  page,
+  initialDate,
+  referenceTime,
+}: {
+  page: RelativeCalculationInput;
+  initialResult: string;
+  initialDate: string;
+  initialDateTime?: string;
+  referenceTime?: string;
 }) {
-  const { state, update, hold, reset } = useRelativeState(page, referenceTime || initialDate + "T12:00:00.000Z");
+  const { state, update, reset } = useRelativeState(
+    page,
+    referenceTime || initialDate + "T12:00:00.000Z",
+  );
   const [editing, setEditing] = useState(false);
   const [amount, setAmount] = useState(String(page.amount));
   const [unit, setUnit] = useState<RelativeUnit>(page.unit);
   const [direction, setDirection] = useState(page.direction);
-  const [date, setDate] = useState(formatInTimeZone(new Date(state.instant), state.zone, "yyyy-MM-dd'T'HH:mm"));
+  const [date, setDate] = useState(
+    formatInTimeZone(new Date(state.instant), state.zone, "yyyy-MM-dd'T'HH:mm"),
+  );
   const [error, setError] = useState("");
   useEffect(() => {
-    if (!editing) setDate(formatInTimeZone(new Date(state.instant), state.zone, "yyyy-MM-dd'T'HH:mm"));
+    if (!editing)
+      setDate(
+        formatInTimeZone(
+          new Date(state.instant),
+          state.zone,
+          "yyyy-MM-dd'T'HH:mm",
+        ),
+      );
   }, [state.instant, state.zone, editing]);
-  function edit() { if (!editing) { hold(); setEditing(true); } }
-  function calculate(event: FormEvent) {
-    event.preventDefault();
-    const instants = resolveWallTime(date, state.zone);
-    const quantity = Number(amount);
-    if (instants.length !== 1 || amount.trim() === "" || !Number.isSafeInteger(quantity) || quantity < 0 || quantity > 10000) {
-      setError(instants.length > 1 ? "This time occurs twice during a clock change. Choose an unambiguous time or use the Time Zone Converter." : "Enter a valid date and a whole-number amount from 0 to 10,000. Skipped clock-change times are not valid.");
-      return;
-    }
-    const next = { ...state, page: { ...page, amount: quantity, unit, direction }, instant: instants[0].toISOString(), mode: "custom" as const };
+  function applyDraft(draft = { amount, unit, direction, date }) {
+    setEditing(true);
+    const reject = (message: string) => {
+      setError(message);
+      update({ ...state, mode: "custom", inputError: message });
+      return false;
+    };
+    const instants = resolveWallTime(draft.date, state.zone);
+    const quantity = parseOffsetAmount(draft.amount, draft.unit);
+    if (!Number.isFinite(quantity)) return reject(offsetInputHelp(draft.unit));
+    if (instants.length !== 1)
+      return reject(
+        instants.length > 1
+          ? "This time occurs twice during a clock change. Choose an unambiguous starting time."
+          : "Enter a valid starting date and time. Skipped clock-change times are not valid.",
+      );
+    const next = {
+      ...state,
+      page: {
+        ...page,
+        amount: quantity,
+        unit: draft.unit,
+        direction: draft.direction,
+      },
+      instant: instants[0].toISOString(),
+      mode: "custom" as const,
+      inputError: undefined,
+    };
     try {
       const resultYear = relativeResult(next).getUTCFullYear();
       if (resultYear < 1 || resultYear > 9999) throw new RangeError();
       relativeText(next);
-    } catch { setError("Choose a result between years 1 and 9999."); return; }
-    update(next); setEditing(true); setError(""); toolEvent("calculate", "relative");
+    } catch {
+      return reject("Choose a result between years 1 and 9999.");
+    }
+    update(next);
+    setError("");
+    return true;
   }
-  return <CalculatorShell result={<CompactResult label={state.mode === "example" ? "Example result (UTC)" : state.mode === "custom" ? "Custom result" : "Live result"} result={relativeText(state)} detail={`Starting point: ${formatInTimeZone(new Date(state.instant), state.zone, "MMMM d, yyyy 'at' h:mm a")} (${state.zone}).`} kind={state.page.unit === "hour" ? "time" : "date"} />}>
-    <form onSubmit={calculate}>
-      <FormHeading />
-      <p className="mt-2 text-sm text-[#536b8d]">{state.mode === "example" ? "Example — fixed starting conditions in UTC. Enable JavaScript for current local time." : `${state.mode === "custom" ? "Custom calculation" : "Live calculation"} · ${state.zone}`}</p>
-      {unit === "business-day" && <p className="mt-2 text-sm text-[#536b8d]">Weekends are excluded. Public holidays are not excluded. The starting date is not counted.</p>}
-      <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2">
-        <Field label="Number" htmlFor="seo-amount"><input id="seo-amount" type="number" required min={0} max={10000} step={1} value={amount} onChange={e=>{edit();setAmount(e.target.value);}} className={fieldClass}/></Field>
-        <Field label="Unit" htmlFor="seo-unit"><select id="seo-unit" value={unit} onChange={e=>{edit();setUnit(e.target.value as RelativeUnit);}} className={fieldClass}>{unitOptions.map(o=><option key={o.value} value={o.value}>{o.label}</option>)}</select></Field>
-        <Field label="Direction" htmlFor="seo-direction"><select id="seo-direction" value={direction} onChange={e=>{edit();setDirection(e.target.value as typeof direction);}} className={fieldClass}><option value="future">Add</option><option value="past">Subtract</option></select></Field>
-        <Field label={`Starting date & time (${state.zone})`} htmlFor="seo-date"><input id="seo-date" type="datetime-local" required value={date} onChange={e=>{edit();setDate(e.target.value);}} className={fieldClass}/></Field>
-      </div>
-      <CalculateButton />
-      <button type="button" className="mt-3 min-h-11 text-sm font-semibold text-[#0969da] underline" onClick={()=>{setEditing(false);setAmount(String(page.amount));setUnit(page.unit);setDirection(page.direction);setError("");reset();}}>Reset to current time</button>
-      {error && <p role="alert">{error}</p>}
-    </form>
-  </CalculatorShell>;
+  function calculate(event: FormEvent) {
+    event.preventDefault();
+    if (applyDraft()) toolEvent("calculate", "relative");
+  }
+  return (
+    <CalculatorShell
+      result={
+        <CompactResult
+          label={
+            state.inputError
+              ? "Last valid result — check inputs"
+              : state.mode === "example"
+                ? "Example result (UTC)"
+                : state.mode === "custom"
+                  ? "Custom result"
+                  : "Live result"
+          }
+          result={relativeText(state)}
+          detail={`Starting point: ${formatInTimeZone(new Date(state.instant), state.zone, "MMMM d, yyyy 'at' h:mm a")} (${state.zone}).`}
+          kind={state.page.unit === "hour" ? "time" : "date"}
+        />
+      }
+    >
+      <form onSubmit={calculate} noValidate>
+        <FormHeading />
+        <p className="mt-2 text-sm text-[#536b8d]">
+          {state.mode === "example"
+            ? "Example — fixed starting conditions in UTC. Enable JavaScript for current local time."
+            : `${state.mode === "custom" ? "Custom calculation" : "Live calculation"} · ${state.zone}`}
+        </p>
+        {unit === "business-day" && (
+          <p className="mt-2 text-sm text-[#536b8d]">
+            Weekends are excluded. Public holidays are not excluded. The
+            starting date is not counted.
+          </p>
+        )}
+        <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2">
+          <Field label="Number" htmlFor="seo-amount">
+            <input
+              id="seo-amount"
+              type="number"
+              required
+              min={0}
+              max={10000}
+              step={unit === "hour" ? "any" : 1}
+              value={amount}
+              aria-describedby="offset-help offset-error"
+              onChange={(e) => {
+                setAmount(e.target.value);
+                applyDraft({ amount: e.target.value, unit, direction, date });
+              }}
+              className={fieldClass}
+            />
+          </Field>
+          <Field label="Unit" htmlFor="seo-unit">
+            <select
+              id="seo-unit"
+              value={unit}
+              onChange={(e) => {
+                const next = e.target.value as RelativeUnit;
+                setUnit(next);
+                applyDraft({ amount, unit: next, direction, date });
+              }}
+              className={fieldClass}
+            >
+              {unitOptions.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Direction" htmlFor="seo-direction">
+            <select
+              id="seo-direction"
+              value={direction}
+              onChange={(e) => {
+                const next = e.target.value as typeof direction;
+                setDirection(next);
+                applyDraft({ amount, unit, direction: next, date });
+              }}
+              className={fieldClass}
+            >
+              <option value="future">Add</option>
+              <option value="past">Subtract</option>
+            </select>
+          </Field>
+          <Field
+            label={`Starting date & time (${state.zone})`}
+            htmlFor="seo-date"
+          >
+            <input
+              id="seo-date"
+              type="datetime-local"
+              required
+              min="0001-01-01T00:00"
+              max="9999-12-31T23:59"
+              value={date}
+              aria-describedby="offset-error"
+              onChange={(e) => {
+                setDate(e.target.value);
+                applyDraft({ amount, unit, direction, date: e.target.value });
+              }}
+              className={fieldClass}
+            />
+          </Field>
+        </div>
+        <p id="offset-help" className="my-3 text-sm text-[#536b8d]">
+          {offsetInputHelp(unit)} Valid inputs update every result on this page.
+        </p>
+        <CalculateButton />
+        <button
+          type="button"
+          className="mt-3 min-h-11 text-sm font-semibold text-[#0969da] underline"
+          onClick={() => {
+            setEditing(false);
+            setAmount(String(page.amount));
+            setUnit(page.unit);
+            setDirection(page.direction);
+            setError("");
+            reset();
+          }}
+        >
+          Reset to current time
+        </button>
+        <p id="offset-error" role="alert">
+          {error}
+        </p>
+      </form>
+    </CalculatorShell>
+  );
 }
 
 function DifferenceForm({
@@ -135,6 +293,8 @@ function DifferenceForm({
   const [start, setStart] = useState(page.start);
   const [end, setEnd] = useState(page.end);
   const [result, setResult] = useState(initialResult);
+  const [applied, setApplied] = useState({ start: page.start, end: page.end });
+  const [error, setError] = useState("");
 
   function calculate(event: FormEvent) {
     event.preventDefault();
@@ -142,21 +302,28 @@ function DifferenceForm({
       parseLocalDate(start),
       parseLocalDate(end),
     );
+    if (!Number.isFinite(days)) {
+      setError("Enter valid start and end dates between years 1 and 9999.");
+      return;
+    }
     setResult(`${days.toLocaleString()} days`);
+    setApplied({ start, end });
+    setError("");
+    toolEvent("calculate", "date-difference");
   }
 
   return (
     <CalculatorShell
       result={
         <CompactResult
-          label="Exact difference"
+          label={error ? "Last valid comparison" : "Selected date comparison"}
           result={result}
-          detail="Standard elapsed-day count between the selected calendar dates."
+          detail={`${applied.start} to ${applied.end}. This editable comparison is separate from the default date pair above. The starting day is not counted.`}
           kind="difference"
         />
       }
     >
-      <form onSubmit={calculate}>
+      <form onSubmit={calculate} noValidate>
         <FormHeading />
         <div className="mt-5 grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(10rem,0.7fr)]">
           <Field label="Start date" htmlFor="difference-start">
@@ -185,6 +352,10 @@ function DifferenceForm({
           </Field>
           <CalculateButton label="Find difference" />
         </div>
+        <p className="mt-3 text-sm text-[#536b8d]">
+          Choose Find difference to apply your dates.
+        </p>
+        <p role="alert">{error}</p>
       </form>
     </CalculatorShell>
   );
@@ -250,7 +421,11 @@ function TimezoneForm({
               className={fieldClass}
             />
           </Field>
-          <ReadonlyZone label="From" city={page.fromCity} zone={page.fromZone} />
+          <ReadonlyZone
+            label="From"
+            city={page.fromCity}
+            zone={page.fromZone}
+          />
           <ReadonlyZone label="To" city={page.toCity} zone={page.toZone} />
           <CalculateButton label="Convert time" />
         </div>
@@ -332,9 +507,7 @@ function ReadonlyZone({
 }) {
   return (
     <div className="min-w-0 self-end rounded-md border border-[#C8D0D8] bg-white px-3 py-2">
-      <p className="text-xs font-semibold text-fern">
-        {label}
-      </p>
+      <p className="text-xs font-semibold text-fern">{label}</p>
       <p className="mt-1 flex items-center gap-1.5 text-sm font-bold text-ink">
         <CalendarDays className="h-3.5 w-3.5" aria-hidden="true" />
         {city}

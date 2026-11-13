@@ -27,8 +27,8 @@ const navigation: ReadonlyArray<NavigationGroup> = [
     links: [
       ["Current Time", "/"],
       ["World Clock by Region", "/time"],
-      ["Hours From Now", "/24-hours-from-now"],
-      ["Hours Ago", "/12-hours-ago"],
+      ["Hours From Now", "/calculations/hours-from-now"],
+      ["Hours Ago", "/calculations/hours-ago"],
       ["Countdown Timer", "/calculators/countdown"],
       ["Time Difference", "/calculators/time-difference"],
     ],

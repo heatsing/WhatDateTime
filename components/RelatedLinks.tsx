@@ -1,10 +1,7 @@
 import { useRelativeState } from "./use-relative-state";
 import { relativeText } from "@/lib/relative-state";
 import Link from "@/components/link";
-import {
-  getPageResult,
-  getRelativePhrase,
-} from "@/lib/pageCalculations";
+import { getPageResult, getRelativePhrase } from "@/lib/pageCalculations";
 import type { PageCalculationInput } from "@/lib/pageCalculations";
 
 type RelatedPage = PageCalculationInput & { slug: string; title: string };
@@ -20,7 +17,18 @@ export function RelatedLinks({
   referenceDate: Date;
   referenceTime?: string;
 }) {
-  const { state } = useRelativeState(currentPage.kind === "relative" ? currentPage : {kind:"relative",type:"hours-from-now",unit:"hour",amount:0,direction:"future"}, referenceTime || referenceDate.toISOString());
+  const { state } = useRelativeState(
+    currentPage.kind === "relative"
+      ? currentPage
+      : {
+          kind: "relative",
+          type: "hours-from-now",
+          unit: "hour",
+          amount: 0,
+          direction: "future",
+        },
+    referenceTime || referenceDate.toISOString(),
+  );
   const heading =
     currentPage.kind === "relative"
       ? "Related and nearby calculations"
@@ -42,18 +50,27 @@ export function RelatedLinks({
       );
 
     return (
-      <section aria-labelledby="related-pages" data-content-stage="nearby-results">
-        <h2 id="related-pages" className="font-display text-3xl font-semibold text-ink sm:text-4xl">
+      <section
+        aria-labelledby="related-pages"
+        data-content-stage="nearby-results"
+      >
+        <h2
+          id="related-pages"
+          className="font-display text-3xl font-semibold text-ink sm:text-4xl"
+        >
           {heading}
         </h2>
         <p className="mt-4 max-w-3xl text-base leading-8 text-ink/60 sm:text-lg">
-          Compare intervals from the same starting point ({state.zone}; {state.mode === "example" ? "fixed example" : state.mode}).
+          Compare intervals from the same starting point ({state.zone};{" "}
+          {state.mode === "example" ? "fixed example" : state.mode}).
         </p>
         <div className="mt-5 overflow-x-auto border-y border-[#D9DEE5]">
           <table className="w-full table-fixed border-collapse text-left text-base sm:text-[17px]">
             <thead className="text-ink/65">
               <tr>
-                <th className="w-[42%] px-1 py-3 font-semibold sm:px-2">Calculation</th>
+                <th className="w-[42%] px-1 py-3 font-semibold sm:px-2">
+                  Calculation
+                </th>
                 <th className="px-2 py-3 font-semibold">Result</th>
               </tr>
             </thead>
@@ -62,12 +79,23 @@ export function RelatedLinks({
                 if (page.kind !== "relative") return null;
                 const current = page.slug === currentPage.slug;
                 return (
-                  <tr key={page.slug} className={current ? "bg-[#E7F0F8] font-semibold" : ""}>
+                  <tr
+                    key={page.slug}
+                    className={current ? "bg-[#E7F0F8] font-semibold" : ""}
+                  >
                     <td className="break-words px-1 py-3 capitalize sm:px-2">
                       {current ? (
-                        <span aria-current="page">{getRelativePhrase(state.page)}</span>
+                        <span aria-current="page">
+                          {state.mode === "custom"
+                            ? `Your calculation: ${state.page.direction === "future" ? "+" : "−"}${state.page.amount} ${state.page.unit.replace("-", " ")}${state.page.amount === 1 ? "" : "s"}`
+                            : getRelativePhrase(state.page)}
+                          {state.inputError ? " (last valid inputs)" : ""}
+                        </span>
                       ) : (
-                        <Link href={`/${page.slug}`} className="font-semibold text-fern transition hover:text-ink">
+                        <Link
+                          href={`/${page.slug}`}
+                          className="font-semibold text-fern transition hover:text-ink"
+                        >
                           {getRelativePhrase(page)}
                         </Link>
                       )}
@@ -110,8 +138,8 @@ export function RelatedLinks({
             <span>
               {page.kind === "relative"
                 ? getRelativePhrase(page)
-                : page.title.replace(/ - .+$/, "")} —{" "}
-              {getPageResult(page, referenceDate)}
+                : page.title.replace(/ - .+$/, "")}{" "}
+              — {getPageResult(page, referenceDate)}
             </span>
           </Link>
         ))}

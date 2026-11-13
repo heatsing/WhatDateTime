@@ -10,7 +10,7 @@ export function DirectDifferenceAnswer({ page, referenceDate }: { page: Differen
 
   return (
     <article data-content-stage="direct-answer" className="mx-auto max-w-4xl border-y border-[#D9DEE5] bg-white py-8 text-center sm:py-10" aria-labelledby="direct-difference-heading">
-      <p className="text-sm font-semibold text-fern">Direct answer</p>
+      <p className="text-sm font-semibold text-fern">Default date-pair answer: {page.start} to {page.end}</p>
       <h2 id="direct-difference-heading" className="mt-2 font-display text-xl font-semibold leading-snug text-ink/65 sm:text-2xl">The exact elapsed difference is</h2>
       <p className="mt-4 font-display text-4xl font-bold tracking-[-0.03em] text-ink sm:text-5xl lg:text-[56px]">{getPageResult(page, referenceDate)}</p>
       <section className="mt-6 border-l-4 border-fern bg-[#F4F8FB] px-4 py-3 text-left">

@@ -33,7 +33,10 @@ export function offsetMinutes(instant: Date, zone: string): number {
   if (label === "GMT") return 0;
   const m = /^GMT([+-])(\d{1,2})(?::(\d{2}))?(?::(\d{2}))?$/.exec(label);
   if (!m) throw new Error(`Unsupported offset ${label}`);
-  return (m[1] === "-" ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3] || 0) + Number(m[4] || 0) / 60);
+  return (
+    (m[1] === "-" ? -1 : 1) *
+    (Number(m[2]) * 60 + Number(m[3] || 0) + Number(m[4] || 0) / 60)
+  );
 }
 export function localISO(instant: Date, zone: string) {
   const parts = Object.fromEntries(
@@ -289,12 +292,14 @@ export function pairFAQs(from: City, to: City, now: Date) {
   const seasons = pairSeasons(from, to, Number(date.slice(0, 4)));
   return [
     {
-      question: `What is the current time difference between ${from.name} and ${to.name}?`,
-      answer: differenceLabel(
-        offsetMinutes(now, to.zone) - offsetMinutes(now, from.zone),
-        from.name,
-        to.name,
-      ),
+      question: `What is the time difference between ${from.name} and ${to.name} on the selected date?`,
+      answer:
+        `At ${displayTime(now, from.zone)} (${utcLabel(offsetMinutes(now, from.zone))}) on ${date} in ${from.name}: ` +
+        differenceLabel(
+          offsetMinutes(now, to.zone) - offsetMinutes(now, from.zone),
+          from.name,
+          to.name,
+        ),
     },
     {
       question: `What is 9 AM in ${from.name} in ${to.name}?`,

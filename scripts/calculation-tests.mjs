@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { countdownHash, parseCountdownHash, validCountdown } from "../lib/countdown-state.ts";
+import { parseOffsetAmount } from "../lib/offset-input.ts";
+import { countdownHash, countdownSeconds, parseCountdownHash, validCountdown } from "../lib/countdown-state.ts";
 import {
   calculateDateDifference,
   calculateRelativeDate,
@@ -7,6 +8,15 @@ import {
 } from "../lib/dateCalculator.ts";
 
 const noon = (value) => new Date(`${value}T12:00:00`);
+
+for (const raw of ["", " ", "NaN", "Infinity", "-1", "10001"]) assert.ok(Number.isNaN(parseOffsetAmount(raw,"hour")));
+assert.equal(parseOffsetAmount("0","business-day"),0);
+assert.equal(parseOffsetAmount("1.5","hour"),1.5);
+assert.ok(Number.isNaN(parseOffsetAmount("1.5","day")));
+assert.ok(Number.isNaN(parseOffsetAmount("0.001","hour")));
+assert.equal(calculateRelativeDate(new Date("2026-11-13T23:30:00"),1.5,"hour").getHours(),1);
+assert.equal(calculateRelativeDate(new Date("2026-11-13T23:30:00"),0.5,"hour").getMinutes(),0);
+assert.equal(calculateRelativeDate(new Date("2026-11-13T23:30:00"),0.5,"hour").getHours(),0);
 
 assert.equal(calculateRelativeDate(noon("2024-02-28"), 1, "day").getDate(), 29);
 assert.equal(calculateRelativeDate(new Date("2026-11-13T23:30:00"), 2, "hour").getHours(), 1);
@@ -17,6 +27,9 @@ assert.equal(calculateRelativeDate(noon("2028-03-31"), 1, "month", "past").getDa
 assert.equal(calculateRelativeDate(noon("2026-11-16"), 1, "business-day", "past").getDate(), 13);
 assert.equal(calculateRelativeDate(noon("2026-11-13"), 0, "business-day").getDate(), 13);
 const countdown = {name:"Event & notes",instant:"2028-02-29T01:30:00.000Z",zone:"Asia/Tokyo"};
+assert.equal(countdownSeconds(countdown.instant, Date.parse(countdown.instant)-1),1);
+assert.equal(countdownSeconds(countdown.instant, Date.parse(countdown.instant)),0);
+assert.equal(countdownSeconds(countdown.instant, Date.parse(countdown.instant)+1000),0);
 assert.deepEqual(parseCountdownHash(countdownHash(countdown)), countdown);
 assert.deepEqual(validCountdown(JSON.parse(JSON.stringify(countdown))), countdown);
 assert.equal(parseCountdownHash("#due=bad&zone=UTC"), null);

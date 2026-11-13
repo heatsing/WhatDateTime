@@ -1,0 +1,174 @@
+{
+  "origin": "http://127.0.0.1:8790",
+  "checkedAt": "2026-11-13T19:32:51.234Z",
+  "results": [
+    {
+      "name": "Hour result, formula, midpoint, copy, invalid input and reset",
+      "result": "passed"
+    },
+    {
+      "name": "Keyboard calculation",
+      "result": "passed"
+    },
+    {
+      "name": "Keyboard copy and recommendation deduplication",
+      "result": "passed"
+    },
+    {
+      "name": "Business-day calendar and nearby results",
+      "result": "passed"
+    },
+    {
+      "name": "Date tool leap day, month end, blank input and reset",
+      "result": "passed"
+    },
+    {
+      "name": "Countdown target, display zone, saving, sharing and resume",
+      "result": "passed"
+    },
+    {
+      "name": "Fresh share navigation preserves UTC instant",
+      "result": "passed"
+    },
+    {
+      "name": "Countdown recommendations appear once",
+      "result": "passed"
+    },
+    {
+      "name": "Selected-time conversion and blank input",
+      "result": "passed"
+    },
+    {
+      "name": "Planner DST gap and repeated hour",
+      "result": "passed"
+    },
+    {
+      "name": "Auxiliary date tools preserve blank drafts and applied conditions",
+      "result": "passed"
+    },
+    {
+      "name": "Blank year: days-in-month",
+      "result": "passed"
+    },
+    {
+      "name": "Blank year: weeks-in-year",
+      "result": "passed"
+    },
+    {
+      "name": "Blank year: calendar",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /calculations/hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /8-hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /35-business-days-from-today",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /calculators/countdown",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /calculators/date-calculator",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 320px /singapore-to-melbourne-time",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /calculations/hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /8-hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /35-business-days-from-today",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /calculators/countdown",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /calculators/date-calculator",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 390px /singapore-to-melbourne-time",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /calculations/hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /8-hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /35-business-days-from-today",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /calculators/countdown",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /calculators/date-calculator",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 768px /singapore-to-melbourne-time",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /calculations/hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /8-hours-from-now",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /35-business-days-from-today",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /calculators/countdown",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /calculators/date-calculator",
+      "result": "passed"
+    },
+    {
+      "name": "No page overflow: 1440px /singapore-to-melbourne-time",
+      "result": "passed"
+    }
+  ]
+}

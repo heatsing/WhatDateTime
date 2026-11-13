@@ -21,6 +21,7 @@ import {
 import { FAQ } from "./FAQ";
 import { Breadcrumb } from "./Breadcrumb";
 import { JsonLd } from "./json-ld";
+import { parseCalendarDate } from "../lib/date-input";
 import {
   breadcrumbListSchema,
   calculatorApplicationSchema,
@@ -74,7 +75,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
   const { from, to, title, description, path, related, directoryPath } = props;
   const [now, setNow] = useState(() => new Date(props.initialTime));
   const [live, setLive] = useState(false);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState<string | null>(null);
   useEffect(() => {
     const update = () => {
       setNow(new Date());
@@ -91,22 +92,36 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
     };
   }, []);
   const date = localISO(now, from.zone).slice(0, 10);
-  const local = selected || `${date}T09:00`;
+  const local = selected ?? `${date}T09:00`;
   const selectedDate = local.slice(0, 10);
-  const nine = resolveWallTime(`${selectedDate}T09:00`, from.zone)[0];
-  const reference = to ? (nine || now) : now;
+  const validDate =
+    Number.isFinite(parseCalendarDate(selectedDate).getTime()) &&
+    selectedDate >= "1900-01-01" &&
+    selectedDate <= "2100-12-31";
+  const instants = to && validDate ? resolveWallTime(local, from.zone) : [];
+  const reference = to
+    ? instants[0] ||
+      (validDate
+        ? resolveWallTime(`${selectedDate}T09:00`, from.zone)[0]
+        : undefined) ||
+      now
+    : now;
   const faqs = to ? pairFAQs(from, to, reference) : cityFAQs(from, now);
   const season = citySeason(from, reference);
   const table = useMemo(
-    () => (to ? conversionTable(selectedDate, from.zone, to.zone) : []),
+    () =>
+      to && validDate ? conversionTable(selectedDate, from.zone, to.zone) : [],
     [selectedDate, from.zone, to?.zone],
   );
   const overlap = useMemo(
-    () => (to ? businessOverlap(selectedDate, from.zone, to.zone) : []),
+    () =>
+      to && validDate ? businessOverlap(selectedDate, from.zone, to.zone) : [],
     [selectedDate, from.zone, to?.zone],
   );
-  const instants = to ? resolveWallTime(local, from.zone) : [];
-  const periods = to ? pairSeasons(from, to, Number(selectedDate.slice(0, 4))) : [];
+  const periods =
+    to && validDate
+      ? pairSeasons(from, to, Number(selectedDate.slice(0, 4)))
+      : [];
   const targets = cities
     .filter((c) => c.slug !== from.slug)
     .sort((a, b) => b.priority - a.priority)
@@ -134,7 +149,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
               name: title,
               description,
               path,
-              dateModified: "2026-11-13",
+              dateModified: "2026-11-14",
             }),
             breadcrumbListSchema([
               { name: "Home", path: "/" },
@@ -167,37 +182,46 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
         {to ? (
           <>
             <section className={panel} data-timezone-answer>
-              <h2 className={heading}>9 AM in {from.name}</h2>
-              <p className="mt-3 text-2xl font-semibold">
-                {nine
-                  ? `On ${selectedDate}, 9:00 AM in ${from.name} is ${displayTime(nine, to.zone)} in ${to.name} (${dateShift(selectedDate, nine, to.zone)}).`
-                  : "This local time does not occur on this date."}
-              </p>
-              <p className="mt-3">
-                {differenceLabel(
-                  offsetMinutes(reference, to.zone) - offsetMinutes(reference, from.zone),
-                  from.name,
-                  to.name,
-                )}
-              </p>
-              <p className="mt-2 text-sm">
-                Conversion: {utcLabel(offsetMinutes(reference, to.zone))} − (
-                {utcLabel(offsetMinutes(reference, from.zone))}) ={" "}
-                {durationLabel(
-                  offsetMinutes(reference, to.zone) - offsetMinutes(reference, from.zone),
-                )}{" "}
-                {offsetMinutes(reference, to.zone) >= offsetMinutes(reference, from.zone)
-                  ? "ahead"
-                  : "behind"}{" "}
-                at the 9 AM reference on {selectedDate}.
-              </p>
-            </section>
-            <section
-              className={`${panel} grid gap-6 sm:grid-cols-2`}
-              aria-label={live ? "Current city times" : "Example city times"}
-            >
-              <Clock city={from} now={now} />
-              <Clock city={to} now={now} />
+              <h2 className={heading}>Selected time in {from.name}</h2>
+              {instants.length ? (
+                instants.map((instant, index) => (
+                  <div key={instant.toISOString()}>
+                    <p className="mt-3 text-2xl font-semibold">
+                      {instants.length > 1 ? `Occurrence ${index + 1}: ` : ""}
+                      {displayTime(instant, from.zone)} on {selectedDate} in{" "}
+                      {from.name} is {displayTime(instant, to.zone)} on{" "}
+                      {displayDate(instant, to.zone)} in {to.name} (
+                      {dateShift(selectedDate, instant, to.zone)}).
+                    </p>
+                    <p className="mt-3">
+                      {differenceLabel(
+                        offsetMinutes(instant, to.zone) -
+                          offsetMinutes(instant, from.zone),
+                        from.name,
+                        to.name,
+                      )}
+                    </p>
+                    <p className="mt-2 text-sm">
+                      Conversion: {utcLabel(offsetMinutes(instant, to.zone))} −
+                      ({utcLabel(offsetMinutes(instant, from.zone))}) ={" "}
+                      {durationLabel(
+                        offsetMinutes(instant, to.zone) -
+                          offsetMinutes(instant, from.zone),
+                      )}{" "}
+                      {offsetMinutes(instant, to.zone) >=
+                      offsetMinutes(instant, from.zone)
+                        ? "ahead"
+                        : "behind"}
+                      . Source zone: {from.zone}; destination: {to.zone}.
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p role="alert" className="mt-3">
+                  Enter a valid date and time from 1900 through 2100. Skipped
+                  clock-change times have no result.
+                </p>
+              )}
             </section>
             <section className={panel}>
               <h2 className={heading}>Meeting planner</h2>
@@ -218,7 +242,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
               />
               <button
                 className="ml-3 min-h-11 text-[#006cff] underline"
-                onClick={() => setSelected("")}
+                onClick={() => setSelected(null)}
               >
                 Reset to today at 9 AM
               </button>
@@ -243,124 +267,154 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
               </div>
             </section>
             <section className={panel}>
-              <h2 className={heading}>24-hour conversion table</h2>
-              <p className="mt-2">
-                {selectedDate} in {from.name}. Repeated local hours show both
-                UTC offsets; skipped hours have no matching instant.
+              <h2 className={heading}>How the conversion works</h2>
+              <p className="mt-3">
+                The entered time is interpreted in {from.zone}, then displayed
+                in {to.zone} at the same instant. Offsets use the selected date,
+                including daylight saving. Repeated hours show both possible
+                instants; skipped hours require a different starting time.
               </p>
-              <div className="mt-4 overflow-x-auto">
-                <table
-                  className="w-full border-collapse text-base"
-                  data-conversion-table
-                >
-                  <caption className="sr-only">
-                    {from.name} to {to.name}, {selectedDate}
-                  </caption>
-                  <thead className="bg-[#eef5fc]">
-                    <tr>
-                      <th scope="col" className={cell}>
-                        {from.name}
-                      </th>
-                      <th scope="col" className={cell}>
-                        {to.name}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {table.map((row) => (
-                      <tr key={row.local}>
-                        <th scope="row" className={`${cell} font-normal`}>
-                          {row.label}
-                        </th>
-                        <td className={cell}>
-                          {row.values.length
-                            ? row.values.map((value, i) => (
-                                <div key={value.iso}>
-                                  {value.time} — {value.shift}
-                                  {row.values.length > 1
-                                    ? ` (source ${value.sourceOffset}, occurrence ${i + 1})`
-                                    : ""}
-                                </div>
-                              ))
-                            : "Skipped by a clock change"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
             </section>
-            <section className={panel}>
-              <h2 className={heading}>Working-hours overlap</h2>
-              <p className="mt-2">
-                Monday–Friday, 9 AM–5 PM in each city. Public holidays and
-                individual schedules are not included.
-              </p>
-              {overlap.length ? (
-                overlap.map((w) => (
-                  <p className="mt-3 font-semibold" key={w.start}>
-                    {displayTime(new Date(w.start), from.zone)}–
-                    {displayTime(new Date(w.end), from.zone)} {from.name} ={" "}
-                    {displayTime(new Date(w.start), to.zone)}–
-                    {displayTime(new Date(w.end), to.zone)} {to.name} (
-                    {displayDate(new Date(w.start), to.zone)}).
-                  </p>
-                ))
-              ) : (
-                <p className="mt-3 font-semibold">
-                  No overlapping office-hours window for {selectedDate}. Try
-                  another date or agree on a time outside normal working hours.
-                </p>
-              )}
-            </section>
-            <section className={panel}>
-              <h2 className={heading}>
-                Clock changes and seasonal differences
+            <section
+              className={`${panel} grid gap-6 sm:grid-cols-2`}
+              aria-label={
+                live
+                  ? "Current city times (separate from planner)"
+                  : "Example city times"
+              }
+            >
+              <h2 className="font-semibold sm:col-span-2">
+                {live
+                  ? "Current city clocks — separate from your selected time"
+                  : "Example city clocks"}
               </h2>
-              <p className="mt-2">
-                {from.name}: {season.status} {to.name}:{" "}
-                {citySeason(to, reference).status}
-              </p>
-              <p className="mt-2">
-                {season.standard !== null &&
-                citySeason(to, reference).standard !== null
-                  ? `Standard-offset comparison: ${differenceLabel(citySeason(to, reference).standard! - season.standard, from.name, to.name)} This compares standard offsets, not necessarily simultaneous seasons.`
-                  : "Seasonal adjustments are listed below without assuming that the smaller offset is legally standard time."}
-              </p>
-              <p className="mt-2">
-                {periods.length > 1
-                  ? "The gap changes when the cities switch clocks on different dates."
-                  : "The offset difference is constant for this calendar year under the available rules."}{" "}
-                Period boundaries below are in UTC; the end is exclusive.
-              </p>
-              <div className="mt-4 overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr>
-                      <th scope="col" className={cell}>
-                        UTC period
-                      </th>
-                      <th scope="col" className={cell}>
-                        {to.name} relative to {from.name}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {periods.map((p) => (
-                      <tr key={p.start}>
-                        <td className={cell}>
-                          {p.start.replace("T", " ").replace(".000Z", "")} →{" "}
-                          {p.end.replace("T", " ").replace(".000Z", "")}
-                        </td>
-                        <td className={cell}>
-                          {differenceLabel(p.minutes, from.name, to.name)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <Clock city={from} now={now} />
+              <Clock city={to} now={now} />
             </section>
+            {validDate && (
+              <>
+                <section className={panel}>
+                  <h2 className={heading}>24-hour conversion table</h2>
+                  <p className="mt-2">
+                    {selectedDate} in {from.name}. Repeated local hours show
+                    both UTC offsets; skipped hours have no matching instant.
+                  </p>
+                  <div className="mt-4 overflow-x-auto">
+                    <table
+                      className="w-full border-collapse text-base"
+                      data-conversion-table
+                    >
+                      <caption className="sr-only">
+                        {from.name} to {to.name}, {selectedDate}
+                      </caption>
+                      <thead className="bg-[#eef5fc]">
+                        <tr>
+                          <th scope="col" className={cell}>
+                            {from.name}
+                          </th>
+                          <th scope="col" className={cell}>
+                            {to.name}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.map((row) => (
+                          <tr key={row.local}>
+                            <th scope="row" className={`${cell} font-normal`}>
+                              {row.label}
+                            </th>
+                            <td className={cell}>
+                              {row.values.length
+                                ? row.values.map((value, i) => (
+                                    <div key={value.iso}>
+                                      {value.time} — {value.shift}
+                                      {row.values.length > 1
+                                        ? ` (source ${value.sourceOffset}, occurrence ${i + 1})`
+                                        : ""}
+                                    </div>
+                                  ))
+                                : "Skipped by a clock change"}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+                <section className={panel}>
+                  <h2 className={heading}>Working-hours overlap</h2>
+                  <p className="mt-2">
+                    Monday–Friday, 9 AM–5 PM in each city. Public holidays and
+                    individual schedules are not included.
+                  </p>
+                  {overlap.length ? (
+                    overlap.map((w) => (
+                      <p className="mt-3 font-semibold" key={w.start}>
+                        {displayTime(new Date(w.start), from.zone)}–
+                        {displayTime(new Date(w.end), from.zone)} {from.name} ={" "}
+                        {displayTime(new Date(w.start), to.zone)}–
+                        {displayTime(new Date(w.end), to.zone)} {to.name} (
+                        {displayDate(new Date(w.start), to.zone)}).
+                      </p>
+                    ))
+                  ) : (
+                    <p className="mt-3 font-semibold">
+                      No overlapping office-hours window for {selectedDate}. Try
+                      another date or agree on a time outside normal working
+                      hours.
+                    </p>
+                  )}
+                </section>
+                <section className={panel}>
+                  <h2 className={heading}>
+                    Clock changes and seasonal differences
+                  </h2>
+                  <p className="mt-2">
+                    {from.name}: {season.status} {to.name}:{" "}
+                    {citySeason(to, reference).status}
+                  </p>
+                  <p className="mt-2">
+                    {season.standard !== null &&
+                    citySeason(to, reference).standard !== null
+                      ? `Standard-offset comparison: ${differenceLabel(citySeason(to, reference).standard! - season.standard, from.name, to.name)} This compares standard offsets, not necessarily simultaneous seasons.`
+                      : "Seasonal adjustments are listed below without assuming that the smaller offset is legally standard time."}
+                  </p>
+                  <p className="mt-2">
+                    {periods.length > 1
+                      ? "The gap changes when the cities switch clocks on different dates."
+                      : "The offset difference is constant for this calendar year under the available rules."}{" "}
+                    Period boundaries below are in UTC; the end is exclusive.
+                  </p>
+                  <div className="mt-4 overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr>
+                          <th scope="col" className={cell}>
+                            UTC period
+                          </th>
+                          <th scope="col" className={cell}>
+                            {to.name} relative to {from.name}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {periods.map((p) => (
+                          <tr key={p.start}>
+                            <td className={cell}>
+                              {p.start.replace("T", " ").replace(".000Z", "")} →{" "}
+                              {p.end.replace("T", " ").replace(".000Z", "")}
+                            </td>
+                            <td className={cell}>
+                              {differenceLabel(p.minutes, from.name, to.name)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              </>
+            )}
           </>
         ) : (
           <>
@@ -449,7 +503,7 @@ export function TimezoneExperience(props: ZoneExperienceProps) {
             />
           </section>
         )}
-        <FAQ faqs={faqs} />
+        {(!to || validDate) && <FAQ faqs={faqs} />}
         <p className="text-sm text-[#536b8d]">
           Rules come from the runtime’s IANA time-zone data via Intl. Future
           government changes may require a runtime update.{" "}

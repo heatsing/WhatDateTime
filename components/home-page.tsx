@@ -42,8 +42,8 @@ const calculatorLinks: ReadonlyArray<ToolLink> = [
   { title: "Half Birthday Calculator", description: "Find the date exactly six months after a birthday.", href: "/calculators/half-birthday", icon: CakeSlice },
   { title: "Countdown Timer", description: "Create a live countdown to any date and time.", href: "/calculators/countdown", icon: Hourglass },
   { title: "Time Difference Calculator", description: "Compare the duration between two dates and times.", href: "/calculators/time-difference", icon: Clock3 },
-  { title: "Hours From Now", description: "Open a precise calculation for 24 hours from now.", href: "/24-hours-from-now", icon: Clock3 },
-  { title: "Hours Ago", description: "See the exact local date and time 12 hours ago.", href: "/12-hours-ago", icon: Clock3 },
+  { title: "Hours From Now", description: "Add or subtract hours and browse common calculations.", href: "/calculations/hours-from-now", icon: Clock3 },
+  { title: "Hours Ago", description: "Browse past-hour calculations and compare intervals.", href: "/calculations/hours-ago", icon: Clock3 },
   { title: "Time Zone Converter", description: "Compare local times between cities around the world.", href: "/calculators/timezone-converter", icon: Globe2 },
   { title: "World Clock", description: "Explore city clocks, UTC offsets, and working hours by region.", href: "/time", icon: Globe2 },
   { title: "Weeks in a Year", description: "Check whether a year contains 52 or 53 ISO weeks.", href: "/calculators/weeks-in-year", icon: CalendarDays },
@@ -89,7 +89,7 @@ const homeFaqs = [
   { question: "What time is it right now?", answer: "The clock above uses your device time zone and updates every second, so it shows your current local date and time." },
   { question: "How do I calculate days between two dates?", answer: "Open the Days Between Dates calculator, select a start date and an end date, and calculate the elapsed calendar duration." },
   { question: "How do I convert time zones?", answer: "Use the Time Zone Converter to choose two cities and compare their local times and UTC offsets." },
-  { question: "Are my calculations stored?", answer: "No. WhatDateTime performs calculations in your browser and does not require an account." },
+  { question: "Are my calculations stored?", answer: "Calculations run in your browser without an account. Countdown targets are saved on this device only when you choose Save target." },
 ] as const;
 
 function ToolRow({ tool }: { tool: ToolLink }) {

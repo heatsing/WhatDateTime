@@ -2,6 +2,8 @@
 
 ## Current
 
+- November 14 UX refinement: synchronized valid-input previews, explicit invalid/draft results, deduplicated recommendations, correct category links, countdown resume/display-zone preservation and selected-time city-pair answers. See `reports/ux-refinement-2026-11-14.md`; source changes are not a production release.
+
 - November 13 repair: explicit UTC examples, shared live/custom calculation state, a generic business-day tool, local countdown save/share, selected-date time-zone summaries and evidence-based restoration of the 35-business-day URL. See `reports/recovery-2026-11-13.md`; production release is separate from source synchronization.
 
 - Maintain 9,994 programmatic pages and all existing calculator routes.
