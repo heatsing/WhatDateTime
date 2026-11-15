@@ -6,6 +6,12 @@ use WhatDateTime\Tools;
 use WhatDateTime\Calculator;
 
 $zone = Tools::run(['tool' => 'timezone', 'mode' => 'custom', 'zone' => 'UTC', 'fromZone' => 'Asia/Singapore', 'toZone' => 'Australia/Melbourne', 'start' => '2026-11-15T12:00']);
+$cities = json_decode(file_get_contents(__DIR__ . '/../whatdatetime-tools/data/cities.json'), true, 512, JSON_THROW_ON_ERROR);
+$cityClock = Tools::cityClock($cities[0], $cities);
+same(count($cityClock['comparisons']), 3, 'city clock comparisons');
+same($cityClock['comparisons'][0]['result']['instant'], $cityClock['result']['instant'], 'city comparison same instant');
+same(count($cityClock['office']), 3, 'city office-hour comparisons');
+same(end($cityClock['facts'])[0], 'Next clock change', 'city next-transition fact');
 same($zone['result']['local'], '2026-11-15T15:00', 'Singapore/Melbourne selected date');
 same($zone['differenceHours'], 3, 'selected-date offset');
 same(count($zone['table']), 24, 'timezone table');

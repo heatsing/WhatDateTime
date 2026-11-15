@@ -37,7 +37,7 @@ node wordpress/scripts/http-check.mjs
 node wordpress/scripts/browser-check.mjs
 ```
 
-These accept `WDT_PREVIEW_URL`; HTTP checks also accept `WDT_HTTP_PROXY`. Browser checks use an isolated headless `agent-browser` session; set `AGENT_BROWSER_BIN` if it is not in the standard local install. Native segmented datetime inputs are set through their value and input/change events because generic CDP text insertion cannot fill that widget. Real buttons, selects, keyboard submission, focus and clipboard handlers are exercised. Screenshots and machine results are written to ignored `wordpress/artifacts/`.
+These accept `WDT_PREVIEW_URL` and `WDT_HTTP_PROXY` (the development proxy defaults to `http://127.0.0.1:4780`). Browser checks use an isolated headless `agent-browser` session; set `AGENT_BROWSER_BIN` if it is not in the standard local install. Run only one browser-check process at a time because the harness uses one named session. Native segmented datetime inputs are set through their value and input/change events because generic CDP text insertion cannot fill that widget. Real buttons, selects, keyboard submission, focus and clipboard handlers are exercised. Screenshots and machine results are written to ignored `wordpress/artifacts/`.
 
 On the isolated preview, `wp eval-file /private/release/tests/wp-integration.php` verifies admin editor permissions/nonce fields and content overrides, restoring every temporary option in `finally`.
 

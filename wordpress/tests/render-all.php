@@ -37,7 +37,7 @@ foreach ($ordered as $slug => $record) {
         foreach ($schemas as $script) {
             $nodes = json_decode($script->textContent, true, 512, JSON_THROW_ON_ERROR);
             if (isset($nodes['@type'])) $nodes = [$nodes];
-            foreach ($nodes as $node) if (($node['@type'] ?? '') === 'WebApplication' && $node['url'] !== $repo->canonical($slug)) throw new RuntimeException('JSON-LD URL mismatch');
+            foreach ($nodes as $node) if (in_array($node['@type'] ?? '', ['WebApplication', 'CollectionPage', 'WebPage'], true) && $node['url'] !== $repo->canonical($slug)) throw new RuntimeException('JSON-LD URL mismatch');
         }
         $states = $x->query('//script[@data-tool-state]');
         if (in_array($record['kind'], ['relative', 'difference', 'timezone', 'calculator'], true) && !$states->length) throw new RuntimeException('Missing PHP calculation');

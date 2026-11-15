@@ -7,9 +7,10 @@ const run = promisify(execFile);
 const binary = process.env.AGENT_BROWSER_BIN || (process.platform === 'win32' ? join(process.env.APPDATA, 'npm/node_modules/agent-browser/bin/agent-browser-win32-x64.exe') : 'agent-browser');
 const base = process.env.WDT_PREVIEW_URL || 'https://darkseagreen-trout-940046.hostingersite.com';
 const session = 'whatdatetime-wp-qa';
+const proxy = process.env.WDT_HTTP_PROXY || 'http://127.0.0.1:4780';
 const records = [];
 async function browser(...args) {
-  const { stdout } = await run(binary, ['--session', session, '--json', ...args], { maxBuffer: 2 * 1024 * 1024 });
+  const { stdout } = await run(binary, ['--session', session, '--proxy', proxy, '--json', ...args], { maxBuffer: 2 * 1024 * 1024 });
   const data = JSON.parse(stdout);
   if (!data.success) throw new Error(JSON.stringify(data));
   return data.data;
@@ -138,6 +139,23 @@ await check('selected-date timezone tables, paired clocks and meeting reset', as
   }
   await browser('set', 'viewport', '390', '844');
   await browser('screenshot', resolve('wordpress/artifacts/timezone-mobile.png'), '--full');
+});
+await browser('open', base + '/time/new-york');
+await until("document.querySelector('[data-clock-status]').textContent.includes('synchronized')");
+await check('city hub comparisons, office hours, facts and FAQs', async () => {
+  assert.equal(await evaluate("document.querySelectorAll('[data-comparison-clock]').length"), 3);
+  assert.ok(await evaluate("document.querySelector('[data-city-details]').textContent.includes('9 AM–5 PM in New York')"));
+  assert.ok(await evaluate("document.querySelector('[data-clock-facts]').textContent.includes('Next clock change')"));
+  const count = await evaluate("Array.from(document.scripts).filter(s=>s.type==='application/ld+json').flatMap(s=>JSON.parse(s.textContent)).find(s=>s['@type']==='FAQPage').mainEntity.length");
+  assert.equal(count, 4);
+  await click('[data-clock-format]');
+  assert.doesNotMatch(await evaluate("document.querySelector('[data-comparison-time]').textContent"), /AM|PM/);
+  for (const width of [360,390,768,1440]) {
+    await browser('set','viewport',String(width),'900');
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
+  }
+  await browser('set','viewport','390','844');
+  await browser('screenshot',resolve('wordpress/artifacts/city-mobile.png'),'--full');
 });
 const toolCases = [
   ['date-calculator', {start:'2026-01-31T12:00',amount:'1',unit:'month'}, 'February 28, 2026'],

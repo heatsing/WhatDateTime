@@ -22,11 +22,16 @@
       root.querySelector('[data-clock-zone]').textContent = `${state.result.zone} (UTC${state.result.offset})`;
       const angles = { hour: date.getUTCHours() % 12 * 30 + date.getUTCMinutes() / 2, minute: date.getUTCMinutes() * 6 + date.getUTCSeconds() / 10, second: date.getUTCSeconds() * 6 };
       for (const [name, angle] of Object.entries(angles)) root.querySelector(`[data-hand="${name}"]`).setAttribute('transform', `rotate(${angle} 110 110)`);
+      for (const city of root.querySelectorAll('[data-comparison-clock]')) {
+        const shifted = new Date(Date.parse(state.result.instant) + performance.now() - fetchedAt + Number(city.dataset.offset) * 60000);
+        city.querySelector('[data-comparison-time]').textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12 }).format(shifted);
+        city.querySelector('[data-comparison-date]').textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', dateStyle: 'full' }).format(shifted);
+      }
     };
     const refresh = async requestedZone => {
       const requestVersion = ++version;
       try {
-        const response = await fetch(root.dataset.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tool: 'clock', zone: requestedZone }), cache: 'no-store' });
+        const response = await fetch(root.dataset.endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tool: 'clock', zone: requestedZone, ...(state.city ? { city: state.city.slug } : {}) }), cache: 'no-store' });
         const data = await response.json();
         if (requestVersion !== version) return;
         if (!response.ok) throw new Error(data.message || 'Clock could not sync.');
@@ -36,6 +41,7 @@
           facts.replaceChildren();
           for (const row of state.facts) { const tr = document.createElement('tr'); for (const value of row) { const td = document.createElement('td'); td.textContent = value; tr.append(td); } facts.append(tr); }
         }
+        if (state.city && data.cityDetails) { root.querySelector('[data-city-details]').innerHTML = data.cityDetails; tick(); }
         for (const summary of document.querySelectorAll('[data-today-summary]')) if (root.dataset.fixed !== 'true') {
           summary.querySelector('[data-today-date]').textContent = state.result.date;
           summary.querySelector('[data-today-day]').textContent = `${state.dayOfYear} of ${state.daysInYear}`;

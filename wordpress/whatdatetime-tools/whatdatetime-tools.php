@@ -29,6 +29,11 @@ function wdt_page(string $slug): ?array {
     return array_merge($page, array_intersect_key(is_array($overrides) ? $overrides : [], array_flip(['title', 'description', 'intro', 'faq', 'revision'])));
 }
 function wdt_calculate(array $input, ?array $page = null): array {
+    if (($input['tool'] ?? '') === 'clock' && !empty($input['city'])) {
+        $cities = wdt_repository()->json('cities.json');
+        foreach ($cities as $city) if ($city['slug'] === $input['city']) return \WhatDateTime\Tools::cityClock($city, $cities);
+        throw new InvalidArgumentException('Unknown city clock.');
+    }
     $state = \WhatDateTime\Tools::run($input);
     if (($page['kind'] ?? '') !== 'relative') return $state;
     $state['nearby'] = [['path' => null, 'label' => 'Your calculation', 'answer' => $state['answer']]];
@@ -146,7 +151,7 @@ add_action('rest_api_init', function () {
                 }
                 $result = wdt_calculate($input, $page);
                 [$primary, $details] = \WhatDateTime\View::parts($result);
-                return new WP_REST_Response(['result' => $result, 'input' => $input, 'html' => $primary, 'details' => $details], 200, ['Cache-Control' => 'private, no-store', 'X-Robots-Tag' => 'noindex']);
+                return new WP_REST_Response(['result' => $result, 'input' => $input, 'html' => $primary, 'details' => $details, 'cityDetails' => isset($result['city']) ? \WhatDateTime\View::cityDetails($result) : null], 200, ['Cache-Control' => 'private, no-store', 'X-Robots-Tag' => 'noindex']);
             } catch (InvalidArgumentException $e) {
                 return new WP_Error('wdt_invalid_input', $e->getMessage(), ['status' => 400]);
             }

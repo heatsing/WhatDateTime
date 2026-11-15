@@ -70,6 +70,12 @@ const reset = await request(api, { resetSlug: '8-hours-from-now', zone: 'Asia/To
 assert.equal(reset.status, 200); assert.equal(JSON.parse(reset.body).result.amount, 8); assert.equal(JSON.parse(reset.body).result.start.zone, 'Asia/Tokyo');
 const clock = await request(api, { tool: 'clock', zone: 'Africa/Casablanca' }, 'POST');
 assert.equal(clock.status, 200); assert.equal(JSON.parse(clock.body).result.result.offsetMinutes, 0);
+const cityClock = await request(api, { tool: 'clock', city: 'new-york' }, 'POST');
+assert.equal(cityClock.status, 200);
+const cityState = JSON.parse(cityClock.body).result;
+assert.equal(cityState.comparisons.length, 3);
+assert.ok(cityState.comparisons.every(city => city.result.instant === cityState.result.instant));
+assert.equal(cityState.office.length, 3);
 assert.match((await request('/robots.txt')).body, /Disallow: \//);
 assert.equal((await request('/BingSiteAuth.xml')).status, 200);
 const result = await request(api, { tool: 'relative', mode: 'custom', zone: 'Asia/Shanghai', start: '2026-11-13T23:30', amount: 2, unit: 'hour', direction: 'future' }, 'POST');

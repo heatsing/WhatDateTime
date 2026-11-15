@@ -6,6 +6,29 @@ use InvalidArgumentException;
 
 final class Tools
 {
+    public static function cityClock(array $city, array $cities): array
+    {
+        $state = self::run(['tool' => 'clock', 'zone' => $city['zone']]);
+        $instant = Calculator::instant($state['result']['instant']);
+        $date = substr($state['result']['local'], 0, 10);
+        $targets = array_values(array_filter($cities, fn($other) => $other['slug'] !== $city['slug']));
+        usort($targets, fn($a, $b) => $b['priority'] <=> $a['priority']);
+        $state['city'] = $city; $state['comparisons'] = []; $state['office'] = [];
+        $start = Calculator::wallTimes($date . 'T09:00', $city['zone'])[0] ?? null;
+        $end = Calculator::wallTimes($date . 'T17:00', $city['zone'])[0] ?? null;
+        foreach (array_slice($targets, 0, 3) as $target) {
+            $zone = Calculator::zone($target['zone']);
+            $state['comparisons'][] = ['name' => $target['name'], 'slug' => $target['slug'], 'result' => Calculator::display($instant->setTimezone($zone))];
+            $state['office'][] = [$target['name'], $start ? $start->setTimezone($zone)->format('g:i A — M j, Y T') : 'Skipped local starting time', $end ? $end->setTimezone($zone)->format('g:i A — M j, Y T') : 'Skipped local ending time'];
+        }
+        $throughYear = (int)substr($date, 0, 4) + 1;
+        $until = Calculator::calendar($throughYear . '-12-31')->getTimestamp() + 86400;
+        $changes = Calculator::zone($city['zone'])->getTransitions($instant->getTimestamp(), $until) ?: [];
+        $next = $changes[1] ?? null;
+        $state['facts'][] = ['Next clock change', $next ? gmdate('Y-m-d H:i', $next['ts']) . ' UTC; new offset ' . $next['offset'] / 3600 . ' hours' : 'No transition listed through ' . $throughYear];
+        return $state;
+    }
+
     private static function integer(mixed $raw, int $min, int $max): int
     {
         if (!is_scalar($raw) || !preg_match('/^[0-9]+$/D', (string)$raw) || (int)$raw < $min || (int)$raw > $max) {

@@ -27,7 +27,18 @@ final class View
         }
         $html .= '<button type="button" class="secondary" data-clock-format>Use 24-hour format</button><button type="button" class="secondary" data-clock-copy>Copy time</button></div><p data-clock-status role="status" class="muted">Reference zone shown above. The clock synchronizes after loading.</p><script type="application/json" data-clock-state>' . json_encode($state, JSON_HEX_TAG | JSON_HEX_AMP | JSON_THROW_ON_ERROR) . '</script></section>';
         if ($fixed) $html = str_replace('</section>', '<div data-clock-facts>' . self::table($state['facts'], ['Time-zone fact', 'Value']) . '</div></section>', $html);
+        if (isset($state['city'])) $html = str_replace('</section>', '<div data-city-details>' . self::cityDetails($state) . '</div></section>', $html);
         return $html;
+    }
+    public static function cityDetails(array $state): string
+    {
+        $html = '<h2>Compare current city times</h2><div class="paired-clocks">';
+        foreach ($state['comparisons'] as $city) {
+            $moment = $city['result'];
+            $html .= '<div data-comparison-clock data-offset="' . self::e($moment['offsetMinutes']) . '"><a href="/time/' . self::e($city['slug']) . '">' . self::e($city['name']) . '</a><p data-comparison-time>' . self::e($moment['time']) . '</p><p data-comparison-date>' . self::e($moment['date']) . '</p><p>' . self::e($moment['zone'] . ' (UTC' . $moment['offset'] . ')') . '</p></div>';
+        }
+        $html .= '</div><h2>9 AM–5 PM in ' . self::e($state['city']['name']) . '</h2><p>Wall-clock conversions for ' . self::e($state['result']['date']) . '. This does not imply that today is a working day.</p>';
+        return $html . self::table($state['office'], ['City', '9 AM source time', '5 PM source time']);
     }
     public static function table(array $rows, array $head = ['Input', 'Result']): string
     {

@@ -23,7 +23,10 @@ elseif ($page['kind'] === 'timezone') {
 } elseif ($page['kind'] === 'hub' && $page['slug'] !== 'time') $parent = ['name' => 'World Clock', 'path' => '/time'];
 $schema = [];
 if ($canonical) {
-    $schema[] = ['@context' => 'https://schema.org', '@type' => 'WebApplication', '@id' => $canonical . '#application', 'name' => $page['title'], 'url' => $canonical, 'description' => $page['description'], 'applicationCategory' => 'UtilitiesApplication', 'operatingSystem' => 'Any', 'isAccessibleForFree' => true, 'dateModified' => $page['revision'], 'offers' => ['@type' => 'Offer', 'price' => 0, 'priceCurrency' => 'USD']];
+    $schemaType = $page['kind'] === 'trust' ? 'WebPage' : (($page['kind'] === 'directory' || ($page['kind'] === 'hub' && $page['hubKind'] !== 'city')) ? 'CollectionPage' : 'WebApplication');
+    $pageSchema = ['@context' => 'https://schema.org', '@type' => $schemaType, '@id' => $canonical . '#page', 'name' => $page['title'], 'url' => $canonical, 'description' => $page['description'], 'isAccessibleForFree' => true, 'dateModified' => $page['revision']];
+    if ($schemaType === 'WebApplication') $pageSchema += ['applicationCategory' => 'UtilitiesApplication', 'operatingSystem' => 'Any', 'offers' => ['@type' => 'Offer', 'price' => 0, 'priceCurrency' => 'USD']];
+    $schema[] = $pageSchema;
     $crumbs = [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://whatdatetime.com']];
     if ($parent) $crumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => $parent['name'], 'item' => 'https://whatdatetime.com' . $parent['path']];
     if ($page['slug'] !== '') $crumbs[] = ['@type' => 'ListItem', 'position' => count($crumbs) + 1, 'name' => $page['h1'], 'item' => $canonical];
@@ -89,9 +92,11 @@ if ($page['kind'] === 'home') {
 if ($page['kind'] === 'hub') {
     if ($page['hubKind'] === 'city') {
         $city = array_values(array_filter($repository->json('cities.json'), fn($c) => $c['slug'] === $page['city']))[0];
-        echo V::clock(Tools::run(['tool' => 'clock', 'zone' => $city['zone']]), rest_url('whatdatetime/v1/calculate'), $repository->json('cities.json'), true);
+        echo V::clock(Tools::cityClock($city, $repository->json('cities.json')), rest_url('whatdatetime/v1/calculate'), $repository->json('cities.json'), true);
     }
     $linkList($page['links']);
+    if (!empty($page['featured'])) { echo '<h2>Featured city clocks</h2>'; $linkList($page['featured']); }
+    if (!empty($page['siblings'])) { echo '<h2>Cities in the same country or time zone</h2>'; $linkList($page['siblings']); }
     if ($page['hubKind'] === 'directory') {
         $links = [];
         foreach ($repository->routes() as $slug => $route) if (str_starts_with($slug, 'time/' . $page['city'] . '/conversions')) $links[] = ['path' => '/' . $slug, 'label' => $route['title']];

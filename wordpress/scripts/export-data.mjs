@@ -6,7 +6,7 @@ import ts from 'typescript';
 import { build } from 'esbuild';
 import { adaptContent } from './content-adapter.mjs';
 import { coreSlugs, allPublicSlugs, allIndexableSlugs, hubRoutes, calculationDirectories, directoryLinks, cityLinks, relatedPairLinks } from '../../lib/siteInventory.ts';
-import { getPageIndexEligibility, cities, regions } from '../../lib/indexEligibility.ts';
+import { getPageIndexEligibility, cities, regions, regionName } from '../../lib/indexEligibility.ts';
 import { trustPages } from '../../src/data/trust-pages.ts';
 import { siteConfig } from '../../lib/site.ts';
 
@@ -89,9 +89,18 @@ add({ slug: '', kind: 'home', title: 'WhatDateTime — Date & Time Calculators',
 for (const hub of hubRoutes) {
   const links = hub.kind === 'directory' ? directoryLinks(hub.city, hub.part)
     : hub.kind === 'city' ? [...cityLinks(hub.city), { path: `/time/${hub.city}/conversions`, label: 'All city conversions' }]
-    : hub.kind === 'region' ? cities.filter(c => c.region === hub.region).map(c => ({ path: `/time/${c.slug}`, label: c.name }))
-    : regions.map(region => ({ path: `/time/regions/${region}`, label: region.replaceAll('-', ' ') }));
-  add({ ...hub, hubKind: hub.kind, kind: 'hub', h1: hub.title, title: `${hub.title} | WhatDateTime`, links }, revisions['timezone-converter']);
+    : hub.kind === 'region' ? cities.filter(c => c.region === hub.region).sort((a,b) => b.priority-a.priority).map(c => ({ path: `/time/${c.slug}`, label: `${c.name}, ${c.country}` }))
+    : regions.map(region => ({ path: `/time/regions/${region}`, label: regionName(region) }));
+  const city = cities.find(c => c.slug === hub.city);
+  const siblings = city && hub.kind === 'city' ? cities.filter(c => c.slug !== city.slug && (c.country === city.country || c.zone === city.zone)).sort((a,b) => b.priority-a.priority).slice(0,6).map(c => ({path:`/time/${c.slug}`,label:c.name})) : [];
+  const faq = city && hub.kind === 'city' ? [
+    {question:`What time zone is ${city.name} in?`,answer:`${city.name}, ${city.country}, uses ${city.zone}.`},
+    {question:`What is the UTC offset in ${city.name}?`,answer:`The current offset is shown beside the ${city.name} clock. The offset table lists the values used during the displayed year.`},
+    {question:`Does ${city.name} change its clocks?`,answer:`The clock-change count and yearly offsets above come from the current PHP IANA rules for ${city.zone}. A year with no changes has one offset throughout that year.`},
+    {question:`When is the next clock change in ${city.name}?`,answer:`The next known transition is listed in the time-zone facts table as a UTC instant and its new offset. If no change is listed, the table gives the end of the checked period. Future legislation can change these rules.`},
+  ] : [];
+  add({ ...hub, hubKind: hub.kind, kind: 'hub', h1: hub.title, title: `${hub.title} | WhatDateTime`, links, siblings, faq,
+    featured: hub.kind === 'root' ? cities.filter(c => c.priority === 5).map(c => ({path:`/time/${c.slug}`,label:c.name})) : [] }, revisions['timezone-converter']);
 }
 for (const page of calculationDirectories) add({ ...page, kind: 'directory', h1: page.title, title: `${page.title} | WhatDateTime` }, revisions.directories);
 if (Object.keys(routes).length !== all.size || Object.keys(routes).some(s => !all.has(s))) throw new Error('Route inventory drift');
