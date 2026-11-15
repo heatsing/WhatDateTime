@@ -6,9 +6,20 @@ import {
 /** Stable method FAQs: no build-time result masquerading as today's answer. */
 export function relativeFAQs(page: RelativeCalculationInput) {
   const phrase = getRelativePhrase(page);
+  const action = page.direction === "future" ? "add" : "subtract";
+  const amount = `${page.amount} ${page.unit.replace("-", " ")}${page.amount === 1 ? "" : "s"}`;
+  const method = page.unit === "hour"
+    ? `Each hour is 60 elapsed minutes, so ${amount} equals ${page.amount * 60} minutes.`
+    : page.unit === "business-day"
+      ? "Count Monday through Friday, skipping Saturdays and Sundays. The starting date is not counted, and public holidays are not excluded."
+      : page.unit === "week"
+        ? `Each week is seven calendar days, so ${amount} equals ${page.amount * 7} calendar days. Weekends and holidays are included.`
+        : page.unit === "month" || page.unit === "year"
+          ? "Keep the same day of the month where possible. If that date does not exist in the target month, use its last day."
+          : "Move one calendar date at a time. Weekends and holidays are included; the starting date is not counted.";
   const first = {
     question: `How do I find the result for ${phrase}?`,
-    answer: `After loading, the calculator uses your device clock and time zone for ${phrase}. The initial HTML is a fixed UTC example. Edit the starting conditions for a custom result, or reset to current time.`,
+    answer: `Start with the date and time shown in the calculator, then ${action} ${amount}. ${method} Choose a different starting date for a custom result, or select Reset to current time to calculate from now.`,
   };
   if (page.unit === "hour")
     return [
@@ -21,7 +32,7 @@ export function relativeFAQs(page: RelativeCalculationInput) {
       {
         question: "Which time zone is used?",
         answer:
-          "Live calculations use the browser's IANA time zone. The zone is shown next to the answer and starting input; the server's fixed example uses UTC, not an assumed visitor location.",
+          "The live answer uses your device's time zone, shown beside the result and starting input. For example, America/New_York follows New York's local time and daylight-saving rules. A result labeled Example uses the stated UTC starting time; it is not the current answer.",
       },
       {
         question: "What happens during daylight saving time changes?",
