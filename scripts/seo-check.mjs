@@ -377,8 +377,7 @@ const report = {
     knownRoutes: known.size,
   },
   errors,
-  evidence:
-    "Editorial priorities and owner-reported indexing; no verified GSC query/page export. No indexing or traffic promise.",
+  evidence: `${policy.basis} No indexing or traffic promise.`,
 };
 fs.mkdirSync("reports", { recursive: true });
 fs.writeFileSync(

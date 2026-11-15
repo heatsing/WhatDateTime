@@ -1,5 +1,5 @@
 {
-  "policyVersion": "2026-09-26",
+  "policyVersion": "2026-11-15",
   "before": {
     "total": 10013,
     "indexable": 10013,
@@ -25,5 +25,5 @@
     "knownRoutes": 10263
   },
   "errors": [],
-  "evidence": "Editorial priorities and owner-reported indexing; no verified GSC query/page export. No indexing or traffic promise."
+  "evidence": "Editorial ranges with individually protected routes. The 2026-11-15 review adds existing indexable routes selected from owner-supplied search evidence; private exports and metrics are not stored here. No indexing or traffic promise."
 }

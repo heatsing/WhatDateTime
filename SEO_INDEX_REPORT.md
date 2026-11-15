@@ -1,6 +1,6 @@
 # SEO index and HTML audit
 
-Policy: 2026-09-26. Editorial priorities and owner-reported indexing; no verified GSC query/page export. No indexing or traffic promise.
+Policy: 2026-11-15. Editorial ranges with individually protected routes. The 2026-11-15 review adds existing indexable routes selected from owner-supplied search evidence; private exports and metrics are not stored here. No indexing or traffic promise.
 
 | Metric | After |
 |---|---:|

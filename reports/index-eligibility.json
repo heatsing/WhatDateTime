@@ -4424,8 +4424,8 @@
   {
     "slug": "8-hours-from-now",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "9-hours-from-now",
@@ -4478,14 +4478,14 @@
   {
     "slug": "17-hours-from-now",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "18-hours-from-now",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "19-hours-from-now",
@@ -4664,8 +4664,8 @@
   {
     "slug": "48-hours-from-now",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "49-hours-from-now",
@@ -4808,8 +4808,8 @@
   {
     "slug": "72-hours-from-now",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "73-hours-from-now",
@@ -7412,8 +7412,8 @@
   {
     "slug": "6-hours-ago",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "7-hours-ago",
@@ -7436,8 +7436,8 @@
   {
     "slug": "10-hours-ago",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "11-hours-ago",
@@ -7466,8 +7466,8 @@
   {
     "slug": "15-hours-ago",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "16-hours-ago",
@@ -15182,14 +15182,14 @@
   {
     "slug": "1-business-day-from-today",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "2-business-days-from-today",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "3-business-days-from-today",
@@ -15224,8 +15224,8 @@
   {
     "slug": "8-business-days-from-today",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "9-business-days-from-today",
@@ -15266,8 +15266,8 @@
   {
     "slug": "15-business-days-from-today",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "16-business-days-from-today",
@@ -15386,7 +15386,7 @@
   {
     "slug": "35-business-days-from-today",
     "indexable": true,
-    "reason": "Protected: Owner-provided 2026-11-13 GSC summary: 2 historical clicks, 155 impressions; original export pending. Useful maintained weekday tool restored after review.",
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
     "priority": 5
   },
   {
@@ -15716,8 +15716,8 @@
   {
     "slug": "90-business-days-from-today",
     "indexable": true,
-    "priority": 4,
-    "reason": "Curated relative-date range or reference interval"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "91-business-days-from-today",
@@ -24206,8 +24206,8 @@
   {
     "slug": "new-york-to-sydney-time",
     "indexable": true,
-    "priority": 4,
-    "reason": "Editorial city priorities 5+5"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "new-york-to-singapore-time",
@@ -24710,8 +24710,8 @@
   {
     "slug": "london-to-toronto-time",
     "indexable": true,
-    "priority": 4,
-    "reason": "Editorial city priorities 5+4"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "london-to-berlin-time",
@@ -25640,8 +25640,8 @@
   {
     "slug": "los-angeles-to-new-york-time",
     "indexable": true,
-    "priority": 4,
-    "reason": "Editorial city priorities 5+5"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "los-angeles-to-london-time",
@@ -28070,8 +28070,8 @@
   {
     "slug": "toronto-to-new-york-time",
     "indexable": true,
-    "priority": 4,
-    "reason": "Editorial city priorities 4+5"
+    "reason": "Protected: Existing indexable route retained after the 2026-11-15 search review; do not remove without a new page-level review.",
+    "priority": 5
   },
   {
     "slug": "toronto-to-london-time",

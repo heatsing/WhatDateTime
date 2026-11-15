@@ -156,10 +156,10 @@ function DeepContent({
         <p className="mt-4 text-base leading-8 text-ink/65 sm:text-lg sm:leading-9">
           {calculationBasis}
         </p>
-        <p className="mt-5 border-l-4 border-fern bg-[#F4F8FB] px-5 py-4 text-base font-medium leading-8 text-ink">
+        <div data-nosnippet="" className="mt-5 border-l-4 border-fern bg-[#F4F8FB] px-5 py-4 text-base font-medium leading-8 text-ink">
           Example (fixed starting conditions, UTC):{" "}
           {getPageFormula(page, referenceDate)}
-        </p>
+        </div>
       </article>
 
       <article
@@ -212,7 +212,7 @@ function DeepContent({
       </article>
 
       <div className="mt-9 space-y-9 border-t border-[#D9DEE5] pt-6">
-        <article>
+        <section data-nosnippet="">
           <h2 className="font-display text-2xl font-semibold text-ink">
             Facts for this calculation example
           </h2>
@@ -229,7 +229,7 @@ function DeepContent({
               </div>
             ))}
           </dl>
-        </article>
+        </section>
         <article>
           <h2 className="font-display text-2xl font-semibold text-ink">
             Worked examples
