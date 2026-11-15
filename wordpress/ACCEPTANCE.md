@@ -2,6 +2,14 @@
 
 Preview: https://darkseagreen-trout-940046.hostingersite.com
 
+## Typography correction — 2026-11-15
+
+- Theme 0.1.1 reduces the shared typography scale without changing content, routes, calculation code or indexing settings. At a standard 1440px viewport, body text changes from 18px to 16px, navigation from 18px to 15px, H1 from 43.2px to 36px, and the homepage clock from 90px to 64px. Mobile H1 is 28px; inputs remain 16px and buttons keep a minimum 44px target height.
+- The root size follows the browser default instead of growing at the desktop breakpoint. Timeline cells can wrap at an enlarged text size; action buttons no longer stretch to the height of adjacent labeled inputs.
+- The old theme is privately backed up at `/home/u343377351/whatdatetime-backups/pre-typography-20261115-Kl4ODg/theme.tar.gz` (SHA-256 `d94e1185187304e3ca15d869b5808f6b22c923b3d751daeb2c1f779ff7502b3e`). Only `style.css` was replaced on Hostinger, after verifying old/new hashes. Deployed CSS SHA-256: `c23f15a9785a759f9ead81a73d7fbc62a409f38682efcbbe598954cf383f1297`. The stylesheet's existing filemtime URL changes its browser cache key.
+- Re-ran typecheck, lint, SEO checks, build, CSS parsing, PHP inventory and 844 calculation assertions. Deployed-preview checks passed for 33 HTML samples, 13 sitemap shards / 2,238 URLs, and 21 browser checks. Typography checks cover 320/360/390/768/1440 widths, input sizes, button heights and 200% text-size reflow on the hour page. The browser harness explicitly scrolls controls into view before real clicks. On Windows, the browser was prestarted through the CLI because a fresh native daemon retained the Node harness's captured output pipes.
+- Reopened the deployed preview without injected CSS and measured the new sizes. Before/after desktop and mobile screenshots are in ignored `wordpress/artifacts/type-{before,after}-{desktop,mobile}.png`; browser errors were empty. `blog_public` remains 0. This style-only update does not complete formal-domain DNS/SSL cutover.
+
 ## Verified
 
 - Independent branch `migrate/wordpress-php-20261115`, based on PR #1's `4060329` (including the date-consistency branch). Existing Astro implementation is unchanged.

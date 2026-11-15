@@ -37,6 +37,16 @@ node wordpress/scripts/http-check.mjs
 node wordpress/scripts/browser-check.mjs
 ```
 
+On Windows, prestart the named headless browser through the CLI before the Node browser harness to avoid a fresh native daemon retaining captured output pipes:
+
+```sh
+agent-browser --session whatdatetime-wp-qa --proxy http://127.0.0.1:4780 open https://darkseagreen-trout-940046.hostingersite.com
+node wordpress/scripts/browser-check.mjs
+agent-browser --session whatdatetime-wp-qa close
+```
+
+Use the same preview URL and proxy as the harness when overriding either setting.
+
 These accept `WDT_PREVIEW_URL` and `WDT_HTTP_PROXY` (the development proxy defaults to `http://127.0.0.1:4780`). Browser checks use an isolated headless `agent-browser` session; set `AGENT_BROWSER_BIN` if it is not in the standard local install. Run only one browser-check process at a time because the harness uses one named session. Native segmented datetime inputs are set through their value and input/change events because generic CDP text insertion cannot fill that widget. Real buttons, selects, keyboard submission, focus and clipboard handlers are exercised. Screenshots and machine results are written to ignored `wordpress/artifacts/`.
 
 On the isolated preview, `wp eval-file /private/release/tests/wp-integration.php` verifies admin editor permissions/nonce fields and content overrides, restoring every temporary option in `finally`.

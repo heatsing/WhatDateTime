@@ -17,7 +17,12 @@ async function browser(...args) {
 }
 async function evaluate(code) { const data = await browser('eval', '-b', Buffer.from(code).toString('base64')); return data.result; }
 async function until(code) { await browser('wait', '--fn', code); }
-const click = selector => browser('click', selector);
+const click = async selector => {
+  // A partially visible mobile button can have its center below the viewport.
+  // Bring the entire control into view before dispatching a real pointer click.
+  await browser('scrollintoview', selector);
+  return browser('click', selector);
+};
 const fill = (selector, value) => browser('fill', selector, value);
 // CDP text insertion cannot fill Chromium's localized segmented datetime widget.
 // Set its native value and dispatch the same bubbling input/change events.
@@ -60,13 +65,32 @@ await check('reset restores this URL and current starting point', async () => {
   await until("document.querySelector('[name=amount]').value === '8' && document.querySelector('[data-status]').textContent.includes('Live mode')");
   assert.equal(await evaluate("document.querySelector('[name=direction]').value"), 'future');
 });
-await check('mobile and desktop layout', async () => {
-  for (const width of [360, 390, 768, 1440]) {
+await check('mobile and desktop layout and typography', async () => {
+  for (const width of [320, 360, 390, 768, 1440]) {
     await browser('set', 'viewport', String(width), '900');
-    const dimensions = await evaluate('({page:document.documentElement.scrollWidth, viewport:innerWidth})');
+    const dimensions = await evaluate(`({
+      page:document.documentElement.scrollWidth, viewport:innerWidth,
+      body:parseFloat(getComputedStyle(document.body).fontSize),
+      heading:parseFloat(getComputedStyle(document.querySelector('h1')).fontSize),
+      nav:parseFloat(getComputedStyle(document.querySelector('.nav-group summary')).fontSize),
+      inputs:Array.from(document.querySelectorAll('input,select')).filter(el=>el.getClientRects().length).map(el=>parseFloat(getComputedStyle(el).fontSize)),
+      buttons:Array.from(document.querySelectorAll('button')).filter(el=>el.getClientRects().length).map(el=>el.getBoundingClientRect().height)
+    })`);
     assert.ok(dimensions.page <= dimensions.viewport, JSON.stringify(dimensions));
+    assert.equal(dimensions.body, 16);
+    assert.equal(dimensions.nav, 15);
+    assert.ok(dimensions.heading >= 28 && dimensions.heading <= 36, JSON.stringify(dimensions));
+    assert.ok(dimensions.inputs.every(size=>size >= 16), JSON.stringify(dimensions));
+    assert.ok(dimensions.buttons.every(height=>height >= 44), JSON.stringify(dimensions));
   }
   await browser('set', 'viewport', '390', '844');
+  try {
+    await evaluate("document.documentElement.style.fontSize='200%'");
+    assert.equal(await evaluate("parseFloat(getComputedStyle(document.body).fontSize)"), 32);
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), 'larger text must reflow without page overflow');
+  } finally {
+    await evaluate("document.documentElement.style.removeProperty('font-size')");
+  }
   await browser('screenshot', resolve('wordpress/artifacts/hour-mobile.png'), '--full');
 });
 await browser('open', base + '/calculators/countdown');
@@ -82,6 +106,7 @@ await check('countdown save/share preserve a UTC instant', async () => {
   await select('[name=zone]', 'America/New_York');
   await until("!document.querySelector('[data-copy]').disabled && document.querySelector('[data-formula]').textContent.includes('America/New_York')");
   await click('[data-share]');
+  await until("typeof window.__copied === 'string' && window.__copied.includes('#event=')");
   const share = new URL(await evaluate('window.__copied'));
   assert.equal(new URLSearchParams(share.hash.slice(1)).get('due'), saved.instant);
   await browser('open', share.href);
@@ -116,6 +141,7 @@ await check('homepage clock, format, search and mobile layout', async () => {
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
   await browser('screenshot', resolve('wordpress/artifacts/home-mobile.png'), '--full');
   await browser('set', 'viewport', '1440', '1000');
+  assert.equal(await evaluate("parseFloat(getComputedStyle(document.querySelector('.clock-value')).fontSize)"), 64);
   await browser('screenshot', resolve('wordpress/artifacts/home-desktop.png'), '--full');
 });
 await browser('open', base + '/london-to-toronto-time');
