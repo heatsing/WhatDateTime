@@ -1,0 +1,28 @@
+<?php
+declare(strict_types=1);
+require __DIR__ . '/../whatdatetime-tools/includes/Tools.php';
+require __DIR__ . '/kernel.php';
+use WhatDateTime\Tools;
+use WhatDateTime\Calculator;
+
+$zone = Tools::run(['tool' => 'timezone', 'mode' => 'custom', 'zone' => 'UTC', 'fromZone' => 'Asia/Singapore', 'toZone' => 'Australia/Melbourne', 'start' => '2026-11-15T12:00']);
+same($zone['result']['local'], '2026-11-15T15:00', 'Singapore/Melbourne selected date');
+same($zone['differenceHours'], 3, 'selected-date offset');
+same(count($zone['table']), 24, 'timezone table');
+$gapTable = Tools::run(['tool' => 'timezone', 'mode' => 'custom', 'zone' => 'UTC', 'fromZone' => 'America/New_York', 'toZone' => 'Europe/London', 'start' => '2026-03-08T12:00']);
+same($gapTable['table'][2][1], 'Skipped by clock change', 'DST table gap');
+$fold = Tools::run(['tool' => 'timezone', 'mode' => 'custom', 'zone' => 'UTC', 'fromZone' => 'America/New_York', 'toZone' => 'Europe/London', 'start' => '2026-11-01T12:00']);
+same(count($fold['table']), 25, 'DST table repeated hour');
+$countdown = Tools::run(['tool' => 'countdown', 'zone' => 'Asia/Tokyo', 'instant' => '2028-02-29T01:30:00.000Z', 'name' => 'Event & notes']);
+$shared = Tools::run(['tool' => 'countdown', 'zone' => 'America/New_York', 'instant' => $countdown['target']['instant'], 'name' => $countdown['target']['name']]);
+same($shared['target']['instant'], $countdown['target']['instant'], 'cross-zone countdown preserves instant');
+$difference = Tools::run(['tool' => 'difference', 'zone' => 'America/New_York', 'start' => '2026-03-07T12:00', 'end' => '2026-03-08T12:00']);
+same($difference['elapsedSeconds'], 23 * 3600, '23 elapsed hours');
+same($difference['calendarDays'], 1, 'one calendar day');
+same(Tools::run(['tool' => 'age', 'birth' => '2000-11-15', 'asof' => '2026-11-15'])['answer'], '26 years, 0 months, 0 days', 'age');
+same(Tools::run(['tool' => 'half-birthday', 'date' => '2027-08-31'])['answer'], 'Tuesday, February 29, 2028', 'half birthday clamp');
+same(Tools::run(['tool' => 'weeks-in-year', 'year' => '2026'])['answer'], '53 ISO weeks', 'ISO year');
+same(Tools::run(['tool' => 'days-in-month', 'year' => '2028', 'month' => '2'])['answer'], '29 days', 'month length');
+rejects(fn() => Tools::run(['tool' => 'age', 'birth' => '2030-01-01', 'asof' => '2026-01-01']), 'future birth');
+rejects(fn() => Tools::run(['tool' => 'calendar', 'year' => 'NaN', 'month' => '2']), 'NaN year');
+echo "PHP tool dispatch checks passed; $checks cumulative assertions.\n";

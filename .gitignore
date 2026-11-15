@@ -13,3 +13,6 @@ out
 .DS_Store
 /dogfood-output/
 /workers/generated/
+/wordpress/whatdatetime-tools/data/
+/wordpress/tests/generated/
+/wordpress/artifacts/
