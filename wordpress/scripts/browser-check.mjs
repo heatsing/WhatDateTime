@@ -34,6 +34,8 @@ await check('custom inputs update answer, formula and calendar', async () => {
   await until("document.querySelector('[data-answer]').textContent.includes('1:30 AM') && document.querySelector('[data-formula]').textContent.includes('2 hours')");
   const actual = await evaluate("({answer:document.querySelector('[data-answer]').textContent,calendar:document.querySelector('.selected-date time').dateTime, formula:document.querySelector('[data-formula]').textContent})");
   assert.match(actual.answer, /November 14, 2026/); assert.equal(actual.calendar, '2026-11-14');
+  const nearby = await evaluate("Array.from(document.querySelectorAll('[data-details] h2')).find(h=>h.textContent==='Nearby calculations').nextElementSibling.nextElementSibling.querySelector('tbody tr').textContent");
+  assert.ok(nearby.includes(actual.answer), nearby);
   await evaluate("window.__copied=''; Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async value=>{window.__copied=value}}})");
   await click('[data-copy]');
   assert.equal(await evaluate('window.__copied'), actual.formula);
@@ -100,14 +102,81 @@ await until("document.querySelector('[data-clock-status]').textContent.includes(
 await check('homepage clock, format, search and mobile layout', async () => {
   await click('[data-clock-format]');
   assert.doesNotMatch(await evaluate("document.querySelector('[data-clock]').textContent"), /AM|PM/);
+  assert.equal(await evaluate("document.querySelector('[data-today-date]').textContent"), await evaluate("document.querySelector('[data-clock-date]').textContent"));
+  await click('.nav-group summary');
+  assert.equal(await evaluate("document.querySelector('.nav-group').open"), true);
+  await browser('press', 'Escape');
+  assert.equal(await evaluate("document.querySelector('.nav-group').open"), false);
   await click('.site-search summary');
   await fill('[name=q]', '8 hours from now'); await browser('press', 'Enter');
   await until("document.querySelector('[data-search-results] a') !== null");
   assert.equal(await evaluate("Array.from(document.querySelectorAll('[data-search-results] a')).some(a=>a.getAttribute('href')==='/8-hours-from-now')"), true);
+  await click('.site-search summary');
   assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
   await browser('screenshot', resolve('wordpress/artifacts/home-mobile.png'), '--full');
   await browser('set', 'viewport', '1440', '1000');
   await browser('screenshot', resolve('wordpress/artifacts/home-desktop.png'), '--full');
 });
+await browser('open', base + '/london-to-toronto-time');
+await until("document.querySelector('[data-status]').textContent.includes('Live mode')");
+await check('selected-date timezone tables, paired clocks and meeting reset', async () => {
+  await fillDate('[name=start]', '2026-03-20T14:00');
+  await click('button[type=submit]');
+  await until("document.querySelector('[data-formula]').textContent.includes('Offset difference: -4 hours')");
+  assert.equal(await evaluate("document.querySelectorAll('.paired-times > div').length"), 2);
+  assert.equal(await evaluate("document.querySelectorAll('.paired-clocks [data-clock]').length"), 2);
+  assert.ok(await evaluate("document.body.textContent.includes('Time difference through the selected year')"));
+  await select('[name=fromZone]', 'Asia/Tokyo');
+  await select('[name=toZone]', 'Europe/Paris');
+  await click('[data-nine-am]');
+  await until("document.querySelector('[name=start]').value.endsWith('T09:00') && document.querySelector('[data-status]').textContent.includes('Custom result')");
+  assert.equal(await evaluate("document.querySelector('[name=fromZone]').value"), 'Asia/Tokyo');
+  assert.equal(await evaluate("document.querySelector('[name=toZone]').value"), 'Europe/Paris');
+  for (const width of [360, 390, 768, 1440]) {
+    await browser('set', 'viewport', String(width), '900');
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'), `timezone width ${width}`);
+  }
+  await browser('set', 'viewport', '390', '844');
+  await browser('screenshot', resolve('wordpress/artifacts/timezone-mobile.png'), '--full');
+});
+const toolCases = [
+  ['date-calculator', {start:'2026-01-31T12:00',amount:'1',unit:'month'}, 'February 28, 2026'],
+  ['business-days', {start:'2026-11-13T12:00',amount:'1'}, 'November 16, 2026'],
+  ['time-difference', {start:'2026-11-13T23:30',end:'2026-11-14T01:30'}, '2 hours, 0 minutes'],
+  ['age-calculator', {birth:'2000-06-15',asof:'2026-06-15'}, '26 years, 0 months, 0 days'],
+  ['days-until', {start:'2028-02-28',end:'2028-02-29'}, '1 calendar days'],
+  ['day-of-week', {date:'2028-02-29'}, 'Tuesday, February 29, 2028'],
+  ['days-in-month', {year:'2028',month:'2'}, '29 days'],
+  ['weeks-in-year', {year:'2026'}, '53 ISO weeks'],
+  ['calendar', {year:'2028',month:'2'}, 'February 2028'],
+  ['half-birthday', {date:'2026-08-31'}, 'February 28, 2027'],
+  ['weeks-and-days-ago', {start:'2026-11-13T12:00',weeks:'1',days:'2'}, 'November 4, 2026'],
+];
+await browser('open', base + '/calculators/timezone-converter');
+await until("document.querySelector('[data-status]').textContent.includes('Live mode')");
+await check('general tool: timezone-converter', async () => {
+  await select('[name=fromZone]', 'America/New_York');
+  await select('[name=toZone]', 'Europe/London');
+  await fillDate('[name=start]', '2026-03-20T09:00');
+  await click('button[type=submit]');
+  await until("document.querySelector('[data-answer]').textContent.includes('1:00 PM') && document.querySelector('[data-formula]').textContent.includes('Offset difference: 4 hours')");
+});
+for (const [slug, fields, expected] of toolCases) {
+  await browser('open', base + '/calculators/' + slug);
+  await until("document.querySelector('[data-status]').textContent.length > 0");
+  await check(`general tool: ${slug}`, async () => {
+    for (const [name, value] of Object.entries(fields)) {
+      const selector = `[name=${name}]`;
+      const tag = await evaluate(`document.querySelector(${JSON.stringify(selector)}).tagName`);
+      if (tag === 'SELECT') await select(selector, value);
+      else if (/^\d{4}-\d{2}-\d{2}/.test(value)) await fillDate(selector, value);
+      else await fill(selector, value);
+    }
+    await click('button[type=submit]');
+    await until(`document.querySelector('[data-answer]').textContent.includes(${JSON.stringify(expected)}) && !document.querySelector('[data-copy]').disabled`);
+    assert.equal(await evaluate("document.querySelector('[data-error]').textContent"), '');
+    assert.ok(await evaluate('document.documentElement.scrollWidth <= innerWidth'));
+  });
+}
 writeFileSync(new URL('../artifacts/browser-results.json', import.meta.url), JSON.stringify({ base, checks: records }, null, 2));
 console.log(`${records.length} WordPress browser checks passed.`);

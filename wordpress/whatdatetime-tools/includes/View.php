@@ -26,6 +26,7 @@ final class View
             $html .= self::select('clock-zone', 'Location / time zone', $zones, $result['zone']);
         }
         $html .= '<button type="button" class="secondary" data-clock-format>Use 24-hour format</button><button type="button" class="secondary" data-clock-copy>Copy time</button></div><p data-clock-status role="status" class="muted">Reference zone shown above. The clock synchronizes after loading.</p><script type="application/json" data-clock-state>' . json_encode($state, JSON_HEX_TAG | JSON_HEX_AMP | JSON_THROW_ON_ERROR) . '</script></section>';
+        if ($fixed) $html = str_replace('</section>', '<div data-clock-facts>' . self::table($state['facts'], ['Time-zone fact', 'Value']) . '</div></section>', $html);
         return $html;
     }
     public static function table(array $rows, array $head = ['Input', 'Result']): string
@@ -45,6 +46,14 @@ final class View
         $html = '<div class="answer"><p class="eyebrow">' . (($state['mode'] ?? '') === 'live' ? 'Current calculation' : 'Calculated result') . '</p>';
         $html .= '<p class="answer-value" data-answer>' . self::e($state['answer']) . '</p><p data-formula>' . self::e($state['formula']) . '</p>';
         if (isset($state['start']['zone'])) $html .= '<p class="muted">Starting point: ' . self::e($state['start']['date'] . ' ' . $state['start']['time'] . ' — ' . $state['start']['zone'] . ' (UTC' . $state['start']['offset'] . ')') . '</p>';
+        if (isset($state['differenceHours'])) {
+            $html .= '<div class="paired-times">';
+            foreach (['start' => 'Source time', 'result' => 'Destination time'] as $key => $label) {
+                $moment = $state[$key];
+                $html .= '<div><strong>' . $label . '</strong><p>' . self::e($moment['time'] . ' — ' . $moment['date']) . '</p><p>' . self::e($moment['zone'] . ' (UTC' . $moment['offset'] . ')') . '</p></div>';
+            }
+            $html .= '</div>';
+        }
         if (isset($state['dateShift'])) $html .= '<p>' . ($state['dateShift'] === 0 ? 'The result stays on the starting calendar date.' : self::e(abs($state['dateShift'])) . ' calendar date(s) ' . ($state['dateShift'] > 0 ? 'later.' : 'earlier.')) . '</p>';
         $html .= '</div>';
         if (isset($state['rules'])) $html .= '<p class="note">' . self::e($state['rules']) . '</p>';
@@ -76,6 +85,12 @@ final class View
                 $html .= '<h3>' . self::e($zone) . '</h3>';
                 $html .= $rows ? self::table(array_map(fn($r) => [$r['instant'], $r['offset'] . ' minutes from UTC (' . $r['abbreviation'] . ')'], $rows), ['Transition instant', 'New offset']) : '<p>No clock changes in this year.</p>';
             }
+        }
+        if (isset($state['periods'])) $html .= '<h2>Time difference through the selected year</h2><p>Each interval ends at the next transition; boundaries are UTC instants.</p>' . self::table($state['periods'], ['From (inclusive)', 'Until (exclusive)', 'Destination minus source']);
+        if (isset($state['nearby'])) {
+            $html .= '<h2>Nearby calculations</h2><p>These comparisons use the same starting point and time zone as your calculation.</p><div class="table-scroll" tabindex="0"><table><thead><tr><th>Calculation</th><th>Result</th></tr></thead><tbody>';
+            foreach ($state['nearby'] as $row) $html .= '<tr><td>' . ($row['path'] ? '<a href="' . self::e($row['path']) . '">' . self::e($row['label']) . '</a>' : self::e($row['label'])) . '</td><td>' . self::e($row['answer']) . '</td></tr>';
+            $html .= '</tbody></table></div>';
         }
         return $html;
     }
@@ -130,6 +145,7 @@ final class View
         if (in_array($tool, ['relative', 'date', 'business-days', 'timezone', 'countdown', 'difference', 'weeks-and-days-ago'], true)) $html .= self::select('occurrence', 'Repeated hour (DST)', ['earlier' => 'Earlier occurrence', 'later' => 'Later occurrence'], $in['occurrence']);
         if ($tool === 'difference') $html .= self::select('endOccurrence', 'End repeated hour (DST)', ['earlier' => 'Earlier occurrence', 'later' => 'Later occurrence'], $in['endOccurrence'] ?? 'earlier');
         $html .= '</div><div class="actions"><button type="submit">' . ($tool === 'countdown' ? 'Start countdown' : 'Calculate') . '</button><button type="button" class="secondary" data-reset>Reset to current time</button><button type="button" class="secondary" data-copy>Copy result</button>';
+        if ($tool === 'timezone') $html .= '<button type="button" class="secondary" data-nine-am>Today at 9 AM</button>';
         if ($tool === 'countdown') $html .= '<button type="button" class="secondary" data-save>Save target</button><button type="button" class="secondary" data-share>Copy share link</button><button type="button" class="secondary" data-clear>Clear and reset</button>';
         return $html . '</div><p data-error role="alert"></p><p data-status role="status" class="muted"></p></form>';
     }

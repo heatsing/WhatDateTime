@@ -2,6 +2,8 @@
 
 ## Current
 
+- November 15 WordPress/PHP migration: all 10,263 existing routes and 13 general calculators are available on the isolated Hostinger preview. See `wordpress/ACCEPTANCE.md` for verified coverage and `wordpress/README.md` for deployment/rollback. Production remains the existing Astro/Cloudflare site; the owner explicitly deferred formal SSL, DNS and Worker-binding changes. Do not treat preview deployment as authorization for domain cutover.
+
 - November 14 UX refinement: synchronized valid-input previews, explicit invalid/draft results, deduplicated recommendations, correct category links, countdown resume/display-zone preservation and selected-time city-pair answers. See `reports/ux-refinement-2026-11-14.md`; source changes are not a production release.
 
 - November 13 repair: explicit UTC examples, shared live/custom calculation state, a generic business-day tool, local countdown save/share, selected-date time-zone summaries and evidence-based restoration of the 35-business-day URL. See `reports/recovery-2026-11-13.md`; production release is separate from source synchronization.

@@ -75,9 +75,12 @@ add({ slug: 'calculators/business-days', kind: 'calculator', calculator: 'busine
   faq: [{ question: 'Are public holidays excluded?', answer: 'No. Only Saturdays and Sundays are excluded.' }, { question: 'Does the starting date count?', answer: 'No. Counting starts on the next or previous date. Zero days returns the starting date.' }, { question: 'Can I subtract business days?', answer: 'Yes. Choose Subtract to move backward, skipping weekends.' }] }, revisions.corePages['calculators/business-days']);
 for (const page of Object.values(trustPages)) add({ ...page, kind: 'trust' }, revisions.corePages[page.slug] || revisions.site);
 const homeTree = ts.createSourceFile('home.tsx', readFileSync(new URL('components/home-page.tsx', root), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const navigationTree = ts.createSourceFile('header.tsx', readFileSync(new URL('components/header.tsx', root), 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+save('navigation.json', await literal('navigation', navigationTree));
 add({ slug: '', kind: 'home', title: 'WhatDateTime — Date & Time Calculators', h1: 'Current Date and Time', description: siteConfig.description,
   intro: 'Check your local time, date, and time zone.', tools: await literal('calculatorLinks', homeTree),
   links: (await literal('popularAnswers', homeTree)).map(([label, path]) => ({ label, path })), faq: await literal('homeFaqs', homeTree),
+  popularZones: (await literal('popularZones', homeTree)).map(([label, path]) => ({ label, path })),
   sections: [
     { title: 'Free Date and Time Tools', paragraphs: ['WhatDateTime provides focused online tools for calculating dates, checking time zones, comparing durations, and planning deadlines. Every calculator is free to use and opens without registration.'] },
     { title: 'Plan dates accurately', paragraphs: ['Add or subtract calendar units, find weekdays, calculate date differences, and check business-day deadlines.'] },

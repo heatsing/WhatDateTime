@@ -25,14 +25,14 @@ final class Tools
         $local = $now->setTimezone(Calculator::zone($zone));
         return [
             'tool' => $tool, 'mode' => 'live', 'zone' => $zone,
-            'start' => $page['start'] ?? $local->format('Y-m-d\TH:i'),
-            'end' => $page['end'] ?? $local->modify('+1 day')->format('Y-m-d\TH:i'),
-            'birth' => $local->modify('-20 years')->format('Y-m-d'), 'asof' => $local->format('Y-m-d'),
+            'start' => $page['start'] ?? $local->format($tool === 'days-until' ? 'Y-m-d' : 'Y-m-d\TH:i'),
+            'end' => $page['end'] ?? $local->modify($tool === 'days-until' ? '+30 days' : '+1 day')->format($tool === 'days-until' ? 'Y-m-d' : 'Y-m-d\TH:i'),
+            'birth' => Calculator::relative($local, 25, 'year', 'past')->format('Y-m-d'), 'asof' => $local->format('Y-m-d'),
             'date' => $local->format('Y-m-d'), 'year' => $local->format('Y'), 'month' => $local->format('n'),
-            'amount' => $page['amount'] ?? ($tool === 'business-days' ? 8 : 30),
+            'amount' => $page['amount'] ?? ($tool === 'business-days' ? 8 : ($tool === 'date' ? 10 : 30)),
             'unit' => $page['unit'] ?? ($tool === 'business-days' ? 'business-day' : 'day'),
             'direction' => $page['direction'] ?? 'future', 'occurrence' => 'earlier', 'endOccurrence' => 'earlier',
-            'weeks' => 2, 'days' => 3,
+            'weeks' => 8, 'days' => 2,
             'fromZone' => $page['fromZone'] ?? 'America/New_York', 'toZone' => $page['toZone'] ?? 'Europe/London',
             'name' => 'My event', 'target' => $local->modify('+7 days')->format('Y-m-d\TH:i'),
         ];
@@ -45,9 +45,13 @@ final class Tools
         Calculator::zone($zone);
         if ($tool === 'clock') {
             $now = new DateTimeImmutable('now', Calculator::zone($zone));
+            $year = $now->format('Y');
+            $transitions = Calculator::zone($zone)->getTransitions(strtotime($year . '-01-01 UTC'), strtotime(((int)$year + 1) . '-01-01 UTC')) ?: [];
+            $offsets = array_values(array_unique(array_map(fn($row) => $row['offset'] / 3600 . ' hours', $transitions)));
+            $facts = [['Zone identifier', $zone], ['Current abbreviation', $now->format('T')], ['UTC offsets in ' . $year, implode(' / ', $offsets)], ['Clock changes in ' . $year, max(0, count($transitions) - 1)]];
             return ['answer' => $now->format('g:i:s A'), 'formula' => $now->format('l, F j, Y') . " ($zone)",
                 'copyText' => $now->format('c') . " ($zone)", 'result' => Calculator::display($now),
-                'dayOfYear' => (int)$now->format('z') + 1, 'daysInYear' => $now->format('L') === '1' ? 366 : 365, 'isoWeek' => $now->format('W')];
+                'facts' => $facts, 'dayOfYear' => (int)$now->format('z') + 1, 'daysInYear' => $now->format('L') === '1' ? 366 : 365, 'isoWeek' => $now->format('W')];
         }
         if (in_array($tool, ['relative', 'date', 'business-days', 'weeks-and-days-ago'], true)) {
             if ($tool === 'business-days') $in['unit'] = 'business-day';
@@ -93,7 +97,15 @@ final class Tools
                 $rows = Calculator::zone($name)->getTransitions($startYear, $endYear) ?: [];
                 $transitions[$name] = array_map(fn($r) => ['instant' => $r['time'], 'offset' => $r['offset'] / 60, 'abbreviation' => $r['abbr']], array_slice($rows, 1));
             }
-            return ['answer' => $answer, 'formula' => $formula, 'copyText' => $formula, 'start' => Calculator::display($date), 'result' => Calculator::display($converted), 'differenceHours' => $difference, 'table' => $table, 'overlap' => $overlap, 'transitions' => $transitions, 'rules' => 'Times and offsets apply to the selected date. Office overlap assumes Monday–Friday, 9 AM–5 PM in each city; public holidays are not excluded.'];
+            $cuts = [$startYear, $endYear];
+            foreach ($transitions as $rows) foreach ($rows as $row) $cuts[] = (new DateTimeImmutable($row['instant']))->getTimestamp();
+            $cuts = array_values(array_unique($cuts)); sort($cuts); $periods = [];
+            for ($i = 0; $i < count($cuts) - 1; $i++) {
+                $at = new DateTimeImmutable('@' . $cuts[$i]);
+                $gap = ($toTz->getOffset($at) - $fromTz->getOffset($at)) / 3600;
+                $periods[] = [gmdate('Y-m-d H:i', $cuts[$i]) . ' UTC', gmdate('Y-m-d H:i', $cuts[$i + 1]) . ' UTC', $gap . ' hours'];
+            }
+            return ['answer' => $answer, 'formula' => $formula, 'copyText' => $formula, 'start' => Calculator::display($date), 'result' => Calculator::display($converted), 'differenceHours' => $difference, 'dateShift' => Calculator::calendarDays($date->format('Y-m-d'), $converted->format('Y-m-d')), 'table' => $table, 'overlap' => $overlap, 'transitions' => $transitions, 'periods' => $periods, 'rules' => 'Times and offsets apply to the selected date. Office overlap assumes Monday–Friday, 9 AM–5 PM in each city; public holidays are not excluded.'];
         }
         if ($tool === 'countdown') {
             $target = isset($in['instant']) ? Calculator::instant((string)$in['instant'])->setTimezone(Calculator::zone($zone))
@@ -107,6 +119,7 @@ final class Tools
         }
         if ($tool === 'difference' || $tool === 'days-until') {
             $start = (string)($in['start'] ?? ''); $end = (string)($in['end'] ?? '');
+            if ($tool === 'days-until') { $start = substr($start, 0, 10); $end = substr($end, 0, 10); }
             $isDate = strlen($start) === 10 && strlen($end) === 10;
             $a = $isDate ? Calculator::calendar($start) : Calculator::wall($start, $zone, (string)($in['occurrence'] ?? 'earlier'));
             $b = $isDate ? Calculator::calendar($end) : Calculator::wall($end, $zone, (string)($in['endOccurrence'] ?? 'earlier'));

@@ -28,6 +28,21 @@ function wdt_page(string $slug): ?array {
     $overrides = get_option('wdt_content_' . hash('sha256', $slug), []);
     return array_merge($page, array_intersect_key(is_array($overrides) ? $overrides : [], array_flip(['title', 'description', 'intro', 'faq', 'revision'])));
 }
+function wdt_calculate(array $input, ?array $page = null): array {
+    $state = \WhatDateTime\Tools::run($input);
+    if (($page['kind'] ?? '') !== 'relative') return $state;
+    $state['nearby'] = [['path' => null, 'label' => 'Your calculation', 'answer' => $state['answer']]];
+    $start = \WhatDateTime\Calculator::instant($state['start']['instant'])->setTimezone(\WhatDateTime\Calculator::zone($state['start']['zone']));
+    foreach (array_slice($page['relatedLinks'] ?? [], 0, 6) as $slug) {
+        $related = wdt_repository()->page($slug);
+        if (!$related || $related['kind'] !== 'relative' || $slug === $page['slug']) continue;
+        try {
+            $end = \WhatDateTime\Calculator::relative($start, $related['amount'], $related['unit'], $related['direction']);
+            $state['nearby'][] = ['path' => '/' . $slug, 'label' => $related['h1'], 'answer' => $end->format($related['unit'] === 'hour' ? 'g:i A — l, F j, Y' : 'l, F j, Y')];
+        } catch (InvalidArgumentException $e) { /* A custom boundary date can put a comparison outside the supported range. */ }
+    }
+    return $state;
+}
 add_filter('wp_sitemaps_enabled', '__return_false');
 add_action('template_redirect', function () {
     $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
@@ -113,13 +128,23 @@ add_action('rest_api_init', function () {
                 $input = $request->get_json_params();
                 if (!is_array($input)) throw new InvalidArgumentException('Enter valid calculator inputs.');
                 foreach ($input as $value) if (!is_scalar($value) && $value !== null) throw new InvalidArgumentException('Calculator inputs must be simple values.');
+                $page = isset($input['pageSlug']) ? wdt_page((string)$input['pageSlug']) : null;
                 if (isset($input['resetSlug'])) {
                     $resetPage = wdt_page((string)$input['resetSlug']);
                     if (!$resetPage || !in_array($resetPage['kind'], ['relative', 'timezone', 'difference', 'calculator', 'directory'], true)) throw new InvalidArgumentException('Unknown calculator page.');
+                    $meeting = !empty($input['meetingStart']);
+                    $meetingZones = array_intersect_key($input, array_flip(['fromZone', 'toZone']));
                     $input = \WhatDateTime\Tools::defaults($resetPage, (string)($input['zone'] ?? 'UTC'));
+                    $page = $resetPage;
+                    if ($meeting && $input['tool'] === 'timezone') {
+                        $input = array_merge($input, $meetingZones);
+                        $input['zone'] = $input['fromZone'];
+                        $input['start'] = (new DateTimeImmutable('now', \WhatDateTime\Calculator::zone($input['fromZone'])))->format('Y-m-d') . 'T09:00';
+                        $input['mode'] = 'custom';
+                    }
                     if ($resetPage['kind'] === 'directory') $input = array_merge($input, ['tool' => 'relative', 'unit' => 'hour', 'amount' => 1]);
                 }
-                $result = \WhatDateTime\Tools::run($input);
+                $result = wdt_calculate($input, $page);
                 [$primary, $details] = \WhatDateTime\View::parts($result);
                 return new WP_REST_Response(['result' => $result, 'input' => $input, 'html' => $primary, 'details' => $details], 200, ['Cache-Control' => 'private, no-store', 'X-Robots-Tag' => 'noindex']);
             } catch (InvalidArgumentException $e) {

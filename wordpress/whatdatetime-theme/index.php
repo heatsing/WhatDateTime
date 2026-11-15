@@ -16,13 +16,23 @@ $linkList = static function (array $links): void {
     echo '</ul>';
 };
 $faqs = $page['faq'] ?? [];
+$parent = null;
+if ($page['kind'] === 'relative' && $repository->page('calculations/' . $page['type'])) $parent = ['name' => $repository->page('calculations/' . $page['type'])['h1'], 'path' => '/calculations/' . $page['type']];
+elseif ($page['kind'] === 'timezone') {
+    foreach ($repository->json('cities.json') as $city) if ($city['name'] === $page['fromCity']) { $parent = ['name' => 'Time in ' . $city['name'], 'path' => '/time/' . $city['slug']]; break; }
+} elseif ($page['kind'] === 'hub' && $page['slug'] !== 'time') $parent = ['name' => 'World Clock', 'path' => '/time'];
 $schema = [];
 if ($canonical) {
     $schema[] = ['@context' => 'https://schema.org', '@type' => 'WebApplication', '@id' => $canonical . '#application', 'name' => $page['title'], 'url' => $canonical, 'description' => $page['description'], 'applicationCategory' => 'UtilitiesApplication', 'operatingSystem' => 'Any', 'isAccessibleForFree' => true, 'dateModified' => $page['revision'], 'offers' => ['@type' => 'Offer', 'price' => 0, 'priceCurrency' => 'USD']];
     $crumbs = [['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://whatdatetime.com']];
-    if ($page['slug'] !== '') $crumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => $page['h1'], 'item' => $canonical];
+    if ($parent) $crumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => $parent['name'], 'item' => 'https://whatdatetime.com' . $parent['path']];
+    if ($page['slug'] !== '') $crumbs[] = ['@type' => 'ListItem', 'position' => count($crumbs) + 1, 'name' => $page['h1'], 'item' => $canonical];
     $schema[] = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $crumbs];
     if ($faqs) $schema[] = ['@context' => 'https://schema.org', '@type' => 'FAQPage', '@id' => $canonical . '#faq', 'mainEntity' => array_map(fn($faq) => ['@type' => 'Question', 'name' => $faq['question'], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $faq['answer']]], $faqs)];
+}
+if ($page['kind'] === 'home') {
+    $schema[] = ['@context' => 'https://schema.org', '@type' => 'Organization', '@id' => 'https://whatdatetime.com/#organization', 'name' => 'WhatDateTime', 'url' => 'https://whatdatetime.com'];
+    $schema[] = ['@context' => 'https://schema.org', '@type' => 'WebSite', '@id' => 'https://whatdatetime.com/#website', 'name' => 'WhatDateTime', 'alternateName' => 'What Date Time', 'url' => 'https://whatdatetime.com', 'description' => $page['description'], 'inLanguage' => 'en-US', 'publisher' => ['@id' => 'https://whatdatetime.com/#organization']];
 }
 ?><!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title><?= esc_html($page['title']) ?></title><meta name="description" content="<?= esc_attr($page['description']) ?>"><meta name="robots" content="<?= esc_attr($robots) ?>">
@@ -31,8 +41,8 @@ if ($canonical) {
 <script type="application/ld+json"><?= wp_json_encode($schema, JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
 <?php wp_head(); ?></head><body><a class="skip" href="#main-content">Skip to main content</a>
 <?php if (!wdt_production()): ?><div class="staging">WordPress migration preview — search indexing is disabled.</div><?php endif; ?>
-<header class="site-header"><div class="nav-inner"><a class="brand" href="<?= esc_url(home_url('/')) ?>">▦ WhatDateTime</a><nav aria-label="Main navigation"><a href="<?= esc_url(home_url('/calculators/date-calculator')) ?>">Date</a><a href="<?= esc_url(home_url('/calculations/hours-from-now')) ?>">Time</a><a href="<?= esc_url(home_url('/calculators/timezone-converter')) ?>">Time Zones</a><a href="<?= esc_url(home_url('/calculators/calendar')) ?>">Calendars</a><a href="<?= esc_url(home_url('/time')) ?>">World Clock</a></nav></div></header>
-<main id="main-content" class="container" tabindex="-1"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= esc_url(home_url('/')) ?>">Home</a><?php if ($page['slug'] !== ''): ?> / <?= esc_html($page['h1']) ?><?php endif; ?></nav>
+<header class="site-header"><div class="nav-inner"><a class="brand" href="<?= esc_url(home_url('/')) ?>">▦ WhatDateTime</a><nav aria-label="Main navigation"><?php foreach ($repository->json('navigation.json') as $group): ?><details class="nav-group"><summary><?= esc_html($group['label']) ?></summary><ul><?php foreach ($group['links'] as [$label, $path]): ?><li><a href="<?= esc_url(home_url($path)) ?>"><?= esc_html($label) ?></a></li><?php endforeach; ?></ul></details><?php endforeach; ?></nav></div></header>
+<main id="main-content" class="container" tabindex="-1"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="<?= esc_url(home_url('/')) ?>">Home</a><?php if ($parent): ?> / <a href="<?= esc_url(home_url($parent['path'])) ?>"><?= esc_html($parent['name']) ?></a><?php endif; ?><?php if ($page['slug'] !== ''): ?> / <?= esc_html($page['h1']) ?><?php endif; ?></nav>
 <details class="site-search"><summary>Search tools and cities</summary><form data-site-search data-endpoint="<?= esc_url(rest_url('whatdatetime/v1/search')) ?>"><label>Tool, calculation, or city<input type="search" name="q" minlength="2" maxlength="100" required></label><button>Search</button><ul data-search-results aria-live="polite"></ul></form></details>
 <h1><?= esc_html($page['h1']) ?></h1><p><?= esc_html($page['intro'] ?? $page['description']) ?></p>
 <div class="page-grid"><div class="content">
@@ -41,12 +51,12 @@ $interactive = in_array($page['kind'], ['relative', 'difference', 'timezone', 'c
 if ($interactive || ($page['kind'] === 'directory' && $page['type'] === 'hours-from-now')) {
     $defaults = Tools::defaults($page);
     if ($page['kind'] === 'directory') $defaults = array_merge($defaults, ['tool' => 'relative', 'unit' => 'hour', 'amount' => 1]);
-    $input = $defaults; $error = ''; $result = Tools::run($defaults);
+    $input = $defaults; $error = ''; $result = wdt_calculate($defaults, $page);
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['wdt_action'])) {
         try {
             foreach ($_POST as $value) if (!is_string($value)) throw new InvalidArgumentException('Enter valid calculator inputs.');
             $input = array_merge($defaults, array_intersect_key(wp_unslash($_POST), $defaults), ['mode' => 'custom', 'tool' => $defaults['tool']]);
-            $result = Tools::run($input);
+            $result = wdt_calculate($input, $page);
         } catch (InvalidArgumentException $e) { $error = $e->getMessage(); }
     }
     if (isset($result['start']['local']) && $input['mode'] === 'live') $input['start'] = $result['start']['local'];
@@ -57,6 +67,13 @@ if ($interactive || ($page['kind'] === 'directory' && $page['type'] === 'hours-f
     echo '<div data-details>' . $details . '</div>';
     echo '<noscript><p>You can calculate with the form without JavaScript. Live countdown updates and local save/share need JavaScript.</p></noscript>';
     echo '<script type="application/json" data-tool-state>' . wp_json_encode(['slug' => $page['slug'], 'defaults' => $defaults, 'input' => $input, 'result' => $result, 'endpoint' => rest_url('whatdatetime/v1/calculate')], JSON_HEX_TAG | JSON_HEX_AMP) . '</script></section>';
+    if ($page['kind'] === 'timezone') {
+        echo '<section><h2>Current city clocks — separate from your selected time</h2><div class="paired-clocks">';
+        foreach (['from', 'to'] as $side) {
+            echo '<div class="compact-clock"><h3>' . esc_html($page[$side . 'City']) . '</h3>' . V::clock(Tools::run(['tool' => 'clock', 'zone' => $page[$side . 'Zone']]), rest_url('whatdatetime/v1/calculate'), $repository->json('cities.json'), true) . '</div>';
+        }
+        echo '</div></section>';
+    }
 }
 if ($page['kind'] === 'home') {
     echo V::clock(Tools::run(['tool' => 'clock', 'zone' => 'UTC']), rest_url('whatdatetime/v1/calculate'), $repository->json('cities.json'));
@@ -104,7 +121,7 @@ foreach (['useCases' => 'Common uses', 'examples' => 'Fixed calculation examples
     foreach ($page[$key] as $text) echo '<li>' . esc_html($text) . '</li>';
     echo '</ul></section>';
 }
-if (!empty($page['relatedLinks'])) {
+if (!empty($page['relatedLinks']) && !isset($result['nearby'])) {
     echo '<h2>Related calculations</h2>';
     $links = [];
     foreach ($page['relatedLinks'] as $slug) if ($related = $repository->page($slug)) $links[] = ['path' => '/' . $slug, 'label' => $related['h1']];
@@ -113,7 +130,9 @@ if (!empty($page['relatedLinks'])) {
 if ($faqs) { echo '<h2>Frequently asked questions</h2>'; foreach ($faqs as $faq) echo '<details><summary>' . esc_html($faq['question']) . '</summary><p>' . esc_html($faq['answer']) . '</p></details>'; }
 if ($page['kind'] === 'error') echo '<p>This URL does not exist. <a href="' . esc_url(home_url('/')) . '">Choose a calculator on the homepage.</a></p>';
 ?>
-</div><aside><h2>Related tools</h2><nav aria-label="Related tools"><?php foreach ($coreLinks as $slug => $name): if ($slug === $page['slug']) continue; ?><a href="<?= esc_url(home_url('/' . $slug)) ?>"><?= esc_html($name) ?></a><?php endforeach; ?></nav><p><a href="<?= esc_url(home_url('/calculation-methodology')) ?>">Calculation methodology</a> · <a href="<?= esc_url(home_url('/data-sources')) ?>">Data sources</a></p></aside></div></main>
+</div><aside><h2>Related tools</h2><nav aria-label="Related tools"><?php foreach ($coreLinks as $slug => $name): if ($slug === $page['slug']) continue; ?><a href="<?= esc_url(home_url('/' . $slug)) ?>"><?= esc_html($name) ?></a><?php endforeach; ?></nav>
+<?php if ($page['kind'] === 'home'): $today = Tools::run(['tool' => 'clock', 'zone' => 'UTC']); ?><h2>Popular Time Zones</h2><?php $linkList($page['popularZones']); ?><section data-today-summary><h2>Today</h2><p data-today-date><?= esc_html($today['result']['date']) ?></p><dl><dt>Day of year</dt><dd data-today-day><?= $today['dayOfYear'] ?> of <?= $today['daysInYear'] ?></dd><dt>ISO week number</dt><dd data-today-week><?= esc_html($today['isoWeek']) ?></dd><dt>Days remaining</dt><dd data-today-remaining><?= $today['daysInYear'] - $today['dayOfYear'] ?></dd></dl></section><?php endif; ?>
+<p><a href="<?= esc_url(home_url('/calculation-methodology')) ?>">Calculation methodology</a> · <a href="<?= esc_url(home_url('/data-sources')) ?>">Data sources</a></p></aside></div></main>
 <footer class="site-footer"><div class="footer-inner"><strong>WhatDateTime</strong><?php foreach (['about' => 'About', 'calculation-methodology' => 'Methodology', 'data-sources' => 'Data Sources', 'contact-and-corrections' => 'Corrections', 'privacy-policy' => 'Privacy', 'terms-of-use' => 'Terms'] as $slug => $name): ?><a href="<?= esc_url(home_url('/' . $slug)) ?>"><?= esc_html($name) ?></a><?php endforeach; ?></div></footer>
 <?php if (wdt_production()): ?><script async src="https://www.googletagmanager.com/gtag/js?id=G-LLS4S0NQH8"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-LLS4S0NQH8',{page_location:location.origin+location.pathname+location.search});</script><?php endif; ?>
 <?php wp_footer(); ?></body></html>

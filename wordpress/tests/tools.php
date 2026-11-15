@@ -25,4 +25,11 @@ same(Tools::run(['tool' => 'weeks-in-year', 'year' => '2026'])['answer'], '53 IS
 same(Tools::run(['tool' => 'days-in-month', 'year' => '2028', 'month' => '2'])['answer'], '29 days', 'month length');
 rejects(fn() => Tools::run(['tool' => 'age', 'birth' => '2030-01-01', 'asof' => '2026-01-01']), 'future birth');
 rejects(fn() => Tools::run(['tool' => 'calendar', 'year' => 'NaN', 'month' => '2']), 'NaN year');
+same(Tools::defaults(['kind' => 'calculator', 'calculator' => 'date'])['amount'], 10, 'original date calculator default');
+same(Tools::defaults(['kind' => 'calculator', 'calculator' => 'weeks-and-days-ago'])['weeks'], 8, 'original combined-week default');
+$until = Tools::defaults(['kind' => 'calculator', 'calculator' => 'days-until']);
+same(Tools::run($until)['calendarDays'], 30, 'original days-until interval');
+$pairPeriods = Tools::run(['tool'=>'timezone','mode'=>'custom','fromZone'=>'America/New_York','toZone'=>'Europe/London','start'=>'2026-03-15T09:00']);
+same($pairPeriods['differenceHours'], 4, 'mismatched DST week');
+same(count($pairPeriods['periods']), 5, 'yearly pair offset periods');
 echo "PHP tool dispatch checks passed; $checks cumulative assertions.\n";

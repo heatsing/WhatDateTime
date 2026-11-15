@@ -20,6 +20,7 @@ async function request(path, input, method = 'GET', form = false) {
 }
 const samples = ['', '8-hours-from-now', '15-hours-ago', '10-hours-ago', '72-hours-from-now', '48-hours-from-now', '18-hours-from-now', 'calculators/countdown', 'calculators/date-calculator', '8-business-days-from-today', '90-business-days-from-today', '35-business-days-from-today', 'toronto-to-new-york-time', 'london-to-toronto-time', 'singapore-to-melbourne-time', '500-hours-ago', 'time', 'time/new-york', 'calculations/hours-from-now', 'calculations/hours-from-now/2', 'calculators/business-days', 'calculators/time-difference', 'calculators/age-calculator', 'calculators/days-until', 'calculators/day-of-week', 'calculators/days-in-month', 'calculators/weeks-in-year', 'calculators/calendar', 'calculators/half-birthday', 'calculators/weeks-and-days-ago', 'calculation-methodology', 'privacy-policy'];
 const records = [];
+samples.push('calculators/timezone-converter');
 for (const slug of samples) {
   const response = await request('/' + slug);
   assert.equal(response.status, 200, slug);
@@ -44,6 +45,13 @@ for (const slug of samples) {
 for (const slug of ['not-a-real-calculator', '999999-hours-ago']) assert.equal((await request('/' + slug)).status, 404, slug);
 const redirect = await request('/date-calculator');
 assert.equal(redirect.status, 308); assert.match(redirect.headers, /location:.*\/calculators\/date-calculator/i);
+const aliases = JSON.parse(readFileSync(new URL('../whatdatetime-tools/data/redirects.json', import.meta.url), 'utf8'));
+for (const [path, expected] of Object.entries(aliases)) {
+  const response = await request(path);
+  assert.equal(response.status, expected.status, path);
+  const location = response.headers.match(/location:\s*([^\r\n]+)/i)?.[1];
+  assert.equal(new URL(location, base).pathname, expected.to, path);
+}
 const shards = JSON.parse(readFileSync(new URL('../whatdatetime-tools/data/sitemap.json', import.meta.url), 'utf8'));
 const index = await request('/sitemap.xml'); assert.equal(index.status, 200);
 let urls = 0;

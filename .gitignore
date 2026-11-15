@@ -16,3 +16,5 @@ out
 /wordpress/whatdatetime-tools/data/
 /wordpress/tests/generated/
 /wordpress/artifacts/
+*.auth-state.json
+/wordpress/**/admin-private-state.json

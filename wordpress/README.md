@@ -41,10 +41,15 @@ These accept `WDT_PREVIEW_URL`; HTTP checks also accept `WDT_HTTP_PROXY`. Browse
 
 On the isolated preview, `wp eval-file /private/release/tests/wp-integration.php` verifies admin editor permissions/nonce fields and content overrides, restoring every temporary option in `finally`.
 
+For full template coverage, keep `tests/render-all.php` outside the public directory and run `php -d memory_limit=512M /usr/local/bin/wp eval-file /private/release/render-all.php` from the WordPress root. It renders all 10,263 routes in a single CLI process, validates the generated SEO/results and internal-link graph, and writes `render-results.json` next to the private test script. It does not crawl thousands of public URLs or change the saved index settings.
+
+`tests/admin-session.php` is an optional, CLI-only preview acceptance helper, **not a plugin file**. It creates a 15-minute core WordPress session for an existing administrator, backed by temporary private files. Always run its `cleanup` mode in `finally` to restore the test page/revision options, revoke the session, and remove private files. Never upload this script or its authentication output to the public directory or commit authentication state. See `ACCEPTANCE.md` for the actual checks performed.
+
 ## Current preview / backup
 
 - Target root: `/home/u343377351/domains/whatdatetime.com/public_html` (verified with a one-time served nonce).
 - Original files and database backup: `/home/u343377351/whatdatetime-backups/pre-migration-20261115-8ks203/`.
+- A second private files/database snapshot was taken before the completion deployment: `/home/u343377351/whatdatetime-backups/pre-parity-20261115/`. Original and subsequent preview ZIP releases are retained privately for rollback.
 - Backup contains `files.tar.gz`, `database.sql`, `SHA256SUMS`; it is outside the webroot with private permissions. Archive readability and both hashes were verified. Never commit or expose the database dump.
 - `blog_public=0`; `WDT_PRODUCTION` is not enabled. Preview pages and XML are noindex, robots disallows crawling, and GA is disabled. Hostinger's preview-domain layer rewrites HTML canonical/JSON-LD links to the preview hostname. Sitemaps intentionally retain the original formal-domain URLs for cutover validation.
 - WordPress `home` and `siteurl` remain their original `http://whatdatetime.com` values; the Hostinger preview layer provides HTTPS preview routing. Do not change them while relying on this layer without testing the consequences.

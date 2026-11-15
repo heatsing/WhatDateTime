@@ -4,6 +4,10 @@
   const storageKey = 'whatdatetime.countdown.v1';
   const zone = () => Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
   const track = (action, tool) => { if (typeof window.gtag === 'function') window.gtag('event', action, { tool }); };
+  const navigation = Array.from(document.querySelectorAll('.nav-group'));
+  for (const menu of navigation) menu.addEventListener('toggle', () => { if (menu.open) for (const other of navigation) if (other !== menu) other.open = false; });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') for (const menu of navigation) menu.open = false; });
+  document.addEventListener('click', event => { if (!event.target.closest('.nav-group')) for (const menu of navigation) menu.open = false; });
   for (const root of document.querySelectorAll('[data-clock-root]')) {
     let state = JSON.parse(root.querySelector('[data-clock-state]').textContent);
     let fetchedAt = performance.now(), hour12 = true, version = 0;
@@ -27,6 +31,17 @@
         if (requestVersion !== version) return;
         if (!response.ok) throw new Error(data.message || 'Clock could not sync.');
         state = data.result; fetchedAt = performance.now(); tick();
+        const facts = root.querySelector('[data-clock-facts] tbody');
+        if (facts && state.facts) {
+          facts.replaceChildren();
+          for (const row of state.facts) { const tr = document.createElement('tr'); for (const value of row) { const td = document.createElement('td'); td.textContent = value; tr.append(td); } facts.append(tr); }
+        }
+        for (const summary of document.querySelectorAll('[data-today-summary]')) if (root.dataset.fixed !== 'true') {
+          summary.querySelector('[data-today-date]').textContent = state.result.date;
+          summary.querySelector('[data-today-day]').textContent = `${state.dayOfYear} of ${state.daysInYear}`;
+          summary.querySelector('[data-today-week]').textContent = state.isoWeek;
+          summary.querySelector('[data-today-remaining]').textContent = state.daysInYear - state.dayOfYear;
+        }
         if (select) { if (!Array.from(select.options).some(o => o.value === requestedZone)) select.add(new Option(requestedZone, requestedZone)); select.value = requestedZone; }
         status.textContent = 'Clock synchronized. Time zone rules are provided by the server.';
       } catch { status.textContent = 'Could not synchronize. The clock is continuing from its last server reference.'; }
@@ -92,7 +107,7 @@
     };
     const calculate = async ({ user = false, values = null, keepInstant = false } = {}) => {
       controller?.abort(); controller = new AbortController(); const version = ++revision;
-      const input = values || read(); input.tool = tool; input.mode = live && liveSupported ? 'live' : 'custom';
+      const input = values || read(); input.tool = tool; input.mode = live && liveSupported ? 'live' : 'custom'; input.pageSlug = config.slug;
       if (keepInstant && result.target) input.instant = result.target.instant;
       copy.disabled = true;
       try {
@@ -137,6 +152,10 @@
       await calculate({ values: { resetSlug: config.slug, zone: zone() } });
     };
     form.querySelector('[data-reset]').addEventListener('click', reset);
+    form.querySelector('[data-nine-am]')?.addEventListener('click', async () => {
+      clearTimeout(debounce); live = false;
+      await calculate({ user: true, values: { resetSlug: config.slug, meetingStart: true, zone: zone(), fromZone: form.elements.fromZone.value, toZone: form.elements.toZone.value } });
+    });
     copy.addEventListener('click', async () => {
       if (pending) return;
       try { countdownTick(); await navigator.clipboard.writeText(result.copyText); status.textContent = 'Result copied.'; track('calculator_copy', tool); }
